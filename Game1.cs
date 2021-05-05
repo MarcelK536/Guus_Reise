@@ -18,7 +18,7 @@ namespace Guus_Reise
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            // TODO: Create Tile[,]
 
             base.Initialize();
         }
@@ -27,7 +27,7 @@ namespace Guus_Reise
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+         
         }
 
         protected override void Update(GameTime gameTime)
@@ -35,7 +35,7 @@ namespace Guus_Reise
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+        
 
             base.Update(gameTime);
         }
@@ -44,7 +44,7 @@ namespace Guus_Reise
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            
 
             base.Draw(gameTime);
         }
