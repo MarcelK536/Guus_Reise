@@ -8,6 +8,8 @@ namespace Guus_Reise
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Tile[,] _board;
+        private Camera _camera;
 
         public Game1()
         {
@@ -18,7 +20,8 @@ namespace Guus_Reise
 
         protected override void Initialize()
         {
-            // TODO: Create Tile[,]
+            int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1 }, { 1, 1, 0, 0, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 2, 2, 0 }, { 0, 0, 0, 2, 0 } };
+            createboard(tilemap);
 
             base.Initialize();
         }
@@ -27,7 +30,7 @@ namespace Guus_Reise
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-         
+            _camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
         }
 
         protected override void Update(GameTime gameTime)
@@ -44,9 +47,34 @@ namespace Guus_Reise
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            
+            for (int i = 0; i < _board.GetLength(0); i++)
+            {
+                for (int k = 0; k < _board.GetLength(1); k++)
+                {
+                    _board[i, k].Draw(_camera);
+                }
+            }
 
             base.Draw(gameTime);
+        }
+
+
+        public void createboard(int[,] tilemap)
+        {
+            for(int i = 0; i < tilemap.GetLength(0); i++)
+            {
+                for(int k =0; k < tilemap.GetLength(1); k++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        _board[i, k] = new Tile(new Vector3(i - tilemap.GetLength(0) / 2, 0, k - tilemap.GetLength(1) / 2), new Point(i, k), tilemap[i, k], Content); 
+                    }
+                    else
+                    {
+                        _board[i, k] = new Tile(new Vector3(i - tilemap.GetLength(0) / 2 - 0.5f, 0, k - tilemap.GetLength(1) / 2 - 0.5f), new Point(i, k), tilemap[i, k], Content);
+                    }
+                }
+            }
         }
     }
 }
