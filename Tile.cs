@@ -65,16 +65,16 @@ namespace Guus_Reise
             this.World = Matrix.CreateScale(0.5f, 0.2f, 0.5f)* Matrix.CreateTranslation(this.Position);
             switch (type)
             {
-                case 1: this.Tile1 = contentmanager.Load<Model>("Wald");
+                case 1: this.Tile1 = contentmanager.Load<Model>("hexagonWald");
                     this.Type = "Wald";
                     break;
-                case 2: this.Tile1 = contentmanager.Load<Model>("Berg");
+                case 2: this.Tile1 = contentmanager.Load<Model>("hexagonBerg");
                     this.Type = "Berg";
                     break;
-                case 3: this.Tile1 = contentmanager.Load<Model>("Straße");
+                case 3: this.Tile1 = contentmanager.Load<Model>("hexagonStraße");
                     this.Type = "Straße";
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("Wiese");
+                default: this.Tile1 = contentmanager.Load<Model>("hexagonWiese");
                     this.Type = "Wiese";
                     break;
             }

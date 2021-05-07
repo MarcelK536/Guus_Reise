@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+//Adding SubClasses within Folders
+using Guus_Reise.Menu;
+
 namespace Guus_Reise
 {
     public class Game1 : Game
@@ -11,6 +14,13 @@ namespace Guus_Reise
         private Tile[,] _board; //Spielbrett
         private Camera _camera;
 
+        enum GameState
+        {
+            MainMenu,
+            LevelSelect,
+            InGame
+        }
+        GameState gameState;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -22,7 +32,7 @@ namespace Guus_Reise
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1 }, { 1, 1, 0, 0, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 2, 2, 0 }, { 0, 0, 0, 2, 0 } }; //input Array der die Art der Tiles für die map generierung angibt
             createboard(tilemap);
-
+            
             base.Initialize();
         }
 
@@ -31,6 +41,8 @@ namespace Guus_Reise
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
+            
+            MainMenu.LoadTexture(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -38,12 +50,42 @@ namespace Guus_Reise
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-        
-
             base.Update(gameTime);
+
+            switch (gameState)
+            {
+                case GameState.MainMenu:
+                    MainMenu.Update(gameTime);
+                    break;
+                case GameState.LevelSelect:
+                    break;
+                case GameState.InGame:
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            switch (gameState)
+            {
+                case GameState.MainMenu:
+                    MainMenu.Draw(_spriteBatch,gameTime);
+                    break;
+                case GameState.LevelSelect:
+                    break;
+                case GameState.InGame:
+                    DrawInGame(gameTime);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        protected void DrawInGame(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
