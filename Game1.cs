@@ -18,7 +18,7 @@ namespace Guus_Reise
         {
             MainMenu,
             LevelSelect,
-            InGame
+            InGame             
         }
         GameState gameState;
         public Game1()

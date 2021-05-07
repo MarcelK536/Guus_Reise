@@ -23,7 +23,7 @@ namespace Guus_Reise.Menu
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            btnDefault.texture;
+            
         }
 
         public static void Update(GameTime gameTime)
