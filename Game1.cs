@@ -38,7 +38,26 @@ namespace Guus_Reise
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-        
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                _camera.MoveCamera(1);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                _camera.MoveCamera(2);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                _camera.MoveCamera(3);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                _camera.MoveCamera(4);
+            }
+
 
             base.Update(gameTime);
         }
