@@ -14,13 +14,22 @@ namespace Guus_Reise
         private Tile[,] _board; //Spielbrett
         private Camera _camera;
 
-        enum GameState
+        public enum GameState
         {
             MainMenu,
             LevelSelect,
             InGame             
         }
-        GameState gameState;
+
+        private static GameState _state;
+
+        public static GameState GState
+        {
+            get => _state;
+            set => _state = value;
+        }
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -34,6 +43,7 @@ namespace Guus_Reise
             createboard(tilemap);
             
             base.Initialize();
+            MainMenu.Init();
         }
 
         protected override void LoadContent()
@@ -52,7 +62,7 @@ namespace Guus_Reise
 
             base.Update(gameTime);
 
-            switch (gameState)
+            switch (_state)
             {
                 case GameState.MainMenu:
                     MainMenu.Update(gameTime);
@@ -70,9 +80,10 @@ namespace Guus_Reise
         {
             base.Draw(gameTime);
 
-            switch (gameState)
+            switch (_state)
             {
                 case GameState.MainMenu:
+                    GraphicsDevice.Clear(Color.CornflowerBlue);
                     MainMenu.Draw(_spriteBatch,gameTime);
                     break;
                 case GameState.LevelSelect:

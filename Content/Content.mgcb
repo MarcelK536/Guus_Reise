@@ -132,6 +132,13 @@
 /processorParam:TextureFormat=Compressed
 /build:hexagonWiese.fbx
 
+#begin MainMenuFont.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MainMenuFont.spritefont
+
 #begin Straße.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
