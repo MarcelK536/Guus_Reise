@@ -58,26 +58,30 @@ namespace Guus_Reise
 
         public Tile(Vector3 position, Point logicalposition, int type, ContentManager contentmanager)
         {
-            this.Position = position;
             this.LogicalPosition = logicalposition;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
-            this.World = Matrix.CreateScale(0.53f, 0.2f, 0.5f)* Matrix.CreateTranslation(this.Position);
             switch (type)
             {
                 case 1: this.Tile1 = contentmanager.Load<Model>("Wald");
                     this.Type = "Wald";
+                    position = position + new Vector3(1, 0, -1.5f);
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("Berg");
                     this.Type = "Berg";
+                    position = position + new Vector3(2.18f, 0, -4.5f);
                     break;
                 case 3: this.Tile1 = contentmanager.Load<Model>("Straße");
                     this.Type = "Straße";
+                    position = position + new Vector3(5.4f, 0, -2.4f);
                     break;
                 default: this.Tile1 = contentmanager.Load<Model>("Wiese");
                     this.Type = "Wiese";
                     break;
             }
+
+            this.Position = position;
+            this.World = Matrix.CreateScale(0.53f, 0.2f, 0.5f) * Matrix.CreateTranslation(this.Position);
         }
 
         public void Draw(Camera camera)
