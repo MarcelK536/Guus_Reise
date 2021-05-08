@@ -11,6 +11,7 @@ namespace Guus_Reise
         private SpriteBatch _spriteBatch;
         private Tile[,] _board; //Spielbrett
         private Camera _camera;
+        private int lastwheel;
 
         public Game1()
         {
@@ -23,6 +24,7 @@ namespace Guus_Reise
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 }, { 1, 1, 3, 3, 1 }, { 2, 1, 2, 1, 2 } }; //input Array der die Art der Tiles für die map generierung angibt
             createboard(tilemap);
+            lastwheel = 0;
 
             base.Initialize();
         }
@@ -41,22 +43,34 @@ namespace Guus_Reise
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                _camera.MoveCamera('w');
+                _camera.MoveCamera("w");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                _camera.MoveCamera('s');
+                _camera.MoveCamera("s");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                _camera.MoveCamera('a');
+                _camera.MoveCamera("a");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                _camera.MoveCamera('d');
+                _camera.MoveCamera("d");
+            }
+
+            if (Mouse.GetState().ScrollWheelValue > lastwheel)
+            {
+                lastwheel = Mouse.GetState().ScrollWheelValue;
+                _camera.MoveCamera("hoch");
+            }
+            
+            if (Mouse.GetState().ScrollWheelValue < lastwheel)
+            {
+                lastwheel = Mouse.GetState().ScrollWheelValue;
+                _camera.MoveCamera("runter");
             }
 
 
