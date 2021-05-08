@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Guus_Reise
 {
@@ -20,7 +21,7 @@ namespace Guus_Reise
 
         protected override void Initialize()
         {
-            int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1 }, { 1, 1, 0, 0, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 2, 2, 0 }, { 0, 0, 0, 2, 0 } }; //input Array der die Art der Tiles für die map generierung angibt
+            int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1 }, { 1, 1, 3, 3, 1 }, { 2, 1, 2, 1, 2 } }; //input Array der die Art der Tiles für die map generierung angibt
             createboard(tilemap);
 
             base.Initialize();
@@ -87,11 +88,12 @@ namespace Guus_Reise
                 {
                     if (i % 2 == 0)
                     {
-                        _board[i, k] = new Tile(new Vector3(i - tilemap.GetLength(0) / 2, 0, k - tilemap.GetLength(1) / 2), new Point(i, k), tilemap[i, k], Content); 
+                        _board[i, k] = new Tile(new Vector3(i, 0, k), new Point(i, k), tilemap[i, k], Content);
+
                     }
                     else
                     {
-                        _board[i, k] = new Tile(new Vector3(i - tilemap.GetLength(0) / 2, 0, k - tilemap.GetLength(1) / 2-0.5f), new Point(i, k), tilemap[i, k], Content);
+                        _board[i, k] = new Tile(new Vector3(i, 0, k - 0.5f), new Point(i, k), tilemap[i, k], Content);
                     }
                 }
             }
