@@ -16,11 +16,18 @@ namespace Guus_Reise
         Texture2D _textureDefault;
         Texture2D _textureHover;
         private Color _tint;
+        private float _scale;
 
         public Color Tint
         {
             get => _tint;
             set => _tint = value;
+        }
+
+        public float Scale
+        {
+            get => _scale;
+            set => _scale = value;
         }
 
         public int ButtonX
@@ -53,20 +60,22 @@ namespace Guus_Reise
             set => _textureHover = value;
         }
 
-        public Button(string name, Texture2D textureDefault, Texture2D textureHover , int buttonX, int buttonY)
+        public Button(string name, Texture2D textureDefault, Texture2D textureHover, float scale, int buttonX, int buttonY)
         {
             this.Name = name;
             this.TextureDefault = textureDefault;
             this.TextureHover = textureHover;
+            this.Scale = scale;
             this.ButtonX = buttonX;
             this.ButtonY = buttonY;
             _tint = Color.Gray;
         }
 
-        public Button(string name, Texture2D textureDefault, int buttonX, int buttonY)
+        public Button(string name, Texture2D textureDefault, float scale, int buttonX, int buttonY)
         {
             this.Name = name;
             this.TextureDefault = textureDefault;
+            this.Scale = scale;
             this.ButtonX = buttonX;
             this.ButtonY = buttonY;
             _tint = Color.Gray;
@@ -78,18 +87,20 @@ namespace Guus_Reise
             this.ButtonY += moveY;
         }
 
-
         public Vector2 GetTextPos()
         {
-            return new Vector2((this.ButtonX + this.TextureDefault.Height) / 2, (this.ButtonY + this.TextureDefault.Width) / 2);
+            return new Vector2((this.ButtonX + this.TextureDefault.Height*this.Scale) / 2, (this.ButtonY + this.TextureDefault.Width*this.Scale) / 2);
         }
 
-
+        public Vector2 GetPos()
+        {
+            return new Vector2(this.ButtonX, this.ButtonY);
+        }
         public bool IsHovered()
         {
-            if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width &&
+            if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width*this.Scale &&
                     Mouse.GetState().Position.X > this.ButtonX &&
-                    Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height &&
+                    Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height*this.Scale &&
                     Mouse.GetState().Position.Y > this.ButtonY)
             {
                 _tint = Color.White;

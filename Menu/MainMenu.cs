@@ -18,7 +18,7 @@ namespace Guus_Reise.Menu
         static Button btnPlay;
         public static void Init()
         {
-            btnPlay = new Button("Play", btnDefaultTexture, btnHoverTexture, 10, 10);
+            btnPlay = new Button("Play", btnDefaultTexture, btnHoverTexture, 0.5f, 10, 10);
         }
         public static void LoadTexture(ContentManager content)
         {
@@ -31,11 +31,11 @@ namespace Guus_Reise.Menu
             spriteBatch.Begin();
             if (btnPlay.IsHovered() == true)
             {
-                spriteBatch.Draw(btnPlay.TextureHover, new Rectangle(btnPlay.ButtonX, btnPlay.ButtonY, btnPlay.TextureHover.Width, btnPlay.TextureHover.Height), btnPlay.Tint);
+                spriteBatch.Draw(btnPlay.TextureHover, btnPlay.GetPos(), null, btnPlay.Tint, 0f, Vector2.Zero, btnPlay.Scale, SpriteEffects.None, 0f);
             }
             else
             {
-                spriteBatch.Draw(btnPlay.TextureDefault, new Rectangle(btnPlay.ButtonX, btnPlay.ButtonY, btnPlay.TextureDefault.Width, btnPlay.TextureDefault.Height), btnPlay.Tint);
+                spriteBatch.Draw(btnPlay.TextureDefault, btnPlay.GetPos(), null, btnPlay.Tint, 0f, Vector2.Zero, btnPlay.Scale, SpriteEffects.None, 0f);
             }
             spriteBatch.DrawString(mainMenuFont, "Start Game",btnPlay.GetTextPos(), Color.Black);
             spriteBatch.End();
