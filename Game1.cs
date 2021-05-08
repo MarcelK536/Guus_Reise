@@ -10,6 +10,7 @@ namespace Guus_Reise
         private SpriteBatch _spriteBatch;
         private Tile[,] _board; //Spielbrett
         private Camera _camera;
+        private int lastwheel;
 
         public Game1()
         {
@@ -20,8 +21,9 @@ namespace Guus_Reise
 
         protected override void Initialize()
         {
-            int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1 }, { 1, 1, 0, 0, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 2, 2, 0 }, { 0, 0, 0, 2, 0 } }; //input Array der die Art der Tiles für die map generierung angibt
+            int[,] tilemap = new int[,] { { 2, 2, 0, 0, 0 }, { 2, 2, 0, 0, 2 }, { 2, 0, 0, 1, 1 }, { 0, 0, 0, 1, 1 }, { 2, 0, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
             createboard(tilemap);
+            lastwheel = 0;
 
             base.Initialize();
         }
@@ -40,22 +42,34 @@ namespace Guus_Reise
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                _camera.MoveCamera(1);
+                _camera.MoveCamera("w");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                _camera.MoveCamera(2);
+                _camera.MoveCamera("s");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                _camera.MoveCamera(3);
+                _camera.MoveCamera("a");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                _camera.MoveCamera(4);
+                _camera.MoveCamera("d");
+            }
+
+            if (Mouse.GetState().ScrollWheelValue > lastwheel)
+            {
+                lastwheel = Mouse.GetState().ScrollWheelValue;
+                _camera.MoveCamera("hoch");
+            }
+            
+            if (Mouse.GetState().ScrollWheelValue < lastwheel)
+            {
+                lastwheel = Mouse.GetState().ScrollWheelValue;
+                _camera.MoveCamera("runter");
             }
 
 
@@ -66,7 +80,7 @@ namespace Guus_Reise
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            for (int i = 0; i < _board.GetLength(0); i++)
+            for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
@@ -78,20 +92,22 @@ namespace Guus_Reise
         }
 
 
-        public void createboard(int[,] tilemap)
+        public void createboard(int[,] tilemap)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
-            _board = new Tile[tilemap.GetLength(0),tilemap.GetLength(1)];
+            _board = new Tile[tilemap.GetLength(0),tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
+
             for(int i = 0; i < tilemap.GetLength(0); i++)
             {
                 for(int k =0; k < tilemap.GetLength(1); k++)
                 {
-                    if (i % 2 == 0)
+                    if (i % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                     {
-                        _board[i, k] = new Tile(new Vector3(i - tilemap.GetLength(0) / 2, 0, k - tilemap.GetLength(1) / 2), new Point(i, k), tilemap[i, k], Content); 
+                        _board[i, k] = new Tile(new Vector3(i, 0, k), new Point(i, k), tilemap[i, k], Content);
+
                     }
                     else
                     {
-                        _board[i, k] = new Tile(new Vector3(i - tilemap.GetLength(0) / 2, 0, k - tilemap.GetLength(1) / 2-0.5f), new Point(i, k), tilemap[i, k], Content);
+                        _board[i, k] = new Tile(new Vector3(i, 0, k - 0.5f), new Point(i, k), tilemap[i, k], Content);
                     }
                 }
             }
