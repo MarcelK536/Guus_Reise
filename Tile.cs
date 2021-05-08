@@ -6,13 +6,13 @@ namespace Guus_Reise
 {
     class Tile
     {
-        private string _type;
-        private Vector3 _position;
-        private Point _logicalPosition;
-        private Charakter _charakter;
-        private Model _tile;
-        private Vector3 _glow;
-        private Vector3 _color;
+        private string _type;                   //Name des Tiletypen bspw. Wald
+        private Vector3 _position;              //Position im Raum
+        private Point _logicalPosition;         //Position im _board Array
+        private Charakter _charakter;           //Platzhalter für Charakter, falls einer auf dem Tile steht
+        private Model _tile;                    //3D Model
+        private Vector3 _glow;                  
+        private Vector3 _color;                 
         private Matrix _world;
 
         public string Type
@@ -62,7 +62,7 @@ namespace Guus_Reise
             this.LogicalPosition = logicalposition;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
-            this.World = Matrix.CreateScale(0.5f, 0.2f, 0.5f)* Matrix.CreateTranslation(this.Position);
+            this.World = Matrix.CreateScale(0.53f, 0.2f, 0.5f)* Matrix.CreateTranslation(this.Position);
             switch (type)
             {
                 case 1: this.Tile1 = contentmanager.Load<Model>("Wald");

@@ -13,20 +13,20 @@ namespace Guus_Reise
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(30), aspectRatio, 0.1f, 100f);
         }
 
-        public void MoveCamera(int zähler)
+        public void MoveCamera(char symbol)
         {
-            switch (zähler)
+            switch (symbol)
             {
-                case 1: this.view.Translation = new Vector3(0, -0.1f, 0.1f) + this.view.Translation;
+                case 'w': this.view.Translation = new Vector3(0, -0.1f, 0.1f) + this.view.Translation; //bewegt camera nach vorne
                     break;
 
-                case 2: this.view.Translation = new Vector3(0, 0.1f, -0.1f) + this.view.Translation;
+                case 's': this.view.Translation = new Vector3(0, 0.1f, -0.1f) + this.view.Translation; //camera nach hinte
                     break;
 
-                case 3: this.view.Translation = new Vector3(0.1f, 0, 0) + this.view.Translation;
+                case 'a': this.view.Translation = new Vector3(0.1f, 0, 0) + this.view.Translation; //camera links
                     break;
 
-                case 4: this.view.Translation = new Vector3(-0.1f, 0, 0) + this.view.Translation;
+                case 'd': this.view.Translation = new Vector3(-0.1f, 0, 0) + this.view.Translation; //camera rechts
                     break;
 
                 default: break;

@@ -41,22 +41,22 @@ namespace Guus_Reise
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                _camera.MoveCamera(1);
+                _camera.MoveCamera('w');
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                _camera.MoveCamera(2);
+                _camera.MoveCamera('s');
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                _camera.MoveCamera(3);
+                _camera.MoveCamera('a');
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                _camera.MoveCamera(4);
+                _camera.MoveCamera('d');
             }
 
 
@@ -67,7 +67,7 @@ namespace Guus_Reise
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            for (int i = 0; i < _board.GetLength(0); i++)
+            for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
@@ -79,14 +79,15 @@ namespace Guus_Reise
         }
 
 
-        public void createboard(int[,] tilemap)
+        public void createboard(int[,] tilemap)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
-            _board = new Tile[tilemap.GetLength(0),tilemap.GetLength(1)];
+            _board = new Tile[tilemap.GetLength(0),tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
+
             for(int i = 0; i < tilemap.GetLength(0); i++)
             {
                 for(int k =0; k < tilemap.GetLength(1); k++)
                 {
-                    if (i % 2 == 0)
+                    if (i % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                     {
                         _board[i, k] = new Tile(new Vector3(i, 0, k), new Point(i, k), tilemap[i, k], Content);
 
