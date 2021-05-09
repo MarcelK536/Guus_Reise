@@ -9,8 +9,8 @@ namespace Guus_Reise
 
         public Camera(float aspectRatio)
         {
-            view = Matrix.CreateLookAt(new Vector3(9, 6, 3), new Vector3(9, 0, -3), Vector3.UnitY);
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(30), aspectRatio, 0.1f, 100f);
+            view = Matrix.CreateLookAt(new Vector3(0, 6, 6), new Vector3(0, 0, 0), Vector3.UnitY);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(40), aspectRatio, 0.1f, 100f);
         }
 
         public void MoveCamera(string symbol)
@@ -29,10 +29,10 @@ namespace Guus_Reise
                 case "d": this.view.Translation = new Vector3(-0.1f, 0, 0) + this.view.Translation; //camera rechts
                     break;
 
-                case "hoch": this.view.Translation = new Vector3(0, 0, 0.3f) + this.view.Translation; 
+                case "hoch": this.view.Translation = new Vector3(0, 0, 0.5f) + this.view.Translation; 
                     break;
 
-                case "runter": this.view.Translation = new Vector3(0, 0, -0.3f) + this.view.Translation; 
+                case "runter": this.view.Translation = new Vector3(0, 0, -0.5f) + this.view.Translation; 
                     break;
 
                 default: break;

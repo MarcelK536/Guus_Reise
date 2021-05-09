@@ -65,15 +65,12 @@ namespace Guus_Reise
             {
                 case 1: this.Tile1 = contentmanager.Load<Model>("Wald");
                     this.Type = "Wald";
-                    position = position + new Vector3(1, 0, -1.5f);
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("Berg");
                     this.Type = "Berg";
-                    position = position + new Vector3(2.18f, 0, -4.5f);
                     break;
                 case 3: this.Tile1 = contentmanager.Load<Model>("Straße");
                     this.Type = "Straße";
-                    position = position + new Vector3(5.4f, 0, -2.4f);
                     break;
                 default: this.Tile1 = contentmanager.Load<Model>("Wiese");
                     this.Type = "Wiese";
@@ -81,7 +78,7 @@ namespace Guus_Reise
             }
 
             this.Position = position;
-            this.World = Matrix.CreateScale(0.53f, 0.2f, 0.5f) * Matrix.CreateTranslation(this.Position);
+            this.World = (Matrix.CreateScale(0.0053f, 0.002f, 0.005f) * Matrix.CreateTranslation(this.Position));
         }
 
         public void Draw(Camera camera)
