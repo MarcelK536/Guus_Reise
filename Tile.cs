@@ -64,7 +64,7 @@ namespace Guus_Reise
             this.Color = new Vector3(0, 0, 0);
             switch (type)
             {
-                case 1: this.Tile1 = contentmanager.Load<Model>("tile1length");
+                case 1: this.Tile1 = contentmanager.Load<Model>("test05");
                     this.Type = "Wald";
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("Berg");
@@ -79,7 +79,7 @@ namespace Guus_Reise
             }
 
             this.Position = position;
-            this.World = (Matrix.CreateScale(0.0053f, 0.002f, 0.005f) * Matrix.CreateTranslation(this.Position));
+            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateTranslation(this.Position));
         }
 
         public void Draw(Camera camera)
