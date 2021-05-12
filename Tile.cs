@@ -79,7 +79,7 @@ namespace Guus_Reise
             }
 
             this.Position = position;
-            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateTranslation(this.Position));
+            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) *Matrix.CreateRotationY(45)* Matrix.CreateTranslation(this.Position));
         }
 
         public void Draw(Camera camera)
