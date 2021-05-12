@@ -151,14 +151,14 @@ namespace Guus_Reise
             {
                 for(int k =0; k < tilemap.GetLength(1); k++)
                 {
-                    if (i % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
+                    if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                     {
-                        _board[i, k] = new Tile(new Vector3(i, 0, k), new Point(i, k), tilemap[i, k], Content);
+                        _board[i, k] = new Tile(new Vector3(i, 0, (k*0.8665f)), new Point(i, k), tilemap[i, k], Content);
 
                     }
                     else
                     {
-                        _board[i, k] = new Tile(new Vector3(i, 0, k - 0.5f), new Point(i, k), tilemap[i, k], Content);
+                        _board[i, k] = new Tile(new Vector3(i+0.5f, 0, (k*0.8665f)), new Point(i, k), tilemap[i, k], Content);
                     }
                 }
             }

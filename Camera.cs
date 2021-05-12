@@ -9,8 +9,8 @@ namespace Guus_Reise
 
         public Camera(float aspectRatio)
         {
-            view = Matrix.CreateLookAt(new Vector3(0, 6, 6), new Vector3(0, 0, 0), Vector3.UnitY);
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(40), aspectRatio, 0.1f, 100f);
+            view = Matrix.CreateLookAt(new Vector3(0, 5, 7), new Vector3(0, 0, 0), Vector3.UnitY);
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(30), aspectRatio, 0.01f, 100f);
         }
 
         public void MoveCamera(string symbol)
