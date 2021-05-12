@@ -115,5 +115,17 @@ namespace Guus_Reise
             return this.IsHovered() == true && Mouse.GetState().LeftButton == ButtonState.Pressed;
         }
 
+        public void Draw(SpriteBatch spriteBatch, SpriteFont spriteFont)
+        {
+            if (this.IsHovered() == true)
+            {
+                spriteBatch.Draw(this.TextureHover, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+            }
+            else
+            {
+                spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+            }
+            spriteBatch.DrawString(spriteFont, this.Name, this.GetTextPos(), Color.Black);
+        }
     }
 }

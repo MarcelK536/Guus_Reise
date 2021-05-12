@@ -16,9 +16,11 @@ namespace Guus_Reise.Menu
         static SpriteFont mainMenuFont;
 
         static Button btnPlay;
+        static Button btnExit;
         public static void Init()
         {
-            btnPlay = new Button("Play", btnDefaultTexture, btnHoverTexture, 0.5f, 10, 10);
+            btnPlay = new Button("Start Game", btnDefaultTexture, btnHoverTexture, 0.5f, 10, 10);
+            btnExit = new Button("Exit", btnDefaultTexture, btnHoverTexture, 0.5f, 300, 10);
         }
         public static void LoadTexture(ContentManager content)
         {
@@ -29,15 +31,8 @@ namespace Guus_Reise.Menu
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {   
             spriteBatch.Begin();
-            if (btnPlay.IsHovered() == true)
-            {
-                spriteBatch.Draw(btnPlay.TextureHover, btnPlay.GetPos(), null, btnPlay.Tint, 0f, Vector2.Zero, btnPlay.Scale, SpriteEffects.None, 0f);
-            }
-            else
-            {
-                spriteBatch.Draw(btnPlay.TextureDefault, btnPlay.GetPos(), null, btnPlay.Tint, 0f, Vector2.Zero, btnPlay.Scale, SpriteEffects.None, 0f);
-            }
-            spriteBatch.DrawString(mainMenuFont, "Start Game",btnPlay.GetTextPos(), Color.Black);
+            btnPlay.Draw(spriteBatch, mainMenuFont);
+            btnExit.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();
         }
 
@@ -46,6 +41,10 @@ namespace Guus_Reise.Menu
             if (btnPlay.IsClicked() == true)
             {
                 GState = GameState.InGame;   
+            }
+            if (btnExit.IsClicked() == true)
+            {
+                GState = GameState.Exit;
             }
         }
 

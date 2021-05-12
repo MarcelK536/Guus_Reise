@@ -18,7 +18,8 @@ namespace Guus_Reise
         {
             MainMenu,
             LevelSelect,
-            InGame             
+            InGame,
+            Exit
         }
 
         private static GameState _state;
@@ -70,6 +71,9 @@ namespace Guus_Reise
                 case GameState.LevelSelect:
                     break;
                 case GameState.InGame:
+                    break;
+                case GameState.Exit:
+                    Exit();
                     break;
                 default:
                     break;
