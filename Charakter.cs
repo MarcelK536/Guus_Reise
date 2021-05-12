@@ -82,5 +82,18 @@ namespace Guus_Reise
             this.Glück = glück;
             this.Bewegungsreichweite = bewegungsreichweite;
         }
+
+        public Charakter (String name, int[] werte)
+        {
+            this.Name = name;
+            this.Widerstandskraft = werte[0];
+            this.Körperkraft = werte[1];
+            this.Abwehr = werte[2];
+            this.Wortgewandheit = werte[3];
+            this.Ignoranz = werte[4];
+            this.Geschwindigkeit = werte[5];
+            this.Glück = werte[6];
+            this.Bewegungsreichweite = werte[7];
+        }
     }
 }
