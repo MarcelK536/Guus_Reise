@@ -89,7 +89,7 @@ namespace Guus_Reise
 
         public Vector2 GetTextPos()
         {
-            return new Vector2((this.ButtonX + this.TextureDefault.Height*this.Scale) / 2, (this.ButtonY + this.TextureDefault.Width*this.Scale) / 2);
+            return new Vector2(this.ButtonX+this.TextureDefault.Height*this.Scale*0.2f, this.ButtonY + (this.TextureDefault.Width*this.Scale)/2);
         }
 
         public Vector2 GetPos()
