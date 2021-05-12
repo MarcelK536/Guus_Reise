@@ -19,7 +19,8 @@ namespace Guus_Reise
             MainMenu,
             LevelSelect,
             InGame,
-            Exit
+            Exit,
+            Credits
         }
 
         private static GameState _state;
@@ -45,6 +46,7 @@ namespace Guus_Reise
             
             base.Initialize();
             MainMenu.Init();
+            Credits.Init();
         }
 
         protected override void LoadContent()
@@ -54,6 +56,7 @@ namespace Guus_Reise
             _camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
             
             MainMenu.LoadTexture(Content);
+            Credits.LoadTexture(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -67,6 +70,9 @@ namespace Guus_Reise
             {
                 case GameState.MainMenu:
                     MainMenu.Update(gameTime);
+                    break;
+                case GameState.Credits:
+                    Credits.Update(gameTime);
                     break;
                 case GameState.LevelSelect:
                     break;
@@ -89,6 +95,10 @@ namespace Guus_Reise
                 case GameState.MainMenu:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
                     MainMenu.Draw(_spriteBatch,gameTime);
+                    break;
+                case GameState.Credits:
+                    GraphicsDevice.Clear(Color.YellowGreen);
+                    Credits.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.LevelSelect:
                     break;

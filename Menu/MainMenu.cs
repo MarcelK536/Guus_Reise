@@ -16,11 +16,13 @@ namespace Guus_Reise.Menu
         static SpriteFont mainMenuFont;
 
         static Button btnPlay;
+        static Button btnCredits;
         static Button btnExit;
         public static void Init()
         {
             btnPlay = new Button("Start Game", btnDefaultTexture, btnHoverTexture, 0.5f, 10, 10);
-            btnExit = new Button("Exit", btnDefaultTexture, btnHoverTexture, 0.5f, 300, 10);
+            btnCredits = new Button("Credits", btnDefaultTexture, btnHoverTexture, 0.5f, 250, 10);
+            btnExit = new Button("Exit", btnDefaultTexture, btnHoverTexture, 0.5f, 500, 10);
         }
         public static void LoadTexture(ContentManager content)
         {
@@ -32,6 +34,7 @@ namespace Guus_Reise.Menu
         {   
             spriteBatch.Begin();
             btnPlay.Draw(spriteBatch, mainMenuFont);
+            btnCredits.Draw(spriteBatch, mainMenuFont);
             btnExit.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();
         }
@@ -41,6 +44,10 @@ namespace Guus_Reise.Menu
             if (btnPlay.IsClicked() == true)
             {
                 GState = GameState.InGame;   
+            }
+            if (btnCredits.IsClicked() == true)
+            {
+                GState = GameState.Credits;
             }
             if (btnExit.IsClicked() == true)
             {
