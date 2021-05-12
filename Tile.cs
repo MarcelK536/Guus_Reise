@@ -64,7 +64,7 @@ namespace Guus_Reise
             this.Color = new Vector3(0, 0, 0);
             switch (type)
             {
-                case 1: this.Tile1 = contentmanager.Load<Model>("test05");
+                case 1: this.Tile1 = contentmanager.Load<Model>("TestModellObjects");
                     this.Type = "Wald";
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("Berg");
