@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Linq;
 
+//Adding SubClasses within Folders
+using Guus_Reise.Menu;
+
 namespace Guus_Reise
 {
     public class Game1 : Game
@@ -18,6 +21,24 @@ namespace Guus_Reise
         private List<Point> possibleMoves = new List<Point>();
         private MouseState _prevMouseState;
 
+        public enum GameState
+        {
+            MainMenu,
+            LevelSelect,
+            InGame,
+            Exit,
+            Credits
+        }
+
+        private static GameState _state;
+
+        public static GameState GState
+        {
+            get => _state;
+            set => _state = value;
+        }
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -27,16 +48,20 @@ namespace Guus_Reise
 
         protected override void Initialize()
         {
+
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
             int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5 }, { 20, 7, 8, 9, 8, 8, 2, 4 } };         //input Array für die Charaktere
             string[] names = new string[] { "Guu", "Peter" };
             int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 } };
+
             Createboard(tilemap);
             CreateCharakter(names, charakter, charPositions);
             lastwheel = 0;
             _prevMouseState = Mouse.GetState();
 
             base.Initialize();
+            MainMenu.Init();
+            Credits.Init();
         }
 
         protected override void LoadContent()
@@ -44,6 +69,9 @@ namespace Guus_Reise
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
+            
+            MainMenu.LoadTexture(Content);
+            Credits.LoadTexture(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -53,6 +81,7 @@ namespace Guus_Reise
 
             MouseState mouseState = Mouse.GetState();
             Vector2 mouseLocation = new Vector2(mouseState.X, mouseState.Y); //position der Maus auf dem monitor
+
             float? minDistance = float.MaxValue;
             bool mouseOverSomething = false;
             hoverTile = null;
@@ -148,12 +177,54 @@ namespace Guus_Reise
                 }
             }
             
-
             _prevMouseState = mouseState;
             base.Update(gameTime);
+
+            switch (_state)
+            {
+                case GameState.MainMenu:
+                    MainMenu.Update(gameTime);
+                    break;
+                case GameState.Credits:
+                    Credits.Update(gameTime);
+                    break;
+                case GameState.LevelSelect:
+                    break;
+                case GameState.InGame:
+                    break;
+                case GameState.Exit:
+                    Exit();
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            switch (_state)
+            {
+                case GameState.MainMenu:
+                    GraphicsDevice.Clear(Color.CornflowerBlue);
+                    MainMenu.Draw(_spriteBatch,gameTime);
+                    break;
+                case GameState.Credits:
+                    GraphicsDevice.Clear(Color.YellowGreen);
+                    Credits.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.LevelSelect:
+                    break;
+                case GameState.InGame:
+                    DrawInGame(gameTime);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        protected void DrawInGame(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 

@@ -69,19 +69,20 @@ namespace Guus_Reise
             this.Color = new Vector3(0, 0, 0);
             switch (type)
             {
+
                 case 1: this.Tile1 = contentmanager.Load<Model>("TestModellObjects");
                     this.Type = "Wald";
                     this.Begehbarkeit = 2;
                     break;
-                case 2: this.Tile1 = contentmanager.Load<Model>("Berg");
+                case 2: this.Tile1 = contentmanager.Load<Model>("hexagonBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
                     break;
-                case 3: this.Tile1 = contentmanager.Load<Model>("Straße");
+                case 3: this.Tile1 = contentmanager.Load<Model>("hexagonStraße");
                     this.Type = "Straße";
                     this.Begehbarkeit = 0.5f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("Wiese");
+                default: this.Tile1 = contentmanager.Load<Model>("hexagonWiese");
                     this.Type = "Wiese";
                     this.Begehbarkeit = 1;
                     break;
