@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Guus_Reise
 {
@@ -94,6 +93,11 @@ namespace Guus_Reise
             this.Geschwindigkeit = werte[5];
             this.Glück = werte[6];
             this.Bewegungsreichweite = werte[7];
+        }
+
+        public void Draw(Camera camera, Matrix world)
+        {
+            //TODO
         }
     }
 }

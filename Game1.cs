@@ -109,37 +109,45 @@ namespace Guus_Reise
 
             if (activeTile == null)
             {
-                if (mouseOverSomething)     //wenn die Maus über sich über einem Tile befindet wird dieses hervorgehoben
+                if (mouseOverSomething)
                 {
-                    _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.4f, 0.4f, 0.4f);
+                    _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released) //wenn zusätzlich die linke Maustaste gedrückt wird, wird das hoverTile zum activeTile
                     {
-                        activeTile = hoverTile;
+                        activeTile = hoverTile;                        
                     }
-                }
+                }                              
             }
             else
             {
-                _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.4f, 0.4f, 0.4f); //das activeTile wird hervorgehoben
+                _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.5f, 0.5f, 0.5f); //das activeTile wird hervorgehoben
 
                 if (activeTile.Charakter != null)
                 {
+                    _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Color = new Vector3(0, 2, 0);
                     ShowMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite);
                     possibleMoves = possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
-                    if(Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition))
+
+                    if (mouseOverSomething)
                     {
-                        _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
-                        _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
-                        activeTile = null;
+                        _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
+
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition))
+                        {
+                            _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
+                            _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
+                            activeTile = null;
+                        }
                     }
                 }
 
                 if (Mouse.GetState().RightButton == ButtonState.Pressed && _prevMouseState.RightButton == ButtonState.Released)    //wenn die rechte Maustaste gedrückt wird, wird das activeTile zurückgesetzt
-                {                   
+                {
                     activeTile = null;
                 }
             }
+            
 
             _prevMouseState = mouseState;
             base.Update(gameTime);
@@ -230,6 +238,7 @@ namespace Guus_Reise
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
                     _board[i, k].Glow = new Vector3(0.1f, 0.1f, 0.1f);
+                    _board[i, k].Color = new Vector3(0, 0, 0);
                 }
             }
         }
@@ -253,7 +262,12 @@ namespace Guus_Reise
         {
             if (bewegung >= 0)
             {
-                _board[x, y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
+                _board[x, y].Glow = new Vector3(0.2f, 0.2f, 0.2f);
+
+                if (_board[x, y].Charakter != null && activeTile.LogicalPosition.X != x && activeTile.LogicalPosition.Y != y)
+                {
+                    _board[x, y].Color = new Vector3(4, 0, 0);
+                }
                 
                 if (x - 1 >= 0)
                 {

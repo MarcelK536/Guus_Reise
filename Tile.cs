@@ -109,6 +109,13 @@ namespace Guus_Reise
                 }
                 mesh.Draw();
             }
+
+            if (this.Charakter != null)
+            {
+                Vector3 hilf = new Vector3(0.0f, 0.01f, 0.0f);
+                Matrix hilf2 = (Matrix.CreateScale(1, 1, 1) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Position + hilf));
+                this.Charakter.Draw(camera, hilf2);
+            }
         }
     }
 }
