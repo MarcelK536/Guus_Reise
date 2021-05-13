@@ -51,8 +51,8 @@ namespace Guus_Reise
 
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
             int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5 }, { 20, 7, 8, 9, 8, 8, 2, 4 } };         //input Array für die Charaktere
-            string[] names = new string[] { "Guu", "Peter" };
-            int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 } };
+            string[] names = new string[] { "Guu", "Peter" };       //input Array für Namen
+            int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 } };   //input Array für Positionen
 
             Createboard(tilemap);
             CreateCharakter(names, charakter, charPositions);
@@ -162,7 +162,7 @@ namespace Guus_Reise
                     {
                         _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
-                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition))
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition)) //wenn ein possibleMive Tile geklickt wird, wird der Charakter dorthin gesetzt
                         {
                             _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
                             _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
@@ -329,13 +329,13 @@ namespace Guus_Reise
             }
         }
 
-        public void ShowMoves(int x, int y, float bewegung)
+        public void ShowMoves(int x, int y, float bewegung) //hebt alle möglichen Züge hervor und speichert diese in possibleMoves
         {
             if (bewegung >= 0)
             {
                 _board[x, y].Glow = new Vector3(0.2f, 0.2f, 0.2f);
 
-                if (_board[x, y].Charakter != null && activeTile.LogicalPosition.X != x && activeTile.LogicalPosition.Y != y)
+                if (_board[x, y].Charakter != null && activeTile.LogicalPosition.X != x && activeTile.LogicalPosition.Y != y) //erkennt andere charaktere
                 {
                     _board[x, y].Color = new Vector3(4, 0, 0);
                 }

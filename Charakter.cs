@@ -1,19 +1,21 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Guus_Reise
 {
     class Charakter
     {
         private String _name;
-        private int _widerstandskraft;
-        private int _körperkraft;
-        private int _abwehr;
-        private int _wortgewandheit;
-        private int _ingoranz;
-        private int _geschwindigkeit;
-        private int _glück;
-        private int _bewegungsreichweite;
+        private int _widerstandskraft; //Leben des Charakters
+        private int _koerperkraft;      //physichen Angriff
+        private int _abwehr;            //physiche Abwehr
+        private int _wortgewandheit;    //social Angriff
+        private int _ingoranz;          //social Abwehr
+        private int _geschwindigkeit;   //geschwindigkeit des Charakters im Kamof
+        private int _glueck;            //wirkt sich auf kritische trefferchance aus
+        private int _bewegungsreichweite; 
+        private Model _model;
 
         public String Name
         {
@@ -27,10 +29,10 @@ namespace Guus_Reise
             set => _widerstandskraft = value;
         }
 
-        public int Körperkraft
+        public int Koerperkraft
         {
-            get => _körperkraft;
-            set => _körperkraft = value;
+            get => _koerperkraft;
+            set => _koerperkraft = value;
         }
 
         public int Abwehr
@@ -57,10 +59,10 @@ namespace Guus_Reise
             set => _geschwindigkeit = value;
         }
 
-        public int Glück
+        public int Glueck
         {
-            get => _glück;
-            set => _glück = value;
+            get => _glueck;
+            set => _glueck = value;
         }
 
         public int Bewegungsreichweite
@@ -69,16 +71,22 @@ namespace Guus_Reise
             set => _bewegungsreichweite = value;
         }
 
+        public Model Model
+        {
+            get => _model;
+            set => _model = value;
+        }
+
         public Charakter (String name, int leben, int angriff, int abwehr, int wortgewand, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite)
         {
             this.Name = name;
             this.Widerstandskraft = leben;
-            this.Körperkraft = angriff;
+            this.Koerperkraft = angriff;
             this.Abwehr = abwehr;
             this.Wortgewandheit = wortgewand;
             this.Ignoranz = ignoranz;
             this.Geschwindigkeit = geschwindigkeit;
-            this.Glück = glück;
+            this.Glueck = glück;
             this.Bewegungsreichweite = bewegungsreichweite;
         }
 
@@ -86,12 +94,12 @@ namespace Guus_Reise
         {
             this.Name = name;
             this.Widerstandskraft = werte[0];
-            this.Körperkraft = werte[1];
+            this.Koerperkraft = werte[1];
             this.Abwehr = werte[2];
             this.Wortgewandheit = werte[3];
             this.Ignoranz = werte[4];
             this.Geschwindigkeit = werte[5];
-            this.Glück = werte[6];
+            this.Glueck = werte[6];
             this.Bewegungsreichweite = werte[7];
         }
 
