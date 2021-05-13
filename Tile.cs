@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,13 +7,13 @@ namespace Guus_Reise
 {
     class Tile
     {
-        private string _type;
-        private Vector3 _position;
-        private Point _logicalPosition;
-        private Charakter _charakter;
-        private Model _tile;
-        private Vector3 _glow;
-        private Vector3 _color;
+        private string _type;                   //Name des Tiletypen bspw. Wald
+        private Vector3 _position;              //Position im Raum
+        private Point _logicalPosition;         //Position im _board Array
+        private Charakter _charakter;           //Platzhalter für Charakter, falls einer auf dem Tile steht
+        private Model _tile;                    //3D Model
+        private Vector3 _glow;                  
+        private Vector3 _color;                 
         private Matrix _world;
 
         public string Type
@@ -58,14 +59,13 @@ namespace Guus_Reise
 
         public Tile(Vector3 position, Point logicalposition, int type, ContentManager contentmanager)
         {
-            this.Position = position;
             this.LogicalPosition = logicalposition;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
-            this.World = Matrix.CreateScale(0.5f, 0.2f, 0.5f)* Matrix.CreateTranslation(this.Position);
             switch (type)
             {
-                case 1: this.Tile1 = contentmanager.Load<Model>("hexagonWald");
+
+                case 1: this.Tile1 = contentmanager.Load<Model>("TestModellObjects");
                     this.Type = "Wald";
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("hexagonBerg");
@@ -78,6 +78,9 @@ namespace Guus_Reise
                     this.Type = "Wiese";
                     break;
             }
+
+            this.Position = position;
+            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) *Matrix.CreateRotationY(45)* Matrix.CreateTranslation(this.Position));
         }
 
         public void Draw(Camera camera)
