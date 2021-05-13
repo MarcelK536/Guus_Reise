@@ -128,7 +128,7 @@ namespace Guus_Reise
         //Draws the Button, Needs the .Begin and .End function in the Class to function
         public void Draw(SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
-            if (this.IsHovered() == true)
+            if (this.IsHovered() == true && this.TextureHover != null)
             {
                 spriteBatch.Draw(this.TextureHover, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
             }
