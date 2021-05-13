@@ -15,6 +15,7 @@ namespace Guus_Reise
         private Vector3 _glow;                  
         private Vector3 _color;                 
         private Matrix _world;
+        private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
 
         public string Type
         {
@@ -56,7 +57,11 @@ namespace Guus_Reise
             get => _world;
             set => _world = value;
         }
-
+        public float Begehbarkeit
+        {
+            get => _begehbarkeit;
+            set => _begehbarkeit = value;
+        }
         public Tile(Vector3 position, Point logicalposition, int type, ContentManager contentmanager)
         {
             this.LogicalPosition = logicalposition;
@@ -67,15 +72,19 @@ namespace Guus_Reise
 
                 case 1: this.Tile1 = contentmanager.Load<Model>("TestModellObjects");
                     this.Type = "Wald";
+                    this.Begehbarkeit = 2;
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("hexagonBerg");
                     this.Type = "Berg";
+                    this.Begehbarkeit = 2.5f;
                     break;
                 case 3: this.Tile1 = contentmanager.Load<Model>("hexagonStraße");
                     this.Type = "Straße";
+                    this.Begehbarkeit = 0.5f;
                     break;
                 default: this.Tile1 = contentmanager.Load<Model>("hexagonWiese");
                     this.Type = "Wiese";
+                    this.Begehbarkeit = 1;
                     break;
             }
 
@@ -100,6 +109,13 @@ namespace Guus_Reise
                     effect.AmbientLightColor = this.Color;
                 }
                 mesh.Draw();
+            }
+
+            if (this.Charakter != null)
+            {
+                Vector3 hilf = new Vector3(0.0f, 0.01f, 0.0f);
+                Matrix hilf2 = (Matrix.CreateScale(1, 1, 1) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Position + hilf));
+                this.Charakter.Draw(camera, hilf2);
             }
         }
     }

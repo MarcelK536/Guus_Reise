@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.Linq;
 
 //Adding SubClasses within Folders
 using Guus_Reise.Menu;
@@ -16,6 +18,8 @@ namespace Guus_Reise
         private int lastwheel;
         private Tile activeTile; //active Tile nach linkem Mousclick
         private Tile hoverTile; //Tile über welchem der mauszeiger steht
+        private List<Point> possibleMoves = new List<Point>();
+        private MouseState _prevMouseState;
 
         public enum GameState
         {
@@ -45,10 +49,15 @@ namespace Guus_Reise
         protected override void Initialize()
         {
 
-            int[,] tilemap = new int[,] { { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
+            int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
+            int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5 }, { 20, 7, 8, 9, 8, 8, 2, 4 } };         //input Array für die Charaktere
+            string[] names = new string[] { "Guu", "Peter" };
+            int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 } };
+
             Createboard(tilemap);
+            CreateCharakter(names, charakter, charPositions);
             lastwheel = 0;
-            activeTile = null;
+            _prevMouseState = Mouse.GetState();
 
             base.Initialize();
             MainMenu.Init();
@@ -70,10 +79,13 @@ namespace Guus_Reise
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            MouseState mouseState = Mouse.GetState();
+            Vector2 mouseLocation = new Vector2(mouseState.X, mouseState.Y); //position der Maus auf dem monitor
 
-            Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y); //position der Maus auf dem monitor
             float? minDistance = float.MaxValue;
             bool mouseOverSomething = false;
+            hoverTile = null;
+            possibleMoves.Clear();
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -107,51 +119,65 @@ namespace Guus_Reise
                 _camera.MoveCamera("runter");
             }
 
-            if(hoverTile != null)           //setzt das hoverTile zurück
+            NoGlow(); 
+
+            for (int i = 0; i < _board.GetLength(0); i++) //berechnet ob die Maus über einem Tile steht, sowie dieses Tile
             {
-                _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.1f, 0.1f, 0.1f);
-                hoverTile = null;
+                for (int k = 0; k < _board.GetLength(1); k++)
+                {
+
+                    float? distance = Intersects(mouseLocation, _board[i, k].Tile1, _board[i, k].World, _camera.view, _camera.projection, GraphicsDevice.Viewport);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        hoverTile = _board[i, k];
+                        mouseOverSomething = true;
+                    }
+                }
             }
 
             if (activeTile == null)
             {
-
-                for (int i = 0; i < _board.GetLength(0); i++) //wenn es kein activeTile gibt wird berechnet ob die Maus über einem Tile steht
+                if (mouseOverSomething)
                 {
-                    for (int k = 0; k < _board.GetLength(1); k++)
-                    {
+                    _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
-                        float? distance = Intersects(mouseLocation, _board[i, k].Tile1, _board[i, k].World, _camera.view, _camera.projection, GraphicsDevice.Viewport);
-                        if (distance < minDistance)
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released) //wenn zusätzlich die linke Maustaste gedrückt wird, wird das hoverTile zum activeTile
+                    {
+                        activeTile = hoverTile;                        
+                    }
+                }                              
+            }
+            else
+            {
+                _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.5f, 0.5f, 0.5f); //das activeTile wird hervorgehoben
+
+                if (activeTile.Charakter != null)
+                {
+                    _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Color = new Vector3(0, 2, 0);
+                    ShowMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite);
+                    possibleMoves = possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
+
+                    if (mouseOverSomething)
+                    {
+                        _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
+
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition))
                         {
-                            minDistance = distance;
-                            hoverTile = _board[i, k];
-                            mouseOverSomething = true;
+                            _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
+                            _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
+                            activeTile = null;
                         }
                     }
                 }
 
-                if (mouseOverSomething)     //wenn die Maus über sich über einem Tile befindet wird dieses hervorgehoben
+                if (Mouse.GetState().RightButton == ButtonState.Pressed && _prevMouseState.RightButton == ButtonState.Released)    //wenn die rechte Maustaste gedrückt wird, wird das activeTile zurückgesetzt
                 {
-                    _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.4f, 0.4f, 0.4f);
-
-                    if (Mouse.GetState().LeftButton == ButtonState.Pressed) //wenn zusätzlich die linke Maustaste gedrückt wird, wird das hoverTile zum activeTile
-                    {
-                        activeTile = hoverTile;
-                    }
-                }
-            }
-            else
-            {
-                _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.4f, 0.4f, 0.4f); //das activeTile wird hervorgehoben
-
-                if (Mouse.GetState().RightButton == ButtonState.Pressed)    //wenn die rechte Maustaste gedrpckt wird, wird das activeTile zurückgesetzt
-                {                   
-                    _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.1f, 0.1f, 0.1f);
                     activeTile = null;
                 }
             }
             
+            _prevMouseState = mouseState;
             base.Update(gameTime);
 
             switch (_state)
@@ -275,5 +301,98 @@ namespace Guus_Reise
 
             return new Ray(nearPoint, direction);
         } 
+
+        public void NoGlow() //setzt den gesamten Glow der Mapd zurück
+        {
+            for(int i=0; i< _board.GetLength(0); i++)
+            {
+                for (int k = 0; k < _board.GetLength(1); k++)
+                {
+                    _board[i, k].Glow = new Vector3(0.1f, 0.1f, 0.1f);
+                    _board[i, k].Color = new Vector3(0, 0, 0);
+                }
+            }
+        }
+
+        public void CreateCharakter(string[] names, int[,] charakter, int[,] positions)
+        {
+            int[] hilf = new int[charakter.GetLength(1)];
+
+            for (int i = 0; i < charakter.GetLength(0); i++)
+            {
+                for (int k = 0; k < charakter.GetLength(1); k++)
+                {
+                    hilf[k] = charakter[i, k];
+                }
+
+                _board[positions[i,0], positions[i,1]].Charakter = new Charakter(names[i], hilf);
+            }
+        }
+
+        public void ShowMoves(int x, int y, float bewegung)
+        {
+            if (bewegung >= 0)
+            {
+                _board[x, y].Glow = new Vector3(0.2f, 0.2f, 0.2f);
+
+                if (_board[x, y].Charakter != null && activeTile.LogicalPosition.X != x && activeTile.LogicalPosition.Y != y)
+                {
+                    _board[x, y].Color = new Vector3(4, 0, 0);
+                }
+                
+                if (x - 1 >= 0)
+                {
+                    possibleMoves.Add(new Point(x - 1,y));
+                    ShowMoves(x - 1, y, bewegung - _board[x - 1, y].Begehbarkeit);
+                }
+
+                if(x + 1 < _board.GetLength(0))
+                {
+                    possibleMoves.Add(new Point(x + 1, y));
+                    ShowMoves(x + 1, y, bewegung - _board[x + 1, y].Begehbarkeit);
+                }
+
+                if(y - 1 >= 0)
+                {
+                    possibleMoves.Add(new Point(x, y - 1));
+                    ShowMoves(x, y - 1, bewegung - _board[x, y - 1].Begehbarkeit);
+                }
+
+                if(y + 1 < _board.GetLength(1))
+                {
+                    possibleMoves.Add(new Point(x, y + 1));
+                    ShowMoves(x, y + 1, bewegung - _board[x, y + 1].Begehbarkeit);
+                }
+
+                if (y % 2 == 0)
+                {
+                    if (x - 1 >= 0 && y - 1 >= 0)
+                    {
+                        possibleMoves.Add(new Point(x - 1, y - 1));
+                        ShowMoves(x - 1, y - 1, bewegung - _board[x - 1, y - 1].Begehbarkeit);
+                    }
+
+                    if (x - 1 >= 0 && y + 1 < _board.GetLength(1))
+                    {
+                        possibleMoves.Add(new Point(x - 1, y - 1));
+                        ShowMoves(x - 1, y + 1, bewegung - _board[x - 1, y + 1].Begehbarkeit);
+                    }
+                }
+                else
+                {
+                    if (x + 1 < _board.GetLength(0) && y - 1 >= 0)
+                    {
+                        possibleMoves.Add(new Point(x + 1, y - 1));
+                        ShowMoves(x + 1, y - 1, bewegung - _board[x + 1, y - 1].Begehbarkeit);
+                    }
+
+                    if (x + 1 < _board.GetLength(0) && y + 1 < _board.GetLength(1))
+                    {
+                        possibleMoves.Add(new Point(x + 1, y + 1));
+                        ShowMoves(x + 1, y + 1, bewegung - _board[x + 1, y + 1].Begehbarkeit);
+                    }
+                }
+            }           
+        }
     }
 }
