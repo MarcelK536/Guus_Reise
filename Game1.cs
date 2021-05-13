@@ -309,13 +309,13 @@ namespace Guus_Reise
                 }
                 else
                 {
-                    if (x + 1 >= 0 && y - 1 >= 0)
+                    if (x + 1 < _board.GetLength(0) && y - 1 >= 0)
                     {
                         possibleMoves.Add(new Point(x + 1, y - 1));
                         ShowMoves(x + 1, y - 1, bewegung - _board[x + 1, y - 1].Begehbarkeit);
                     }
 
-                    if (x + 1 >= 0 && y + 1 < _board.GetLength(1))
+                    if (x + 1 < _board.GetLength(0) && y + 1 < _board.GetLength(1))
                     {
                         possibleMoves.Add(new Point(x + 1, y + 1));
                         ShowMoves(x + 1, y + 1, bewegung - _board[x + 1, y + 1].Begehbarkeit);
