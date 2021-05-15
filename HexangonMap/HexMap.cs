@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Guus_Reise.HexangonMap
+namespace Guus_Reise
 {
     class HexMap
     {
@@ -114,14 +114,14 @@ namespace Guus_Reise.HexangonMap
                 if (activeTile.Charakter != null)
                 {
                     _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Color = new Vector3(0, 2, 0);
-                    ShowMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite);
+                    CalculatePossibleMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite);
                     possibleMoves = possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
 
                     if (mouseOverSomething)
                     {
                         _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
-                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition)) //wenn ein possibleMive Tile geklickt wird, wird der Charakter dorthin gesetzt
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition) && hoverTile.LogicalPosition != activeTile.LogicalPosition) //wenn ein possibleMive Tile geklickt wird, wird der Charakter dorthin gesetzt
                         {
                             _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
                             _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
@@ -220,7 +220,7 @@ namespace Guus_Reise.HexangonMap
                 }
             }
         }
-        public static void ShowMoves(int x, int y, float bewegung) //hebt alle möglichen Züge hervor und speichert diese in possibleMoves
+        public static void CalculatePossibleMoves(int x, int y, float bewegung) //hebt alle möglichen Züge hervor und speichert diese in possibleMoves
         {
             if (bewegung >= 0)
             {
@@ -229,60 +229,69 @@ namespace Guus_Reise.HexangonMap
                 if (_board[x, y].Charakter != null && activeTile.LogicalPosition.X != x && activeTile.LogicalPosition.Y != y) //erkennt andere charaktere
                 {
                     _board[x, y].Color = new Vector3(4, 0, 0);
-                }
-
-                if (x - 1 >= 0)
-                {
-                    possibleMoves.Add(new Point(x - 1, y));
-                    ShowMoves(x - 1, y, bewegung - _board[x - 1, y].Begehbarkeit);
-                }
-
-                if (x + 1 < _board.GetLength(0))
-                {
-                    possibleMoves.Add(new Point(x + 1, y));
-                    ShowMoves(x + 1, y, bewegung - _board[x + 1, y].Begehbarkeit);
-                }
-
-                if (y - 1 >= 0)
-                {
-                    possibleMoves.Add(new Point(x, y - 1));
-                    ShowMoves(x, y - 1, bewegung - _board[x, y - 1].Begehbarkeit);
-                }
-
-                if (y + 1 < _board.GetLength(1))
-                {
-                    possibleMoves.Add(new Point(x, y + 1));
-                    ShowMoves(x, y + 1, bewegung - _board[x, y + 1].Begehbarkeit);
-                }
-
-                if (y % 2 == 0)
-                {
-                    if (x - 1 >= 0 && y - 1 >= 0)
-                    {
-                        possibleMoves.Add(new Point(x - 1, y - 1));
-                        ShowMoves(x - 1, y - 1, bewegung - _board[x - 1, y - 1].Begehbarkeit);
-                    }
-
-                    if (x - 1 >= 0 && y + 1 < _board.GetLength(1))
-                    {
-                        possibleMoves.Add(new Point(x - 1, y - 1));
-                        ShowMoves(x - 1, y + 1, bewegung - _board[x - 1, y + 1].Begehbarkeit);
-                    }
+                    possibleMoves.Remove(new Point(x, y));
                 }
                 else
                 {
-                    if (x + 1 < _board.GetLength(0) && y - 1 >= 0)
+
+                    if (x - 1 >= 0)
                     {
-                        possibleMoves.Add(new Point(x + 1, y - 1));
-                        ShowMoves(x + 1, y - 1, bewegung - _board[x + 1, y - 1].Begehbarkeit);
+                        possibleMoves.Add(new Point(x - 1, y));
+                        CalculatePossibleMoves(x - 1, y, bewegung - _board[x - 1, y].Begehbarkeit);
                     }
 
-                    if (x + 1 < _board.GetLength(0) && y + 1 < _board.GetLength(1))
+                    if (x + 1 < _board.GetLength(0))
                     {
-                        possibleMoves.Add(new Point(x + 1, y + 1));
-                        ShowMoves(x + 1, y + 1, bewegung - _board[x + 1, y + 1].Begehbarkeit);
+                        possibleMoves.Add(new Point(x + 1, y));
+                        CalculatePossibleMoves(x + 1, y, bewegung - _board[x + 1, y].Begehbarkeit);
+                    }
+
+                    if (y - 1 >= 0)
+                    {
+                        possibleMoves.Add(new Point(x, y - 1));
+                        CalculatePossibleMoves(x, y - 1, bewegung - _board[x, y - 1].Begehbarkeit);
+                    }
+
+                    if (y + 1 < _board.GetLength(1))
+                    {
+                        possibleMoves.Add(new Point(x, y + 1));
+                        CalculatePossibleMoves(x, y + 1, bewegung - _board[x, y + 1].Begehbarkeit);
+                    }
+
+                    if (y % 2 == 0)
+                    {
+                        if (x - 1 >= 0 && y - 1 >= 0)
+                        {
+                            possibleMoves.Add(new Point(x - 1, y - 1));
+                            CalculatePossibleMoves(x - 1, y - 1, bewegung - _board[x - 1, y - 1].Begehbarkeit);
+                        }
+
+                        if (x - 1 >= 0 && y + 1 < _board.GetLength(1))
+                        {
+                            possibleMoves.Add(new Point(x - 1, y + 1));
+                            CalculatePossibleMoves(x - 1, y + 1, bewegung - _board[x - 1, y + 1].Begehbarkeit);
+                        }
+                    }
+                    else
+                    {
+                        if (x + 1 < _board.GetLength(0) && y - 1 >= 0)
+                        {
+                            possibleMoves.Add(new Point(x + 1, y - 1));
+                            CalculatePossibleMoves(x + 1, y - 1, bewegung - _board[x + 1, y - 1].Begehbarkeit);
+                        }
+
+                        if (x + 1 < _board.GetLength(0) && y + 1 < _board.GetLength(1))
+                        {
+                            possibleMoves.Add(new Point(x + 1, y + 1));
+                            CalculatePossibleMoves(x + 1, y + 1, bewegung - _board[x + 1, y + 1].Begehbarkeit);
+                        }
                     }
                 }
+
+            }
+            else
+            {
+                possibleMoves.Remove(new Point(x, y));
             }
         }
         public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions, Tile[,] board)

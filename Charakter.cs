@@ -7,6 +7,8 @@ namespace Guus_Reise
     class Charakter
     {
         private String _name;
+        private int _level;
+        private int _xp;
         private int _widerstandskraft; //Leben des Charakters
         private int _koerperkraft;      //physichen Angriff
         private int _abwehr;            //physiche Abwehr
@@ -16,11 +18,25 @@ namespace Guus_Reise
         private int _glueck;            //wirkt sich auf kritische trefferchance aus
         private int _bewegungsreichweite; 
         private Model _model;
+        private Vector3 _glow;
+        private Vector3 _color;
 
         public String Name
         {
             get => _name;
             set => _name = value;
+        }
+
+        public int Level
+        {
+            get => _level;
+            set => _level = value;
+        }
+
+        public int XP
+        {
+            get => _xp;
+            set => _xp = value;
         }
 
         public int Widerstandskraft
@@ -76,6 +92,16 @@ namespace Guus_Reise
             get => _model;
             set => _model = value;
         }
+        public Vector3 Glow
+        {
+            get => _glow;
+            set => _glow = value;
+        }
+        public Vector3 Color
+        {
+            get => _color;
+            set => _color = value;
+        }
 
         public Charakter (String name, int leben, int angriff, int abwehr, int wortgewand, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite)
         {
@@ -88,6 +114,8 @@ namespace Guus_Reise
             this.Geschwindigkeit = geschwindigkeit;
             this.Glueck = glück;
             this.Bewegungsreichweite = bewegungsreichweite;
+            this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
+            this.Color = new Vector3(0, 0, 0);
         }
 
         public Charakter (String name, int[] werte)
@@ -101,9 +129,48 @@ namespace Guus_Reise
             this.Geschwindigkeit = werte[5];
             this.Glueck = werte[6];
             this.Bewegungsreichweite = werte[7];
+            this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
+            this.Color = new Vector3(0, 0, 0);
         }
 
         public void Draw(Camera camera, Matrix world)
+        {
+           /* foreach (var mesh in _model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.TextureEnabled = false;
+                    effect.LightingEnabled = true;
+                    effect.EnableDefaultLighting();
+                    effect.PreferPerPixelLighting = true;
+                    effect.World = world;
+                    effect.View = camera.view;
+                    effect.Projection = camera.projection;
+                    effect.DiffuseColor = this.Glow;
+                    effect.AmbientLightColor = this.Color;
+                }
+                mesh.Draw();
+            } */
+        }
+
+        public void AddXp(Charakter winner, Charakter looser)
+        {
+            int hilf = ((looser.Level - winner.Level) * 10) + 30;
+
+            if (hilf+winner.XP >= 100)
+            {
+                int hilf2 = (hilf+winner.XP) / 100;
+                hilf = (hilf+winner.XP) % 100;
+                LevelUp(hilf2);
+                winner.XP += hilf;
+            }
+            else
+            {
+                winner.XP += hilf;
+            }
+        }
+
+        public void LevelUp(int level)
         {
             //TODO
         }
