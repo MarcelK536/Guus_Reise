@@ -18,6 +18,10 @@ namespace Guus_Reise
         private Color _tint;                //Colors the Texture to Symbolise Hovering
         private float _scale;               //Adjusts the Size of the Button
 
+        MouseState prevMouseState;
+
+
+
         public Color Tint
         {
             get => _tint;
@@ -122,7 +126,14 @@ namespace Guus_Reise
         //Checks if the Button is Clicked
         public bool IsClicked()
         {
-            return this.IsHovered() == true && Mouse.GetState().LeftButton == ButtonState.Pressed;
+            MouseState mouseState = Mouse.GetState();
+
+            if (this.IsHovered() && Mouse.GetState().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+            {
+                return true;
+            }
+            prevMouseState = mouseState;
+            return false;
         }
 
         //Draws the Button, Needs the .Begin and .End function in the Class to function
@@ -138,5 +149,6 @@ namespace Guus_Reise
             }
             spriteBatch.DrawString(spriteFont, this.Name, this.GetTextPos(), Color.Black);
         }
+
     }
 }
