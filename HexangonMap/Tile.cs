@@ -70,19 +70,19 @@ namespace Guus_Reise
             switch (type)
             {
 
-                case 1: this.Tile1 = contentmanager.Load<Model>("TestModellObjects");
+                case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
                     this.Type = "Wald";
                     this.Begehbarkeit = 2;
                     break;
-                case 2: this.Tile1 = contentmanager.Load<Model>("hexagonBerg");
+                case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
                     break;
-                case 3: this.Tile1 = contentmanager.Load<Model>("hexagonStraße");
+                case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
                     this.Type = "Straße";
                     this.Begehbarkeit = 0.5f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("hexagonWiese");
+                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
                     this.Type = "Wiese";
                     this.Begehbarkeit = 1;
                     break;

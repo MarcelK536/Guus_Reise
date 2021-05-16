@@ -28,7 +28,7 @@ namespace Guus_Reise.Menu
         {
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
-            mainMenuFont = content.Load<SpriteFont>("MainMenuFont");
+            mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {   
