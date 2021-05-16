@@ -38,11 +38,11 @@ namespace Guus_Reise.Menu
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             _spriteBatch = spriteBatch;
-            var spritesheet = content.Load<SpriteSheet>("motwCopy.json", new JsonContentLoader());
+            var spritesheet = content.Load<SpriteSheet>("World\\worldJson.json", new JsonContentLoader());
             var sprite = new AnimatedSprite(spritesheet);
-            sprite.Play("idle");
+            sprite.Play("world");
             world = sprite;
-            worldposition = new Vector2(250, 100);
+            worldposition = new Vector2(450, 250);
 
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -56,7 +56,7 @@ namespace Guus_Reise.Menu
 
         public static void Update(GameTime gameTime)
         {
-            world.Play("walkNorth");
+            world.Play("world");
             var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             world.Update(deltaSeconds);
             //if (planet.IsClicked() == true)
