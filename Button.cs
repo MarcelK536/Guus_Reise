@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Color = Microsoft.Xna.Framework.Color;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Guus_Reise
 {
@@ -127,9 +128,9 @@ namespace Guus_Reise
         public bool IsClicked()
         {
             MouseState mouseState = Mouse.GetState();
-
             if (this.IsHovered() && Mouse.GetState().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
             {
+                Thread.Sleep(100);
                 return true;
             }
             prevMouseState = mouseState;
