@@ -43,7 +43,7 @@ namespace Guus_Reise.Menu
         {
             if (btnPlay.IsClicked() == true)
             {
-                GState = GameState.InGame;   
+                GState = GameState.PlanetMenu;   
             }
             if (btnCredits.IsClicked() == true)
             {

@@ -20,8 +20,8 @@ namespace Guus_Reise.Menu
 
         public static void Init()
         {
-            planet = new Button("Planet 1", btnDefaultTexture, btnHoverTexture, 0.5f, 10, 10);
-            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 500, 10);
+            planet = new Button("Planet 1", btnDefaultTexture, btnHoverTexture, 0.5f, 250, 100);
+            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 570,-40);
         }
         public static void LoadTexture(ContentManager content)
         {

@@ -19,7 +19,8 @@ namespace Guus_Reise
             LevelSelect,
             InGame,
             Exit,
-            Credits
+            Credits,
+            PlanetMenu
         }
 
         private static GameState _state;
@@ -44,6 +45,8 @@ namespace Guus_Reise
             MainMenu.Init();
             Credits.Init();
             HexMap.Init(Content);
+            PlanetMenu.Init();
+
         }
 
         protected override void LoadContent()
@@ -51,6 +54,7 @@ namespace Guus_Reise
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
             MainMenu.LoadTexture(Content);
+            PlanetMenu.LoadTexture(Content);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
         }
@@ -69,6 +73,9 @@ namespace Guus_Reise
                     break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
+                    break;
+                case GameState.PlanetMenu:
+                    PlanetMenu.Update(gameTime);
                     break;
                 case GameState.LevelSelect:
                     break;
@@ -92,6 +99,10 @@ namespace Guus_Reise
                 case GameState.MainMenu:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
                     MainMenu.Draw(_spriteBatch,gameTime);
+                    break;
+                case GameState.PlanetMenu:
+                    GraphicsDevice.Clear(Color.Black);
+                    PlanetMenu.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.Credits:
                     GraphicsDevice.Clear(Color.YellowGreen);
