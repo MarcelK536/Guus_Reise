@@ -44,6 +44,18 @@
 /processorParam:TextureFormat=Compressed
 /build:MainMenu/MainMenuFont.spritefont
 
+#begin motw.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:motw.png
+
 #begin TileModels/TestModellObjects.fbx
 /importer:FbxImporter
 /processor:ModelProcessor

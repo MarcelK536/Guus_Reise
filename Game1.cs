@@ -54,7 +54,7 @@ namespace Guus_Reise
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
             MainMenu.LoadTexture(Content);
-            PlanetMenu.LoadTexture(Content);
+            PlanetMenu.LoadTexture(Content,_spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
         }

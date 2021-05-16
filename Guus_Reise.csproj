@@ -32,4 +32,9 @@
   <ItemGroup>
     <Folder Include="Content\bin\DesktopGL\Content\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\motwCopy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
