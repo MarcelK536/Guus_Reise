@@ -226,7 +226,7 @@ namespace Guus_Reise
             {
                 _board[x, y].Glow = new Vector3(0.2f, 0.2f, 0.2f);
 
-                if (_board[x, y].Charakter != null && activeTile.LogicalPosition.X != x && activeTile.LogicalPosition.Y != y) //erkennt andere charaktere
+                if (_board[x, y].Charakter != null && activeTile.LogicalPosition != new Point(x,y)) //erkennt andere charaktere
                 {
                     _board[x, y].Color = new Vector3(4, 0, 0);
                     possibleMoves.Remove(new Point(x, y));
