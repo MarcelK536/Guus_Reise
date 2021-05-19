@@ -43,7 +43,7 @@ namespace Guus_Reise
             base.Initialize();
             MainMenu.Init();
             Credits.Init();
-            HexMap.Init(Content);
+            HexMap.Init(Content, GraphicsDevice);
         }
 
         protected override void LoadContent()
@@ -101,7 +101,7 @@ namespace Guus_Reise
                     break;
                 case GameState.InGame:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    HexMap.DrawInGame(gameTime);
+                    HexMap.DrawInGame(_spriteBatch,gameTime);
                     break;
                 default:
                     break;
