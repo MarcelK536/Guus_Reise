@@ -31,10 +31,12 @@ namespace Guus_Reise
         public override void Update()
         {
             base.Update();
-
-            if (btnQuitGame.IsClicked())
+            if (Active)
             {
-                Game1.GState = Game1.GameState.MainMenu;
+                if (btnQuitGame.IsClicked())
+                {
+                    Game1.GState = Game1.GameState.MainMenu;
+                }
             }
         }
 
