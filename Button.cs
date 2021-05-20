@@ -100,7 +100,7 @@ namespace Guus_Reise
         public Vector2 GetTextPos(SpriteFont font)
         {
             Vector2 size = font.MeasureString(this.Name);
-            return new Vector2(this.ButtonX+this.TextureDefault.Height*this.Scale*0.2f, this.ButtonY + (this.TextureDefault.Width*this.Scale)/2-size.Y/2);
+            return new Vector2(this.ButtonX + (this.TextureDefault.Height*this.Scale)/2 - size.X/5, this.ButtonY + (this.TextureDefault.Width/2*this.Scale)/2 - size.Y/2);
         }
 
         //Returns Position Vector of the Button used for Drawing
