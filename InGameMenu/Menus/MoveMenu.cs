@@ -17,7 +17,7 @@ namespace Guus_Reise
         public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), new Texture2D(graphicsDevice, 350, 600), moveMenuFont,graphicsDevice)
         {
             GraphicsDevice = graphicsDevice;
-            Texture2D btnTexture = new Texture2D(graphicsDevice, 100, 50);
+            Texture2D btnTexture = new Texture2D(graphicsDevice, 150, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {

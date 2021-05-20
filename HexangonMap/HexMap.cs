@@ -22,6 +22,8 @@ namespace Guus_Reise
         public static SimpleMenu actionMenu;
         public static SpriteFont actionMenuFont;
 
+        public static SimpleMenu levelUpMenu;
+
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice)
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
@@ -36,6 +38,7 @@ namespace Guus_Reise
 
             actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             actionMenu = new MoveMenu(actionMenuFont,graphicsDevice);
+            levelUpMenu = new SkillUpMenu(_board[0,1].Charakter,actionMenuFont, graphicsDevice);
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -87,6 +90,10 @@ namespace Guus_Reise
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 actionMenu.Active = !actionMenu.Active;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.H))
+            {
+                levelUpMenu.Active = !levelUpMenu.Active;
             }
             NoGlow();
 
@@ -148,6 +155,7 @@ namespace Guus_Reise
             _prevMouseState = mouseState;
 
             actionMenu.Update();
+            levelUpMenu.Update();
         }
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
@@ -161,6 +169,7 @@ namespace Guus_Reise
             }
 
             actionMenu.Draw(spriteBatch);
+            levelUpMenu.Draw(spriteBatch);
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
