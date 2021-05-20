@@ -18,7 +18,11 @@ namespace Guus_Reise
         private static Tile hoverTile; //Tile über welchem der mauszeiger steht
         private static List<Point> possibleMoves = new List<Point>();
         private static MouseState _prevMouseState;
-        public static void Init(ContentManager Content)
+
+        public static SimpleMenu actionMenu;
+        public static SpriteFont actionMenuFont;
+
+        public static void Init(ContentManager Content, GraphicsDevice graphicsDevice)
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
             int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5 }, { 20, 7, 8, 9, 8, 8, 2, 4 } };         //input Array für die Charaktere
@@ -29,6 +33,9 @@ namespace Guus_Reise
             CreateCharakter(names, charakter, charPositions, _board);
             lastwheel = 0;
             _prevMouseState = Mouse.GetState();
+
+            actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
+            actionMenu = new MoveMenu(actionMenuFont,graphicsDevice);
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -77,7 +84,10 @@ namespace Guus_Reise
                 lastwheel = Mouse.GetState().ScrollWheelValue;
                 _camera.MoveCamera("runter");
             }
-
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                actionMenu.Active = !actionMenu.Active;
+            }
             NoGlow();
 
             for (int i = 0; i < _board.GetLength(0); i++) //berechnet ob die Maus über einem Tile steht, sowie dieses Tile
@@ -136,9 +146,11 @@ namespace Guus_Reise
                 }
             }
             _prevMouseState = mouseState;
+
+            actionMenu.Update();
         }
 
-        public static void DrawInGame(GameTime gameTime)
+        public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
         {
             for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
             {
@@ -147,6 +159,8 @@ namespace Guus_Reise
                     _board[i, k].Draw(_camera);
                 }
             }
+
+            actionMenu.Draw(spriteBatch);
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert

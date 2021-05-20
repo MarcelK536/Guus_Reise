@@ -121,9 +121,10 @@ namespace Guus_Reise
 
 
         //Gets Text Position by Calculating the Vector using the Placement of the Button AND the details of the Texture
-        public Vector2 GetTextPos()
+        public Vector2 GetTextPos(SpriteFont font)
         {
-            return new Vector2(this.ButtonX+this.TextureDefault.Height*this.Scale*0.2f, this.ButtonY + (this.TextureDefault.Width*this.Scale)/2);
+            Vector2 size = font.MeasureString(this.Name);
+            return new Vector2(this.ButtonX+this.TextureDefault.Height*this.Scale*0.2f, this.ButtonY + (this.TextureDefault.Width*this.Scale)/2-size.Y/2);
         }
 
         //Returns Position Vector of the Button used for Drawing
