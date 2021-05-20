@@ -32,4 +32,12 @@
   <ItemGroup>
     <Folder Include="Content\bin\DesktopGL\Content\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Content\World\worldJson.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\World\worldYellow.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
