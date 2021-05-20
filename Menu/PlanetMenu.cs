@@ -17,14 +17,17 @@ namespace Guus_Reise.Menu
         static Texture2D btnDefaultTexture;
         static Texture2D btnHoverTexture;
         static Texture2D worldTexture;
+        static Texture2D worldTexture2;
         static SpriteFont mainMenuFont;
         static AnimatedSprite[] planetButtonAnimations;
         static Vector2 worldposition;
         //static Button[] planetButtons;
         static Button planet;
+        static Button planetTwo;
         static Button back;
         //static Button planetAnimated;
         static AnimatedSprite planet1;
+        static AnimatedSprite planet2;
 
         private static SpriteBatch _spriteBatch;
 
@@ -33,7 +36,8 @@ namespace Guus_Reise.Menu
         public static void Init()
         {
             string[] planetNames = { "World1" }; //"World2"
-            planet = new Button("worldBla", worldTexture, planet1, 0.6f,350, 250);
+            planet = new Button("worl1", worldTexture, planet1, 0.6f,200, 250);
+            planetTwo = new Button("world2", worldTexture2, planet2, 0.6f, 400, 250);
             back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 570,-40);
             int index = 0;
             //foreach(string planetName in planetNames)
@@ -50,6 +54,7 @@ namespace Guus_Reise.Menu
             //Content for Button Back
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
             worldTexture = content.Load<Texture2D>("World\\worldPicute");
+            worldTexture2 = content.Load<Texture2D>("World\\worldYellowPicture");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             int index = 0;
@@ -62,6 +67,10 @@ namespace Guus_Reise.Menu
                 worldposition = new Vector2(400, 250);
 
             }
+            spritesheet = content.Load<SpriteSheet>("World\\" + "worldYellow.json", new JsonContentLoader());
+            planet2 = new AnimatedSprite(spritesheet);
+            planet2.Play("worldYellow");
+            worldposition = new Vector2(400, 250);
 
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -70,6 +79,7 @@ namespace Guus_Reise.Menu
             //planet.Draw(spriteBatch, mainMenuFont);
             back.Draw(spriteBatch, mainMenuFont);
             planet.Draw(_spriteBatch, mainMenuFont);
+            planetTwo.Draw(_spriteBatch, mainMenuFont);
             //_spriteBatch.Draw(planet1, worldposition);
             spriteBatch.End();
         }
@@ -79,13 +89,16 @@ namespace Guus_Reise.Menu
             var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
             planet1.Play("world");
             planet1.Update(deltaSeconds);
+            planet2.Play("worldYellow");
+            planet2.Update(deltaSeconds);
+
             //foreach (AnimatedSprite planet in planetButtonAnimations)
             //{
             //    planet.Play("world");
             //    planet.Update(deltaSeconds);
 
             //}
-            if (planet.IsClicked() == true)
+            if (planet.IsClicked() == true || planetTwo.IsClicked() == true)
             {
                 GState = GameState.InGame;
             }
