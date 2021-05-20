@@ -8,6 +8,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using System.Diagnostics;
 using System.Threading;
 using MonoGame.Extended.Sprites;
+using MonoGame.Extended.TextureAtlases;
 
 namespace Guus_Reise
 {
@@ -99,9 +100,11 @@ namespace Guus_Reise
         }
 
         //Creates Animated-Button with only a Default Animation
-        public Button(string name, AnimatedSprite spriteAnimated, float scale, int buttonX, int buttonY)
+        public Button(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, float scale, int buttonX, int buttonY)
         {
             this.Name = name;
+            this.TextureDefault = textureDefault;
+            this.TextureHover = textureDefault;
             _spriteAnimated = spriteAnimated;
             this.Scale = scale;
             this.ButtonX = buttonX;
@@ -132,12 +135,12 @@ namespace Guus_Reise
         //Returns Boolean to Check the State of the Button
         public bool IsHovered()
         {
-            if(this.IsAnimated == true)
-            {
-                return true;
-            }
-            else
-            {
+            //if(this.IsAnimated == true)
+            //{
+            //    return true;
+            //}
+            //else
+            //{
                 if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width * this.Scale &&
                     Mouse.GetState().Position.X > this.ButtonX &&
                     Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height * this.Scale &&
@@ -146,7 +149,7 @@ namespace Guus_Reise
                     _tint = Color.White;
                     return true;
                 }
-            }
+            //}
             _tint = Color.Gray;
             return false;
         }
@@ -182,7 +185,15 @@ namespace Guus_Reise
             }
             else // Button with Animation
             {
-                spriteBatch.Draw(this._spriteAnimated, this.GetPos());
+                //spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0f, this.Scale);
+                if (this.IsHovered() == true && this.TextureHover != null)
+                {
+                    spriteBatch.Draw(this._spriteAnimated, this.GetPos());
+                }
+                else
+                {
+                    spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+                }
             }
             
         }

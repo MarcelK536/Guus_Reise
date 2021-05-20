@@ -16,6 +16,7 @@ namespace Guus_Reise.Menu
     {
         static Texture2D btnDefaultTexture;
         static Texture2D btnHoverTexture;
+        static Texture2D worldTexture;
         static SpriteFont mainMenuFont;
         static AnimatedSprite[] planetButtonAnimations;
         static Vector2 worldposition;
@@ -32,7 +33,7 @@ namespace Guus_Reise.Menu
         public static void Init()
         {
             string[] planetNames = { "World1" }; //"World2"
-            planet = new Button("worldBla", planet1, 0.5f, 400, 250);
+            planet = new Button("worldBla", worldTexture, planet1, 0.6f,350, 250);
             back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 570,-40);
             int index = 0;
             //foreach(string planetName in planetNames)
@@ -48,6 +49,7 @@ namespace Guus_Reise.Menu
             string[] contentStrings = { "worldJson.json" }; // "World\\worldYellow.json"
             //Content for Button Back
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
+            worldTexture = content.Load<Texture2D>("World\\worldPicute");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             int index = 0;
