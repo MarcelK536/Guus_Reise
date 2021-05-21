@@ -16,7 +16,8 @@ namespace Guus_Reise
         private int _ingoranz;          //social Abwehr
         private int _geschwindigkeit;   //geschwindigkeit des Charakters im Kamof
         private int _glueck;            //wirkt sich auf kritische trefferchance aus
-        private int _bewegungsreichweite; 
+        private int _bewegungsreichweite;
+        private int _fpunkte;
         private Model _model;
         private Vector3 _glow;
         private Vector3 _color;
@@ -87,6 +88,12 @@ namespace Guus_Reise
             set => _bewegungsreichweite = value;
         }
 
+        public int Fähigkeitspunkte
+        {
+            get => _fpunkte;
+            set => _fpunkte = value;
+        }
+
         public Model Model
         {
             get => _model;
@@ -114,6 +121,7 @@ namespace Guus_Reise
             this.Geschwindigkeit = geschwindigkeit;
             this.Glueck = glück;
             this.Bewegungsreichweite = bewegungsreichweite;
+            this.Fähigkeitspunkte = 0;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
         }
@@ -153,7 +161,7 @@ namespace Guus_Reise
             } */
         }
 
-        public void AddXp(Charakter winner, Charakter looser)
+        public void GainXp(Charakter winner, Charakter looser)
         {
             int hilf = ((looser.Level - winner.Level) * 10) + 30;
 
@@ -161,18 +169,14 @@ namespace Guus_Reise
             {
                 int hilf2 = (hilf+winner.XP) / 100;
                 hilf = (hilf+winner.XP) % 100;
-                LevelUp(hilf2);
+                winner.Level += hilf2;
+                winner.Fähigkeitspunkte += hilf2;
                 winner.XP += hilf;
             }
             else
             {
                 winner.XP += hilf;
             }
-        }
-
-        public void LevelUp(int level)
-        {
-            //TODO
         }
     }
 }
