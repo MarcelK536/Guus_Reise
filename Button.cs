@@ -98,6 +98,15 @@ namespace Guus_Reise
             this.ButtonY = buttonY;
             _tint = Color.Gray;
         }
+        public Button(string name, Texture2D textureDefault, float scale, Vector2 pos)
+        {
+            this.Name = name;
+            this.TextureDefault = textureDefault;
+            this.Scale = scale;
+            this.ButtonX = (int) pos.X;
+            this.ButtonY = (int) pos.Y;
+            _tint = Color.Gray;
+        }
 
         //Creates Animated-Button with only a Default Animation
         public Button(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, float scale, int buttonX, int buttonY)
@@ -131,6 +140,18 @@ namespace Guus_Reise
         public Vector2 GetPos()
         {
             return new Vector2(this.ButtonX, this.ButtonY);
+        }
+
+        //Returns Position Vector to Place Something Right of Button
+        public Vector2 GetPosRightOf()
+        {
+            return new Vector2(this.ButtonX + this.TextureDefault.Width + 10, this.ButtonY);
+        }
+
+        //Returns Position Vector to Place Something below Button
+        public Vector2 GetPosBelow()
+        {
+            return new Vector2(this.ButtonX, this.ButtonY + this.TextureDefault.Height + 10);
         }
 
         //Returns Boolean to Check the State of the Button
