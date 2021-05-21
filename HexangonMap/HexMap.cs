@@ -11,18 +11,19 @@ namespace Guus_Reise
 {
     class HexMap
     {
-        private static Tile[,] _board; //Spielbrett
+        public static Tile[,] _board; //Spielbrett
         private static Camera _camera;
         private static int lastwheel;
-        private static Tile activeTile; //active Tile nach linkem Mousclick
+        public static Tile activeTile; //active Tile nach linkem Mousclick
         private static Tile hoverTile; //Tile über welchem der mauszeiger steht
         private static List<Point> possibleMoves = new List<Point>();
         private static MouseState _prevMouseState;
+        private static KeyboardState _prevKeyState;
 
         public static SimpleMenu actionMenu;
         public static SpriteFont actionMenuFont;
 
-        public static SimpleMenu levelUpMenu;
+        public static SkillUpMenu levelUpMenu;
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice)
         {
@@ -35,10 +36,11 @@ namespace Guus_Reise
             CreateCharakter(names, charakter, charPositions, _board);
             lastwheel = 0;
             _prevMouseState = Mouse.GetState();
+            _prevKeyState = Keyboard.GetState();
 
             actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             actionMenu = new MoveMenu(actionMenuFont,graphicsDevice);
-            levelUpMenu = new SkillUpMenu(_board[0,1].Charakter,actionMenuFont, graphicsDevice);
+            levelUpMenu = new SkillUpMenu(actionMenuFont, graphicsDevice);
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -49,6 +51,7 @@ namespace Guus_Reise
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
             MouseState mouseState = Mouse.GetState();
+            KeyboardState keystate = Keyboard.GetState();
             Vector2 mouseLocation = new Vector2(mouseState.X, mouseState.Y); //position der Maus auf dem monitor
 
             float? minDistance = float.MaxValue;
@@ -87,11 +90,11 @@ namespace Guus_Reise
                 lastwheel = Mouse.GetState().ScrollWheelValue;
                 _camera.MoveCamera("runter");
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (Keyboard.GetState().IsKeyDown(Keys.P) && _prevKeyState.IsKeyUp(Keys.P))
             {
                 actionMenu.Active = !actionMenu.Active;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.H))
+            if (Keyboard.GetState().IsKeyDown(Keys.H) && _prevKeyState.IsKeyUp(Keys.H))
             {
                 levelUpMenu.Active = !levelUpMenu.Active;
             }
@@ -134,6 +137,8 @@ namespace Guus_Reise
                     CalculatePossibleMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite);
                     possibleMoves = possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
 
+                    levelUpMenu.Update(_board, activeTile);
+
                     if (mouseOverSomething)
                     {
                         _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
@@ -153,9 +158,9 @@ namespace Guus_Reise
                 }
             }
             _prevMouseState = mouseState;
+            _prevKeyState = keystate;
 
             actionMenu.Update();
-            levelUpMenu.Update();
         }
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
@@ -169,7 +174,10 @@ namespace Guus_Reise
             }
 
             actionMenu.Draw(spriteBatch);
-            levelUpMenu.Draw(spriteBatch);
+            if (activeTile != null)
+            {
+                levelUpMenu.Draw(spriteBatch, _board, activeTile);
+            }           
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
