@@ -130,14 +130,13 @@ namespace Guus_Reise
             else
             {
                 _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.5f, 0.5f, 0.5f); //das activeTile wird hervorgehoben
+                levelUpMenu.Update(_board, activeTile);
 
                 if (activeTile.Charakter != null)
                 {
                     _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Color = new Vector3(0, 2, 0);
                     CalculatePossibleMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite);
                     possibleMoves = possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
-
-                    levelUpMenu.Update(_board, activeTile);
 
                     if (mouseOverSomething)
                     {
@@ -174,10 +173,11 @@ namespace Guus_Reise
             }
 
             actionMenu.Draw(spriteBatch);
-            if (activeTile.Charakter != null)
+            if (activeTile != null)
             {
-                levelUpMenu.Draw(spriteBatch, _board, activeTile);
-            }           
+                    levelUpMenu.Draw(spriteBatch, _board, activeTile);               
+            }
+            
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
