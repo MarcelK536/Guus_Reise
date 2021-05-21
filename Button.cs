@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Color = Microsoft.Xna.Framework.Color;
 using System.Diagnostics;
 using System.Threading;
+using MonoGame.Extended.Sprites;
+using MonoGame.Extended.TextureAtlases;
 
 namespace Guus_Reise
 {
@@ -18,6 +20,8 @@ namespace Guus_Reise
         Texture2D _textureHover;            //OPTIONAL Hover Texture to further show Hovering
         private Color _tint;                //Colors the Texture to Symbolise Hovering
         private float _scale;               //Adjusts the Size of the Button
+        AnimatedSprite _spriteAnimated;     // Animation für Animated Button
+        private bool _isAnimated = false;   //for default a Button ist non-animated
 
         MouseState prevMouseState;
 
@@ -65,6 +69,12 @@ namespace Guus_Reise
             set => _textureHover = value;
         }
 
+        public bool IsAnimated
+        {
+            get => _isAnimated;
+            set => _isAnimated = value;
+        }
+
         // Creates Button with an extra Hover Texture
         public Button(string name, Texture2D textureDefault, Texture2D textureHover, float scale, int buttonX, int buttonY)
         {
@@ -88,6 +98,29 @@ namespace Guus_Reise
             this.ButtonY = buttonY;
             _tint = Color.Gray;
         }
+        public Button(string name, Texture2D textureDefault, float scale, Vector2 pos)
+        {
+            this.Name = name;
+            this.TextureDefault = textureDefault;
+            this.Scale = scale;
+            this.ButtonX = (int) pos.X;
+            this.ButtonY = (int) pos.Y;
+            _tint = Color.Gray;
+        }
+
+        //Creates Animated-Button with only a Default Animation
+        public Button(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, float scale, int buttonX, int buttonY)
+        {
+            this.Name = name;
+            this.TextureDefault = textureDefault;
+            this.TextureHover = textureDefault;
+            _spriteAnimated = spriteAnimated;
+            this.Scale = scale;
+            this.ButtonX = buttonX;
+            this.ButtonY = buttonY;
+            _tint = Color.Gray;
+            this.IsAnimated = true;
+        }
 
         public void MoveButton(int moveX, int moveY)
         {
@@ -97,9 +130,10 @@ namespace Guus_Reise
 
 
         //Gets Text Position by Calculating the Vector using the Placement of the Button AND the details of the Texture
-        public Vector2 GetTextPos()
+        public Vector2 GetTextPos(SpriteFont font)
         {
-            return new Vector2(this.ButtonX+this.TextureDefault.Height*this.Scale*0.2f, this.ButtonY + (this.TextureDefault.Width*this.Scale)/2);
+            Vector2 size = font.MeasureString(this.Name);
+            return new Vector2(this.ButtonX + (this.TextureDefault.Height*this.Scale)/2 - size.X/5, this.ButtonY + (this.TextureDefault.Width/2*this.Scale)/2 - size.Y/2);
         }
 
         //Returns Position Vector of the Button used for Drawing
@@ -108,17 +142,36 @@ namespace Guus_Reise
             return new Vector2(this.ButtonX, this.ButtonY);
         }
 
+        //Returns Position Vector to Place Something Right of Button
+        public Vector2 GetPosRightOf()
+        {
+            return new Vector2(this.ButtonX + this.TextureDefault.Width + 10, this.ButtonY);
+        }
+
+        //Returns Position Vector to Place Something below Button
+        public Vector2 GetPosBelow()
+        {
+            return new Vector2(this.ButtonX, this.ButtonY + this.TextureDefault.Height + 10);
+        }
+
         //Returns Boolean to Check the State of the Button
         public bool IsHovered()
         {
-            if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width*this.Scale &&
+            //if(this.IsAnimated == true)
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+                if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width * this.Scale &&
                     Mouse.GetState().Position.X > this.ButtonX &&
-                    Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height*this.Scale &&
+                    Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height * this.Scale &&
                     Mouse.GetState().Position.Y > this.ButtonY)
-            {
-                _tint = Color.White;
-                return true;
-            }
+                {
+                    _tint = Color.White;
+                    return true;
+                }
+            //}
             _tint = Color.Gray;
             return false;
         }
@@ -140,15 +193,31 @@ namespace Guus_Reise
         //Draws the Button, Needs the .Begin and .End function in the Class to function
         public void Draw(SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
-            if (this.IsHovered() == true && this.TextureHover != null)
+            if(this.IsAnimated == false) // no Animation
             {
-                spriteBatch.Draw(this.TextureHover, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+                if (this.IsHovered() == true && this.TextureHover != null)
+                {
+                    spriteBatch.Draw(this.TextureHover, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+                }
+                spriteBatch.DrawString(spriteFont, this.Name, this.GetTextPos(spriteFont), Color.Black);
             }
-            else
+            else // Button with Animation
             {
-                spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+                //spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0f, this.Scale);
+                if (this.IsHovered() == true && this.TextureHover != null)
+                {
+                    spriteBatch.Draw(this._spriteAnimated, this.GetPos());
+                }
+                else
+                {
+                    spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+                }
             }
-            spriteBatch.DrawString(spriteFont, this.Name, this.GetTextPos(), Color.Black);
+            
         }
 
     }

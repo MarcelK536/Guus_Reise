@@ -19,7 +19,8 @@ namespace Guus_Reise
             LevelSelect,
             InGame,
             Exit,
-            Credits
+            Credits,
+            PlanetMenu
         }
 
         private static GameState _state;
@@ -43,7 +44,9 @@ namespace Guus_Reise
             base.Initialize();
             MainMenu.Init();
             Credits.Init();
-            HexMap.Init(Content);
+            HexMap.Init(Content, GraphicsDevice);
+            PlanetMenu.Init();
+
         }
 
         protected override void LoadContent()
@@ -51,6 +54,7 @@ namespace Guus_Reise
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             
             MainMenu.LoadTexture(Content);
+            PlanetMenu.LoadTexture(Content,_spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
         }
@@ -69,6 +73,9 @@ namespace Guus_Reise
                     break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
+                    break;
+                case GameState.PlanetMenu:
+                    PlanetMenu.Update(gameTime);
                     break;
                 case GameState.LevelSelect:
                     break;
@@ -93,6 +100,10 @@ namespace Guus_Reise
                     GraphicsDevice.Clear(Color.CornflowerBlue);
                     MainMenu.Draw(_spriteBatch,gameTime);
                     break;
+                case GameState.PlanetMenu:
+                    GraphicsDevice.Clear(Color.Black);
+                    PlanetMenu.Draw(_spriteBatch, gameTime);
+                    break;
                 case GameState.Credits:
                     GraphicsDevice.Clear(Color.YellowGreen);
                     Credits.Draw(_spriteBatch, gameTime);
@@ -101,7 +112,7 @@ namespace Guus_Reise
                     break;
                 case GameState.InGame:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    HexMap.DrawInGame(gameTime);
+                    HexMap.DrawInGame(_spriteBatch,gameTime);
                     break;
                 default:
                     break;
