@@ -96,25 +96,34 @@ namespace Guus_Reise
             {
                 int x = _activeTile.LogicalPosition.X;
                 int y = _activeTile.LogicalPosition.Y;
-                spriteBatch.Begin();
-                spriteBatch.DrawString(textFont, "Name: " + _board[x, y].Charakter.Name + " Punkte: " + _board[x, y].Charakter.Fähigkeitspunkte, btnClose.GetPosRightOf(), Color.Yellow);
-                btnPlusWiderstandskraft.Draw(spriteBatch,textFont);
-                spriteBatch.DrawString(textFont, "Widerstandskraft: " + _board[x, y].Charakter.Widerstandskraft, btnPlusWiderstandskraft.GetPosRightOf(), Color.Yellow);
-                btnPlusKoerperkraft.Draw(spriteBatch, textFont);
-                spriteBatch.DrawString(textFont, "Koerperkraft: " + _board[x, y].Charakter.Koerperkraft, btnPlusKoerperkraft.GetPosRightOf(), Color.Yellow);
-                btnPlusAbwehr.Draw(spriteBatch, textFont);
-                spriteBatch.DrawString(textFont, "Abwehr: " + _board[x, y].Charakter.Abwehr, btnPlusAbwehr.GetPosRightOf(), Color.Yellow);
-                btnPlusWortgewandtheit.Draw(spriteBatch, textFont);
-                spriteBatch.DrawString(textFont, "Wortgewandheit: " + _board[x, y].Charakter.Wortgewandheit, btnPlusWortgewandtheit.GetPosRightOf(), Color.Yellow);
-                btnPlusIgnoranz.Draw(spriteBatch, textFont);
-                spriteBatch.DrawString(textFont, "Ignoranz: " + _board[x, y].Charakter.Ignoranz, btnPlusIgnoranz.GetPosRightOf(), Color.Yellow);
-                btnPlusGeschwindigkeit.Draw(spriteBatch, textFont);
-                spriteBatch.DrawString(textFont, "Geschwindigkeit: " + _board[x, y].Charakter.Geschwindigkeit, btnPlusGeschwindigkeit.GetPosRightOf(), Color.Yellow);
-                btnPlusGlueck.Draw(spriteBatch, textFont); 
-                spriteBatch.DrawString(textFont, "Glueck: " + _board[x, y].Charakter.Glueck, btnPlusGlueck.GetPosRightOf(), Color.Yellow);
-                btnPlusBewegung.Draw(spriteBatch, textFont);
-                spriteBatch.DrawString(textFont, "Bewegungsreichweite: " + _board[x, y].Charakter.Bewegungsreichweite, btnPlusBewegung.GetPosRightOf(), Color.Yellow);
-                spriteBatch.End();
+                if (_board[x, y].Charakter == null)
+                {
+                    spriteBatch.Begin();
+                    spriteBatch.DrawString(textFont, "Kein Charakter ausgewaehlt", btnClose.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.End();
+                }
+                else
+                {
+                    spriteBatch.Begin();
+                    spriteBatch.DrawString(textFont, "Name: " + _board[x, y].Charakter.Name + " Punkte: " + _board[x, y].Charakter.Fähigkeitspunkte, btnClose.GetPosRightOf(), Color.Yellow);
+                    btnPlusWiderstandskraft.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + _board[x, y].Charakter.Widerstandskraft, btnPlusWiderstandskraft.GetPosRightOf(), Color.Yellow);
+                    btnPlusKoerperkraft.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Koerperkraft: " + _board[x, y].Charakter.Koerperkraft, btnPlusKoerperkraft.GetPosRightOf(), Color.Yellow);
+                    btnPlusAbwehr.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Abwehr: " + _board[x, y].Charakter.Abwehr, btnPlusAbwehr.GetPosRightOf(), Color.Yellow);
+                    btnPlusWortgewandtheit.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Wortgewandheit: " + _board[x, y].Charakter.Wortgewandheit, btnPlusWortgewandtheit.GetPosRightOf(), Color.Yellow);
+                    btnPlusIgnoranz.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Ignoranz: " + _board[x, y].Charakter.Ignoranz, btnPlusIgnoranz.GetPosRightOf(), Color.Yellow);
+                    btnPlusGeschwindigkeit.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Geschwindigkeit: " + _board[x, y].Charakter.Geschwindigkeit, btnPlusGeschwindigkeit.GetPosRightOf(), Color.Yellow);
+                    btnPlusGlueck.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Glueck: " + _board[x, y].Charakter.Glueck, btnPlusGlueck.GetPosRightOf(), Color.Yellow);
+                    btnPlusBewegung.Draw(spriteBatch, textFont);
+                    spriteBatch.DrawString(textFont, "Bewegungsreichweite: " + _board[x, y].Charakter.Bewegungsreichweite, btnPlusBewegung.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.End();
+                }
             }
         }
 
