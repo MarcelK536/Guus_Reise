@@ -174,7 +174,7 @@ namespace Guus_Reise
             }
 
             actionMenu.Draw(spriteBatch);
-            if (activeTile != null)
+            if (activeTile.Charakter != null)
             {
                 levelUpMenu.Draw(spriteBatch, _board, activeTile);
             }           
