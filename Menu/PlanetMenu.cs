@@ -32,24 +32,24 @@ namespace Guus_Reise.Menu
         public static void Init()
         {
             // here to insert Names of Planets
-            List<string> planetNames = new List<string>{ "Planet 1"};
+            List<string> planetNames = new List<string>{ "Planet 1", "Planet 2"};
 
             // set Planet-Buttons
             planetButtons = new AnimatedButton[planetNames.Count];
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 400 + index * 300, 300 );
+                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 200 + index * 300, 250 );
             }
 
             // Set Button Back
-            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 570,20);
+            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.3f, 650,20);
 
         }
         public static void LoadTexture(ContentManager content, SpriteBatch spriteBatch)
         {
             // here to insert the names of the Planetbuttons which have to be initialized
-            listOfPlanets = new List<string> { "worldOne"};
+            listOfPlanets = new List<string> { "worldOne", "worldTwo"};
             
             _spriteBatch = spriteBatch;
             SpriteSheet spritesheet;

@@ -97,7 +97,7 @@ namespace Guus_Reise
                 {
                     spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0, this.Scale);
                 }
-                Vector2 textPosition = new Vector2((this.GetTextPos(spriteFont).X) - 10, (this.GetTextPos(spriteFont).Y) + 50);
+                Vector2 textPosition = new Vector2((this.GetTextPos(spriteFont).X), (this.GetTextPos(spriteFont).Y) + 150);
                 spriteBatch.DrawString(spriteFont, this.Name, textPosition, Color.White);
         }
 
