@@ -43,7 +43,7 @@ namespace Guus_Reise.Menu
             }
 
             // Set Button Back
-            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 570,-40);
+            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 570,20);
 
         }
         public static void LoadTexture(ContentManager content, SpriteBatch spriteBatch)
