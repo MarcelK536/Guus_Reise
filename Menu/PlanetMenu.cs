@@ -20,7 +20,7 @@ namespace Guus_Reise.Menu
 
         static Texture2D[] worldTextures;
         static AnimatedSprite[] planetButtonAnimations;
-        static Button[] planetButtons;
+        static AnimatedButton[] planetButtons;
         static Button back;
         static List<string> listOfPlanets;
 
@@ -35,11 +35,11 @@ namespace Guus_Reise.Menu
             List<string> planetNames = new List<string>{ "Planet 1"};
 
             // set Planet-Buttons
-            planetButtons = new Button[planetNames.Count];
+            planetButtons = new AnimatedButton[planetNames.Count];
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new Button(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale,2.5f, 400 + index * 300, 300 );
+                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 400 + index * 300, 300 );
             }
 
             // Set Button Back
@@ -85,7 +85,7 @@ namespace Guus_Reise.Menu
             back.Draw(spriteBatch, mainMenuFont);
 
             // Draw Planet-Buttons
-            foreach(Button planet in planetButtons)
+            foreach(AnimatedButton planet in planetButtons)
             {
                 planet.Draw(_spriteBatch, mainMenuFont);
             }
@@ -112,7 +112,7 @@ namespace Guus_Reise.Menu
 
             }
             // Test for Click on Buttons
-            foreach (Button planet in planetButtons)
+            foreach (AnimatedButton planet in planetButtons)
             {
                 if (planet.IsClicked() == true)
                 {

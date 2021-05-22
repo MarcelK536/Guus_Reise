@@ -18,13 +18,11 @@ namespace Guus_Reise
         private string _name;               //the Printed Name of the Button
         Texture2D _textureDefault;          //Default Texture of the Button
         Texture2D _textureHover;            //OPTIONAL Hover Texture to further show Hovering
-        private Color _tint;                //Colors the Texture to Symbolise Hovering
-        private float _scale;               //Adjusts the Size of the Button
-        private Vector2 _scale2;
-        AnimatedSprite _spriteAnimated;     // Animation für Animated Button
-        private bool _isAnimated = false;   //for default a Button ist non-animated
+        protected Color _tint;                //Colors the Texture to Symbolise Hovering
+        protected float _scale;               //Adjusts the Size of the Button
+        protected bool _isAnimated = false;   //for default a Button ist non-animated
 
-        MouseState prevMouseState;
+        protected MouseState prevMouseState;
 
 
         #region GetterSetter
@@ -39,12 +37,6 @@ namespace Guus_Reise
         {
             get => _scale;
             set => _scale = value;
-        }
-
-        public Vector2 Scale2
-        {
-            get => _scale2;
-            set => _scale2 = value;
         }
 
         public int ButtonX
@@ -85,6 +77,12 @@ namespace Guus_Reise
         #endregion
 
         #region Constructors
+
+        //Defailt Constructor - important for Child Class AnimatedButton
+        public Button()
+        {
+
+        }
         // Creates Button with an extra Hover Texture
         public Button(string name, Texture2D textureDefault, Texture2D textureHover, float scale, int buttonX, int buttonY)
         {
@@ -118,47 +116,13 @@ namespace Guus_Reise
             this.ButtonY = (int) pos.Y;
             _tint = Color.Gray;
         }
-
-        //Creates Animated-Button with only a Default Animation
-        public Button(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, Vector2 scale2, float scale, int buttonX, int buttonY)
-        {
-            this.Name = name;
-            this.TextureDefault = textureDefault;
-            this.TextureHover = textureDefault;
-            _spriteAnimated = spriteAnimated;
-            this.Scale = scale;
-            this.Scale2 = scale2;
-            this.ButtonX = buttonX;
-            this.ButtonY = buttonY;
-            _tint = Color.Gray;
-            this.IsAnimated = true;
-        }
         #endregion
 
+        #region positionFunctions
         public void MoveButton(int moveX, int moveY)
         {
             this.ButtonX += moveX;
             this.ButtonY += moveY;
-        }
-
-        // Tests if the given coordinates lies into the animatedSprite of the Button (in the Animated Button)
-        public bool liesInto(Vector2 coordinates)
-        {
-                if (this._spriteAnimated.IsVisible == true)
-                {
-                    Vector2 pos = new Vector2();
-                    pos = this.GetPos();
-                    Vector2[] corners = new Vector2[10];
-                    corners = this._spriteAnimated.GetCorners(pos, 0f, this.Scale2);
-                    if (coordinates.X > corners[0].X && coordinates.Y > corners[0].Y)
-                    {
-                        if (coordinates.X < corners[2].X && coordinates.Y < corners[2].Y)
-                        {
-                            return true;
-                        }
-                    }
-                }   
-            return false;
         }
 
         // Tests if the given coordinates lies into the given texture (into Button with given texture)
@@ -208,42 +172,33 @@ namespace Guus_Reise
         {
             return new Vector2(this.ButtonX, this.ButtonY + this.TextureDefault.Height + 10);
         }
-
+#endregion
 
         //Returns Boolean to Check the State of the Button
         public bool IsHovered()
         {
             Vector2 currentMouseState = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
-            if (this.IsAnimated)
+            if(liesInto(currentMouseState, this.TextureDefault))
             {
-                
-                if(liesInto(currentMouseState))
-                {
-                    _tint = Color.White;
-                    return true;
-                }
+                _tint = Color.White;
+                return true;
             }
-            else
-            {
-                if(liesInto(currentMouseState, this.TextureDefault))
-                {
-                    _tint = Color.White;
-                    return true;
-                }
-                _tint = Color.Gray;
-            }
+            _tint = Color.Gray;
             return false;
         }
-
 
         //Checks if the Button is Clicked
         public bool IsClicked()
         {
             MouseState mouseState = Mouse.GetState();
-            if (this.IsHovered() && Mouse.GetState().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+            if (this.IsHovered())
             {
-                Thread.Sleep(100);
-                return true;
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
+                {
+                    
+                    Thread.Sleep(100);
+                    return true;
+                }
             }
             prevMouseState = mouseState;
             return false;
@@ -252,32 +207,15 @@ namespace Guus_Reise
         //Draws the Button, Needs the .Begin and .End function in the Class to function
         public void Draw(SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
-            if(this.IsAnimated == false) // no Animation
+            if (this.IsHovered() == true && this.TextureHover != null)
             {
-                if (this.IsHovered() == true && this.TextureHover != null)
-                {
-                    spriteBatch.Draw(this.TextureHover, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
-                }
-                else
-                {
-                    spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
-                }
-                spriteBatch.DrawString(spriteFont, this.Name, this.GetTextPos(spriteFont), Color.Black);
+                spriteBatch.Draw(this.TextureHover, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
             }
-            else // Button with Animation
+            else
             {
-                if (this.IsHovered() == true && this.TextureHover != null)
-                {
-                    spriteBatch.Draw(this._spriteAnimated, this.GetPos(),0, this.Scale2);
-                }
-                else
-                {
-                    spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0, this.Scale2);
-                }
-                Vector2 textPosition = new Vector2((this.GetTextPos(spriteFont).X)-10, (this.GetTextPos(spriteFont).Y) + 50);
-                spriteBatch.DrawString(spriteFont, this.Name, textPosition, Color.White);
+                spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
             }
-            
+            spriteBatch.DrawString(spriteFont, this.Name, this.GetTextPos(spriteFont), Color.Black);          
         }
 
     }
