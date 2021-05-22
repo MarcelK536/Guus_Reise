@@ -27,6 +27,7 @@ namespace Guus_Reise
         MouseState prevMouseState;
 
 
+        #region GetterSetter
 
         public Color Tint
         {
@@ -81,7 +82,9 @@ namespace Guus_Reise
             get => _isAnimated;
             set => _isAnimated = value;
         }
+        #endregion
 
+        #region Constructors
         // Creates Button with an extra Hover Texture
         public Button(string name, Texture2D textureDefault, Texture2D textureHover, float scale, int buttonX, int buttonY)
         {
@@ -105,6 +108,7 @@ namespace Guus_Reise
             this.ButtonY = buttonY;
             _tint = Color.Gray;
         }
+
         public Button(string name, Texture2D textureDefault, float scale, Vector2 pos)
         {
             this.Name = name;
@@ -129,6 +133,7 @@ namespace Guus_Reise
             _tint = Color.Gray;
             this.IsAnimated = true;
         }
+        #endregion
 
         public void MoveButton(int moveX, int moveY)
         {
@@ -136,6 +141,38 @@ namespace Guus_Reise
             this.ButtonY += moveY;
         }
 
+        // Tests if the given coordinates lies into the animatedSprite of the Button (in the Animated Button)
+        public bool liesInto(Vector2 coordinates)
+        {
+                if (this._spriteAnimated.IsVisible == true)
+                {
+                    Vector2 pos = new Vector2();
+                    pos = this.GetPos();
+                    Vector2[] corners = new Vector2[10];
+                    corners = this._spriteAnimated.GetCorners(pos, 0f, this.Scale2);
+                    if (coordinates.X > corners[0].X && coordinates.Y > corners[0].Y)
+                    {
+                        if (coordinates.X < corners[2].X && coordinates.Y < corners[2].Y)
+                        {
+                            return true;
+                        }
+                    }
+                }   
+            return false;
+        }
+
+        // Tests if the given coordinates lies into the given texture (into Button with given texture)
+        public bool liesInto(Vector2 coordinates, Texture2D texture)
+        {
+            if ( coordinates.X < this.ButtonX + texture.Width * this.Scale && coordinates.Y < this.ButtonY + texture.Height * this.Scale)
+            {
+                if(coordinates.X > this.ButtonX && coordinates.Y > this.ButtonY)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         //Gets Text Position by Calculating the Vector using the Placement of the Button AND the details of the Texture
         public Vector2 GetTextPos(SpriteFont font)
@@ -144,6 +181,7 @@ namespace Guus_Reise
             Vector2 center = this.GetTextureCenter();
             
             return new Vector2(this.ButtonX + center.X - fontSize.X/2, this.ButtonY + center.Y - fontSize.Y/2);
+
         }
 
         public Vector2 GetTextureCenter()
@@ -175,15 +213,25 @@ namespace Guus_Reise
         //Returns Boolean to Check the State of the Button
         public bool IsHovered()
         {
-            if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width * this.Scale &&
-                Mouse.GetState().Position.X > this.ButtonX &&
-                Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height * this.Scale &&
-                Mouse.GetState().Position.Y > this.ButtonY)
+            Vector2 currentMouseState = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
+            if (this.IsAnimated)
             {
-                _tint = Color.White;
-                return true;
+                
+                if(liesInto(currentMouseState))
+                {
+                    _tint = Color.White;
+                    return true;
+                }
             }
-            _tint = Color.Gray;
+            else
+            {
+                if(liesInto(currentMouseState, this.TextureDefault))
+                {
+                    _tint = Color.White;
+                    return true;
+                }
+                _tint = Color.Gray;
+            }
             return false;
         }
 
