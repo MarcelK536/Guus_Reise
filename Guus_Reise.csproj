@@ -31,12 +31,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\bin\DesktopGL\Content\" />
+    <Folder Include="Content\World\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Content\World\worldJson.json">
+    <None Update="Content\World\worldOne.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Content\World\worldYellow.json">
+    <None Update="Content\World\worldTwo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

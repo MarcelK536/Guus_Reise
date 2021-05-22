@@ -1,6 +1,6 @@
 {
   "textureAtlas": {
-    "texture": "world.png",
+    "texture": "worldOneSheet.png",
     "regionWidth": 100,
     "regionHeight": 100
   },

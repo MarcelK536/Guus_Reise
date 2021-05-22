@@ -16,91 +16,98 @@ namespace Guus_Reise.Menu
     {
         static Texture2D btnDefaultTexture;
         static Texture2D btnHoverTexture;
-        static Texture2D worldTexture;
-        static Texture2D worldTexture2;
         static SpriteFont mainMenuFont;
+
+        static Texture2D[] worldTextures;
         static AnimatedSprite[] planetButtonAnimations;
-        static Vector2 worldposition;
-        //static Button[] planetButtons;
-        static Button planet;
-        static Button planetTwo;
+        static Button[] planetButtons;
         static Button back;
-        //static Button planetAnimated;
-        static AnimatedSprite planet1;
-        static AnimatedSprite planet2;
+        
+        static int index;
+        //static Vector2 worldposition;
 
         private static SpriteBatch _spriteBatch;
 
-        //static AnimatedSprite world;
-
         public static void Init()
         {
-            string[] planetNames = { "World1" }; //"World2"
-            planet = new Button("worl1", worldTexture, planet1, 0.6f,200, 250);
-            planetTwo = new Button("world2", worldTexture2, planet2, 0.6f, 400, 250);
+            // here to insert Names of Planets
+            List<string> planetNames = new List<string>{ "Planet 1", "Planet 2"};
+
+            // set Planet-Buttons
+            planetButtons = new Button[planetNames.Count];
+            foreach(string planetName in planetNames)
+            {
+                index = planetNames.IndexOf(planetName);
+                planetButtons[index] = new Button(planetName, worldTextures[index], planetButtonAnimations[index], 0.6f, 200 + index*50, 250 + index *50);
+            }
+
+            // Set Button Back
             back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.5f, 570,-40);
-            int index = 0;
-            //foreach(string planetName in planetNames)
-            //{
-            //    planetButtons[index] = new Button(planetName, planetButtonAnimations[index], 0.5f, 450 + index * 50, 250 + index * 50);
-            //    index++;
-            //}
 
         }
         public static void LoadTexture(ContentManager content, SpriteBatch spriteBatch)
         {
+            // here to insert the names of the Planetbuttons which have to be initialized
+            List<string> listOfPlanets = new List<string> { "worldOne", "worldTwo" };
+            
             _spriteBatch = spriteBatch;
-            string[] contentStrings = { "worldJson.json" }; // "World\\worldYellow.json"
+            SpriteSheet spritesheet;
+
+            // Arrays for Planet-Buttons
+            planetButtonAnimations = new AnimatedSprite[listOfPlanets.Count];
+            worldTextures = new Texture2D[listOfPlanets.Count];
+
             //Content for Button Back
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
-            worldTexture = content.Load<Texture2D>("World\\worldPicute");
-            worldTexture2 = content.Load<Texture2D>("World\\worldYellowPicture");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
-            int index = 0;
-            SpriteSheet spritesheet;
-            foreach (string contentString in contentStrings)
+
+            // Filling of Arrays
+            foreach (string planetName in listOfPlanets)
             {
-                spritesheet = content.Load<SpriteSheet>("World\\"+contentString, new JsonContentLoader());
-                planet1 = new AnimatedSprite(spritesheet);
-                planet1.Play("world");
-                worldposition = new Vector2(400, 250);
+                index = listOfPlanets.IndexOf(planetName);
 
+                // fill array of Animations
+                spritesheet = content.Load<SpriteSheet>("World\\"+ planetName+".json", new JsonContentLoader());
+                planetButtonAnimations[index] = new AnimatedSprite(spritesheet);
+                planetButtonAnimations[index].Play("world");
+
+                // fill array of Textures
+                worldTextures[index] = content.Load<Texture2D>("World\\" + planetName);
             }
-            spritesheet = content.Load<SpriteSheet>("World\\" + "worldYellow.json", new JsonContentLoader());
-            planet2 = new AnimatedSprite(spritesheet);
-            planet2.Play("worldYellow");
-            worldposition = new Vector2(400, 250);
-
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            //planet.Draw(spriteBatch, mainMenuFont);
+
+            // Draw Back-Button
             back.Draw(spriteBatch, mainMenuFont);
-            planet.Draw(_spriteBatch, mainMenuFont);
-            planetTwo.Draw(_spriteBatch, mainMenuFont);
-            //_spriteBatch.Draw(planet1, worldposition);
+
+            // Draw Planet-Buttons
+            foreach(Button planet in planetButtons)
+            {
+                planet.Draw(_spriteBatch, mainMenuFont);
+            }
             spriteBatch.End();
         }
 
         public static void Update(GameTime gameTime)
         {
+            // Play Animation
             var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            planet1.Play("world");
-            planet1.Update(deltaSeconds);
-            planet2.Play("worldYellow");
-            planet2.Update(deltaSeconds);
-
-            //foreach (AnimatedSprite planet in planetButtonAnimations)
-            //{
-            //    planet.Play("world");
-            //    planet.Update(deltaSeconds);
-
-            //}
-            if (planet.IsClicked() == true || planetTwo.IsClicked() == true)
+            foreach (AnimatedSprite planet in planetButtonAnimations)
             {
-                GState = GameState.InGame;
+                planet.Play("world");
+                planet.Update(deltaSeconds);
+
+            }
+            // Test for Click on Buttons
+            foreach (Button planet in planetButtons)
+            {
+                if (planet.IsClicked() == true)
+                {
+                    GState = GameState.InGame;
+                }
             }
             if (back.IsClicked() == true)
             {
