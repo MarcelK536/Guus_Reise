@@ -136,21 +136,14 @@ namespace Guus_Reise
         //Returns Boolean to Check the State of the Button
         public bool IsHovered()
         {
-            //if(this.IsAnimated == true)
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-                if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width * this.Scale &&
-                    Mouse.GetState().Position.X > this.ButtonX &&
-                    Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height * this.Scale &&
-                    Mouse.GetState().Position.Y > this.ButtonY)
-                {
-                    _tint = Color.White;
-                    return true;
-                }
-            //}
+            if (Mouse.GetState().Position.X < this.ButtonX + this.TextureDefault.Width * this.Scale &&
+                Mouse.GetState().Position.X > this.ButtonX &&
+                Mouse.GetState().Position.Y < this.ButtonY + this.TextureDefault.Height * this.Scale &&
+                Mouse.GetState().Position.Y > this.ButtonY)
+            {
+                _tint = Color.White;
+                return true;
+            }
             _tint = Color.Gray;
             return false;
         }
@@ -186,7 +179,6 @@ namespace Guus_Reise
             }
             else // Button with Animation
             {
-                //spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0f, this.Scale);
                 if (this.IsHovered() == true && this.TextureHover != null)
                 {
                     spriteBatch.Draw(this._spriteAnimated, this.GetPos());
@@ -195,6 +187,8 @@ namespace Guus_Reise
                 {
                     spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
                 }
+                Vector2 textPosition = new Vector2((this.GetTextPos(spriteFont).X)-10, (this.GetTextPos(spriteFont).Y) + 50);
+                spriteBatch.DrawString(spriteFont, this.Name, textPosition, Color.White);
             }
             
         }

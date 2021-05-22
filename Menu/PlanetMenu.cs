@@ -38,7 +38,7 @@ namespace Guus_Reise.Menu
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new Button(planetName, worldTextures[index], planetButtonAnimations[index], 0.6f, 200 + index*50, 250 + index *50);
+                planetButtons[index] = new Button(planetName, worldTextures[index], planetButtonAnimations[index], 0.6f, 200 + index * 150, 250 );
             }
 
             // Set Button Back
