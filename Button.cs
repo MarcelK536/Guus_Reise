@@ -141,6 +141,7 @@ namespace Guus_Reise
             return new Vector2(this.ButtonX, this.ButtonY);
         }
 
+
         //Returns Boolean to Check the State of the Button
         public bool IsHovered()
         {
@@ -193,7 +194,7 @@ namespace Guus_Reise
                 }
                 else
                 {
-                    spriteBatch.Draw(this.TextureDefault, this.GetPos(), null, this.Tint, 0f, Vector2.Zero, this.Scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0, this.Scale2);
                 }
                 Vector2 textPosition = new Vector2((this.GetTextPos(spriteFont).X)-10, (this.GetTextPos(spriteFont).Y) + 50);
                 spriteBatch.DrawString(spriteFont, this.Name, textPosition, Color.White);

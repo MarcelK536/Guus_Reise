@@ -22,7 +22,9 @@ namespace Guus_Reise.Menu
         static AnimatedSprite[] planetButtonAnimations;
         static Button[] planetButtons;
         static Button back;
-        
+        static List<string> listOfPlanets;
+
+
         static int index;
         static Vector2 worldScale = new Vector2(2.5f, 2.5f);
 
@@ -30,14 +32,14 @@ namespace Guus_Reise.Menu
         public static void Init()
         {
             // here to insert Names of Planets
-            List<string> planetNames = new List<string>{ "Planet 1", "Planet 2"};
+            List<string> planetNames = new List<string>{ "Planet 1"};
 
             // set Planet-Buttons
             planetButtons = new Button[planetNames.Count];
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new Button(planetName, worldTextures[index], planetButtonAnimations[index], worldScale, 2.5f, 100 + index * 300, 150 );
+                planetButtons[index] = new Button(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale,2.5f, 200 + index * 300, 150 );
             }
 
             // Set Button Back
@@ -47,7 +49,7 @@ namespace Guus_Reise.Menu
         public static void LoadTexture(ContentManager content, SpriteBatch spriteBatch)
         {
             // here to insert the names of the Planetbuttons which have to be initialized
-            List<string> listOfPlanets = new List<string> { "worldOne", "worldTwo" };
+            listOfPlanets = new List<string> { "worldOne"};
             
             _spriteBatch = spriteBatch;
             SpriteSheet spritesheet;
@@ -94,10 +96,19 @@ namespace Guus_Reise.Menu
         {
             // Play Animation
             var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            foreach (AnimatedSprite planet in planetButtonAnimations)
+            foreach (string planet in listOfPlanets)
             {
-                planet.Play("world");
-                planet.Update(deltaSeconds);
+                index = listOfPlanets.IndexOf(planet);
+                if(planetButtons[index].IsHovered() == true)
+                {
+                    planetButtonAnimations[index].Play("world");
+                }
+                else
+                {
+                    planetButtonAnimations[index].Play("noMovement");
+                }
+
+                planetButtonAnimations[index].Update(deltaSeconds);
 
             }
             // Test for Click on Buttons
