@@ -26,20 +26,20 @@ namespace Guus_Reise.Menu
 
 
         static int index;
-        static Vector2 worldScale = new Vector2(2.5f, 2.5f);
+        static Vector2 worldScale = new Vector2(2.3f, 2.3f);
 
         private static SpriteBatch _spriteBatch;
         public static void Init()
         {
             // here to insert Names of Planets
-            List<string> planetNames = new List<string>{ "Planet 1", "Planet 2"};
+            List<string> planetNames = new List<string>{ "Planet 1", "Planet 2", "Planet 3"};
 
             // set Planet-Buttons
             planetButtons = new AnimatedButton[planetNames.Count];
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 200 + index * 300, 250 );
+                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 150 + index * 250, 250 );
             }
 
             // Set Button Back
@@ -49,7 +49,7 @@ namespace Guus_Reise.Menu
         public static void LoadTexture(ContentManager content, SpriteBatch spriteBatch)
         {
             // here to insert the names of the Planetbuttons which have to be initialized
-            listOfPlanets = new List<string> { "worldOne", "worldTwo"};
+            listOfPlanets = new List<string> { "worldOne", "worldTwo", "worldThree"};
             
             _spriteBatch = spriteBatch;
             SpriteSheet spritesheet;
