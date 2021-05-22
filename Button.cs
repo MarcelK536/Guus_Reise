@@ -105,6 +105,15 @@ namespace Guus_Reise
             this.ButtonY = buttonY;
             _tint = Color.Gray;
         }
+        public Button(string name, Texture2D textureDefault, float scale, Vector2 pos)
+        {
+            this.Name = name;
+            this.TextureDefault = textureDefault;
+            this.Scale = scale;
+            this.ButtonX = (int) pos.X;
+            this.ButtonY = (int) pos.Y;
+            _tint = Color.Gray;
+        }
 
         //Creates Animated-Button with only a Default Animation
         public Button(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, Vector2 scale2, float scale, int buttonX, int buttonY)
@@ -131,14 +140,35 @@ namespace Guus_Reise
         //Gets Text Position by Calculating the Vector using the Placement of the Button AND the details of the Texture
         public Vector2 GetTextPos(SpriteFont font)
         {
-            Vector2 size = font.MeasureString(this.Name);
-            return new Vector2(this.ButtonX+this.TextureDefault.Height*this.Scale*0.2f, this.ButtonY + (this.TextureDefault.Width*this.Scale)/2-size.Y/2);
+            Vector2 fontSize = font.MeasureString(this.Name);
+            Vector2 center = this.GetTextureCenter();
+            
+            return new Vector2(this.ButtonX + center.X - fontSize.X/2, this.ButtonY + center.Y - fontSize.Y/2);
+        }
+
+        public Vector2 GetTextureCenter()
+        {
+            float centerX = (this.TextureDefault.Width * this.Scale) / 2;
+            float centerY = (this.TextureDefault.Height * this.Scale) / 2;
+            return new Vector2(centerX, centerY);
         }
 
         //Returns Position Vector of the Button used for Drawing
         public Vector2 GetPos()
         {
             return new Vector2(this.ButtonX, this.ButtonY);
+        }
+
+        //Returns Position Vector to Place Something Right of Button
+        public Vector2 GetPosRightOf()
+        {
+            return new Vector2(this.ButtonX + this.TextureDefault.Width + 10, this.ButtonY);
+        }
+
+        //Returns Position Vector to Place Something below Button
+        public Vector2 GetPosBelow()
+        {
+            return new Vector2(this.ButtonX, this.ButtonY + this.TextureDefault.Height + 10);
         }
 
 

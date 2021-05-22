@@ -11,16 +11,19 @@ namespace Guus_Reise
 {
     class HexMap
     {
-        private static Tile[,] _board; //Spielbrett
+        public static Tile[,] _board; //Spielbrett
         private static Camera _camera;
         private static int lastwheel;
-        private static Tile activeTile; //active Tile nach linkem Mousclick
+        public static Tile activeTile; //active Tile nach linkem Mousclick
         private static Tile hoverTile; //Tile über welchem der mauszeiger steht
         private static List<Point> possibleMoves = new List<Point>();
         private static MouseState _prevMouseState;
+        private static KeyboardState _prevKeyState;
 
         public static SimpleMenu actionMenu;
         public static SpriteFont actionMenuFont;
+
+        public static SkillUpMenu levelUpMenu;
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice)
         {
@@ -33,9 +36,11 @@ namespace Guus_Reise
             CreateCharakter(names, charakter, charPositions, _board);
             lastwheel = 0;
             _prevMouseState = Mouse.GetState();
+            _prevKeyState = Keyboard.GetState();
 
             actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             actionMenu = new MoveMenu(actionMenuFont,graphicsDevice);
+            levelUpMenu = new SkillUpMenu(actionMenuFont, graphicsDevice);
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -46,6 +51,7 @@ namespace Guus_Reise
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
             MouseState mouseState = Mouse.GetState();
+            KeyboardState keystate = Keyboard.GetState();
             Vector2 mouseLocation = new Vector2(mouseState.X, mouseState.Y); //position der Maus auf dem monitor
 
             float? minDistance = float.MaxValue;
@@ -84,9 +90,13 @@ namespace Guus_Reise
                 lastwheel = Mouse.GetState().ScrollWheelValue;
                 _camera.MoveCamera("runter");
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (Keyboard.GetState().IsKeyDown(Keys.P) && _prevKeyState.IsKeyUp(Keys.P))
             {
                 actionMenu.Active = !actionMenu.Active;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.H) && _prevKeyState.IsKeyUp(Keys.H))
+            {
+                levelUpMenu.Active = !levelUpMenu.Active;
             }
             NoGlow();
 
@@ -120,6 +130,7 @@ namespace Guus_Reise
             else
             {
                 _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.5f, 0.5f, 0.5f); //das activeTile wird hervorgehoben
+                levelUpMenu.Update(_board, activeTile);
 
                 if (activeTile.Charakter != null)
                 {
@@ -146,6 +157,7 @@ namespace Guus_Reise
                 }
             }
             _prevMouseState = mouseState;
+            _prevKeyState = keystate;
 
             actionMenu.Update();
         }
@@ -161,6 +173,11 @@ namespace Guus_Reise
             }
 
             actionMenu.Draw(spriteBatch);
+            if (activeTile != null)
+            {
+                    levelUpMenu.Draw(spriteBatch, _board, activeTile);               
+            }
+            
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
