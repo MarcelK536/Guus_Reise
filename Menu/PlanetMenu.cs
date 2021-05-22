@@ -24,10 +24,9 @@ namespace Guus_Reise.Menu
         static Button back;
         
         static int index;
-        //static Vector2 worldposition;
+        static Vector2 worldScale = new Vector2(2.5f, 2.5f);
 
         private static SpriteBatch _spriteBatch;
-
         public static void Init()
         {
             // here to insert Names of Planets
@@ -38,7 +37,7 @@ namespace Guus_Reise.Menu
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new Button(planetName, worldTextures[index], planetButtonAnimations[index], 0.6f, 200 + index * 150, 250 );
+                planetButtons[index] = new Button(planetName, worldTextures[index], planetButtonAnimations[index], worldScale, 2.5f, 100 + index * 300, 150 );
             }
 
             // Set Button Back

@@ -20,6 +20,7 @@ namespace Guus_Reise
         Texture2D _textureHover;            //OPTIONAL Hover Texture to further show Hovering
         private Color _tint;                //Colors the Texture to Symbolise Hovering
         private float _scale;               //Adjusts the Size of the Button
+        private Vector2 _scale2;
         AnimatedSprite _spriteAnimated;     // Animation für Animated Button
         private bool _isAnimated = false;   //for default a Button ist non-animated
 
@@ -37,6 +38,12 @@ namespace Guus_Reise
         {
             get => _scale;
             set => _scale = value;
+        }
+
+        public Vector2 Scale2
+        {
+            get => _scale2;
+            set => _scale2 = value;
         }
 
         public int ButtonX
@@ -100,13 +107,14 @@ namespace Guus_Reise
         }
 
         //Creates Animated-Button with only a Default Animation
-        public Button(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, float scale, int buttonX, int buttonY)
+        public Button(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, Vector2 scale2, float scale, int buttonX, int buttonY)
         {
             this.Name = name;
             this.TextureDefault = textureDefault;
             this.TextureHover = textureDefault;
             _spriteAnimated = spriteAnimated;
             this.Scale = scale;
+            this.Scale2 = scale2;
             this.ButtonX = buttonX;
             this.ButtonY = buttonY;
             _tint = Color.Gray;
@@ -181,7 +189,7 @@ namespace Guus_Reise
             {
                 if (this.IsHovered() == true && this.TextureHover != null)
                 {
-                    spriteBatch.Draw(this._spriteAnimated, this.GetPos());
+                    spriteBatch.Draw(this._spriteAnimated, this.GetPos(),0, this.Scale2);
                 }
                 else
                 {
