@@ -23,16 +23,18 @@ namespace Guus_Reise.Menu
         static AnimatedButton[] planetButtons;
         static Button back;
         static List<string> listOfPlanets;
+        static int indexOfSelectedPlanet;
 
 
         static int index;
-        static Vector2 worldScale = new Vector2(2.3f, 2.3f);
+        static Vector2 worldScale = new Vector2(1.5f, 1.5f);
 
         private static SpriteBatch _spriteBatch;
         public static void Init()
         {
             // here to insert Names of Planets
             List<string> planetNames = new List<string>{ "Planet 1", "Planet 2", "Planet 3"};
+            indexOfSelectedPlanet = (planetNames.Count) / 2;
 
             // set Planet-Buttons
             planetButtons = new AnimatedButton[planetNames.Count];
@@ -77,6 +79,21 @@ namespace Guus_Reise.Menu
                 worldTextures[index] = content.Load<Texture2D>("World\\" + planetName);
             }
         }
+
+        // Test of Object at index index, are the current selected element, and if true, set a lower scale
+        public static void SetMenuScale(int index)
+        {
+            Vector2 ScaleSelectedWorld = new Vector2(2.3f, 2.3f);
+            if(indexOfSelectedPlanet == index)
+            {
+                planetButtons[index].Scale = ScaleSelectedWorld;
+            }
+            else
+            {
+                planetButtons[index].Scale = worldScale;
+            }
+
+        }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
@@ -99,7 +116,8 @@ namespace Guus_Reise.Menu
             foreach (string planet in listOfPlanets)
             {
                 index = listOfPlanets.IndexOf(planet);
-                if(planetButtons[index].IsHovered() == true)
+                SetMenuScale(index);
+                if (planetButtons[index].IsHovered() == true)
                 {
                     planetButtonAnimations[index].Play("world");
                 }
