@@ -9,6 +9,7 @@ using System.Threading;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
+using Microsoft.Xna.Framework.Input;
 
 namespace Guus_Reise.Menu
 {
@@ -30,6 +31,9 @@ namespace Guus_Reise.Menu
         static Vector2 worldScale = new Vector2(1.5f, 1.5f);
 
         private static SpriteBatch _spriteBatch;
+
+        private static KeyboardState _prevKeyState;
+
         public static void Init()
         {
             // here to insert Names of Planets
@@ -41,11 +45,15 @@ namespace Guus_Reise.Menu
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 150 + index * 250, 250 );
+                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 150 + index * 250, 250, false);
             }
-
+            planetButtons[indexOfSelectedPlanet].isFocused = true;
+            bool test = planetButtons[indexOfSelectedPlanet].isFocused;
             // Set Button Back
             back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.3f, 650,20);
+
+            // Set previous Keyboard State
+            _prevKeyState = Keyboard.GetState();
 
         }
         public static void LoadTexture(ContentManager content, SpriteBatch spriteBatch)
@@ -94,6 +102,36 @@ namespace Guus_Reise.Menu
             }
 
         }
+
+        public static void defineSelectedObject(string lr)
+        {
+            planetButtons[indexOfSelectedPlanet].isFocused = false;
+            switch (lr)
+            {
+                case "Left":
+                    if(indexOfSelectedPlanet == 0)
+                    {
+                        indexOfSelectedPlanet = planetButtons.Length - 1;
+                    }
+                    else
+                    {
+                        indexOfSelectedPlanet -= 1;
+                    }
+                    break;
+                case "Right":
+                    if(indexOfSelectedPlanet == planetButtons.Length-1)
+                    {
+                        indexOfSelectedPlanet = 0;
+                    }
+                    else
+                    {
+                        indexOfSelectedPlanet += 1;
+                    }
+                    break;
+            }
+            planetButtons[indexOfSelectedPlanet].isFocused = true;
+        }
+
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
@@ -129,10 +167,20 @@ namespace Guus_Reise.Menu
                 planetButtonAnimations[index].Update(deltaSeconds);
 
             }
+            // Test if an swipe in left or right direktion was initialized
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
+            {
+                defineSelectedObject("Right");
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
+            {
+                defineSelectedObject("Left");
+            }
+
             // Test for Click on Buttons
             foreach (AnimatedButton planet in planetButtons)
             {
-                if (planet.IsClicked() == true)
+                if (planet.IsClicked() == true && planet.isFocused)
                 {
                     GState = GameState.InGame;
                 }
@@ -141,6 +189,7 @@ namespace Guus_Reise.Menu
             {
                 GState = GameState.MainMenu;
             }
+            _prevKeyState = Keyboard.GetState();
         }
     }
 }

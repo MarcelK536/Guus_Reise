@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Color = Microsoft.Xna.Framework.Color;
-
 using System.Threading;
 using MonoGame.Extended.Sprites;
 using MonoGame.Extended.TextureAtlases;
@@ -34,6 +33,20 @@ namespace Guus_Reise
             this.IsAnimated = true;
         }
 
+        public AnimatedButton(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, Vector2 scale, int buttonX, int buttonY, bool onlyClickButton)
+        {
+            this.Name = name;
+            this.TextureDefault = textureDefault;
+            this.TextureHover = textureDefault;
+            _spriteAnimated = spriteAnimated;
+            this.Scale = scale;
+            this.ButtonX = buttonX;
+            this.ButtonY = buttonY;
+            _tint = Color.Gray;
+            this.IsAnimated = true;
+            this.isOnlyClickButton = onlyClickButton;
+        }
+
         public bool liesInto(Vector2 coordinates) 
         {
             if (this._spriteAnimated.IsVisible == true)
@@ -52,9 +65,7 @@ namespace Guus_Reise
             }
             return false;
         }
-
-        //Returns Boolean to Check the State of the Button
-        public new bool IsHovered()
+        public new bool IsPointedAt()
         {
             Vector2 currentMouseState = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
             if (liesInto(currentMouseState))
@@ -65,11 +76,31 @@ namespace Guus_Reise
             return false;
         }
 
+        //Returns Boolean to Check the State of the Button
+        public new bool IsHovered()
+        {
+            if(this.isOnlyClickButton)
+            {
+                if (IsPointedAt())
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if(isFocused == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         //Checks if the Button is Clicked
         public new bool IsClicked()
         {
             MouseState mouseState = Mouse.GetState();
-            if (this.IsHovered())
+            if (this.IsPointedAt())
             {
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
                 {
@@ -78,7 +109,6 @@ namespace Guus_Reise
                     return true;
                 }
             }
-
             prevMouseState = mouseState;
             return false;
         }
@@ -86,16 +116,9 @@ namespace Guus_Reise
         //Draws the Button, Needs the .Begin and .End function in the Class to function
         public new void Draw(SpriteBatch spriteBatch, SpriteFont spriteFont)
         {
-                if (this.IsHovered() == true)
-                {
-                    spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0, this.Scale);
-                }
-                else
-                {
-                    spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0, this.Scale);
-                }
-                Vector2 textPosition = new Vector2((this.GetTextPos(spriteFont).X), (this.GetTextPos(spriteFont).Y) + 150);
-                spriteBatch.DrawString(spriteFont, this.Name, textPosition, Color.White);
+            spriteBatch.Draw(this._spriteAnimated, this.GetPos(), 0, this.Scale);      
+            Vector2 textPosition = new Vector2((this.GetTextPos(spriteFont).X), (this.GetTextPos(spriteFont).Y) + 150);
+            spriteBatch.DrawString(spriteFont, this.Name, textPosition, Color.White);
         }
 
     }

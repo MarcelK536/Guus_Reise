@@ -5,10 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Color = Microsoft.Xna.Framework.Color;
-using System.Diagnostics;
 using System.Threading;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.TextureAtlases;
 
 namespace Guus_Reise
 {
@@ -21,6 +18,8 @@ namespace Guus_Reise
         protected Color _tint;                //Colors the Texture to Symbolise Hovering
         protected float _scale;               //Adjusts the Size of the Button
         protected bool _isAnimated = false;   //for default a Button ist non-animated
+        protected bool _isFocused = false;  // For deafault a Button is not focused
+        protected bool _isOnlyClickButton = true; // For default a Button is a only-Click-Button
 
         protected MouseState prevMouseState;
 
@@ -73,6 +72,18 @@ namespace Guus_Reise
         {
             get => _isAnimated;
             set => _isAnimated = value;
+        }
+
+        public bool isFocused
+        {
+            get => _isFocused;
+            set => _isFocused = value;
+        }
+
+        public bool isOnlyClickButton
+        {
+            get => _isOnlyClickButton;
+            set => _isOnlyClickButton = value;
         }
         #endregion
 
@@ -172,18 +183,40 @@ namespace Guus_Reise
         {
             return new Vector2(this.ButtonX, this.ButtonY + this.TextureDefault.Height + 10);
         }
-#endregion
 
-        //Returns Boolean to Check the State of the Button
-        public bool IsHovered()
+        // return Boolean to Check, if Mouse ist pointed at the Button
+        public bool IsPointedAt()
         {
             Vector2 currentMouseState = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
-            if(liesInto(currentMouseState, this.TextureDefault))
+            if (liesInto(currentMouseState, this.TextureDefault))
             {
                 _tint = Color.White;
                 return true;
             }
-            _tint = Color.Gray;
+            return false;
+        }
+        #endregion
+
+        //Returns Boolean to Check the State of the Button
+        public bool IsHovered()
+        {
+            if(this.isOnlyClickButton == true)
+            {
+                if (IsPointedAt())
+                {
+                    _tint = Color.White;
+                    return true;
+                }
+                _tint = Color.Gray;
+            }
+            else
+            {
+                if (isFocused == true)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -191,7 +224,7 @@ namespace Guus_Reise
         public bool IsClicked()
         {
             MouseState mouseState = Mouse.GetState();
-            if (this.IsHovered())
+            if (this.IsPointedAt())
             {
                 if (Mouse.GetState().LeftButton == ButtonState.Pressed && prevMouseState.LeftButton == ButtonState.Released)
                 {
