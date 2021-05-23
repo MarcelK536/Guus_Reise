@@ -107,6 +107,8 @@ namespace Guus_Reise.Menu
 
         }
 
+
+        // Function returns index of next or previous Object
         private static int GetIndexOfNextPreviousObject(int oldindex, string nextPrevious)
         {
             int newIndex = 0;
@@ -136,8 +138,8 @@ namespace Guus_Reise.Menu
             return newIndex;
         }
 
-
-        private static void SwitchPositionPlanets(string lr)
+        // Function sets the new Position of the Objects after swiping left or right
+        private static void SwitchPositionObjects(string lr)
         {
             int[] nextXPosition = new int[planetButtons.Length];
             switch (lr)
@@ -161,7 +163,9 @@ namespace Guus_Reise.Menu
                 planetButtons[i].ButtonX = nextXPosition[i];
             }
         }
-        private static void defineSelectedObject(string lr)
+
+        // Function set Index of the Selected Object after swiping left or right
+        private static void DefineSelectedObject(string lr)
         {
             planetButtons[indexOfSelectedPlanet].isFocused = false;
             switch (lr)
@@ -174,7 +178,7 @@ namespace Guus_Reise.Menu
                     break;
             }
             planetButtons[indexOfSelectedPlanet].isFocused = true;
-            SwitchPositionPlanets(lr);
+            SwitchPositionObjects(lr);
         }
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -215,12 +219,12 @@ namespace Guus_Reise.Menu
             // Test if an swipe in left or right direktion was initialized
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
             {
-                defineSelectedObject("Right");
+                DefineSelectedObject("Right");
                 
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
             {
-                defineSelectedObject("Left");
+                DefineSelectedObject("Left");
             }
 
             // Test for Click on Buttons

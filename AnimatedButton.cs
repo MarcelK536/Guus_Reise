@@ -33,6 +33,10 @@ namespace Guus_Reise
             this.IsAnimated = true;
         }
 
+        /* 
+         * Constructor defines AnimatedButton with AnimatedSprite spriteAnimated, scale and at pos buttonX, buttonY, it 
+         * is defines whether it is an Click only Button
+        */
         public AnimatedButton(string name, Texture2D textureDefault, AnimatedSprite spriteAnimated, Vector2 scale, int buttonX, int buttonY, bool onlyClickButton)
         {
             this.Name = name;
@@ -47,7 +51,8 @@ namespace Guus_Reise
             this.isOnlyClickButton = onlyClickButton;
         }
 
-        public bool liesInto(Vector2 coordinates) 
+        // Functions return bool whether die given Coorindates lies in to the Animated Button
+        public bool LiesInto(Vector2 coordinates) 
         {
             if (this._spriteAnimated.IsVisible == true)
             {
@@ -65,10 +70,12 @@ namespace Guus_Reise
             }
             return false;
         }
+
+        // Function return Boolean to Check, if Mouse ist pointed at the Button
         public new bool IsPointedAt()
         {
             Vector2 currentMouseState = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
-            if (liesInto(currentMouseState))
+            if (LiesInto(currentMouseState))
             {
                 _tint = Color.White;
                 return true;
@@ -76,7 +83,12 @@ namespace Guus_Reise
             return false;
         }
 
-        //Returns Boolean to Check the State of the Button
+        /*
+         * Function Returns Boolean to Check the State of the Button
+         * if the Button ist Click only and the Mouse is pointed at, ist returns true
+         * if the Button ist not clickOnly and it is focused it returns true
+         * else it returns false
+        */
         public new bool IsHovered()
         {
             if(this.isOnlyClickButton)

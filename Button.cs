@@ -137,7 +137,7 @@ namespace Guus_Reise
         }
 
         // Tests if the given coordinates lies into the given texture (into Button with given texture)
-        public bool liesInto(Vector2 coordinates, Texture2D texture)
+        public bool LiesInto(Vector2 coordinates, Texture2D texture)
         {
             if ( coordinates.X < this.ButtonX + texture.Width * this.Scale && coordinates.Y < this.ButtonY + texture.Height * this.Scale)
             {
@@ -188,7 +188,7 @@ namespace Guus_Reise
         public bool IsPointedAt()
         {
             Vector2 currentMouseState = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
-            if (liesInto(currentMouseState, this.TextureDefault))
+            if (LiesInto(currentMouseState, this.TextureDefault))
             {
                 _tint = Color.White;
                 return true;
