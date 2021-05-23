@@ -34,6 +34,10 @@ namespace Guus_Reise.Menu
 
         private static KeyboardState _prevKeyState;
 
+
+
+
+
         public static void Init()
         {
             // here to insert Names of Planets
@@ -89,7 +93,7 @@ namespace Guus_Reise.Menu
         }
 
         // Test of Object at index index, are the current selected element, and if true, set a lower scale
-        public static void SetMenuScale(int index)
+        private static void SetMenuScale(int index)
         {
             Vector2 ScaleSelectedWorld = new Vector2(2.3f, 2.3f);
             if(indexOfSelectedPlanet == index)
@@ -103,33 +107,74 @@ namespace Guus_Reise.Menu
 
         }
 
-        public static void defineSelectedObject(string lr)
+        private static int GetIndexOfNextPreviousObject(int oldindex, string nextPrevious)
+        {
+            int newIndex = 0;
+            switch(nextPrevious)
+            {
+                case "Next":
+                    if (oldindex == planetButtons.Length - 1)
+                    {
+                        newIndex = 0;
+                    }
+                    else
+                    {
+                        newIndex = oldindex + 1;
+                    }
+                    break;
+                case "Previous":
+                    if (oldindex == 0)
+                    {
+                        newIndex = planetButtons.Length - 1;
+                    }
+                    else
+                    {
+                        newIndex = oldindex - 1;
+                    }
+                    break;
+            }
+            return newIndex;
+        }
+
+
+        private static void SwitchPositionPlanets(string lr)
+        {
+            int[] nextXPosition = new int[planetButtons.Length];
+            switch (lr)
+            {
+                case "Left":
+                    for (int i = 0; i < planetButtons.Length; i++)
+                    {
+                        nextXPosition[i] = planetButtons[GetIndexOfNextPreviousObject(i, "Next")].ButtonX;
+                    }
+                    
+                    break;
+                case "Right":
+                    for (int i = 0; i < planetButtons.Length; i++)
+                    {
+                        nextXPosition[i] = planetButtons[GetIndexOfNextPreviousObject(i, "Previous")].ButtonX;
+                    }
+                    break;
+            }
+            for (int i = 0; i < planetButtons.Length; i++)
+            {
+                planetButtons[i].ButtonX = nextXPosition[i];
+            }
+        }
+        private static void defineSelectedObject(string lr)
         {
             planetButtons[indexOfSelectedPlanet].isFocused = false;
             switch (lr)
             {
                 case "Left":
-                    if(indexOfSelectedPlanet == 0)
-                    {
-                        indexOfSelectedPlanet = planetButtons.Length - 1;
-                    }
-                    else
-                    {
-                        indexOfSelectedPlanet -= 1;
-                    }
+                    indexOfSelectedPlanet = GetIndexOfNextPreviousObject(indexOfSelectedPlanet, "Previous");
                     break;
                 case "Right":
-                    if(indexOfSelectedPlanet == planetButtons.Length-1)
-                    {
-                        indexOfSelectedPlanet = 0;
-                    }
-                    else
-                    {
-                        indexOfSelectedPlanet += 1;
-                    }
+                    indexOfSelectedPlanet = GetIndexOfNextPreviousObject(indexOfSelectedPlanet, "Next");
                     break;
             }
             planetButtons[indexOfSelectedPlanet].isFocused = true;
+            SwitchPositionPlanets(lr);
         }
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -171,6 +216,7 @@ namespace Guus_Reise.Menu
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
             {
                 defineSelectedObject("Right");
+                
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
             {
