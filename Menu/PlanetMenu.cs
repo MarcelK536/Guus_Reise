@@ -226,7 +226,7 @@ namespace Guus_Reise.Menu
             // Test for Click on Buttons
             foreach (AnimatedButton planet in planetButtons)
             {
-                if (planet.IsClicked() == true && planet.isFocused)
+                if (planet.IsClicked() == true && planet.isFocused || Keyboard.GetState().IsKeyDown(Keys.Enter) && planet.isFocused)
                 {
                     GState = GameState.InGame;
                 }
