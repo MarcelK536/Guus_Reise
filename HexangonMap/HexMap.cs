@@ -15,12 +15,13 @@ namespace Guus_Reise
         private static Camera _camera;
         private static int lastwheel;
         public static Tile activeTile; //active Tile nach linkem Mousclick
-        private static Tile hoverTile; //Tile über welchem der mauszeiger steht
+        public static Tile hoverTile; //Tile über welchem der mauszeiger steht
+        public static Tile moveTile;
         private static List<Point> possibleMoves = new List<Point>();
         private static MouseState _prevMouseState;
         private static KeyboardState _prevKeyState;
 
-        public static SimpleMenu actionMenu;
+        public static MoveMenu actionMenu;
         public static SpriteFont actionMenuFont;
 
         public static SkillUpMenu levelUpMenu;
@@ -90,10 +91,7 @@ namespace Guus_Reise
                 lastwheel = Mouse.GetState().ScrollWheelValue;
                 _camera.MoveCamera("runter");
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.P) && _prevKeyState.IsKeyUp(Keys.P))
-            {
-                actionMenu.Active = !actionMenu.Active;
-            }
+         
             if (Keyboard.GetState().IsKeyDown(Keys.H) && _prevKeyState.IsKeyUp(Keys.H))
             {
                 levelUpMenu.Active = !levelUpMenu.Active;
@@ -144,9 +142,8 @@ namespace Guus_Reise
 
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition) && hoverTile.LogicalPosition != activeTile.LogicalPosition) //wenn ein possibleMive Tile geklickt wird, wird der Charakter dorthin gesetzt
                         {
-                            _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
-                            _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
-                            activeTile = null;
+                            actionMenu.Active = true;
+                            moveTile = hoverTile;
                         }
                     }
                 }
@@ -154,12 +151,13 @@ namespace Guus_Reise
                 if (Mouse.GetState().RightButton == ButtonState.Pressed && _prevMouseState.RightButton == ButtonState.Released)    //wenn die rechte Maustaste gedrückt wird, wird das activeTile zurückgesetzt
                 {
                     activeTile = null;
+                    moveTile = null;
+                    actionMenu.Active = false;
                 }
             }
+            actionMenu.Update(_board, activeTile, moveTile);
             _prevMouseState = mouseState;
             _prevKeyState = keystate;
-
-            actionMenu.Update();
         }
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)

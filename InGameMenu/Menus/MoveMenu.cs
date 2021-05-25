@@ -28,14 +28,24 @@ namespace Guus_Reise
             btnQuitGame = new Button("Quit Game", btnTexture, 1, (int)pos.X, (int)pos.Y+btnTexture.Height*2);
         }
 
-        public override void Update()
+        public void Update(Tile[,] _board, Tile activeTile, Tile moveTile)
         {
             base.Update();
             if (Active)
             {
+                _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Glow = new Vector3(0.5f, 0.5f, 0.5f);
+
                 if (btnQuitGame.IsClicked())
                 {
                     Game1.GState = Game1.GameState.MainMenu;
+                }
+                if (btnConfirm.IsClicked())
+                {
+                    _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
+                    _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
+                    this.Active =! this.Active;
+                    HexMap.activeTile = null;
+                    HexMap.moveTile = null;
                 }
             }
         }

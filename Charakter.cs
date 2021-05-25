@@ -121,7 +121,7 @@ namespace Guus_Reise
             this.Geschwindigkeit = geschwindigkeit;
             this.Glueck = glück;
             this.Bewegungsreichweite = bewegungsreichweite;
-            this.Fähigkeitspunkte = 4;
+            this.Fähigkeitspunkte = 0;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
         }
