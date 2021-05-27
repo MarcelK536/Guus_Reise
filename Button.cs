@@ -122,10 +122,10 @@ namespace Guus_Reise
             this.IsAnimated = true;
         }
 
-        public void MoveButton(int moveX, int moveY)
+        public void MoveButton(Vector2 newPostition)
         {
-            this.ButtonX += moveX;
-            this.ButtonY += moveY;
+            this.ButtonX = (int)newPostition.X;
+            this.ButtonY = (int)newPostition.Y;
         }
 
 
