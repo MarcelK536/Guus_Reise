@@ -7,6 +7,7 @@ namespace Guus_Reise
     class Charakter
     {
         private String _name;
+        private bool _npc;
         private int _level;
         private int _xp;
         private int _widerstandskraft; //Leben des Charakters
@@ -26,6 +27,12 @@ namespace Guus_Reise
         {
             get => _name;
             set => _name = value;
+        }
+
+        public bool IsNPC
+        {
+            get => _npc;
+            set => _npc = value;
         }
 
         public int Level
@@ -110,7 +117,7 @@ namespace Guus_Reise
             set => _color = value;
         }
 
-        public Charakter (String name, int leben, int angriff, int abwehr, int wortgewand, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite)
+        /*public Charakter (String name, int leben, int angriff, int abwehr, int wortgewand, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite)
         {
             this.Name = name;
             this.Widerstandskraft = leben;
@@ -124,7 +131,7 @@ namespace Guus_Reise
             this.Fähigkeitspunkte = 0;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
-        }
+        }*/
 
         public Charakter (String name, int[] werte)
         {
@@ -137,6 +144,14 @@ namespace Guus_Reise
             this.Geschwindigkeit = werte[5];
             this.Glueck = werte[6];
             this.Bewegungsreichweite = werte[7];
+            if(werte[8] == 0)
+            {
+                this.IsNPC = false;
+            }
+            if (werte[8] == 1)
+            {
+                this.IsNPC = true;
+            }
             this.Fähigkeitspunkte = 4;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);

@@ -18,6 +18,10 @@ namespace Guus_Reise
         public static Tile hoverTile; //Tile über welchem der mauszeiger steht
         public static Tile moveTile;
         private static List<Point> possibleMoves = new List<Point>();
+        private static List<Tile> enemyTile = new List<Tile>();
+        private static List<Tile> friendTile = new List<Tile>();
+        private static int enemys;
+        private static int friends;
         private static MouseState _prevMouseState;
         private static KeyboardState _prevKeyState;
 
@@ -29,7 +33,7 @@ namespace Guus_Reise
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice)
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-            int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5 }, { 20, 7, 8, 9, 8, 8, 2, 4 } };         //input Array für die Charaktere
+            int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1 } };         //input Array für die Charaktere
             string[] names = new string[] { "Guu", "Peter" };       //input Array für Namen
             int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 } };   //input Array für Positionen
 
@@ -140,10 +144,39 @@ namespace Guus_Reise
                     {
                         _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
-                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition) && hoverTile.LogicalPosition != activeTile.LogicalPosition) //wenn ein possibleMive Tile geklickt wird, wird der Charakter dorthin gesetzt
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition) && hoverTile.LogicalPosition != activeTile.LogicalPosition) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
                         {
                             actionMenu.Active = true;
                             moveTile = hoverTile;
+                            List<Tile> neighbours = new List<Tile>(GetNeighbourTiles(moveTile));
+                            enemys = 0;
+                            friends = 0;
+                            enemyTile.Clear();
+                            friendTile.Clear();
+                            foreach(Tile tile in neighbours)
+                            {
+                                if(tile.Charakter != null)
+                                {
+                                    if (tile.Charakter.IsNPC != activeTile.Charakter.IsNPC)
+                                    {
+                                        enemys++;
+                                        enemyTile.Add(tile);
+                                    }
+                                    else
+                                    {
+                                        friends++;
+                                        friendTile.Add(tile);
+                                    }
+                                }
+                            }
+                            if(enemys > 0)
+                            {
+                                actionMenu.fightTrue = true;
+                            }
+                            if(friends > 0)
+                            {
+                                actionMenu.interactTrue = true;
+                            }
                         }
                     }
                 }
@@ -153,6 +186,12 @@ namespace Guus_Reise
                     activeTile = null;
                     moveTile = null;
                     actionMenu.Active = false;
+                    enemys = 0;
+                    friends = 0;
+                    enemyTile.Clear();
+                    friendTile.Clear();
+                    actionMenu.fightTrue = false;
+                    actionMenu.interactTrue = false;
                 }
             }
             actionMenu.Update(_board, activeTile, moveTile);
@@ -336,6 +375,59 @@ namespace Guus_Reise
 
                 board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
             }
+        }
+        public static List<Tile> GetNeighbourTiles(Tile tile)
+        {
+            List<Tile> list = new List<Tile>();
+            int x = tile.LogicalPosition.X;
+            int y = tile.LogicalPosition.Y;
+
+            if (x - 1 >= 0)
+            {
+                list.Add(_board[x - 1, y]);
+            }
+
+            if (x + 1 < _board.GetLength(0))
+            {
+                list.Add(_board[x + 1, y]);
+            }
+
+            if (y - 1 >= 0)
+            {
+                list.Add(_board[x, y - 1]);
+            }
+
+            if (y + 1 < _board.GetLength(1))
+            {
+                list.Add(_board[x, y + 1]);
+            }
+
+            if (y % 2 == 0)
+            {
+                if (x - 1 >= 0 && y - 1 >= 0)
+                {
+                    list.Add(_board[x - 1, y - 1]);
+                }
+
+                if (x - 1 >= 0 && y + 1 < _board.GetLength(1))
+                {
+                    list.Add(_board[x - 1, y + 1]);
+                }
+            }
+            else
+            {
+                if (x + 1 < _board.GetLength(0) && y - 1 >= 0)
+                {
+                    list.Add(_board[x + 1, y - 1]);
+                }
+
+                if (x + 1 < _board.GetLength(0) && y + 1 < _board.GetLength(1))
+                {
+                    list.Add(_board[x + 1, y + 1]);
+                }
+            }
+
+            return list;
         }
     }
 }
