@@ -12,20 +12,25 @@ namespace Guus_Reise
     {
         public GraphicsDevice GraphicsDevice{ get; }
         Button btnConfirm;
+        Button btnAttack;
         Button btnQuitGame;
+
+        bool playerNearEnemy = true;
 
         public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), new Texture2D(graphicsDevice, 350, 600), moveMenuFont,graphicsDevice)
         {
             GraphicsDevice = graphicsDevice;
-            Texture2D btnTexture = new Texture2D(graphicsDevice, 150, 50);
+            btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
+            Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
                 btnColor[i] = Color.Aquamarine;
             }
             btnTexture.SetData(btnColor);
-            btnConfirm = new Button("Confirm Move", btnTexture, 1, (int)pos.X, (int)pos.Y+btnTexture.Height);
-            btnQuitGame = new Button("Quit Game", btnTexture, 1, (int)pos.X, (int)pos.Y+btnTexture.Height*2);
+            btnConfirm = new Button("Confirm Move", btnTexture, 1, btnClose.GetPosBelow());
+            btnAttack = new Button("Attack", btnTexture, 1, btnConfirm.GetPosBelow());
+            btnQuitGame = new Button("Quit Game", btnTexture, 1, btnAttack.GetPosBelow());
         }
 
         public void Update(Tile[,] _board, Tile activeTile, Tile moveTile)
@@ -48,6 +53,8 @@ namespace Guus_Reise
                     HexMap.moveTile = null;
                 }
             }
+
+            //playerNearEnemy = !playerNearEnemy;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -58,6 +65,15 @@ namespace Guus_Reise
             {
                 spriteBatch.Begin();
                 btnConfirm.Draw(spriteBatch,textFont);
+                if (playerNearEnemy == true)
+                {
+                    btnAttack.Draw(spriteBatch, textFont);
+                    btnQuitGame.MoveButton(btnAttack.GetPosBelow());
+                }
+                else
+                {
+                    btnQuitGame.MoveButton(btnConfirm.GetPosBelow());
+                }
                 btnQuitGame.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }

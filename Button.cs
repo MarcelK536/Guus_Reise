@@ -129,11 +129,14 @@ namespace Guus_Reise
         }
         #endregion
 
+
+        //Creates Animated-Button with only a Default Animation
+        
         #region positionFunctions
-        public void MoveButton(int moveX, int moveY)
+        public void MoveButton(Vector2 newPostition)
         {
-            this.ButtonX += moveX;
-            this.ButtonY += moveY;
+            this.ButtonX = (int)newPostition.X;
+            this.ButtonY = (int)newPostition.Y;
         }
 
         // Tests if the given coordinates lies into the given texture (into Button with given texture)
