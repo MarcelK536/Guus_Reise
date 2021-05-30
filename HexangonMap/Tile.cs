@@ -91,6 +91,14 @@ namespace Guus_Reise
             this.Position = position;
             this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) *Matrix.CreateRotationY(45)* Matrix.CreateTranslation(this.Position));
         }
+        public void Update(GameTime gameTime)
+        {
+            if(this.Charakter != null)
+            {
+                Charakter.Update(gameTime);
+            }
+            
+        }
 
         public void Draw(Camera camera)
         {
@@ -115,7 +123,7 @@ namespace Guus_Reise
             {
                 Vector3 hilf = new Vector3(0.0f, 0.005f, 0.0f);
                 Matrix hilf2 = (Matrix.CreateScale(1, 1, 1) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Position + hilf));
-                this.Charakter.Draw(camera, hilf2);
+                this.Charakter.Draw();
             }
         }
     }

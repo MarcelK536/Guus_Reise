@@ -114,6 +114,7 @@ namespace Guus_Reise
                         hoverTile = _board[i, k];
                         mouseOverSomething = true;
                     }
+                    _board[i,k].Update(time);
                 }
             }
 
@@ -197,6 +198,7 @@ namespace Guus_Reise
             actionMenu.Update(_board, activeTile, moveTile);
             _prevMouseState = mouseState;
             _prevKeyState = keystate;
+
         }
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)

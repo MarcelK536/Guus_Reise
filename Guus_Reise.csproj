@@ -31,9 +31,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\bin\DesktopGL\Content\" />
+    <Folder Include="Content\Charakter\" />
     <Folder Include="Content\World\" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Content\Charakter\Guu.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Content\World\worldOne.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -1,6 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
+using MonoGame.Extended.Sprites;
+using MonoGame.Extended.Serialization;
+using MonoGame.Extended.Content;
+
 
 namespace Guus_Reise
 {
@@ -22,6 +27,11 @@ namespace Guus_Reise
         private Model _model;
         private Vector3 _glow;
         private Vector3 _color;
+        private Vector2 charakterScale = new Vector2(1.5f, 1.5f);
+        private Vector2 pos = new Vector2(150f, 250f);
+
+        static AnimatedSprite spriteCharakter;
+        private static SpriteBatch _spriteBatch;
 
         public String Name
         {
@@ -157,24 +167,49 @@ namespace Guus_Reise
             this.Color = new Vector3(0, 0, 0);
         }
 
+        public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
+        {
+            SpriteSheet spritesheet;
+            spritesheet = content.Load<SpriteSheet>("Charakter\\Guu.json", new JsonContentLoader());
+            spriteCharakter = new AnimatedSprite(spritesheet);
+            spriteCharakter.Play("walk_left");
+            _spriteBatch = spriteBatch;
+        }
+
         public void Draw(Camera camera, Matrix world)
         {
-           /* foreach (var mesh in _model.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.TextureEnabled = false;
-                    effect.LightingEnabled = true;
-                    effect.EnableDefaultLighting();
-                    effect.PreferPerPixelLighting = true;
-                    effect.World = world;
-                    effect.View = camera.view;
-                    effect.Projection = camera.projection;
-                    effect.DiffuseColor = this.Glow;
-                    effect.AmbientLightColor = this.Color;
-                }
-                mesh.Draw();
-            } */
+            /* foreach (var mesh in _model.Meshes)
+             {
+                 foreach (BasicEffect effect in mesh.Effects)
+                 {
+                     effect.TextureEnabled = false;
+                     effect.LightingEnabled = true;
+                     effect.EnableDefaultLighting();
+                     effect.PreferPerPixelLighting = true;
+                     effect.World = world;
+                     effect.View = camera.view;
+                     effect.Projection = camera.projection;
+                     effect.DiffuseColor = this.Glow;
+                     effect.AmbientLightColor = this.Color;
+                 }
+                 mesh.Draw();
+             } */
+        }
+
+        //Draws the Button, Needs the .Begin and .End function in the Class to function
+        public void Draw()
+        {
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(spriteCharakter, pos, 0,charakterScale);
+            _spriteBatch.End();
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            // Play Animation
+            var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            spriteCharakter.Play("walk_left");
+            spriteCharakter.Update(deltaSeconds);
         }
 
         public void GainXp(Charakter winner, Charakter looser)
