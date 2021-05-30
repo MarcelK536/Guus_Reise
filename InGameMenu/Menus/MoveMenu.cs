@@ -35,12 +35,12 @@ namespace Guus_Reise
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
         }
 
-        public void Update(Hex[,] _board, Hex activeTile, Hex moveTile)
+        public override void Update()
         {
             base.Update();
             if (Active)
             {
-                _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
+                HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
 
                 if (btnQuitGame.IsClicked())
                 {
@@ -48,13 +48,24 @@ namespace Guus_Reise
                 }
                 if (btnConfirm.IsClicked())
                 {
-                    _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
-                    _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
-                    _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Charakter.LogicalPosition = _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].LogicalPosition;
+                    HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter;
+                    HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter = null;
+                    HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].LogicalPosition;
+                    HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter.CanMove = false;
+
+                    foreach (Charakter charakter in HexMap.playableCharacter)
+                    {
+                        if (charakter.LogicalPosition == Player1.activeTile.LogicalPosition)
+                        {
+                            HexMap.playableCharacter[HexMap.playableCharacter.IndexOf(charakter)] = HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter;
+                        }
+                    }
+                    
                     this.Active =! this.Active;
                     Player1.activeTile = null;
                     Player1.moveTile = null;
                     fightTrue = false;
+                    interactTrue = false;
                 }
                 if (fightTrue)
                 {

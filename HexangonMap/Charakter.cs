@@ -13,6 +13,7 @@ namespace Guus_Reise
     {
         private String _name;
         private bool _npc;
+        private bool _canMove;
         private int _level;
         private int _xp;
         private int _widerstandskraft; //Leben des Charakters
@@ -39,73 +40,66 @@ namespace Guus_Reise
             get => _name;
             set => _name = value;
         }
-
         public bool IsNPC
         {
             get => _npc;
             set => _npc = value;
         }
-
+        public bool CanMove
+        {
+            get => _canMove;
+            set => _canMove = value;
+        }
         public int Level
         {
             get => _level;
             set => _level = value;
         }
-
         public int XP
         {
             get => _xp;
             set => _xp = value;
         }
-
         public int Widerstandskraft
         {
             get => _widerstandskraft;
             set => _widerstandskraft = value;
         }
-
         public int Koerperkraft
         {
             get => _koerperkraft;
             set => _koerperkraft = value;
         }
-
         public int Abwehr
         {
             get => _abwehr;
             set => _abwehr = value;
         }
-
         public int Wortgewandheit
         {
             get => _wortgewandheit;
             set => _wortgewandheit = value;
         }
-
         public int Ignoranz
         {
             get => _ingoranz;
             set => _ingoranz = value;
         }
-
         public int Geschwindigkeit
         {
             get => _geschwindigkeit;
             set => _geschwindigkeit = value;
         }
-
         public int Glueck
         {
             get => _glueck;
             set => _glueck = value;
         }
-
         public int Bewegungsreichweite
         {
             get => _bewegungsreichweite;
             set => _bewegungsreichweite = value;
         }
-
         public int Fähigkeitspunkte
         {
             get => _fpunkte;

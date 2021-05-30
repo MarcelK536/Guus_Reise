@@ -77,14 +77,17 @@ namespace Guus_Reise
                 if (activeTile.Charakter != null)
                 {
                     HexMap._board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Tile.Color = new Vector3(0, 0, 2);
-                    HexMap.CalculatePossibleMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite, activeTile);
-                    HexMap.possibleMoves = HexMap.possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
+                    if (activeTile.Charakter.CanMove)
+                    {
+                        HexMap.CalculatePossibleMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite, activeTile);
+                        HexMap.possibleMoves = HexMap.possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
+                    }
 
                     if (mouseOverSomething)
                     {
                         HexMap._board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
-                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && HexMap.possibleMoves.Contains(hoverTile.LogicalPosition) && hoverTile.LogicalPosition != activeTile.LogicalPosition) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && HexMap.possibleMoves.Contains(hoverTile.LogicalPosition)) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
                         {
                             actionMenu.Active = true;
                             actionMenu.fightTrue = false;
@@ -136,7 +139,7 @@ namespace Guus_Reise
                     actionMenu.interactTrue = false;
                 }
             }
-            actionMenu.Update(HexMap._board, activeTile, moveTile);
+            actionMenu.Update();
             _prevMouseState = mouseState;
             _prevKeyState = keystate;
         }

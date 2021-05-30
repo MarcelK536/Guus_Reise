@@ -11,10 +11,13 @@ namespace Guus_Reise
     class HexMap
     {
         public static Hex[,] _board; //Spielbrett
+        public static List<Point> possibleMoves = new List<Point>();
 
         public static Camera _camera;
         public static int lastwheel; // hilfsvariable für Camerazoom
-        public static List<Point> possibleMoves = new List<Point>();
+
+        public static List<Charakter> npcs = new List<Charakter>();
+        public static List<Charakter> playableCharacter = new List<Charakter>();
         public static List<Hex> enemyNeighbourTiles = new List<Hex>();
         public static List<Hex> friendNeighbourTiles = new List<Hex>();
         public static int enemyNeighbourCount;
@@ -30,7 +33,7 @@ namespace Guus_Reise
             int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 }, { 4, 2 } };   //input Array für Positionen
 
             Createboard(tilemap, Content);
-            CreateCharakter(names, charakter, charPositions, _board);
+            CreateCharakter(names, charakter, charPositions);
             lastwheel = 0;
             Player1._prevMouseState = Mouse.GetState();
             Player1._prevKeyState = Keyboard.GetState();
@@ -82,10 +85,42 @@ namespace Guus_Reise
             if (playerTurn)
             {
                 Player1.Update(time, graphicsDevice);
+                int movecounter = playableCharacter.Count;
+                foreach(Charakter charakter in playableCharacter)
+                {
+                    if (!charakter.CanMove)
+                    {
+                        movecounter--;
+                    }
+                }
+                if (movecounter <= 0)
+                {
+                    playerTurn = !playerTurn;
+                    foreach(Charakter charakter in npcs)
+                    {
+                        charakter.CanMove = true;
+                    }
+                }
             }
             else
             {
                 Player2.Update(time, graphicsDevice);
+                int movecounter = npcs.Count;
+                foreach (Charakter charakter in npcs)
+                {
+                    if (!charakter.CanMove)
+                    {
+                        movecounter--;
+                    }
+                }
+                if (movecounter <= 0)
+                {
+                    playerTurn = !playerTurn;
+                    foreach(Charakter charakter in playableCharacter)
+                    {
+                        charakter.CanMove = true;
+                    }
+                }
             }
         }
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
@@ -257,7 +292,7 @@ namespace Guus_Reise
                 possibleMoves.Remove(new Point(x, y));
             }
         }
-        public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions, Hex[,] board)
+        public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions)
         {
             int[] hilf = new int[charakter.GetLength(1)];
 
@@ -267,8 +302,18 @@ namespace Guus_Reise
                 {
                     hilf[k] = charakter[i, k];
                 }
-                board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
-                board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = board[positions[i, 0], positions[i, 1]].LogicalPosition;
+                _board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
+                _board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = _board[positions[i, 0], positions[i, 1]].LogicalPosition;
+                if (_board[positions[i, 0], positions[i, 1]].Charakter.IsNPC)
+                {
+                    _board[positions[i, 0], positions[i, 1]].Charakter.CanMove = false;
+                    npcs.Add(_board[positions[i, 0], positions[i, 1]].Charakter);
+                }
+                else
+                {
+                    _board[positions[i, 0], positions[i, 1]].Charakter.CanMove = true;
+                    playableCharacter.Add(_board[positions[i, 0], positions[i, 1]].Charakter);
+                }
             }
         }
         public static List<Hex> GetNeighbourTiles(Hex tile)

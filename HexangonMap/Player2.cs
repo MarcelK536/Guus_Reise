@@ -10,7 +10,10 @@ namespace Guus_Reise
     {
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
-
+            foreach(Charakter charakter in HexMap.npcs)
+            {
+                charakter.CanMove = false;
+            }
         }
     }
 }
