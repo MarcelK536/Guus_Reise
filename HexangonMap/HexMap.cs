@@ -15,15 +15,15 @@ namespace Guus_Reise
         private static GraphicsDevice _graphicsDevice;
 
         private static Camera _camera;
-        private static int lastwheel;
+        private static int lastwheel; // hilfsvariable für Camerazoom
         public static Hex activeTile; //active Tile nach linkem Mousclick
         public static Hex hoverTile; //Tile über welchem der mauszeiger steht
-        public static Hex moveTile;
+        public static Hex moveTile; //als Zugziel ausgewühltes Tile
         private static List<Point> possibleMoves = new List<Point>();
-        private static List<Hex> enemyTile = new List<Hex>();
-        private static List<Hex> friendTile = new List<Hex>();
-        private static int enemys;
-        private static int friends;
+        private static List<Hex> enemyNeighbourTiles = new List<Hex>();
+        private static List<Hex> friendNeighbourTiles = new List<Hex>();
+        private static int enemyNeighbourCount;
+        private static int friendlyNeighbourCount;
         private static MouseState _prevMouseState;
         private static KeyboardState _prevKeyState;
 
@@ -35,9 +35,9 @@ namespace Guus_Reise
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-            int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1 } };         //input Array für die Charaktere
-            string[] names = new string[] { "Guu", "Peter" };       //input Array für Namen
-            int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 } };   //input Array für Positionen
+            int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1 }, { 20, 7, 8, 9, 8, 8, 2, 4, 0 } };         //input Array für die Charaktere
+            string[] names = new string[] { "Guu", "Peter", "Paul" };       //input Array für Namen
+            int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 }, { 4, 2 } };   //input Array für Positionen
 
             Createboard(tilemap, Content);
             CreateCharakter(names, charakter, charPositions, _board);
@@ -150,33 +150,35 @@ namespace Guus_Reise
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition) && hoverTile.LogicalPosition != activeTile.LogicalPosition) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
                         {
                             actionMenu.Active = true;
+                            actionMenu.fightTrue = false;
+                            actionMenu.interactTrue = false;
                             moveTile = hoverTile;
                             List<Hex> neighbours = new List<Hex>(GetNeighbourTiles(moveTile));
-                            enemys = 0;
-                            friends = 0;
-                            enemyTile.Clear();
-                            friendTile.Clear();
+                            enemyNeighbourCount = 0;
+                            friendlyNeighbourCount = 0;
+                            enemyNeighbourTiles.Clear();
+                            friendNeighbourTiles.Clear();
                             foreach(Hex tile in neighbours)
                             {
-                                if(tile.Charakter != null)
+                                if(tile.Charakter != null && tile != activeTile)
                                 {
                                     if (tile.Charakter.IsNPC != activeTile.Charakter.IsNPC)
                                     {
-                                        enemys++;
-                                        enemyTile.Add(tile);
+                                        enemyNeighbourCount++;
+                                        enemyNeighbourTiles.Add(tile);
                                     }
                                     else
                                     {
-                                        friends++;
-                                        friendTile.Add(tile);
+                                        friendlyNeighbourCount++;
+                                        friendNeighbourTiles.Add(tile);
                                     }
                                 }
                             }
-                            if(enemys > 0)
+                            if(enemyNeighbourCount > 0)
                             {
                                 actionMenu.fightTrue = true;
                             }
-                            if(friends > 0)
+                            if(friendlyNeighbourCount > 0)
                             {
                                 actionMenu.interactTrue = true;
                             }
@@ -189,10 +191,10 @@ namespace Guus_Reise
                     activeTile = null;
                     moveTile = null;
                     actionMenu.Active = false;
-                    enemys = 0;
-                    friends = 0;
-                    enemyTile.Clear();
-                    friendTile.Clear();
+                    enemyNeighbourCount = 0;
+                    friendlyNeighbourCount = 0;
+                    enemyNeighbourTiles.Clear();
+                    friendNeighbourTiles.Clear();
                     actionMenu.fightTrue = false;
                     actionMenu.interactTrue = false;
                 }
@@ -202,7 +204,6 @@ namespace Guus_Reise
             _prevKeyState = keystate;
 
         }
-
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
         {
             for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
@@ -220,7 +221,6 @@ namespace Guus_Reise
             }
             
         }
-
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
             _board = new Hex[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
@@ -243,7 +243,6 @@ namespace Guus_Reise
                 }
             }
         }
-
         public static float? Intersects(Vector2 mouseLocation, Model model, Matrix world, Matrix view, Matrix projection, Viewport viewport) //gibt die küruzeste distanz zum Model zurück (null falls keine Kollision)
         {
             float? minDistance = null;
@@ -264,7 +263,6 @@ namespace Guus_Reise
             }
             return minDistance;
         }
-
         public static float? IntersectDistance(BoundingSphere sphere, Vector2 mouseLocation, Matrix view, Matrix projection, Viewport viewport)    //überprüft wie weit ein Strahl reisen muss um mit dem gegebenen Objekt zu kollidieren
         {
             Ray mouseRay = CalculateRay(mouseLocation, view, projection, viewport);
@@ -387,10 +385,9 @@ namespace Guus_Reise
                     hilf[k] = charakter[i, k];
                 }
                 board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
+                board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = board[positions[i, 0], positions[i, 1]].LogicalPosition;
             }
         }
-
-
         public static List<Hex> GetNeighbourTiles(Hex tile)
         {
             List<Hex> list = new List<Hex>();

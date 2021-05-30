@@ -50,6 +50,7 @@ namespace Guus_Reise
                 {
                     _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Charakter = _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter;
                     _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
+                    _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Charakter.LogicalPosition = _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].LogicalPosition;
                     this.Active =! this.Active;
                     HexMap.activeTile = null;
                     HexMap.moveTile = null;
@@ -80,6 +81,7 @@ namespace Guus_Reise
             {
                 spriteBatch.Begin();
                 btnConfirm.Draw(spriteBatch,textFont);
+                btnInteract.MoveButton(btnAttack.GetPosBelow());
 
                 if (!fightTrue && !interactTrue)
                 {

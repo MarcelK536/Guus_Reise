@@ -28,9 +28,8 @@ namespace Guus_Reise
         private static Model _model;
         private Vector3 _glow;
         private Vector3 _color;
-        private Vector2 charakterScale = new Vector2(1.5f, 1.5f);
-        private Vector3 pos;
-        private Tile _tile;
+       // private Vector2 charakterScale = new Vector2(1.5f, 1.5f);
+       // private Vector3 pos;
 
         static AnimatedSprite spriteCharakter;
         private static SpriteBatch _spriteBatch;
