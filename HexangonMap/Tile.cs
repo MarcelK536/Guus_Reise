@@ -8,9 +8,6 @@ namespace Guus_Reise
     class Tile
     {
         private string _type;                   //Name des Tiletypen bspw. Wald
-        private Vector3 _position;              //Position im Raum
-        private Point _logicalPosition;         //Position im _board Array
-        private Charakter _charakter;           //Platzhalter für Charakter, falls einer auf dem Tile steht
         private Model _tile;                    //3D Model
         private Vector3 _glow;                  
         private Vector3 _color;                 
@@ -22,21 +19,7 @@ namespace Guus_Reise
             get => _type;
             set => _type = value;
         }
-        public Vector3 Position
-        {
-            get => _position;
-            set => _position = value;
-        }
-        public Point LogicalPosition
-        {
-            get => _logicalPosition;
-            set => _logicalPosition = value;
-        }
-        public Charakter Charakter
-        {
-            get => _charakter;
-            set => _charakter = value;
-        }
+        
         public Model Tile1
         {
             get => _tile;
@@ -62,9 +45,8 @@ namespace Guus_Reise
             get => _begehbarkeit;
             set => _begehbarkeit = value;
         }
-        public Tile(Vector3 position, Point logicalposition, int type, ContentManager contentmanager)
+        public Tile(Vector3 position, int type, ContentManager contentmanager)
         {
-            this.LogicalPosition = logicalposition;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
             switch (type)
@@ -88,8 +70,7 @@ namespace Guus_Reise
                     break;
             }
 
-            this.Position = position;
-            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) *Matrix.CreateRotationY(45)* Matrix.CreateTranslation(this.Position));
+            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) *Matrix.CreateRotationY(45)* Matrix.CreateTranslation(position));
         }
 
         public void Draw(Camera camera)
@@ -109,13 +90,6 @@ namespace Guus_Reise
                     effect.AmbientLightColor = this.Color;
                 }
                 mesh.Draw();
-            }
-
-            if (this.Charakter != null) //wenn auf dem Tile ein Charakter ist soll dieser auch dargestellt werden
-            {
-                Vector3 hilf = new Vector3(0.0f, 0.005f, 0.0f);
-                Matrix hilf2 = (Matrix.CreateScale(1, 1, 1) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Position + hilf));
-                this.Charakter.Draw(camera, hilf2);
             }
         }
     }

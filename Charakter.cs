@@ -19,6 +19,7 @@ namespace Guus_Reise
         private int _glueck;            //wirkt sich auf kritische trefferchance aus
         private int _bewegungsreichweite;
         private int _fpunkte;
+        private Point _logicalPosition;
         private Model _model;
         private Vector3 _glow;
         private Vector3 _color;
@@ -100,7 +101,11 @@ namespace Guus_Reise
             get => _fpunkte;
             set => _fpunkte = value;
         }
-
+        public Point LogicalPosition
+        {
+            get => _logicalPosition;
+            set => _logicalPosition = value;
+        }
         public Model Model
         {
             get => _model;

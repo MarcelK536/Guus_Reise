@@ -11,15 +11,15 @@ namespace Guus_Reise
 {
     class HexMap
     {
-        public static Tile[,] _board; //Spielbrett
+        public static Hex[,] _board; //Spielbrett
         private static Camera _camera;
         private static int lastwheel;
-        public static Tile activeTile; //active Tile nach linkem Mousclick
-        public static Tile hoverTile; //Tile über welchem der mauszeiger steht
-        public static Tile moveTile;
+        public static Hex activeTile; //active Tile nach linkem Mousclick
+        public static Hex hoverTile; //Tile über welchem der mauszeiger steht
+        public static Hex moveTile;
         private static List<Point> possibleMoves = new List<Point>();
-        private static List<Tile> enemyTile = new List<Tile>();
-        private static List<Tile> friendTile = new List<Tile>();
+        private static List<Hex> enemyTile = new List<Hex>();
+        private static List<Hex> friendTile = new List<Hex>();
         private static int enemys;
         private static int friends;
         private static MouseState _prevMouseState;
@@ -107,7 +107,7 @@ namespace Guus_Reise
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
 
-                    float? distance = Intersects(mouseLocation, _board[i, k].Tile1, _board[i, k].World, _camera.view, _camera.projection, graphicsDevice.Viewport);
+                    float? distance = Intersects(mouseLocation, _board[i, k].Tile.Tile1, _board[i, k].Tile.World, _camera.view, _camera.projection, graphicsDevice.Viewport);
                     if (distance < minDistance)
                     {
                         minDistance = distance;
@@ -121,7 +121,7 @@ namespace Guus_Reise
             {
                 if (mouseOverSomething)
                 {
-                    _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
+                    _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released) //wenn zusätzlich die linke Maustaste gedrückt wird, wird das hoverTile zum activeTile
                     {
@@ -131,29 +131,29 @@ namespace Guus_Reise
             }
             else
             {
-                _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Glow = new Vector3(0.5f, 0.5f, 0.5f); //das activeTile wird hervorgehoben
+                _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f); //das activeTile wird hervorgehoben
                 levelUpMenu.Update(_board, activeTile);
 
                 if (activeTile.Charakter != null)
                 {
-                    _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Color = new Vector3(0, 2, 0);
+                    _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Tile.Color = new Vector3(0, 0, 2);
                     CalculatePossibleMoves(activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y, activeTile.Charakter.Bewegungsreichweite);
                     possibleMoves = possibleMoves.Distinct().ToList();      //entfernt alle Duplikate aus der Liste
 
                     if (mouseOverSomething)
                     {
-                        _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Glow = new Vector3(0.3f, 0.3f, 0.3f);
+                        _board[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.3f, 0.3f, 0.3f);
 
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && possibleMoves.Contains(hoverTile.LogicalPosition) && hoverTile.LogicalPosition != activeTile.LogicalPosition) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
                         {
                             actionMenu.Active = true;
                             moveTile = hoverTile;
-                            List<Tile> neighbours = new List<Tile>(GetNeighbourTiles(moveTile));
+                            List<Hex> neighbours = new List<Hex>(GetNeighbourTiles(moveTile));
                             enemys = 0;
                             friends = 0;
                             enemyTile.Clear();
                             friendTile.Clear();
-                            foreach(Tile tile in neighbours)
+                            foreach(Hex tile in neighbours)
                             {
                                 if(tile.Charakter != null)
                                 {
@@ -219,7 +219,7 @@ namespace Guus_Reise
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
-            _board = new Tile[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
+            _board = new Hex[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
 
             for (int i = 0; i < tilemap.GetLength(0); i++)
             {
@@ -227,12 +227,14 @@ namespace Guus_Reise
                 {
                     if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                     {
-                        _board[i, k] = new Tile(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), tilemap[i, k], Content);
+                        Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                        _board[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
 
                     }
                     else
                     {
-                        _board[i, k] = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), tilemap[i, k], Content);
+                        Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                        _board[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
                     }
                 }
             }
@@ -283,8 +285,8 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
-                    _board[i, k].Glow = new Vector3(0.1f, 0.1f, 0.1f);
-                    _board[i, k].Color = new Vector3(0, 0, 0);
+                    _board[i, k].Tile.Glow = new Vector3(0.1f, 0.1f, 0.1f);
+                    _board[i, k].Tile.Color = new Vector3(0, 0, 0);
                 }
             }
         }
@@ -292,11 +294,19 @@ namespace Guus_Reise
         {
             if (bewegung >= 0)
             {
-                _board[x, y].Glow = new Vector3(0.2f, 0.2f, 0.2f);
+                _board[x, y].Tile.Glow = new Vector3(0.2f, 0.2f, 0.2f);
 
                 if (_board[x, y].Charakter != null && activeTile.LogicalPosition != new Point(x,y)) //erkennt andere charaktere
                 {
-                    _board[x, y].Color = new Vector3(4, 0, 0);
+                    if(_board[x, y].Charakter.IsNPC)
+                    {
+                        _board[x, y].Tile.Color = new Vector3(4, 0, 0);
+                    }
+                    else
+                    {
+                        _board[x, y].Tile.Color = new Vector3(0, 3, 0);
+                    }
+                    
                     possibleMoves.Remove(new Point(x, y));
                 }
                 else
@@ -305,25 +315,25 @@ namespace Guus_Reise
                     if (x - 1 >= 0)
                     {
                         possibleMoves.Add(new Point(x - 1, y));
-                        CalculatePossibleMoves(x - 1, y, bewegung - _board[x - 1, y].Begehbarkeit);
+                        CalculatePossibleMoves(x - 1, y, bewegung - _board[x - 1, y].Tile.Begehbarkeit);
                     }
 
                     if (x + 1 < _board.GetLength(0))
                     {
                         possibleMoves.Add(new Point(x + 1, y));
-                        CalculatePossibleMoves(x + 1, y, bewegung - _board[x + 1, y].Begehbarkeit);
+                        CalculatePossibleMoves(x + 1, y, bewegung - _board[x + 1, y].Tile.Begehbarkeit);
                     }
 
                     if (y - 1 >= 0)
                     {
                         possibleMoves.Add(new Point(x, y - 1));
-                        CalculatePossibleMoves(x, y - 1, bewegung - _board[x, y - 1].Begehbarkeit);
+                        CalculatePossibleMoves(x, y - 1, bewegung - _board[x, y - 1].Tile.Begehbarkeit);
                     }
 
                     if (y + 1 < _board.GetLength(1))
                     {
                         possibleMoves.Add(new Point(x, y + 1));
-                        CalculatePossibleMoves(x, y + 1, bewegung - _board[x, y + 1].Begehbarkeit);
+                        CalculatePossibleMoves(x, y + 1, bewegung - _board[x, y + 1].Tile.Begehbarkeit);
                     }
 
                     if (y % 2 == 0)
@@ -331,13 +341,13 @@ namespace Guus_Reise
                         if (x - 1 >= 0 && y - 1 >= 0)
                         {
                             possibleMoves.Add(new Point(x - 1, y - 1));
-                            CalculatePossibleMoves(x - 1, y - 1, bewegung - _board[x - 1, y - 1].Begehbarkeit);
+                            CalculatePossibleMoves(x - 1, y - 1, bewegung - _board[x - 1, y - 1].Tile.Begehbarkeit);
                         }
 
                         if (x - 1 >= 0 && y + 1 < _board.GetLength(1))
                         {
                             possibleMoves.Add(new Point(x - 1, y + 1));
-                            CalculatePossibleMoves(x - 1, y + 1, bewegung - _board[x - 1, y + 1].Begehbarkeit);
+                            CalculatePossibleMoves(x - 1, y + 1, bewegung - _board[x - 1, y + 1].Tile.Begehbarkeit);
                         }
                     }
                     else
@@ -345,13 +355,13 @@ namespace Guus_Reise
                         if (x + 1 < _board.GetLength(0) && y - 1 >= 0)
                         {
                             possibleMoves.Add(new Point(x + 1, y - 1));
-                            CalculatePossibleMoves(x + 1, y - 1, bewegung - _board[x + 1, y - 1].Begehbarkeit);
+                            CalculatePossibleMoves(x + 1, y - 1, bewegung - _board[x + 1, y - 1].Tile.Begehbarkeit);
                         }
 
                         if (x + 1 < _board.GetLength(0) && y + 1 < _board.GetLength(1))
                         {
                             possibleMoves.Add(new Point(x + 1, y + 1));
-                            CalculatePossibleMoves(x + 1, y + 1, bewegung - _board[x + 1, y + 1].Begehbarkeit);
+                            CalculatePossibleMoves(x + 1, y + 1, bewegung - _board[x + 1, y + 1].Tile.Begehbarkeit);
                         }
                     }
                 }
@@ -362,7 +372,7 @@ namespace Guus_Reise
                 possibleMoves.Remove(new Point(x, y));
             }
         }
-        public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions, Tile[,] board)
+        public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions, Hex[,] board)
         {
             int[] hilf = new int[charakter.GetLength(1)];
 
@@ -376,9 +386,9 @@ namespace Guus_Reise
                 board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
             }
         }
-        public static List<Tile> GetNeighbourTiles(Tile tile)
+        public static List<Hex> GetNeighbourTiles(Hex tile)
         {
-            List<Tile> list = new List<Tile>();
+            List<Hex> list = new List<Hex>();
             int x = tile.LogicalPosition.X;
             int y = tile.LogicalPosition.Y;
 
