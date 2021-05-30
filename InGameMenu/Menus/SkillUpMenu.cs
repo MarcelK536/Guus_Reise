@@ -39,64 +39,64 @@ namespace Guus_Reise
             btnPlusBewegung = new Button("+", btnTexture, 1, btnPlusGlueck.GetPosBelow());
         }
 
-        public void Update(Hex[,] _board, Hex _activeTile)
+        public override void Update()
         {
             base.Update();
             if (Active)
             {
-                int x = _activeTile.LogicalPosition.X;
-                int y = _activeTile.LogicalPosition.Y;
-                if (btnPlusWiderstandskraft.IsClicked() && _board[x,y].Charakter.Fähigkeitspunkte > 0)
+                int x = Player1.activeTile.LogicalPosition.X;
+                int y = Player1.activeTile.LogicalPosition.Y;
+                if (btnPlusWiderstandskraft.IsClicked() && HexMap._board[x,y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Widerstandskraft++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Widerstandskraft++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
-                if (btnPlusKoerperkraft.IsClicked() && _board[x, y].Charakter.Fähigkeitspunkte > 0)
+                if (btnPlusKoerperkraft.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Koerperkraft++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Koerperkraft++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
-                if (btnPlusAbwehr.IsClicked() && _board[x, y].Charakter.Fähigkeitspunkte > 0)
+                if (btnPlusAbwehr.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Abwehr++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Abwehr++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
-                if (btnPlusWortgewandtheit.IsClicked() && _board[x, y].Charakter.Fähigkeitspunkte > 0)
+                if (btnPlusWortgewandtheit.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Wortgewandheit++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Wortgewandheit++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
-                if (btnPlusIgnoranz.IsClicked() && _board[x, y].Charakter.Fähigkeitspunkte > 0)
+                if (btnPlusIgnoranz.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Ignoranz++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Ignoranz++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
-                if (btnPlusGeschwindigkeit.IsClicked() && _board[x, y].Charakter.Fähigkeitspunkte > 0)
+                if (btnPlusGeschwindigkeit.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Geschwindigkeit++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Geschwindigkeit++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
-                if (btnPlusGlueck.IsClicked() && _board[x, y].Charakter.Fähigkeitspunkte > 0)
+                if (btnPlusGlueck.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Glueck++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Glueck++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
-                if (btnPlusBewegung.IsClicked() && _board[x, y].Charakter.Fähigkeitspunkte > 0)
+                if (btnPlusBewegung.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
-                    _board[x, y].Charakter.Bewegungsreichweite++;
-                    _board[x, y].Charakter.Fähigkeitspunkte--;
+                    HexMap._board[x, y].Charakter.Bewegungsreichweite++;
+                    HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Hex[,] _board, Hex _activeTile)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
             if (Active)
             {
-                int x = _activeTile.LogicalPosition.X;
-                int y = _activeTile.LogicalPosition.Y;
-                if (_board[x, y].Charakter == null)
+                int x = Player1.activeTile.LogicalPosition.X;
+                int y = Player1.activeTile.LogicalPosition.Y;
+                if (HexMap._board[x, y].Charakter == null)
                 {
                     spriteBatch.Begin();
                     spriteBatch.DrawString(textFont, "Kein Charakter ausgewaehlt", btnClose.GetPosRightOf(), Color.Yellow);
@@ -105,23 +105,23 @@ namespace Guus_Reise
                 else
                 {
                     spriteBatch.Begin();
-                    spriteBatch.DrawString(textFont, "Name: " + _board[x, y].Charakter.Name + " Punkte: " + _board[x, y].Charakter.Fähigkeitspunkte, btnClose.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Name: " + HexMap._board[x, y].Charakter.Name + " Punkte: " + HexMap._board[x, y].Charakter.Fähigkeitspunkte, btnClose.GetPosRightOf(), Color.Yellow);
                     btnPlusWiderstandskraft.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + _board[x, y].Charakter.Widerstandskraft, btnPlusWiderstandskraft.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + HexMap._board[x, y].Charakter.Widerstandskraft, btnPlusWiderstandskraft.GetPosRightOf(), Color.Yellow);
                     btnPlusKoerperkraft.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Koerperkraft: " + _board[x, y].Charakter.Koerperkraft, btnPlusKoerperkraft.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Koerperkraft: " + HexMap._board[x, y].Charakter.Koerperkraft, btnPlusKoerperkraft.GetPosRightOf(), Color.Yellow);
                     btnPlusAbwehr.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Abwehr: " + _board[x, y].Charakter.Abwehr, btnPlusAbwehr.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Abwehr: " + HexMap._board[x, y].Charakter.Abwehr, btnPlusAbwehr.GetPosRightOf(), Color.Yellow);
                     btnPlusWortgewandtheit.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Wortgewandheit: " + _board[x, y].Charakter.Wortgewandheit, btnPlusWortgewandtheit.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Wortgewandheit: " + HexMap._board[x, y].Charakter.Wortgewandheit, btnPlusWortgewandtheit.GetPosRightOf(), Color.Yellow);
                     btnPlusIgnoranz.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Ignoranz: " + _board[x, y].Charakter.Ignoranz, btnPlusIgnoranz.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Ignoranz: " + HexMap._board[x, y].Charakter.Ignoranz, btnPlusIgnoranz.GetPosRightOf(), Color.Yellow);
                     btnPlusGeschwindigkeit.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Geschwindigkeit: " + _board[x, y].Charakter.Geschwindigkeit, btnPlusGeschwindigkeit.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Geschwindigkeit: " + HexMap._board[x, y].Charakter.Geschwindigkeit, btnPlusGeschwindigkeit.GetPosRightOf(), Color.Yellow);
                     btnPlusGlueck.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Glueck: " + _board[x, y].Charakter.Glueck, btnPlusGlueck.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Glueck: " + HexMap._board[x, y].Charakter.Glueck, btnPlusGlueck.GetPosRightOf(), Color.Yellow);
                     btnPlusBewegung.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Bewegungsreichweite: " + _board[x, y].Charakter.Bewegungsreichweite, btnPlusBewegung.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Bewegungsreichweite: " + HexMap._board[x, y].Charakter.Bewegungsreichweite, btnPlusBewegung.GetPosRightOf(), Color.Yellow);
                     spriteBatch.End();
                 }
             }

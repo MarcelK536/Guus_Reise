@@ -52,8 +52,8 @@ namespace Guus_Reise
                     _board[activeTile.LogicalPosition.X, activeTile.LogicalPosition.Y].Charakter = null;
                     _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Charakter.LogicalPosition = _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].LogicalPosition;
                     this.Active =! this.Active;
-                    HexMap.activeTile = null;
-                    HexMap.moveTile = null;
+                    Player1.activeTile = null;
+                    Player1.moveTile = null;
                     fightTrue = false;
                 }
                 if (fightTrue)
