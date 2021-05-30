@@ -29,10 +29,10 @@ namespace Guus_Reise
                 case "d": this.view.Translation = new Vector3(-0.1f, 0, 0) + this.view.Translation; //camera rechts
                     break;
 
-                case "hoch": this.view.Translation = new Vector3(0, 0, 0.5f) + this.view.Translation; 
+                case "hoch": this.view.Translation = new Vector3(0, 0, 0.5f) + this.view.Translation;
                     break;
 
-                case "runter": this.view.Translation = new Vector3(0, 0, -0.5f) + this.view.Translation; 
+                case "runter": this.view.Translation = new Vector3(0, 0, -0.5f) + this.view.Translation;
                     break;
 
                 default: break;

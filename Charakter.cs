@@ -179,7 +179,12 @@ namespace Guus_Reise
 
         public void GainXp(Charakter winner, Charakter looser)
         {
-            int hilf = ((looser.Level - winner.Level) * 10) + 30;
+            int hilf = ((looser.Level - winner.Level) * 3) + 30;
+            
+            if (hilf < 0)
+            {
+                hilf = 0;
+            }
 
             if (hilf+winner.XP >= 100)
             {
