@@ -113,7 +113,7 @@ namespace Guus_Reise
                     effect.World = this.World;
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
-                    effect.DiffuseColor = this.Glow;
+                    //effect.DiffuseColor = this.Glow;
                     effect.AmbientLightColor = this.Color;
                 }
                 mesh.Draw();
@@ -122,7 +122,7 @@ namespace Guus_Reise
             if (this.Charakter != null) //wenn auf dem Tile ein Charakter ist soll dieser auch dargestellt werden
             {
                 Vector3 hilf = new Vector3(0.0f, 0.005f, 0.0f);
-                Matrix hilf2 = (Matrix.CreateScale(0.1f, 0.1f, 0.1f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Position + hilf));
+                Matrix hilf2 = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Position + hilf));
                 this.Charakter.Draw(camera, hilf2);
             }
         }
