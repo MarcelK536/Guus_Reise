@@ -12,7 +12,7 @@ namespace Guus_Reise
     {
         public GraphicsDevice GraphicsDevice{ get; }
         Button btnConfirm;
-        Button btnFight;
+        Button btnAttack;
         Button btnQuitGame;
         Button btnInteract;
         public bool fightTrue;
@@ -21,17 +21,18 @@ namespace Guus_Reise
         public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), new Texture2D(graphicsDevice, 350, 600), moveMenuFont,graphicsDevice)
         {
             GraphicsDevice = graphicsDevice;
-            Texture2D btnTexture = new Texture2D(graphicsDevice, 150, 50);
+            btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
+            Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
                 btnColor[i] = Color.Aquamarine;
             }
             btnTexture.SetData(btnColor);
-            btnConfirm = new Button("Confirm Move", btnTexture, 1, (int)pos.X, (int)pos.Y+btnTexture.Height*3);
-            btnFight = new Button("Fight", btnTexture, 1, (int)pos.X, (int)pos.Y + btnTexture.Height);
-            btnInteract = new Button("Interact", btnTexture, 1, (int)pos.X, (int)pos.Y + btnTexture.Height*2);
-            btnQuitGame = new Button("Quit Game", btnTexture, 1, (int)pos.X, (int)pos.Y+btnTexture.Height*4);
+            btnConfirm = new Button("Confirm Move", btnTexture, 1, btnClose.GetPosBelow());
+            btnAttack = new Button("Attack", btnTexture, 1, btnConfirm.GetPosBelow());
+            btnInteract = new Button("Iteract", btnTexture, 1, btnAttack.GetPosBelow());
+            btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
         }
 
         public void Update(Tile[,] _board, Tile activeTile, Tile moveTile)
@@ -56,7 +57,7 @@ namespace Guus_Reise
                 }
                 if (fightTrue)
                 {
-                    if (btnFight.IsClicked())
+                    if (btnAttack.IsClicked())
                     {
                         //TODO FIGHT
                     }
@@ -79,15 +80,35 @@ namespace Guus_Reise
             {
                 spriteBatch.Begin();
                 btnConfirm.Draw(spriteBatch,textFont);
+
+                if (!fightTrue && !interactTrue)
+                {
+                    btnQuitGame.MoveButton(btnConfirm.GetPosBelow());
+                }
+                else
+                {
+                    if (fightTrue)
+                    {
+                        btnAttack.Draw(spriteBatch, textFont);
+                        btnQuitGame.MoveButton(btnAttack.GetPosBelow());
+                        if (interactTrue)
+                        {
+                            btnInteract.Draw(spriteBatch, textFont);
+                            btnQuitGame.MoveButton(btnInteract.GetPosBelow());
+                        }
+                    }
+                    else
+                    {
+                        if (interactTrue)
+                        {
+                            btnInteract.MoveButton(btnConfirm.GetPosBelow());
+                            btnInteract.Draw(spriteBatch, textFont);
+                            btnQuitGame.MoveButton(btnInteract.GetPosBelow());
+                        }
+                    }
+                }
+                
                 btnQuitGame.Draw(spriteBatch, textFont);
-                if (fightTrue)
-                {
-                    btnFight.Draw(spriteBatch, textFont);
-                }
-                if (interactTrue)
-                {
-                    btnInteract.Draw(spriteBatch, textFont);
-                }
                 spriteBatch.End();
             }
         }

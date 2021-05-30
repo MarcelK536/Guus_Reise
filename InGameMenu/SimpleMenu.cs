@@ -11,21 +11,24 @@ namespace Guus_Reise
         public Texture2D bkgTexture;
         public SpriteFont textFont;
         public Button btnClose;
-
+        public float btnWidth;
 
         public SimpleMenu(Vector2 position, Texture2D background, SpriteFont menuFont, GraphicsDevice graphicsDevice)
         {
             pos = position;
+            textFont = menuFont;
+            btnWidth = menuFont.MeasureString("Close").X+10;
             bkgTexture = background;
-            Texture2D btnTexture = new Texture2D(graphicsDevice, 100, 50);
+            Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
-            for(int i=0; i<btnColor.Length; i++)
+            for (int i = 0; i < btnColor.Length; i++)
             {
                 btnColor[i] = Color.White;
             }
             btnTexture.SetData(btnColor);
             btnClose = new Button("Close", btnTexture, 1, (int)pos.X, (int)pos.Y);
-            textFont = menuFont;
+            
+
         }
 
         public bool Active
@@ -60,6 +63,5 @@ namespace Guus_Reise
         {
             Active = false;
         }
-
     }
 }
