@@ -87,7 +87,7 @@ namespace Guus_Reise
                     effect.World = this.World;
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
-                    //effect.DiffuseColor = this.Glow;
+                    effect.DiffuseColor = this.Glow;
                     effect.AmbientLightColor = this.Color;
                 }
                 mesh.Draw();
