@@ -44,7 +44,7 @@ namespace Guus_Reise
             base.Initialize();
             MainMenu.Init();
             Credits.Init();
-            HexMap.Init(Content, GraphicsDevice);
+            HexMap.Init(Content, GraphicsDevice, _graphics);
             PlanetMenu.Init();
 
         }

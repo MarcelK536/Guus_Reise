@@ -11,6 +11,8 @@ namespace Guus_Reise
 {
     class HexMap
     {
+        private static GraphicsDevice _graphicsDevice;
+
         public static Tile[,] _board; //Spielbrett
         private static Camera _camera;
         private static int lastwheel;
@@ -30,7 +32,7 @@ namespace Guus_Reise
 
         public static SkillUpMenu levelUpMenu;
 
-        public static void Init(ContentManager Content, GraphicsDevice graphicsDevice)
+        public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
             int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1 } };         //input Array für die Charaktere
@@ -46,6 +48,7 @@ namespace Guus_Reise
             actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             actionMenu = new MoveMenu(actionMenuFont,graphicsDevice);
             levelUpMenu = new SkillUpMenu(actionMenuFont, graphicsDevice);
+            _graphicsDevice = graphicsDevice;
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -374,9 +377,16 @@ namespace Guus_Reise
                 {
                     hilf[k] = charakter[i, k];
                 }
-
-                board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
+                board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf, board[positions[i, 0], positions[i, 1]]);
             }
+        }
+
+        public static Vector2 Make2DPositionCharakter(Vector3 posNewCharakter, Tile tile)
+        {
+
+            Vector3 newCharakter = _graphicsDevice.Viewport.Unproject(posNewCharakter, _camera.projection, _camera.view, tile.World);
+            Vector2 vec = new Vector2(newCharakter.X, newCharakter.Y);
+            return vec;
         }
         public static List<Tile> GetNeighbourTiles(Tile tile)
         {

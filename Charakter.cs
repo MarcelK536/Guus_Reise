@@ -24,11 +24,12 @@ namespace Guus_Reise
         private int _glueck;            //wirkt sich auf kritische trefferchance aus
         private int _bewegungsreichweite;
         private int _fpunkte;
-        private Model _model;
+        private static Model _model;
         private Vector3 _glow;
         private Vector3 _color;
         private Vector2 charakterScale = new Vector2(1.5f, 1.5f);
-        private Vector2 pos = new Vector2(150f, 250f);
+        private Vector3 pos;
+        private Tile _tile;
 
         static AnimatedSprite spriteCharakter;
         private static SpriteBatch _spriteBatch;
@@ -143,7 +144,7 @@ namespace Guus_Reise
             this.Color = new Vector3(0, 0, 0);
         }*/
 
-        public Charakter (String name, int[] werte)
+        public Charakter (String name, int[] werte, Tile tile)
         {
             this.Name = name;
             this.Widerstandskraft = werte[0];
@@ -165,6 +166,8 @@ namespace Guus_Reise
             this.Fähigkeitspunkte = 4;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
+            this.pos = new Vector3(tile.Position.X, tile.Position.Y, tile.Position.Z);
+            this._tile = tile;
         }
 
         public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
@@ -174,35 +177,36 @@ namespace Guus_Reise
             spriteCharakter = new AnimatedSprite(spritesheet);
             spriteCharakter.Play("walk_left");
             _spriteBatch = spriteBatch;
+            _model = content.Load<Model>("blueCube2");
         }
 
         public void Draw(Camera camera, Matrix world)
         {
-            /* foreach (var mesh in _model.Meshes)
+            foreach (var mesh in _model.Meshes)
              {
                  foreach (BasicEffect effect in mesh.Effects)
                  {
-                     effect.TextureEnabled = false;
-                     effect.LightingEnabled = true;
-                     effect.EnableDefaultLighting();
-                     effect.PreferPerPixelLighting = true;
-                     effect.World = world;
+                     effect.TextureEnabled = true;
+                    //effect.LightingEnabled = true;
+                    //effect.EnableDefaultLighting();
+                    //effect.PreferPerPixelLighting = true;
+                    effect.World = world;
                      effect.View = camera.view;
                      effect.Projection = camera.projection;
-                     effect.DiffuseColor = this.Glow;
+                     //effect.DiffuseColor = this.Glow;
                      effect.AmbientLightColor = this.Color;
                  }
                  mesh.Draw();
-             } */
+             }
         }
 
         //Draws the Button, Needs the .Begin and .End function in the Class to function
-        public void Draw()
-        {
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(spriteCharakter, pos, 0,charakterScale);
-            _spriteBatch.End();
-        }
+        //public void Draw()
+        //{
+        //    _spriteBatch.Begin();
+        //    _spriteBatch.Draw(spriteCharakter, pos, 0,charakterScale);
+        //    _spriteBatch.End();
+        //}
 
         public void Update(GameTime gameTime)
         {
