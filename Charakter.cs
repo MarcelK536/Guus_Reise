@@ -149,7 +149,7 @@ namespace Guus_Reise
             this.Color = new Vector3(0, 0, 0);
         }*/
 
-        public Charakter (String name, int[] werte, Tile tile)
+        public Charakter (String name, int[] werte)
         {
             this.Name = name;
             this.Widerstandskraft = werte[0];
@@ -171,8 +171,6 @@ namespace Guus_Reise
             this.Fähigkeitspunkte = 4;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
-            this.pos = new Vector3(tile.Position.X, tile.Position.Y, tile.Position.Z);
-            this._tile = tile;
         }
 
         public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)

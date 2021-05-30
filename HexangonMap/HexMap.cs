@@ -117,7 +117,6 @@ namespace Guus_Reise
                         hoverTile = _board[i, k];
                         mouseOverSomething = true;
                     }
-                    _board[i,k].Update(time);
                 }
             }
 
@@ -387,17 +386,11 @@ namespace Guus_Reise
                 {
                     hilf[k] = charakter[i, k];
                 }
-                board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf, board[positions[i, 0], positions[i, 1]]);
+                board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
             }
         }
 
-        public static Vector2 Make2DPositionCharakter(Vector3 posNewCharakter, Tile tile)
-        {
 
-            Vector3 newCharakter = _graphicsDevice.Viewport.Unproject(posNewCharakter, _camera.projection, _camera.view, tile.World);
-            Vector2 vec = new Vector2(newCharakter.X, newCharakter.Y);
-            return vec;
-        }
         public static List<Hex> GetNeighbourTiles(Hex tile)
         {
             List<Hex> list = new List<Hex>();

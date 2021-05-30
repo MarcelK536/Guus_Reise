@@ -72,14 +72,7 @@ namespace Guus_Reise
 
             this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) *Matrix.CreateRotationY(45)* Matrix.CreateTranslation(position));
         }
-        public void Update(GameTime gameTime)
-        {
-            if(this.Charakter != null)
-            {
-                Charakter.Update(gameTime);
-            }
-            
-        }
+
 
         public void Draw(Camera camera)
         {
