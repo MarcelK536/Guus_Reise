@@ -35,12 +35,12 @@ namespace Guus_Reise
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
         }
 
-        public void Update(Tile[,] _board, Tile activeTile, Tile moveTile)
+        public void Update(Hex[,] _board, Hex activeTile, Hex moveTile)
         {
             base.Update();
             if (Active)
             {
-                _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Glow = new Vector3(0.5f, 0.5f, 0.5f);
+                _board[moveTile.LogicalPosition.X, moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
 
                 if (btnQuitGame.IsClicked())
                 {

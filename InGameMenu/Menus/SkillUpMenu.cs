@@ -39,7 +39,7 @@ namespace Guus_Reise
             btnPlusBewegung = new Button("+", btnTexture, 1, btnPlusGlueck.GetPosBelow());
         }
 
-        public void Update(Tile[,] _board, Tile _activeTile)
+        public void Update(Hex[,] _board, Hex _activeTile)
         {
             base.Update();
             if (Active)
@@ -89,7 +89,7 @@ namespace Guus_Reise
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Tile[,] _board, Tile _activeTile)
+        public void Draw(SpriteBatch spriteBatch, Hex[,] _board, Hex _activeTile)
         {
             base.Draw(spriteBatch);
             if (Active)
