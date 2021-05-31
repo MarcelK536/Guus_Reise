@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using System.Collections.Generic;
 
 namespace Guus_Reise
 {
@@ -13,6 +13,8 @@ namespace Guus_Reise
         public Button btnClose;
         public float btnWidth;
 
+
+        static List<SimpleMenu> allInstances = new List<SimpleMenu>();
         public SimpleMenu(Vector2 position, Texture2D background, SpriteFont menuFont, GraphicsDevice graphicsDevice)
         {
             pos = position;
@@ -27,8 +29,8 @@ namespace Guus_Reise
             }
             btnTexture.SetData(btnColor);
             btnClose = new Button("Close", btnTexture, 1, (int)pos.X, (int)pos.Y);
-            
 
+            allInstances.Add(this);
         }
 
         public bool Active
@@ -62,6 +64,18 @@ namespace Guus_Reise
         public virtual void Close(object INFO)
         {
             Active = false;
+        }
+
+        public static void DeactivateAllOtherMenus(SimpleMenu activeMenu)
+        {
+            foreach (SimpleMenu menu in allInstances)
+            {
+                if(menu == activeMenu)
+                {
+                    continue;
+                }
+                menu.Active = false;
+            }
         }
     }
 }
