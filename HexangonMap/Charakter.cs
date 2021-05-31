@@ -13,6 +13,7 @@ namespace Guus_Reise
     {
         private String _name;
         private bool _npc;
+        private int _ki;
         private bool _canMove;
         private int _level;
         private int _xp;
@@ -44,6 +45,11 @@ namespace Guus_Reise
         {
             get => _npc;
             set => _npc = value;
+        }
+        public int KI
+        {
+            get => _ki;
+            set => _ki = value;
         }
         public bool CanMove
         {
@@ -161,6 +167,7 @@ namespace Guus_Reise
             {
                 this.IsNPC = true;
             }
+            this.KI = werte[9];
             this.Fähigkeitspunkte = 4;
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);

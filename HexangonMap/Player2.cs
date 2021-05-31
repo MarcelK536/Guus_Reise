@@ -12,7 +12,18 @@ namespace Guus_Reise
         {
             foreach(Charakter charakter in HexMap.npcs)
             {
-                charakter.CanMove = false;
+                switch (charakter.KI)
+                {
+                    case 1:
+                        charakter.CanMove = false;
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    default: charakter.CanMove = false;
+                        break;
+                }
             }
         }
     }
