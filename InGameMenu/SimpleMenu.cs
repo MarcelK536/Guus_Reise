@@ -77,5 +77,17 @@ namespace Guus_Reise
                 menu.Active = false;
             }
         }
+
+        public static bool CheckIfAnyMenuOpen() 
+        {
+            foreach (SimpleMenu menu in allInstances)
+            {
+                if(menu.Active == true)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
