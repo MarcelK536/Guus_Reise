@@ -19,5 +19,11 @@ namespace Guus_Reise
         {
 
         }
+
+       /* public static void CalculateMoves(List<Moves> player, List<Moves> npc)
+        {
+
+        }
+       */
     }
 }
