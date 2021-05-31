@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using static Guus_Reise.Game1;
 
 namespace Guus_Reise
 {
@@ -72,6 +73,10 @@ namespace Guus_Reise
                     if (btnAttack.IsClicked())
                     {
                         //TODO FIGHT
+                        Fighthandler.npcTiles = HexMap.enemyNeighbourTiles;
+                        Fighthandler.playerTiles = HexMap.friendNeighbourTiles;
+                        Fighthandler.playerTiles.Add(Player1.activeTile);
+                        GState = Game1.GameState.InFight;
                     }
                 }
                 if (interactTrue)
