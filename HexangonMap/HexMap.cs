@@ -28,12 +28,13 @@ namespace Guus_Reise
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-            int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1, 1 }, { 20, 7, 8, 9, 8, 8, 2, 4, 0, 0 } };         //input Array für die Charaktere
+            //int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1, 1 }, { 20, 7, 8, 9, 8, 8, 2, 4, 0, 0 } };         //input Array für die Charaktere
+            int[] charakterlevel = new int[] { 5, 4, 4 };
             string[] names = new string[] { "Guu", "Peter", "Paul" };       //input Array für Namen
             int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 }, { 4, 2 } };   //input Array für Positionen
 
             Createboard(tilemap, Content);
-            CreateCharakter(names, charakter, charPositions);
+            CreateCharakter(names, charakterlevel, charPositions);
             lastwheel = 0;
             Player1._prevMouseState = Mouse.GetState();
             Player1._prevKeyState = Keyboard.GetState();
@@ -292,17 +293,18 @@ namespace Guus_Reise
                 possibleMoves.Remove(new Point(x, y));
             }
         }
-        public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions)
+        public static void CreateCharakter(string[] names, int[] charakter, int[,] positions)
         {
-            int[] hilf = new int[charakter.GetLength(1)];
+            //int[] hilf = new int[charakter.GetLength(1)];
 
             for (int i = 0; i < charakter.GetLength(0); i++)
             {
-                for (int k = 0; k < charakter.GetLength(1); k++)
-                {
-                    hilf[k] = charakter[i, k];
-                }
-                _board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
+                //for (int k = 0; k < charakter.GetLength(1); k++)
+                //{
+                //    hilf[k] = charakter[i, k];
+                //}
+                //_board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
+                _board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], charakter[i]);
                 _board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = _board[positions[i, 0], positions[i, 1]].LogicalPosition;
                 if (_board[positions[i, 0], positions[i, 1]].Charakter.IsNPC)
                 {
