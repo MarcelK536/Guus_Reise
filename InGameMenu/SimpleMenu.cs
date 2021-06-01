@@ -8,27 +8,25 @@ namespace Guus_Reise
     {
         protected bool _active;
         public Vector2 pos;
-        public Texture2D bkgTexture;
         public SpriteFont textFont;
         public Button btnClose;
         public float btnWidth;
 
 
         static List<SimpleMenu> allInstances = new List<SimpleMenu>();
-        public SimpleMenu(Vector2 position, Texture2D background, SpriteFont menuFont, GraphicsDevice graphicsDevice)
+        public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice)
         {
             pos = position;
             textFont = menuFont;
-            btnWidth = menuFont.MeasureString("Close").X+10;
-            bkgTexture = background;
-            Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
-            Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
+            btnWidth = menuFont.MeasureString("Close").X + 10;
+            Texture2D btnCloseTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
+            Color[] btnColor = new Color[btnCloseTexture.Width * btnCloseTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
                 btnColor[i] = Color.White*0.5f;
             }
-            btnTexture.SetData(btnColor);
-            btnClose = new Button("Close", btnTexture, 1, (int)pos.X, (int)pos.Y);
+            btnCloseTexture.SetData(btnColor);
+            btnClose = new Button("Close", btnCloseTexture, 1, (int)pos.X, (int)pos.Y);
 
             allInstances.Add(this);
         }
@@ -55,7 +53,6 @@ namespace Guus_Reise
             if (Active)
             {
                 spriteBatch.Begin();
-                spriteBatch.Draw(bkgTexture, pos, Color.Black);
                 btnClose.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }

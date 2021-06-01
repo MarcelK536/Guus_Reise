@@ -7,8 +7,7 @@ using System.Text;
 namespace Guus_Reise
 {
     class SkillUpMenu : SimpleMenu
-    {
-        public GraphicsDevice GraphicsDevice { get; }
+    {  
         Button btnPlusWiderstandskraft;
         Button btnPlusKoerperkraft;
         Button btnPlusAbwehr;
@@ -19,9 +18,8 @@ namespace Guus_Reise
         Button btnPlusBewegung;
 
 
-        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), new Texture2D(graphicsDevice, 350, 600), moveMenuFont, graphicsDevice) 
+        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), moveMenuFont, graphicsDevice)
         {
-            GraphicsDevice = graphicsDevice;
             Texture2D btnTexture = new Texture2D(graphicsDevice, 25, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)

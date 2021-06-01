@@ -18,8 +18,9 @@ namespace Guus_Reise
         Button btnInteract;
         public bool fightTrue;
         public bool interactTrue;
+        static public Texture2D menuTexture { get; set; }
 
-        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), new Texture2D(graphicsDevice, 350, 600), moveMenuFont,graphicsDevice)
+        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), moveMenuFont,graphicsDevice)
         {
             GraphicsDevice = graphicsDevice;
             btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
@@ -27,7 +28,7 @@ namespace Guus_Reise
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
-                btnColor[i] = Color.Aquamarine*0.8f;
+                btnColor[i] = Color.Aquamarine*0.5f;
             }
             btnTexture.SetData(btnColor);
             btnConfirm = new Button("Confirm Move", btnTexture, 1, btnClose.GetPosBelow());
