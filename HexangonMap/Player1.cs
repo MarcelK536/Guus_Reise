@@ -91,6 +91,7 @@ namespace Guus_Reise
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && HexMap.possibleMoves.Contains(hoverTile.LogicalPosition)) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
                         {
                             actionMenu.Active = true;
+                            SimpleMenu.DeactivateAllOtherMenus(actionMenu);
                             actionMenu.fightTrue = false;
                             actionMenu.interactTrue = false;
                             moveTile = hoverTile;

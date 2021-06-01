@@ -27,7 +27,7 @@ namespace Guus_Reise
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
-                btnColor[i] = Color.Aquamarine;
+                btnColor[i] = Color.Aquamarine*0.8f;
             }
             btnTexture.SetData(btnColor);
             btnConfirm = new Button("Confirm Move", btnTexture, 1, btnClose.GetPosBelow());

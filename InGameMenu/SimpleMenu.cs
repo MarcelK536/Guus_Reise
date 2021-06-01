@@ -25,7 +25,7 @@ namespace Guus_Reise
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
-                btnColor[i] = Color.White;
+                btnColor[i] = Color.White*0.5f;
             }
             btnTexture.SetData(btnColor);
             btnClose = new Button("Close", btnTexture, 1, (int)pos.X, (int)pos.Y);
