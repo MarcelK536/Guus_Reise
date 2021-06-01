@@ -48,8 +48,8 @@ namespace Guus_Reise
             base.Update();
             if (Active)
             {
-                int x = Player1.activeTile.LogicalPosition.X;
-                int y = Player1.activeTile.LogicalPosition.Y;
+                int x = Player.activeTile.LogicalPosition.X;
+                int y = Player.activeTile.LogicalPosition.Y;
                 if (btnPlusWiderstandskraft.IsClicked() && HexMap._board[x,y].Charakter.Fähigkeitspunkte > 0)
                 {
                     HexMap._board[x, y].Charakter.Widerstandskraft++;
@@ -108,8 +108,8 @@ namespace Guus_Reise
             base.Draw(spriteBatch);
             if (Active)
             {
-                int x = Player1.activeTile.LogicalPosition.X;
-                int y = Player1.activeTile.LogicalPosition.Y;
+                int x = Player.activeTile.LogicalPosition.X;
+                int y = Player.activeTile.LogicalPosition.Y;
                 if (HexMap._board[x, y].Charakter == null)
                 {
                     spriteBatch.Begin();

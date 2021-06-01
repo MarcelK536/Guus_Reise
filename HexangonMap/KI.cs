@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Guus_Reise
 {
-    class Player2
+    class KI
     {
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {

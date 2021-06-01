@@ -36,13 +36,13 @@ namespace Guus_Reise
             Createboard(tilemap, Content);
             CreateCharakter(names, charakterlevel, charPositions);
             lastwheel = 0;
-            Player1._prevMouseState = Mouse.GetState();
-            Player1._prevKeyState = Keyboard.GetState();
+            Player._prevMouseState = Mouse.GetState();
+            Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
 
-            Player1.actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
-            Player1.actionMenu = new MoveMenu(Player1.actionMenuFont,graphicsDevice);
-            Player1.levelUpMenu = new SkillUpMenu(Player1.actionMenuFont, graphicsDevice);
+            Player.actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
+            Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice);
+            Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice);
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -85,7 +85,7 @@ namespace Guus_Reise
 
             if (playerTurn)
             {
-                Player1.Update(time, graphicsDevice);
+                Player.Update(time, graphicsDevice);
                 int movecounter = playableCharacter.Count;
                 foreach(Charakter charakter in playableCharacter)
                 {
@@ -105,7 +105,7 @@ namespace Guus_Reise
             }
             else
             {
-                Player2.Update(time, graphicsDevice);
+                KI.Update(time, graphicsDevice);
                 int movecounter = npcs.Count;
                 foreach (Charakter charakter in npcs)
                 {
@@ -135,7 +135,7 @@ namespace Guus_Reise
             }
             if (playerTurn)
             {
-                Player1.Draw(spriteBatch, gameTime);
+                Player.Draw(spriteBatch, gameTime);
             }
             
             
