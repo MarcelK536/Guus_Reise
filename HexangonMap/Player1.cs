@@ -37,6 +37,7 @@ namespace Guus_Reise
          
             if (Keyboard.GetState().IsKeyDown(Keys.H) && _prevKeyState.IsKeyUp(Keys.H))
             {
+                SimpleMenu.DeactivateAllOtherMenus(levelUpMenu);
                 levelUpMenu.Active = !levelUpMenu.Active;
             }
 
