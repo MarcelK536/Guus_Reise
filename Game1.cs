@@ -47,7 +47,7 @@ namespace Guus_Reise
             Credits.Init();
             HexMap.Init(Content, GraphicsDevice, _graphics);
             PlanetMenu.Init();
-
+            Fighthandler.Init(GraphicsDevice);
         }
 
         protected override void LoadContent()

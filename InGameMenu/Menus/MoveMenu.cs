@@ -11,7 +11,6 @@ namespace Guus_Reise
 {
     class MoveMenu : SimpleMenu
     {
-        public GraphicsDevice GraphicsDevice{ get; }
         Button btnConfirm;
         Button btnAttack;
         Button btnQuitGame;
@@ -22,7 +21,6 @@ namespace Guus_Reise
 
         public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
         {
-            GraphicsDevice = graphicsDevice;
             btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
@@ -39,8 +37,6 @@ namespace Guus_Reise
             menuButtons.Add(btnInteract);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
             menuButtons.Add(btnQuitGame);
-
-
         }
 
         public override void Update()
