@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-
-
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using static Guus_Reise.Game1;
 namespace Guus_Reise
 {
     class Fighthandler
@@ -12,11 +13,24 @@ namespace Guus_Reise
         public static List<Hex> npcTiles = new List<Hex>();
         public static void Update()
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                GState = Game1.GameState.InGame;
+            }
+
 
         }
 
-        public static void Draw()
+        public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            foreach (Hex tile in playerTiles)
+            {
+                tile.Draw(HexMap.Camera);
+            }
+            foreach (Hex tile in npcTiles)
+            {
+                tile.Draw(HexMap.Camera);
+            }
 
         }
 

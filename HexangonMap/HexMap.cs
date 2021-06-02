@@ -13,7 +13,7 @@ namespace Guus_Reise
         public static Hex[,] _board; //Spielbrett
         public static List<Point> possibleMoves = new List<Point>();
 
-        public static Camera _camera;
+        private static Camera camera;
         public static int lastwheel; // hilfsvariable für Camerazoom
 
         public static List<Charakter> npcs = new List<Charakter>();
@@ -24,6 +24,8 @@ namespace Guus_Reise
         public static int friendlyNeighbourCount;
         
         private static bool playerTurn;
+
+        internal static Camera Camera { get => camera; set => camera = value; }
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
@@ -46,40 +48,40 @@ namespace Guus_Reise
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
         {
-            _camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
+            Camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                _camera.MoveCamera("w");
+                Camera.MoveCamera("w");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                _camera.MoveCamera("s");
+                Camera.MoveCamera("s");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                _camera.MoveCamera("a");
+                Camera.MoveCamera("a");
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                _camera.MoveCamera("d");
+                Camera.MoveCamera("d");
             }
 
             if (Mouse.GetState().ScrollWheelValue > lastwheel)
             {
                 lastwheel = Mouse.GetState().ScrollWheelValue;
-                _camera.MoveCamera("hoch");
+                Camera.MoveCamera("hoch");
             }
 
             if (Mouse.GetState().ScrollWheelValue < lastwheel)
             {
                 lastwheel = Mouse.GetState().ScrollWheelValue;
-                _camera.MoveCamera("runter");
+                Camera.MoveCamera("runter");
             }
 
             if (playerTurn)
@@ -129,7 +131,7 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
-                    _board[i, k].Draw(_camera);
+                    _board[i, k].Draw(Camera);
                 }
             }
             if (playerTurn)

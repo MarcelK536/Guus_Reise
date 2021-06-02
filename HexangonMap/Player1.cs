@@ -48,7 +48,7 @@ namespace Guus_Reise
                 for (int k = 0; k < HexMap._board.GetLength(1); k++)
                 {
 
-                    float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap._camera.view, HexMap._camera.projection, graphicsDevice.Viewport);
+                    float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap.Camera.view, HexMap.Camera.projection, graphicsDevice.Viewport);
                     if (distance < minDistance)
                     {
                         minDistance = distance;
