@@ -32,9 +32,13 @@ namespace Guus_Reise
             }
             btnTexture.SetData(btnColor);
             btnConfirm = new Button("Confirm Move", btnTexture, 1, btnClose.GetPosBelow());
+            menuButtons.Add(btnConfirm);
             btnAttack = new Button("Attack", btnTexture, 1, btnConfirm.GetPosBelow());
+            menuButtons.Add(btnAttack);
             btnInteract = new Button("Iteract", btnTexture, 1, btnAttack.GetPosBelow());
+            menuButtons.Add(btnInteract);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
+            menuButtons.Add(btnQuitGame);
         }
 
         public override void Update()

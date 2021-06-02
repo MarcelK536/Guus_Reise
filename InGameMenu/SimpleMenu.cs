@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Timers;
 
 namespace Guus_Reise
 {
@@ -12,6 +13,10 @@ namespace Guus_Reise
         public Button btnClose;
         public float btnWidth;
 
+
+        public List<Button> menuButtons= new List<Button>();
+        public float menuWidth;
+        Timer blendTimer = new Timer(1000);
 
         static List<SimpleMenu> allInstances = new List<SimpleMenu>();
         public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice)
@@ -27,6 +32,9 @@ namespace Guus_Reise
             }
             btnCloseTexture.SetData(btnColor);
             btnClose = new Button("Close", btnCloseTexture, 1, (int)pos.X, (int)pos.Y);
+            menuButtons.Add(btnClose);
+
+            menuWidth = menuButtons[menuButtons.Count-1].TextureDefault.Width;
 
             allInstances.Add(this);
         }
@@ -52,9 +60,17 @@ namespace Guus_Reise
         {
             if (Active)
             {
+                BlendIn();
                 spriteBatch.Begin();
                 btnClose.Draw(spriteBatch, textFont);
                 spriteBatch.End();
+            }
+            else
+            {
+                foreach (Button button in menuButtons)
+                {
+                    button.ButtonX = (int) -menuWidth;
+                } 
             }
         }
 
@@ -85,6 +101,17 @@ namespace Guus_Reise
                 }
             }
             return false;
+        }
+
+        public virtual void BlendIn()
+        {
+            foreach (Button button in menuButtons)
+            {
+                if (button.ButtonX < 0)
+                {
+                    button.ButtonX += 2;
+                }
+            }
         }
     }
 }
