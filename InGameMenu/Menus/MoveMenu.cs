@@ -20,7 +20,7 @@ namespace Guus_Reise
         public bool interactTrue;
         static public Texture2D menuTexture { get; set; }
 
-        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), moveMenuFont,graphicsDevice)
+        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
         {
             GraphicsDevice = graphicsDevice;
             btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
@@ -39,6 +39,8 @@ namespace Guus_Reise
             menuButtons.Add(btnInteract);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
             menuButtons.Add(btnQuitGame);
+
+
         }
 
         public override void Update()

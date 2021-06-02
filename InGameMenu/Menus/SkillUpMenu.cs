@@ -18,7 +18,7 @@ namespace Guus_Reise
         Button btnPlusBewegung;
 
 
-        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), moveMenuFont, graphicsDevice)
+        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont, graphicsDevice,blend)
         {
             Texture2D btnTexture = new Texture2D(graphicsDevice, 25, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
@@ -28,13 +28,21 @@ namespace Guus_Reise
             }
             btnTexture.SetData(btnColor);
             btnPlusWiderstandskraft = new Button("+", btnTexture, 1, btnClose.GetPosBelow());
+            menuButtons.Add(btnPlusWiderstandskraft);
             btnPlusKoerperkraft = new Button("+", btnTexture, 1, btnPlusWiderstandskraft.GetPosBelow());
+            menuButtons.Add(btnPlusKoerperkraft);
             btnPlusAbwehr = new Button("+", btnTexture, 1, btnPlusKoerperkraft.GetPosBelow());
+            menuButtons.Add(btnPlusAbwehr);
             btnPlusWortgewandtheit = new Button("+", btnTexture, 1, btnPlusAbwehr.GetPosBelow());
+            menuButtons.Add(btnPlusWortgewandtheit);
             btnPlusIgnoranz = new Button("+", btnTexture, 1, btnPlusWortgewandtheit.GetPosBelow());
+            menuButtons.Add(btnPlusIgnoranz);
             btnPlusGeschwindigkeit = new Button("+", btnTexture, 1, btnPlusIgnoranz.GetPosBelow());
+            menuButtons.Add(btnPlusGeschwindigkeit);
             btnPlusGlueck = new Button("+", btnTexture, 1, btnPlusGeschwindigkeit.GetPosBelow());
+            menuButtons.Add(btnPlusGlueck);
             btnPlusBewegung = new Button("+", btnTexture, 1, btnPlusGlueck.GetPosBelow());
+            menuButtons.Add(btnPlusBewegung);
         }
 
         public override void Update()
@@ -100,7 +108,13 @@ namespace Guus_Reise
                     spriteBatch.DrawString(textFont, "Kein Charakter ausgewaehlt", btnClose.GetPosRightOf(), Color.Yellow);
                     spriteBatch.End();
                 }
-                else
+                else if (HexMap._board[x,y].Charakter.IsNPC == true) 
+                {
+                    spriteBatch.Begin();
+                    spriteBatch.DrawString(textFont, "Name: " + HexMap._board[x, y].Charakter.Name, btnClose.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.End();
+                }
+                else 
                 {
                     spriteBatch.Begin();
                     spriteBatch.DrawString(textFont, "Name: " + HexMap._board[x, y].Charakter.Name + " Punkte: " + HexMap._board[x, y].Charakter.Fähigkeitspunkte, btnClose.GetPosRightOf(), Color.Yellow);

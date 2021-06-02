@@ -13,13 +13,21 @@ namespace Guus_Reise
         public Button btnClose;
         public float btnWidth;
 
-
+        public BlendDirection blendDirection;
         public List<Button> menuButtons= new List<Button>();
         public float menuWidth;
-        Timer blendTimer = new Timer(1000);
+        
+        public enum BlendDirection
+        {
+            None,
+            LeftToRight,
+            RightToLeft,
+            TopToBottom,
+            BottomToTop
+        }
 
         static List<SimpleMenu> allInstances = new List<SimpleMenu>();
-        public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice)
+        public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction)
         {
             pos = position;
             textFont = menuFont;
@@ -34,6 +42,7 @@ namespace Guus_Reise
             btnClose = new Button("Close", btnCloseTexture, 1, (int)pos.X, (int)pos.Y);
             menuButtons.Add(btnClose);
 
+            blendDirection = direction;
             menuWidth = menuButtons[menuButtons.Count-1].TextureDefault.Width;
 
             allInstances.Add(this);
@@ -58,6 +67,24 @@ namespace Guus_Reise
         
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+            if (blendDirection == BlendDirection.None)
+            {
+                if (Active)
+                {
+                    spriteBatch.Begin();
+                    btnClose.Draw(spriteBatch, textFont);
+                    spriteBatch.End();
+                }
+            }
+            else if(blendDirection == BlendDirection.LeftToRight)
+            {
+                DrawBlendLeftToRight(spriteBatch);
+            }
+
+        }
+
+        public virtual void DrawBlendLeftToRight(SpriteBatch spriteBatch)
+        {
             if (Active)
             {
                 BlendIn();
@@ -69,8 +96,8 @@ namespace Guus_Reise
             {
                 foreach (Button button in menuButtons)
                 {
-                    button.ButtonX = (int) -menuWidth;
-                } 
+                    button.ButtonX = (int)-menuWidth;
+                }
             }
         }
 
