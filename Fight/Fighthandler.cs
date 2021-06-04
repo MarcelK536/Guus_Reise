@@ -13,10 +13,10 @@ namespace Guus_Reise
         public static List<Hex> playerTiles = new List<Hex>();
         public static List<Hex> npcTiles = new List<Hex>();
 
-        static int[,] fightMap = new int[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }; //input Array der die Art der Tiles für die map generierung angibt
+        static int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
         public static Hex[,] _fightBoard;
-        public static int[,] charPositionsPlayer = new int[,] { { 0, 1 }, { 1, 0 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
-        public static int[,] charPositionsEnemy = new int[,] { { 5, 0 }, { 5, 1 }, { 5, 2 }, { 3, 1 } };   //Positionen für Gegner
+        public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
+        public static int[,] charPositionsEnemy = new int[,] { { 6, 0 }, { 6, 1 }, { 6, 2 }, { 4, 1 } };   //Positionen für Gegner
 
         public static int[,] originalPositions = new int[,] { };
 
@@ -58,18 +58,21 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < tilemap.GetLength(1); k++)
                 {
-                    if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
+                    if (tilemap[i, k] != 0)
                     {
-                        Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        _fightBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
+                        {
+                            Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                            _fightBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
 
+                        }
+                        else
+                        {
+                            Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                            _fightBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        }
                     }
-                    else
-                    {
-                        Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        _fightBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
-                    }
-                }
+                }           
             }
         }
 
@@ -89,7 +92,10 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < _fightBoard.GetLength(1); k++)
                 {
-                    _fightBoard[i, k].Draw(HexMap.Camera);
+                    if (_fightBoard[i, k] != null)
+                    {
+                        _fightBoard[i, k].Draw(HexMap.Camera);
+                    }
                 }
             }
         
