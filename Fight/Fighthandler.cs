@@ -10,7 +10,7 @@ namespace Guus_Reise
 {
     class Fighthandler
     {
-        public static List<Hex> playerTiles = new List<Hex>();
+        public static List<Hex> playerTiles = new List<Hex>();      //Der Initierende Spieler steht am Ende der Liste
         public static List<Hex> npcTiles = new List<Hex>();
 
         static int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
@@ -18,7 +18,9 @@ namespace Guus_Reise
         public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
         public static int[,] charPositionsEnemy = new int[,] { { 6, 0 }, { 6, 1 }, { 6, 2 }, { 4, 1 } };   //Positionen für Gegner
 
-        public static int[,] originalPositions = new int[,] { };
+        public static int[,] originalPositionsPlayer = new int[,] { };
+        public static int[,] originalPositionsEnemy = new int[,] { };
+
 
         public static FightMenu fightMenu;
 
@@ -30,12 +32,34 @@ namespace Guus_Reise
         }
 
         public static void InitPlayers()
-        {
+        {  
+            for(int i = 0; i < playerTiles.Count - 1; i++) 
+            {
+                originalPositionsPlayer[i, 0] = playerTiles[i].LogicalPosition.X;
+                originalPositionsPlayer[i, 1] = playerTiles[i].LogicalPosition.Y;
+            }
+            for (int i = 0; i < npcTiles.Count - 1; i++)
+            {
+                originalPositionsEnemy[i, 0] = playerTiles[i].LogicalPosition.X;
+                originalPositionsEnemy[i, 1] = playerTiles[i].LogicalPosition.Y;
+            }
+
+            for(int i = 0; i < playerTiles.Count - 1; i++)
+            {
+                if (i == playerTiles.Count - 1)
+                {
+                    _fightBoard[charPositionsPlayer[charPositionsPlayer.Length - 1, 0], charPositionsPlayer[charPositionsPlayer.Length - 1, 1]].Charakter = playerTiles[i].Charakter;
+                }
+                else
+                {
+                    _fightBoard[charPositionsPlayer[i, 0], charPositionsPlayer[i, 1]].Charakter = playerTiles[i].Charakter;
+                }
+            }
             /* 
              * ToDo: -  Kopiere die originalen Positionen in originalPositions
              *       -  Platziere die Spieler auf ihren Platz in der FightMap (charPositionsXXX) Arrays
              *       -  Lade die Texturen
-             */      
+             */
         }
 
         public static void Update()
@@ -78,10 +102,12 @@ namespace Guus_Reise
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+           /*
             foreach (Hex tile in playerTiles)
             {
                 tile.Draw(HexMap.Camera);
             }
+           */
             foreach (Hex tile in npcTiles)
             {
                 tile.Draw(HexMap.Camera);
