@@ -40,10 +40,6 @@ namespace Guus_Reise
         public void Draw(Camera camera)
         {
             this.Tile.Draw(camera);
-            if (this.Charakter != null) //wenn auf dem Tile ein Charakter ist soll dieser auch dargestellt werden
-            {
-                this.Charakter.Draw(camera);
-            }
         }
 
     }

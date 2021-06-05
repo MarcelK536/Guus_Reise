@@ -30,7 +30,7 @@ namespace Guus_Reise
         private static Model _model;
         private Vector3 _glow;
         private Vector3 _color;
-        private Vector3 cubeScale = new Vector3(0.09f, 0.09f, 0.09f);
+        private Vector3 cubeScale = new Vector3(0.002f, 0.002f, 0.002f);
         CharakterAnimation _charakterAnimation;
 
 
@@ -179,7 +179,7 @@ namespace Guus_Reise
 
         public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
         {
-            _model = content.Load<Model>("Charakter\\onesiteblue");
+            _model = content.Load<Model>("Charakter\\alienTelefon");
         }
 
         public void Draw(Camera camera)

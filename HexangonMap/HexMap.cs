@@ -52,6 +52,16 @@ namespace Guus_Reise
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
 
+            // Aktualisieren der Charakter-Position
+            foreach(Charakter c in playableCharacter)
+            {
+                c.CharakterAnimation.Update();
+            }
+            foreach(Charakter c in npcs)
+            {
+                c.CharakterAnimation.Update();
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 _camera.MoveCamera("w");
@@ -137,6 +147,16 @@ namespace Guus_Reise
             if (playerTurn)
             {
                 Player1.Draw(spriteBatch, gameTime);
+            }
+
+            //Zeichnen der Charaktere nach dem die komplette Map fertig ist
+            foreach(Charakter c in playableCharacter)
+            {
+                c.Draw(_camera);
+            }
+            foreach (Charakter c in npcs)
+            {
+                c.Draw(_camera);
             }
 
         }
