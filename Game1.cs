@@ -5,6 +5,7 @@ using System.Linq;
 
 //Adding SubClasses within Folders
 using Guus_Reise.Menu;
+using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {
@@ -59,6 +60,7 @@ namespace Guus_Reise
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
             Charakter.LoadContent(Content, _spriteBatch);
+            CharakterAnimation.LoadContent(Content, _spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)

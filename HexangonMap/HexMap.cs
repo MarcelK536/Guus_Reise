@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {
@@ -50,11 +51,16 @@ namespace Guus_Reise
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
-            for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
+            //Updaten der Animation
+            for (int i = 0; i < _board.GetLength(0); i++)        
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
-                    _board[i, k].Update(time);
+                    if(_board[i, k].Charakter != null)
+                    {
+                        _board[i, k].Charakter.CharakterAnimation.Update(time);
+                    }
+                    
                 }
             }
 
@@ -144,10 +150,10 @@ namespace Guus_Reise
             {
                 Player1.Draw(spriteBatch, gameTime);
             }
-            foreach(Charakter c in playableCharacter)
-            {
-                c.DrawAnimation();
-            }
+            //foreach(Charakter c in playableCharacter)
+            //{
+            //    c.CharakterAnimation.Draw();
+            //}
            
 
 
@@ -308,6 +314,7 @@ namespace Guus_Reise
         public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions)
         {
             int[] hilf = new int[charakter.GetLength(1)];
+            Hex curr;
 
             for (int i = 0; i < charakter.GetLength(0); i++)
             {
@@ -315,10 +322,8 @@ namespace Guus_Reise
                 {
                     hilf[k] = charakter[i, k];
                 }
-                _board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
-                Vector3 translation = new Vector3(0.0f, 0.05f, 0f);
-                Vector3 cubePosition = _board[positions[i, 0], positions[i, 1]].Position + translation;
-                _board[positions[i, 0], positions[i, 1]].Charakter.CubePosition = cubePosition;
+                curr = _board[positions[i, 0], positions[i, 1]];
+                curr.Charakter = new Charakter(names[i], hilf, curr);
                 _board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = _board[positions[i, 0], positions[i, 1]].LogicalPosition;
                 if (_board[positions[i, 0], positions[i, 1]].Charakter.IsNPC)
                 {
