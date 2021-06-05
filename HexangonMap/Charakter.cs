@@ -30,8 +30,10 @@ namespace Guus_Reise
         private static Model _model;
         private Vector3 _glow;
         private Vector3 _color;
-       // private Vector2 charakterScale = new Vector2(1.5f, 1.5f);
-       // private Vector3 pos;
+        private Vector2 charakterScale = new Vector2(1.5f, 1.5f);
+        private Vector3 _cubePosition;
+
+        private Vector2 positionAnimatedSprite = new Vector2(460f, 270f);
 
         static AnimatedSprite spriteCharakter;
         private static SpriteBatch _spriteBatch;
@@ -45,6 +47,11 @@ namespace Guus_Reise
         {
             get => _npc;
             set => _npc = value;
+        }
+        public Vector3 CubePosition
+        {
+            get => _cubePosition;
+            set => _cubePosition = value;
         }
         public int KI
         {
@@ -186,7 +193,7 @@ namespace Guus_Reise
         public void Draw(Camera camera, Matrix world)
         {
             foreach (var mesh in _model.Meshes)
-             {
+            {
                  foreach (BasicEffect effect in mesh.Effects)
                  {
                      effect.TextureEnabled = true;
@@ -204,12 +211,12 @@ namespace Guus_Reise
         }
 
         //Draws the Button, Needs the .Begin and .End function in the Class to function
-        //public void Draw()
-        //{
-        //    _spriteBatch.Begin();
-        //    _spriteBatch.Draw(spriteCharakter, pos, 0,charakterScale);
-        //    _spriteBatch.End();
-        //}
+        public void DrawAnimation()
+        {
+            _spriteBatch.Begin();
+            _spriteBatch.Draw(spriteCharakter, positionAnimatedSprite, 0, charakterScale);
+            _spriteBatch.End();
+        }
 
         public void Update(GameTime gameTime)
         {

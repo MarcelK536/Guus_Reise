@@ -50,6 +50,14 @@ namespace Guus_Reise
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
+            for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
+            {
+                for (int k = 0; k < _board.GetLength(1); k++)
+                {
+                    _board[i, k].Update(time);
+                }
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 _camera.MoveCamera("w");
@@ -136,8 +144,13 @@ namespace Guus_Reise
             {
                 Player1.Draw(spriteBatch, gameTime);
             }
-            
-            
+            foreach(Charakter c in playableCharacter)
+            {
+                c.DrawAnimation();
+            }
+           
+
+
         }
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
@@ -303,6 +316,9 @@ namespace Guus_Reise
                     hilf[k] = charakter[i, k];
                 }
                 _board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
+                Vector3 translation = new Vector3(0.0f, 0.05f, 0f);
+                Vector3 cubePosition = _board[positions[i, 0], positions[i, 1]].Position + translation;
+                _board[positions[i, 0], positions[i, 1]].Charakter.CubePosition = cubePosition;
                 _board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = _board[positions[i, 0], positions[i, 1]].LogicalPosition;
                 if (_board[positions[i, 0], positions[i, 1]].Charakter.IsNPC)
                 {

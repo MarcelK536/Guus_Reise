@@ -43,8 +43,17 @@ namespace Guus_Reise
             if (this.Charakter != null) //wenn auf dem Tile ein Charakter ist soll dieser auch dargestellt werden
             {
                 Vector3 hilf = new Vector3(0.0f, 0.005f, 0.0f);
-                Matrix hilf2 = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Position + hilf));
+                Matrix hilf2 = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(this.Charakter.CubePosition));
                 this.Charakter.Draw(camera, hilf2);
+                //this.Charakter.DrawAnimation();
+            }
+        }
+
+        public void Update(GameTime time)
+        {
+            if (this.Charakter != null)
+            {
+                this.Charakter.Update(time);
             }
         }
     }
