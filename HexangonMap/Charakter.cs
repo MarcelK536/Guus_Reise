@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
-using MonoGame.Extended.Sprites;
-using MonoGame.Extended.Serialization;
-using MonoGame.Extended.Content;
 using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
@@ -30,7 +27,6 @@ namespace Guus_Reise
         private static Model _model;
         private Vector3 _glow;
         private Vector3 _color;
-        private Vector3 cubeScale = new Vector3(0.002f, 0.002f, 0.002f);
         CharakterAnimation _charakterAnimation;
 
 
@@ -184,7 +180,7 @@ namespace Guus_Reise
 
         public void Draw(Camera camera)
         {
-            Matrix world = (Matrix.CreateScale(cubeScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(CharakterAnimation.CubePosition));
+            Matrix world = (Matrix.CreateScale(CharakterAnimation.CharakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(CharakterAnimation.CharakterPostion));
             foreach (var mesh in _model.Meshes)
             {
                  foreach (BasicEffect effect in mesh.Effects)

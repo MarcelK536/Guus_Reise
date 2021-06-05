@@ -52,7 +52,7 @@ namespace Guus_Reise
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
 
-            // Aktualisieren der Charakter-Position
+            // Aktualisieren der Charakter-Positionen
             foreach(Charakter c in playableCharacter)
             {
                 c.CharakterAnimation.Update();
@@ -118,6 +118,7 @@ namespace Guus_Reise
             {
                 Player2.Update(time, graphicsDevice);
                 int movecounter = npcs.Count;
+
                 foreach (Charakter charakter in npcs)
                 {
                     if (!charakter.CanMove)
@@ -149,7 +150,7 @@ namespace Guus_Reise
                 Player1.Draw(spriteBatch, gameTime);
             }
 
-            //Zeichnen der Charaktere nach dem die komplette Map fertig ist
+            //Zeichnen der Charaktere nach dem die komplette Map fertig ist (da es sonst zu nem Graphik-Bug kommt)
             foreach(Charakter c in playableCharacter)
             {
                 c.Draw(_camera);

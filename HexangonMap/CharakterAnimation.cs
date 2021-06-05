@@ -8,15 +8,15 @@ namespace Guus_Reise.HexangonMap
 {
     class CharakterAnimation
     {
-        private Vector2 _charakterScale = new Vector2(1f, 1f);
-        private Vector3 _cubePosition;
-        Vector3 translation = new Vector3(0.0f, 0.25f, 0f);
+        private Vector3 _charakterPostion; //Position des Charakters
+        Vector3 translation = new Vector3(0.0f, 0.25f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
+        private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
         Hex _hexagon;
 
         public CharakterAnimation(Hex hexagon, Charakter charakter)
         {
             _hexagon = hexagon;
-            _cubePosition = hexagon.Position + translation;
+            _charakterPostion = hexagon.Position + translation;
         }
 
         public Hex Hexagon
@@ -25,31 +25,22 @@ namespace Guus_Reise.HexangonMap
             set => _hexagon = value;
         }
 
-        public Vector2 CharakterScale
+        public Vector3 CharakterScale
         {
             get => _charakterScale;
             set => _charakterScale = value;
         }
 
-        public Vector3 CubePosition
+
+        public Vector3 CharakterPostion
         {
-            get => _cubePosition;
-            set => _cubePosition = value;
+            get => _charakterPostion;
+            set => _charakterPostion = value;
         }
 
         public void Update()
         {
-            _cubePosition = _hexagon.Position + translation;
-        }
-
-        public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
-        {
-            //Lade Guu Animation
-            //SpriteSheet spritesheet;
-            //spritesheet = content.Load<SpriteSheet>("Charakter\\Guu.json", new JsonContentLoader());
-            //spriteCharakter = new AnimatedSprite(spritesheet);
-            //spriteCharakter.Play("walk_left");
-            //_spriteBatch = spriteBatch;
+            _charakterPostion = _hexagon.Position + translation;
         }
 
 
