@@ -30,7 +30,7 @@ namespace Guus_Reise
         private static Model _model;
         private Vector3 _glow;
         private Vector3 _color;
-        private Vector3 cubeScale = new Vector3(0.04f, 0.04f, 0.04f);
+        private Vector3 cubeScale = new Vector3(0.09f, 0.09f, 0.09f);
         CharakterAnimation _charakterAnimation;
 
 
@@ -179,12 +179,12 @@ namespace Guus_Reise
 
         public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
         {
-            _model = content.Load<Model>("Charakter\\plane3");
+            _model = content.Load<Model>("Charakter\\onesiteblue");
         }
 
         public void Draw(Camera camera)
         {
-            Matrix world = (Matrix.CreateScale(0.03f,0.03f,0.03f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(CharakterAnimation.CubePosition));
+            Matrix world = (Matrix.CreateScale(cubeScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(CharakterAnimation.CubePosition));
             foreach (var mesh in _model.Meshes)
             {
                  foreach (BasicEffect effect in mesh.Effects)

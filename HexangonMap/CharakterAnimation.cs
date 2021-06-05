@@ -55,38 +55,13 @@ namespace Guus_Reise.HexangonMap
         public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
         {
             //Lade Guu Animation
-            SpriteSheet spritesheet;
-            spritesheet = content.Load<SpriteSheet>("Charakter\\Guu.json", new JsonContentLoader());
-            spriteCharakter = new AnimatedSprite(spritesheet);
-            spriteCharakter.Play("walk_left");
-            _spriteBatch = spriteBatch;
+            //SpriteSheet spritesheet;
+            //spritesheet = content.Load<SpriteSheet>("Charakter\\Guu.json", new JsonContentLoader());
+            //spriteCharakter = new AnimatedSprite(spritesheet);
+            //spriteCharakter.Play("walk_left");
+            //_spriteBatch = spriteBatch;
         }
 
-
-        public void Update(GameTime gameTime)
-        {
-            // Play Animation
-            var deltaSeconds = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            spriteCharakter.Play("walk_left");
-            spriteCharakter.Update(deltaSeconds);
-            WorldCoordinatesToScreenCoordinates();
-        }
-
-        public void Draw()
-        {
-            _spriteBatch.Begin();
-            _spriteBatch.Draw(spriteCharakter, _positionAnimatedSprite, 0, _charakterScale);
-            _spriteBatch.End();
-        }
-
-        public void WorldCoordinatesToScreenCoordinates()
-        {
-            //_cubePosition = _hexagon.Position + translation;
-            //var xCube = CubePosition.X * 920f;
-            //var yCube = CubePosition.Y * 190f + 270f;
-            //_positionAnimatedSprite.X = xCube;
-            //_positionAnimatedSprite.Y = yCube;
-        }
 
 
 

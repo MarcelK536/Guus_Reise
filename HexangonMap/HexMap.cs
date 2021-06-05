@@ -51,18 +51,6 @@ namespace Guus_Reise
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
-            //Updaten der Animation
-            for (int i = 0; i < _board.GetLength(0); i++)        
-            {
-                for (int k = 0; k < _board.GetLength(1); k++)
-                {
-                    if(_board[i, k].Charakter != null)
-                    {
-                        _board[i, k].Charakter.CharakterAnimation.Update(time);
-                    }
-                    
-                }
-            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
@@ -150,12 +138,6 @@ namespace Guus_Reise
             {
                 Player1.Draw(spriteBatch, gameTime);
             }
-            //foreach(Charakter c in playableCharacter)
-            //{
-            //    c.CharakterAnimation.Draw();
-            //}
-           
-
 
         }
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
