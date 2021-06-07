@@ -97,6 +97,7 @@ namespace Guus_Reise
 
         protected override void Draw(GameTime gameTime)
         {
+            _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;     //Fixt Zeichenreihnfolge
             base.Draw(gameTime);
 
             switch (_state)

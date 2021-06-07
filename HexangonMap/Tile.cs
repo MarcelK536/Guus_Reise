@@ -80,14 +80,14 @@ namespace Guus_Reise
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.TextureEnabled = false;
+                   // effect.DiffuseColor = this.Glow;
                     effect.LightingEnabled = true;
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
                     effect.World = this.World;
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
-                    effect.DiffuseColor = this.Glow;
+                    
                     effect.AmbientLightColor = this.Color;
                 }
                 mesh.Draw();
