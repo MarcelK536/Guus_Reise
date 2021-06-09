@@ -52,6 +52,7 @@ namespace Guus_Reise
                 }
                 if (btnConfirm.IsClicked())
                 {
+                    HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y];
                     HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter;
                     HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter = null;
                     HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].LogicalPosition;
@@ -70,6 +71,7 @@ namespace Guus_Reise
                     Player1.moveTile = null;
                     fightTrue = false;
                     interactTrue = false;
+                    
                 }
                 if (fightTrue)
                 {

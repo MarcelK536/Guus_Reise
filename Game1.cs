@@ -5,6 +5,7 @@ using System.Linq;
 
 //Adding SubClasses within Folders
 using Guus_Reise.Menu;
+using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {

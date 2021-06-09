@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {
@@ -52,6 +53,17 @@ namespace Guus_Reise
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
+
+            // Aktualisieren der Charakter-Positionen
+            foreach(Charakter c in playableCharacter)
+            {
+                c.CharakterAnimation.Update();
+            }
+            foreach(Charakter c in npcs)
+            {
+                c.CharakterAnimation.Update();
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 Camera.MoveCamera("w");
@@ -108,6 +120,7 @@ namespace Guus_Reise
             {
                 Player2.Update(time, graphicsDevice);
                 int movecounter = npcs.Count;
+
                 foreach (Charakter charakter in npcs)
                 {
                     if (!charakter.CanMove)
@@ -138,8 +151,17 @@ namespace Guus_Reise
             {
                 Player1.Draw(spriteBatch, gameTime);
             }
-            
-            
+
+            //Zeichnen der Charaktere nach dem die komplette Map fertig ist (da es sonst zu nem Graphik-Bug kommt)
+            foreach(Charakter c in playableCharacter)
+            {
+                c.Draw(_camera);
+            }
+            foreach (Charakter c in npcs)
+            {
+                c.Draw(_camera);
+            }
+
         }
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
@@ -297,6 +319,7 @@ namespace Guus_Reise
         public static void CreateCharakter(string[] names, int[,] charakter, int[,] positions)
         {
             int[] hilf = new int[charakter.GetLength(1)];
+            Hex curr;
 
             for (int i = 0; i < charakter.GetLength(0); i++)
             {
@@ -304,7 +327,8 @@ namespace Guus_Reise
                 {
                     hilf[k] = charakter[i, k];
                 }
-                _board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
+                curr = _board[positions[i, 0], positions[i, 1]];
+                curr.Charakter = new Charakter(names[i], hilf, curr);
                 _board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = _board[positions[i, 0], positions[i, 1]].LogicalPosition;
                 if (_board[positions[i, 0], positions[i, 1]].Charakter.IsNPC)
                 {
