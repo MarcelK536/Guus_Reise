@@ -21,7 +21,7 @@ namespace Guus_Reise
         //Button btnPlusBewegung;
 
 
-        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), new Texture2D(graphicsDevice, 350, 600), moveMenuFont, graphicsDevice) 
+        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,  graphicsDevice, blend) 
         {
             GraphicsDevice = graphicsDevice;
             Texture2D btnTexture = new Texture2D(graphicsDevice, 25, 25);
