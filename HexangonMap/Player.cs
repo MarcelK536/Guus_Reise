@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Guus_Reise
 {
-    class Player1
+    class Player
     {
         public static MouseState _prevMouseState;
         public static KeyboardState _prevKeyState;

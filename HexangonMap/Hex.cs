@@ -36,7 +36,6 @@ namespace Guus_Reise
             this.LogicalPosition = logicalPosition;
             this.Tile = tile;
         }
-
         public void Draw(Camera camera)
         {
             this.Tile.Draw(camera);

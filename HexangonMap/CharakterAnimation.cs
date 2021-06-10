@@ -13,7 +13,7 @@ namespace Guus_Reise.HexangonMap
         private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
         Hex _hexagon;
 
-        public CharakterAnimation(Hex hexagon, Charakter charakter)
+        public CharakterAnimation(Hex hexagon)
         {
             _hexagon = hexagon;
             _charakterPostion = hexagon.Position + translation;
