@@ -18,11 +18,15 @@ namespace Guus_Reise.Menu
         static Button btnPlay;
         static Button btnCredits;
         static Button btnExit;
-        public static void Init()
+
+        static GraphicsDeviceManager _graphics;
+
+        public static void Init(GraphicsDeviceManager graphics)
         {
-            btnPlay = new Button("Start Game", btnDefaultTexture, btnHoverTexture, 0.5f, 10, 10);
-            btnCredits = new Button("Credits", btnDefaultTexture, btnHoverTexture, 0.5f, 250, 10);
-            btnExit = new Button("Exit", btnDefaultTexture, btnHoverTexture, 0.5f, 500, 10);
+            _graphics = graphics;
+            btnPlay = new Button("Start Game", btnDefaultTexture, btnHoverTexture, 0.5f, 170, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight *0.2));
+            btnCredits = new Button("Credits", btnDefaultTexture, btnHoverTexture, 0.5f, 410, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight * 0.2));
+            btnExit = new Button("Exit", btnDefaultTexture, btnHoverTexture, 0.5f, 650, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight * 0.2));
         }
         public static void LoadTexture(ContentManager content)
         {
@@ -53,6 +57,35 @@ namespace Guus_Reise.Menu
             {
                 GState = GameState.Exit;
             }
+        }
+
+        public static void SetParametersFromWindowScale()
+        {
+            if(_graphics.IsFullScreen == true)
+            {
+                btnPlay.ButtonY = _graphics.PreferredBackBufferHeight - (int)(_graphics.PreferredBackBufferHeight * 0.1);
+                //X
+                btnPlay.ButtonX = 550;
+                btnCredits.ButtonX = 850;
+                btnExit.ButtonX = 1150;
+                // Scale
+                btnPlay.Scale = 0.65f;
+            }
+            else
+            {
+                btnPlay.ButtonY = _graphics.PreferredBackBufferHeight - (int)(_graphics.PreferredBackBufferHeight * 0.2);
+                //X
+                btnPlay.ButtonX = 170;
+                btnCredits.ButtonX = 410;
+                btnExit.ButtonX = 650;
+                //Scale
+                btnPlay.Scale = 0.5f;
+                
+            }
+            btnCredits.ButtonY = btnPlay.ButtonY;
+            btnExit.ButtonY = btnPlay.ButtonY;
+            btnCredits.Scale = btnPlay.Scale;
+            btnExit.Scale = btnPlay.Scale;
         }
 
     }
