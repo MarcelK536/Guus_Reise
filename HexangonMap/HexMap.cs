@@ -330,8 +330,7 @@ namespace Guus_Reise
                 //}
                 //_board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
                 curr = _board[positions[i, 0], positions[i, 1]];
-                curr.Charakter = new Charakter(names[i], charakter[i]);
-                curr.Charakter.CharakterAnimation = new CharakterAnimation(curr);
+                curr.Charakter = new Charakter(names[i], charakter[i], curr);
                 _board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = _board[positions[i, 0], positions[i, 1]].LogicalPosition;
                 if (_board[positions[i, 0], positions[i, 1]].Charakter.IsNPC)
                 {

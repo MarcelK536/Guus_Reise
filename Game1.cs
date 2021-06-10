@@ -63,7 +63,7 @@ namespace Guus_Reise
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
-            Charakter.LoadContent(Content, _spriteBatch);
+            CharakterAnimation.LoadContent(Content, _spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)

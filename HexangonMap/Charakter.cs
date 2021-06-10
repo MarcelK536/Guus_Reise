@@ -27,11 +27,8 @@ namespace Guus_Reise
         private int _bewegungsreichweite;
         private int _fpunkte;
         private Point _logicalPosition;
-        private static Model _model;
-        private Vector3 _glow;
-        private Vector3 _color;
+
         CharakterAnimation _charakterAnimation;
-        private static Texture2D texBlue;
 
 
         public String Name
@@ -134,21 +131,7 @@ namespace Guus_Reise
             get => _logicalPosition;
             set => _logicalPosition = value;
         }
-        public Model Model
-        {
-            get => _model;
-            set => _model = value;
-        }
-        public Vector3 Glow
-        {
-            get => _glow;
-            set => _glow = value;
-        }
-        public Vector3 Color
-        {
-            get => _color;
-            set => _color = value;
-        }
+
 
         /*public Charakter (String name, int leben, int angriff, int abwehr, int wortgewand, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite)
         {
@@ -167,10 +150,11 @@ namespace Guus_Reise
         }*/
 
         
-        public Charakter(String klasse, int level)
+        public Charakter(String klasse, int level, Hex hex)
         {
             int[] stats = LevelToStats(level, klasse);
             SetCharakter(klasse, stats);
+            _charakterAnimation = new CharakterAnimation(hex, this);
         }
         public void SetCharakter(String name, int[] werte)
         {
@@ -196,8 +180,6 @@ namespace Guus_Reise
             this.KI = werte[11];
             this.Fähigkeitspunkte = werte[12];
             this.Level = werte[13];
-            this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
-            this.Color = new Vector3(0, 0, 0);
         }
 
         public int[] LevelToStats(int level, String klasse)
@@ -232,34 +214,9 @@ namespace Guus_Reise
             return stats;
         }
 
-        public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
-        {
-            _model = content.Load<Model>("Charakter\\plane");
-            texBlue = content.Load<Texture2D>("Charakter\\texTimmae");
-            
-
-        }
-
         public void Draw(Camera camera)
         {
-            Matrix world = (Matrix.CreateScale(CharakterAnimation.CharakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(CharakterAnimation.CharakterPostion));
-            foreach (var mesh in _model.Meshes)
-            {
-                 foreach (BasicEffect effect in mesh.Effects)
-                 {
-                    effect.TextureEnabled = true;
-                    effect.Texture = texBlue;
-                    //effect.LightingEnabled = true;
-                    //effect.EnableDefaultLighting();
-                    //effect.PreferPerPixelLighting = true;
-                    effect.World = world;
-                    effect.View = camera.view;
-                    effect.Projection = camera.projection;
-                    //effect.DiffuseColor = this.Glow;
-                    effect.AmbientLightColor = this.Color;
-                 }
-                 mesh.Draw();
-             }
+            _charakterAnimation.DrawCharakter(camera);
         }
 
 
