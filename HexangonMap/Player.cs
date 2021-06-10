@@ -48,7 +48,7 @@ namespace Guus_Reise
                 for (int k = 0; k < HexMap._board.GetLength(1); k++)
                 {
 
-                    float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap._camera.view, HexMap._camera.projection, graphicsDevice.Viewport);
+                    float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap.Camera.view, HexMap.Camera.projection, graphicsDevice.Viewport);
                     if (distance < minDistance)
                     {
                         minDistance = distance;
@@ -91,6 +91,7 @@ namespace Guus_Reise
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && HexMap.possibleMoves.Contains(hoverTile.LogicalPosition)) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
                         {
                             actionMenu.Active = true;
+                            SimpleMenu.DeactivateAllOtherMenus(actionMenu);
                             actionMenu.fightTrue = false;
                             actionMenu.interactTrue = false;
                             moveTile = hoverTile;

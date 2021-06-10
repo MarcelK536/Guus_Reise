@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Timers;
 
 namespace Guus_Reise
 {
@@ -8,27 +9,41 @@ namespace Guus_Reise
     {
         protected bool _active;
         public Vector2 pos;
-        public Texture2D bkgTexture;
         public SpriteFont textFont;
         public Button btnClose;
         public float btnWidth;
 
+        public BlendDirection blendDirection;
+        public List<Button> menuButtons= new List<Button>();
+        public float menuWidth;
+        
+        public enum BlendDirection
+        {
+            None,
+            LeftToRight,
+            RightToLeft,
+            TopToBottom,
+            BottomToTop
+        }
 
         static List<SimpleMenu> allInstances = new List<SimpleMenu>();
-        public SimpleMenu(Vector2 position, Texture2D background, SpriteFont menuFont, GraphicsDevice graphicsDevice)
+        public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction)
         {
             pos = position;
             textFont = menuFont;
-            btnWidth = menuFont.MeasureString("Close").X+10;
-            bkgTexture = background;
-            Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
-            Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
+            btnWidth = menuFont.MeasureString("Close").X + 10;
+            Texture2D btnCloseTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
+            Color[] btnColor = new Color[btnCloseTexture.Width * btnCloseTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
-                btnColor[i] = Color.White;
+                btnColor[i] = Color.White*0.5f;
             }
-            btnTexture.SetData(btnColor);
-            btnClose = new Button("Close", btnTexture, 1, (int)pos.X, (int)pos.Y);
+            btnCloseTexture.SetData(btnColor);
+            btnClose = new Button("Close", btnCloseTexture, 1, (int)pos.X, (int)pos.Y);
+            menuButtons.Add(btnClose);
+
+            blendDirection = direction;
+            menuWidth = menuButtons[menuButtons.Count-1].TextureDefault.Width;
 
             allInstances.Add(this);
         }
@@ -52,12 +67,37 @@ namespace Guus_Reise
         
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+            if (blendDirection == BlendDirection.None)
+            {
+                if (Active)
+                {
+                    spriteBatch.Begin();
+                    btnClose.Draw(spriteBatch, textFont);
+                    spriteBatch.End();
+                }
+            }
+            else if(blendDirection == BlendDirection.LeftToRight)
+            {
+                DrawBlendLeftToRight(spriteBatch);
+            }
+
+        }
+
+        public virtual void DrawBlendLeftToRight(SpriteBatch spriteBatch)
+        {
             if (Active)
             {
+                BlendIn();
                 spriteBatch.Begin();
-                spriteBatch.Draw(bkgTexture, pos, Color.Black);
                 btnClose.Draw(spriteBatch, textFont);
                 spriteBatch.End();
+            }
+            else
+            {
+                foreach (Button button in menuButtons)
+                {
+                    button.ButtonX = (int)-menuWidth;
+                }
             }
         }
 
@@ -88,6 +128,17 @@ namespace Guus_Reise
                 }
             }
             return false;
+        }
+
+        public virtual void BlendIn()
+        {
+            foreach (Button button in menuButtons)
+            {
+                if (button.ButtonX < 0)
+                {
+                    button.ButtonX += 2;
+                }
+            }
         }
     }
 }
