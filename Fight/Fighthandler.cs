@@ -27,7 +27,7 @@ namespace Guus_Reise
 
         public static void Init(GraphicsDevice graphicsDevice, ContentManager content)
         {
-            fightMenu = new FightMenu(Player1.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+            fightMenu = new FightMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
             Createboard(fightMap, content);
         }
 
