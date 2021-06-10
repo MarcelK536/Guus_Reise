@@ -44,8 +44,8 @@ namespace Guus_Reise
             playerTurn = true;
 
             Player.actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
-            Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice);
-            Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice);
+            Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
+            Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
