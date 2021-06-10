@@ -155,11 +155,11 @@ namespace Guus_Reise
             //Zeichnen der Charaktere nach dem die komplette Map fertig ist (da es sonst zu nem Graphik-Bug kommt)
             foreach(Charakter c in playableCharacter)
             {
-                c.Draw(_camera);
+                c.Draw(Camera);
             }
             foreach (Charakter c in npcs)
             {
-                c.Draw(_camera);
+                c.Draw(Camera);
             }
 
         }

@@ -16,14 +16,11 @@ namespace Guus_Reise
         static int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
         public static Hex[,] _fightBoard;
         public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
-        public static int[,] charPositionsEnemy = new int[,] { { 6, 0 }, { 6, 1 }, { 6, 2 }, { 4, 1 } };   //Positionen für Gegner
-
-        public static int[,] originalPositionsPlayer = new int[,] { };
-        public static int[,] originalPositionsEnemy = new int[,] { };
+        public static int[,] charPositionsEnemy = new int[,] { { 6, 0 }, { 6, 1 }, { 6, 2 }, { 4, 1 } };   //Positionen für Gegner  Der dem Spieler gegenüber stehenenden Gegner ist an der Letzten Position
 
 
         public static FightMenu fightMenu;
-
+        public static bool initPlayers = false;
 
         public static void Init(GraphicsDevice graphicsDevice, ContentManager content)
         {
@@ -32,38 +29,30 @@ namespace Guus_Reise
         }
 
         public static void InitPlayers()
-        {  
-            for(int i = 0; i < playerTiles.Count - 1; i++) 
+        {
+            for(int i = playerTiles.Count-1; i >= 0; i--) 
             {
-                originalPositionsPlayer[i, 0] = playerTiles[i].LogicalPosition.X;
-                originalPositionsPlayer[i, 1] = playerTiles[i].LogicalPosition.Y;
-            }
-            for (int i = 0; i < npcTiles.Count - 1; i++)
-            {
-                originalPositionsEnemy[i, 0] = playerTiles[i].LogicalPosition.X;
-                originalPositionsEnemy[i, 1] = playerTiles[i].LogicalPosition.Y;
-            }
-
-            for(int i = 0; i < playerTiles.Count - 1; i++)
-            {
-                if (i == playerTiles.Count - 1)
+                for(int j = charPositionsPlayer.GetLength(0)-1; j > 0; j--)
                 {
-                    _fightBoard[charPositionsPlayer[charPositionsPlayer.Length - 1, 0], charPositionsPlayer[charPositionsPlayer.Length - 1, 1]].Charakter = playerTiles[i].Charakter;
-                }
-                else
-                {
-                    _fightBoard[charPositionsPlayer[i, 0], charPositionsPlayer[i, 1]].Charakter = playerTiles[i].Charakter;
+                    if (_fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter == null)
+                    {
+                        Vector3 curRealPos = _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position;
+                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]] = playerTiles[i];
+                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter.LogicalPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
+                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position = curRealPos;
+                        break;
+                    }
                 }
             }
-            /* 
-             * ToDo: -  Kopiere die originalen Positionen in originalPositions
-             *       -  Platziere die Spieler auf ihren Platz in der FightMap (charPositionsXXX) Arrays
-             *       -  Lade die Texturen
-             */
+            initPlayers = true;
         }
 
         public static void Update()
         {
+            if (initPlayers == false)
+            {
+                InitPlayers();
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
                 GState = Game1.GameState.InGame;
@@ -102,25 +91,20 @@ namespace Guus_Reise
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-           /*
-            foreach (Hex tile in playerTiles)
+            if (initPlayers == true)
             {
-                tile.Draw(HexMap.Camera);
-            }
-           */
-            foreach (Hex tile in npcTiles)
-            {
-                tile.Draw(HexMap.Camera);
-            }
-
-
-            for (int i = 0; i < _fightBoard.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
-            {
-                for (int k = 0; k < _fightBoard.GetLength(1); k++)
+                for (int i = 0; i < _fightBoard.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
                 {
-                    if (_fightBoard[i, k] != null)
+                    for (int k = 0; k < _fightBoard.GetLength(1); k++)
                     {
-                        _fightBoard[i, k].Draw(HexMap.Camera);
+                        if (_fightBoard[i, k] != null)
+                        {
+                            _fightBoard[i, k].Draw(HexMap.Camera);
+                            if (_fightBoard[i, k].Charakter != null)
+                            {
+                                _fightBoard[i, k].Charakter.Draw(HexMap.Camera);
+                            }
+                        }
                     }
                 }
             }
