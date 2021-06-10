@@ -13,6 +13,7 @@ namespace Guus_Reise
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private static KeyboardState _prevKeyState;
 
         public enum GameState
         {
@@ -42,7 +43,10 @@ namespace Guus_Reise
         }
 
         protected override void Initialize()
-        {        
+        {
+            _graphics.PreferredBackBufferWidth = 1000;
+            _graphics.PreferredBackBufferHeight = 600;
+            _graphics.ApplyChanges();
             base.Initialize();
             MainMenu.Init();
             Credits.Init();
@@ -54,9 +58,9 @@ namespace Guus_Reise
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             MainMenu.LoadTexture(Content);
-            PlanetMenu.LoadTexture(Content,_spriteBatch);
+            PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
             Charakter.LoadContent(Content, _spriteBatch);
@@ -66,7 +70,7 @@ namespace Guus_Reise
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-                                  
+
             base.Update(gameTime);
 
             switch (_state)
@@ -94,6 +98,13 @@ namespace Guus_Reise
                 default:
                     break;
             }
+
+            // Screeen Scale
+            if (Keyboard.GetState().IsKeyDown(Keys.F1) && _prevKeyState.IsKeyUp(Keys.F1))
+            {
+                ResizeScreen();
+            }
+            _prevKeyState = Keyboard.GetState();
         }
 
         protected override void Draw(GameTime gameTime)
@@ -105,7 +116,7 @@ namespace Guus_Reise
             {
                 case GameState.MainMenu:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    MainMenu.Draw(_spriteBatch,gameTime);
+                    MainMenu.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.PlanetMenu:
                     GraphicsDevice.Clear(Color.Black);
@@ -119,7 +130,7 @@ namespace Guus_Reise
                     break;
                 case GameState.InGame:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    HexMap.DrawInGame(_spriteBatch,gameTime);
+                    HexMap.DrawInGame(_spriteBatch, gameTime);
                     break;
                 case GameState.InFight:
                     Fighthandler.Draw();
@@ -127,6 +138,24 @@ namespace Guus_Reise
                 default:
                     break;
             }
+        }
+
+        private void ResizeScreen()
+        {
+            if (_graphics.PreferredBackBufferWidth == 1000)
+            {
+                _graphics.PreferredBackBufferWidth = 1500;
+                _graphics.PreferredBackBufferHeight = 1024;
+                _graphics.IsFullScreen = true;
+            }
+            else
+            {
+                _graphics.PreferredBackBufferWidth = 1000;
+                _graphics.PreferredBackBufferHeight = 600;
+                _graphics.IsFullScreen = false;
+                
+            }
+            _graphics.ApplyChanges();
         }
     }
 }
