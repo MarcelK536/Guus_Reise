@@ -28,6 +28,7 @@ namespace Guus_Reise
         private Vector3 _glow;
         private Vector3 _color;
         CharakterAnimation _charakterAnimation;
+        private static Texture2D texBlue;
 
 
         public String Name
@@ -175,7 +176,10 @@ namespace Guus_Reise
 
         public static void LoadContent(ContentManager content, SpriteBatch spriteBatch)
         {
-            _model = content.Load<Model>("Charakter\\alienTelefon");
+            _model = content.Load<Model>("Charakter\\plane");
+            texBlue = content.Load<Texture2D>("Charakter\\texTimmae");
+            
+
         }
 
         public void Draw(Camera camera)
@@ -185,15 +189,16 @@ namespace Guus_Reise
             {
                  foreach (BasicEffect effect in mesh.Effects)
                  {
-                     effect.TextureEnabled = true;
+                    effect.TextureEnabled = true;
+                    effect.Texture = texBlue;
                     //effect.LightingEnabled = true;
                     //effect.EnableDefaultLighting();
                     //effect.PreferPerPixelLighting = true;
                     effect.World = world;
-                     effect.View = camera.view;
-                     effect.Projection = camera.projection;
-                     //effect.DiffuseColor = this.Glow;
-                     effect.AmbientLightColor = this.Color;
+                    effect.View = camera.view;
+                    effect.Projection = camera.projection;
+                    //effect.DiffuseColor = this.Glow;
+                    effect.AmbientLightColor = this.Color;
                  }
                  mesh.Draw();
              }
