@@ -223,6 +223,16 @@ namespace Guus_Reise
             _charakterAnimation.DrawCharakter(camera);
         }
 
+        public void Play(string nameAnimation)
+        {
+            _charakterAnimation.Play(nameAnimation);
+        }
+
+        public void Stop()
+        {
+            _charakterAnimation.Stop();
+        }
+
 
 
         public void GainXp(Charakter winner, Charakter looser)

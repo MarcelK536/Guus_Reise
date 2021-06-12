@@ -58,12 +58,13 @@ namespace Guus_Reise
             // Aktualisieren der Charakter-Positionen
             foreach(Charakter c in playableCharacter)
             {
-                c.CharakterAnimation.Update();
+                c.CharakterAnimation.Update(time);
             }
             foreach(Charakter c in npcs)
             {
-                c.CharakterAnimation.Update();
+                c.CharakterAnimation.Update(time);
             }
+
 
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {

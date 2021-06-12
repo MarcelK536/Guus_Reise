@@ -3,11 +3,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Input;
 
 namespace Guus_Reise.HexangonMap
 {
     class CharakterAnimation
     {
+        private static KeyboardState _prevKeyState;
         private Vector3 _charakterPostion; //Position des Charakters
         
         Vector3 translation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
@@ -26,16 +28,30 @@ namespace Guus_Reise.HexangonMap
         
         Model _planeModel;
         Texture2D _texCharakter;
+        Texture2D _curTex;
+        private List<Texture2D> currentAnimation;
+        int currentFrame = 0;
 
         private Vector3 _glow;
         private Vector3 _color;
+
+        float timer;
+        float intervall = 100f;
+
+        bool isPlayAnimation = false;
 
         public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle)
         {
             idle = animIdle;
             _planeModel = planeModel;
             _texCharakter = texCharakter;
+            _curTex = _texCharakter;
+
+            // Set previous Keyboard State
+            _prevKeyState = Keyboard.GetState();
         }
+
+
 
         public void SetParametersAfterInitCharakter(Charakter charakter, Hex hexagon)
         {
@@ -79,7 +95,7 @@ namespace Guus_Reise.HexangonMap
                 foreach (BasicEffect effect in mesh.Effects)
                 {
                     effect.TextureEnabled = true;
-                    effect.Texture = _texCharakter;
+                    effect.Texture = _curTex;
                     //effect.LightingEnabled = true;
                     //effect.EnableDefaultLighting();
                     //effect.PreferPerPixelLighting = true;
@@ -93,14 +109,66 @@ namespace Guus_Reise.HexangonMap
             }
         }
 
-        public void Update()
+        public void Update(GameTime gametime)
         {
             _charakterPostion = _hexagon.Position + translation;
+            if(isPlayAnimation)
+            {
+                _curTex = currentAnimation[currentFrame];
+                UpdateAnimation(gametime);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.P) && _prevKeyState.IsKeyUp(Keys.P))
+            {
+                if(isPlayAnimation)
+                {
+                    Stop();
+                }
+                else
+                {
+                    Play("Idle");
+                }
+
+            }
+            _prevKeyState = Keyboard.GetState();
         }
 
-        public void Play()
+        public void UpdateAnimation( GameTime gametime)
         {
+            timer += (float)gametime.ElapsedGameTime.TotalMilliseconds / 2;
+            if(timer > intervall)
+            {
+                currentFrame++;
+                timer = 0;
+                if(currentFrame == currentAnimation.Count)
+                {
+                    currentFrame = 0;
+                }
+            }
+        }
 
+        public void Play(string nameAnimation)
+        {
+            if(nameAnimation == "")
+            {
+                throw new InvalidOperationException("Animation kann nicht null sein");
+            }
+            switch(nameAnimation)
+            {
+                case "Idle":
+                    currentAnimation = idle;
+                    break;
+                default:
+                    currentAnimation = idle;
+                    break;
+            }
+            isPlayAnimation = true;
+        }
+
+        // Setzen der Texture wieder auf die Standardtextur
+        public void Stop()
+        {
+            _curTex = _texCharakter;
+            isPlayAnimation = false;
         }
 
 
