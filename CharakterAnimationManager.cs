@@ -13,9 +13,15 @@ namespace Guus_Reise
         static List<string> charakterNames;
         static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
         static CharakterAnimation[] charakterAnimations;
+
+        static bool _activeHexExists = false;
         // (Idle, moveLeft, moveRight, moveFront, moveBack, readyToFight)
 
-
+        public static bool ActiveHexExists
+        {
+            get => _activeHexExists;
+            set => _activeHexExists = value;
+        }
 
         public static void Init(ContentManager content)
         {

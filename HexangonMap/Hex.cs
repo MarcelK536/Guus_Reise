@@ -9,6 +9,7 @@ namespace Guus_Reise
         private Tile _tile;
         private Charakter _charakter;
         bool _isHovered = false;
+        bool _isActive = false;
 
         public Vector3 Position
         {
@@ -16,10 +17,16 @@ namespace Guus_Reise
             set => _position = value;
         }
 
-        public bool IsHovered
+        public bool IsHovered 
         {
             get => _isHovered;
             set => _isHovered = value;
+        }
+
+        public bool IsActive 
+        {
+            get => _isActive;
+            set => _isActive = value;
         }
 
         public Point LogicalPosition

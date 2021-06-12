@@ -67,7 +67,10 @@ namespace Guus_Reise
                     }
                     
                     this.Active =! this.Active;
+                    Player.activeTile.IsActive = false;
                     Player.activeTile = null;
+                    CharakterAnimationManager.ActiveHexExists = false;
+
                     Player.moveTile = null;
                     fightTrue = false;
                     interactTrue = false;

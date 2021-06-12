@@ -11,6 +11,7 @@ namespace Guus_Reise.HexangonMap
     {
         private static KeyboardState _prevKeyState;
         private Vector3 _charakterPostion; //Position des Charakters
+        bool activeHexExists = false;
         
         Vector3 translation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
         private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
@@ -117,26 +118,28 @@ namespace Guus_Reise.HexangonMap
                 _curTex = currentAnimation[currentFrame];
                 UpdateAnimation(gametime);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.P) && _prevKeyState.IsKeyUp(Keys.P))
+
+            if (!_hexagon.IsHovered)
             {
-                if(isPlayAnimation)
+                if(!_hexagon.IsActive)
                 {
                     StopAnimation();
+                }
+            }
+            if (_hexagon.IsHovered)
+            {
+                if(CharakterAnimationManager.ActiveHexExists)
+                {
+                    if(_hexagon.IsActive)
+                    {
+                        Play("Idle");
+                    }
                 }
                 else
                 {
                     Play("Idle");
                 }
-
-            }
-
-            if (!_hexagon.IsHovered)
-            {
-                StopAnimation();
-            }
-            if (_hexagon.IsHovered)
-            {
-                Play("Idle");
+                
             }
 
             _prevKeyState = Keyboard.GetState();

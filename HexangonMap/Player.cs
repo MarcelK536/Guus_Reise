@@ -72,6 +72,8 @@ namespace Guus_Reise
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released) //wenn zusätzlich die linke Maustaste gedrückt wird, wird das hoverTile zum activeTile
                     {
                         activeTile = hoverTile;
+                        activeTile.IsActive = true;
+                        CharakterAnimationManager.ActiveHexExists = true;
                     }
                 }
             }
@@ -135,7 +137,10 @@ namespace Guus_Reise
 
                 if (Mouse.GetState().RightButton == ButtonState.Pressed && _prevMouseState.RightButton == ButtonState.Released)    //wenn die rechte Maustaste gedrückt wird, wird das activeTile zurückgesetzt
                 {
+                    activeTile.IsActive = false;
                     activeTile = null;
+                    CharakterAnimationManager.ActiveHexExists = false;
+
                     moveTile = null;
                     actionMenu.Active = false;
                     HexMap.enemyNeighbourCount = 0;
