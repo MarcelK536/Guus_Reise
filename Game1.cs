@@ -44,6 +44,7 @@ namespace Guus_Reise
 
         protected override void Initialize()
         {
+            CharakterAnimationManager.Init(Content);
             _graphics.PreferredBackBufferWidth = 1000;
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
@@ -63,7 +64,6 @@ namespace Guus_Reise
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
-            CharakterAnimation.LoadContent(Content, _spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)

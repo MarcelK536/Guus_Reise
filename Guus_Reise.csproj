@@ -32,7 +32,9 @@
   <ItemGroup>
     <Folder Include="Content\bin\DesktopGL\Content\" />
     <Folder Include="Content\Charakter\Guu\idle\" />
+    <Folder Include="Content\Charakter\Paul\" />
     <Folder Include="Content\Charakter\Peter\" />
+    <Folder Include="Content\Charakter\Timmae\moveRight\" />
     <Folder Include="Content\World\" />
   </ItemGroup>
   <ItemGroup>
