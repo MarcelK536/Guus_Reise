@@ -31,7 +31,7 @@ namespace Guus_Reise
             foreach (string name in charakterNames)
             {
                 path = "Content\\Charakter\\" + name;
-                Texture2D texCharakter = content.Load<Texture2D>("Charakter\\texLiLaAlien");
+                Texture2D texCharakter = content.Load<Texture2D>("Charakter\\"+name+"\\tex"+name);
 
                 List<Texture2D> idle = new List<Texture2D>();
                 //...

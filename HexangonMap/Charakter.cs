@@ -150,12 +150,16 @@ namespace Guus_Reise
         }*/
 
         
-        public Charakter(String klasse, int level, Hex hex)
+        public Charakter(String klasse, int level, Hex hex, CharakterAnimation charakterAnimation)
         {
             int[] stats = LevelToStats(level, klasse);
             SetCharakter(klasse, stats);
-            _charakterAnimation = new CharakterAnimation(hex, this);
+            _charakterAnimation = charakterAnimation;
+
+            //Fehlende Parameter für die CharakterAnimation setzen
+            charakterAnimation.SetParametersAfterInitCharakter(this, hex);
         }
+
         public void SetCharakter(String name, int[] werte)
         {
             this.Name = name;

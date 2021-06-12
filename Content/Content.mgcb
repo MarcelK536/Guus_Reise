@@ -61,6 +61,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/Idle/GuuIdle2.png
 
+#begin Charakter/Guu/texGuu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/texGuu.png
+
 #begin Charakter/Paul/Idle/PaulIdle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -85,6 +97,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/Idle/PaulIdle2.png
 
+#begin Charakter/Paul/texPaul.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/texPaul.png
+
 #begin Charakter/Peter/Idle/PeterIdle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -108,6 +132,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Peter/Idle/PeterIdle2.png
+
+#begin Charakter/Peter/texPeter.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/texPeter.png
 
 #begin Charakter/plane.fbx
 /importer:FbxImporter
@@ -140,30 +176,6 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/texClean.png
 
-#begin Charakter/texLiLaAlien.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Charakter/texLiLaAlien.png
-
-#begin Charakter/texTimmae.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Charakter/texTimmae.png
-
 #begin Charakter/Timmae/Idle/TimmaeIdle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -187,6 +199,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/Idle/TimmaeIdle2.png
+
+#begin Charakter/Timmae/texTimmae.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/texTimmae.png
 
 #begin MainMenu/MainMenuFont.spritefont
 /importer:FontDescriptionImporter

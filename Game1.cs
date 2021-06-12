@@ -44,13 +44,13 @@ namespace Guus_Reise
 
         protected override void Initialize()
         {
-            CharakterAnimationManager.Init(Content);
             _graphics.PreferredBackBufferWidth = 1000;
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
             base.Initialize();
             MainMenu.Init(_graphics);
             Credits.Init();
+            CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
             HexMap.Init(Content, GraphicsDevice, _graphics);
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);

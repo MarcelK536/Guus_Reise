@@ -24,12 +24,11 @@ namespace Guus_Reise.HexangonMap
         Hex _hexagon;
         Charakter _charakter;
         
-        private static Model _planeModel;
-        private static Texture2D _texCharakter;
+        Model _planeModel;
+        Texture2D _texCharakter;
 
         private Vector3 _glow;
         private Vector3 _color;
-        static List<string> charakterNames;
 
         public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle)
         {
@@ -38,13 +37,13 @@ namespace Guus_Reise.HexangonMap
             _texCharakter = texCharakter;
         }
 
-        public CharakterAnimation(Hex hexagon, Charakter charakter)
+        public void SetParametersAfterInitCharakter(Charakter charakter, Hex hexagon)
         {
+            _charakter = charakter;
             _hexagon = hexagon;
             _charakterPostion = hexagon.Position + translation;
-            this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
-            this.Color = new Vector3(0, 0, 0);
-            //texture Lists
+            _glow = new Vector3(0.1f, 0.1f, 0.1f);
+            _color = new Vector3(0, 0, 0);
         }
 
         public Hex Hexagon
@@ -72,37 +71,26 @@ namespace Guus_Reise.HexangonMap
             set => _charakter = value;
         }
 
-        public Vector3 Glow
-        {
-            get => _glow;
-            set => _glow = value;
-        }
-        public Vector3 Color
-        {
-            get => _color;
-            set => _color = value;
-        }
-
         public void DrawCharakter(Camera camera)
         {
-            //Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterPostion));
-            //foreach (var mesh in _model.Meshes)
-            //{
-            //    foreach (BasicEffect effect in mesh.Effects)
-            //    {
-            //        effect.TextureEnabled = true;
-            //        effect.Texture = texCharakter;
-            //        //effect.LightingEnabled = true;
-            //        //effect.EnableDefaultLighting();
-            //        //effect.PreferPerPixelLighting = true;
-            //        effect.World = world;
-            //        effect.View = camera.view;
-            //        effect.Projection = camera.projection;
-            //        //effect.DiffuseColor = this.Glow;
-            //        effect.AmbientLightColor = this.Color;
-            //    }
-            //    mesh.Draw();
-            //}
+            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterPostion));
+            foreach (var mesh in _planeModel.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.TextureEnabled = true;
+                    effect.Texture = _texCharakter;
+                    //effect.LightingEnabled = true;
+                    //effect.EnableDefaultLighting();
+                    //effect.PreferPerPixelLighting = true;
+                    effect.World = world;
+                    effect.View = camera.view;
+                    effect.Projection = camera.projection;
+                    //effect.DiffuseColor = this.Glow;
+                    effect.AmbientLightColor = this._color;
+                }
+                mesh.Draw();
+            }
         }
 
         public void Update()
