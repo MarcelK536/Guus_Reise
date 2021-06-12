@@ -187,6 +187,8 @@ namespace Guus_Reise
                 }
             }
         }
+
+
         public static float? Intersects(Vector2 mouseLocation, Model model, Matrix world, Matrix view, Matrix projection, Viewport viewport) //gibt die küruzeste distanz zum Model zurück (null falls keine Kollision)
         {
             float? minDistance = null;

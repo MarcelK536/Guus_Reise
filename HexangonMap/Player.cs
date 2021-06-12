@@ -47,14 +47,19 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < HexMap._board.GetLength(1); k++)
                 {
-
                     float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap.Camera.view, HexMap.Camera.projection, graphicsDevice.Viewport);
                     if (distance < minDistance)
                     {
                         minDistance = distance;
                         hoverTile = HexMap._board[i, k];
+                        hoverTile.IsHovered = true;
                         mouseOverSomething = true;
                     }
+                    else
+                    {
+                        HexMap._board[i, k].IsHovered = false;
+                    }
+                    
                 }
             }
 
@@ -141,6 +146,8 @@ namespace Guus_Reise
                     actionMenu.interactTrue = false;
                 }
             }
+           
+
             actionMenu.Update();
             _prevMouseState = mouseState;
             _prevKeyState = keystate;

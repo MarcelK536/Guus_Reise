@@ -230,7 +230,7 @@ namespace Guus_Reise
 
         public void Stop()
         {
-            _charakterAnimation.Stop();
+            _charakterAnimation.StopAnimation();
         }
 
 

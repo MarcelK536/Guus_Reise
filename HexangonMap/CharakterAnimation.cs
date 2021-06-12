@@ -121,7 +121,7 @@ namespace Guus_Reise.HexangonMap
             {
                 if(isPlayAnimation)
                 {
-                    Stop();
+                    StopAnimation();
                 }
                 else
                 {
@@ -129,6 +129,16 @@ namespace Guus_Reise.HexangonMap
                 }
 
             }
+
+            if (!_hexagon.IsHovered)
+            {
+                StopAnimation();
+            }
+            if (_hexagon.IsHovered)
+            {
+                Play("Idle");
+            }
+
             _prevKeyState = Keyboard.GetState();
         }
 
@@ -165,7 +175,7 @@ namespace Guus_Reise.HexangonMap
         }
 
         // Setzen der Texture wieder auf die Standardtextur
-        public void Stop()
+        public void StopAnimation()
         {
             _curTex = _texCharakter;
             isPlayAnimation = false;
