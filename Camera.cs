@@ -28,27 +28,27 @@ namespace Guus_Reise
             switch (symbol)
             {
                 case "w": this.view.Translation = new Vector3(0, -0.1f, 0.1f) + this.view.Translation; //bewegt camera nach vorne
-                    _currentTranslation.Y = _currentTranslation.Y + 0.1f;
-                    break;
-
-                case "s": this.view.Translation = new Vector3(0, 0.1f, -0.1f) + this.view.Translation; //camera nach hinte
                     _currentTranslation.Y = _currentTranslation.Y - 0.1f;
                     break;
 
+                case "s": this.view.Translation = new Vector3(0, 0.1f, -0.1f) + this.view.Translation; //camera nach hinte
+                    _currentTranslation.Y = _currentTranslation.Y + 0.1f;
+                    break;
+
                 case "a": this.view.Translation = new Vector3(0.1f, 0, 0) + this.view.Translation; //camera links
-                    _currentTranslation.X = _currentTranslation.Y - 0.1f;
+                    _currentTranslation.X = _currentTranslation.X - 0.1f;
                     break;
 
                 case "d": this.view.Translation = new Vector3(-0.1f, 0, 0) + this.view.Translation; //camera rechts
-                    _currentTranslation.X = _currentTranslation.Y + 0.1f;
+                    _currentTranslation.X = _currentTranslation.X + 0.1f;
                     break;
 
                 case "hoch": this.view.Translation = new Vector3(0, 0, 0.5f) + this.view.Translation;
-                    _currentTranslation.Z = _currentTranslation.Y + 0.5f;
+                    _currentTranslation.Z = _currentTranslation.Z - 0.5f;
                     break;
 
                 case "runter": this.view.Translation = new Vector3(0, 0, -0.5f) + this.view.Translation;
-                    _currentTranslation.Z = _currentTranslation.Y - 0.5f;
+                    _currentTranslation.Z = _currentTranslation.Z + 0.5f;
                     break;
 
                 default: break;
@@ -61,14 +61,17 @@ namespace Guus_Reise
             {
                 case "Y":
                     this.view.Translation = new Vector3(0, value, -1*value) + this.view.Translation; //camera nach hinte
+                    _currentTranslation.Y = _currentTranslation.Y + value;
                     break;
 
                 case "X":
                     this.view.Translation = new Vector3(-1*value, 0, 0) + this.view.Translation; //camera rechts
+                    _currentTranslation.X = _currentTranslation.X + value;
                     break;
 
                 case "zoom":
                     this.view.Translation = new Vector3(0, 0, value) + this.view.Translation;
+                    _currentTranslation.Z = _currentTranslation.Z - value;
                     break;
 
                 default: break;

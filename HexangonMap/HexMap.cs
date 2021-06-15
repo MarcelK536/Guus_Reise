@@ -26,7 +26,12 @@ namespace Guus_Reise
         public static int friendlyNeighbourCount;
         
         private static bool playerTurn;
+
+        private static KeyboardState _prevKeyState;
+
         internal static Camera Camera { get => camera; set => camera = value; }
+
+
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
@@ -46,6 +51,7 @@ namespace Guus_Reise
             Player.actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+            _prevKeyState = Keyboard.GetState();
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -98,6 +104,11 @@ namespace Guus_Reise
                 Camera.MoveCamera("runter");
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.G) && _prevKeyState.IsKeyUp(Keys.G))
+            {
+                visManager.SetCameraToMiddleOfMap();
+            }
+
             if (playerTurn)
             {
                 Player.Update(time, graphicsDevice);
@@ -139,6 +150,7 @@ namespace Guus_Reise
                     }
                 }
             }
+            _prevKeyState = Keyboard.GetState();
         }
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
         {
