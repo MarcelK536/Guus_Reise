@@ -13,6 +13,7 @@ namespace Guus_Reise
     {
         public static Hex[,] _board; //Spielbrett
         public static List<Point> possibleMoves = new List<Point>();
+        public static VisualisationManager visManager;
 
         private static Camera camera;
         public static int lastwheel; // hilfsvariable für Camerazoom
@@ -25,7 +26,6 @@ namespace Guus_Reise
         public static int friendlyNeighbourCount;
         
         private static bool playerTurn;
-
         internal static Camera Camera { get => camera; set => camera = value; }
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
@@ -186,13 +186,15 @@ namespace Guus_Reise
                     }
                 }
             }
+            visManager = new VisualisationManager(tilemap.GetLength(0), tilemap.GetLength(1), Camera);
+            visManager.SetCameraToMiddleOfMap();
+
         }
 
 
         public static float? Intersects(Vector2 mouseLocation, Model model, Matrix world, Matrix view, Matrix projection, Viewport viewport) //gibt die küruzeste distanz zum Model zurück (null falls keine Kollision)
         {
             float? minDistance = null;
-
             for (int index = 0; index < model.Meshes.Count; index++)    //berechnet für jedes Mesh im Model einen sphere um den Punkt und überprüft auf strahlenkollision
             {
                 BoundingSphere sphere = model.Meshes[index].BoundingSphere;
