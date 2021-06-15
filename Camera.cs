@@ -18,9 +18,6 @@ namespace Guus_Reise
         {
             view = Matrix.CreateLookAt(new Vector3(0f, 5, 7), new Vector3(0f, 0, 0), Vector3.UnitY);
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(30), aspectRatio, 0.01f, 100f);
-            //this.view.Translation = new Vector3(0, 0, -4f) + this.view.Translation;
-            //this.view.Translation = new Vector3(-4f, 0f, 0f) + this.view.Translation;
-            //this.view.Translation = new Vector3(0, 1.75f, -1.75f) + this.view.Translation;
         }
 
         public void MoveCamera(string symbol)
@@ -43,12 +40,20 @@ namespace Guus_Reise
                     _currentTranslation.X = _currentTranslation.X + 0.1f;
                     break;
 
-                case "hoch": this.view.Translation = new Vector3(0, 0, 0.5f) + this.view.Translation;
-                    _currentTranslation.Z = _currentTranslation.Z - 0.5f;
+                case "hoch":
+                    if (_currentTranslation.Z >= -6.5f+(_currentTranslation.Y*0.35f))
+                    {
+                        this.view.Translation = new Vector3(0, 0, 0.5f) + this.view.Translation;
+                        _currentTranslation.Z = _currentTranslation.Z - 0.5f;
+                    } 
                     break;
 
-                case "runter": this.view.Translation = new Vector3(0, 0, -0.5f) + this.view.Translation;
-                    _currentTranslation.Z = _currentTranslation.Z + 0.5f;
+                case "runter":
+                    if (_currentTranslation.Z <= 20)
+                    {
+                        this.view.Translation = new Vector3(0, 0, -0.5f) + this.view.Translation;
+                        _currentTranslation.Z = _currentTranslation.Z + 0.5f;
+                    } 
                     break;
 
                 default: break;
