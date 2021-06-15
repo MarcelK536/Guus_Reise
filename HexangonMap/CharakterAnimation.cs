@@ -37,12 +37,14 @@ namespace Guus_Reise.HexangonMap
         private Vector3 _color;
 
         float timer;
-        float intervall = 100f;
+        float _standardIntervall;
+        float _currentIntervall;
 
         bool isPlayAnimation = false;
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle)
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, float standardintervall)
         {
+            _standardIntervall = standardintervall;
             idle = animIdle;
             _planeModel = planeModel;
             _texCharakter = texCharakter;
@@ -132,12 +134,12 @@ namespace Guus_Reise.HexangonMap
                 {
                     if(_hexagon.IsActive)
                     {
-                        Play("Idle");
+                        Play("Idle", _standardIntervall);
                     }
                 }
                 else
                 {
-                    Play("Idle");
+                    Play("Idle", _standardIntervall);
                 }
                 
             }
@@ -148,7 +150,7 @@ namespace Guus_Reise.HexangonMap
         public void UpdateAnimation( GameTime gametime)
         {
             timer += (float)gametime.ElapsedGameTime.TotalMilliseconds / 2;
-            if(timer > intervall)
+            if(timer > _currentIntervall)
             {
                 currentFrame++;
                 timer = 0;
@@ -159,7 +161,7 @@ namespace Guus_Reise.HexangonMap
             }
         }
 
-        public void Play(string nameAnimation)
+        public void Play(string nameAnimation, float intervall)
         {
             if(nameAnimation == "")
             {
@@ -174,6 +176,7 @@ namespace Guus_Reise.HexangonMap
                     currentAnimation = idle;
                     break;
             }
+            _currentIntervall = intervall;
             isPlayAnimation = true;
         }
 

@@ -33,7 +33,7 @@ namespace Guus_Reise
             DirectoryInfo di;
             Model planeModel = content.Load<Model>("Charakter\\plane");
 
-
+            float standardIntervall = 100f;
             foreach (string name in charakterNames)
             {
                 path = "Content\\Charakter\\" + name;
@@ -56,11 +56,16 @@ namespace Guus_Reise
                     idle.Add(curr);
                 }
 
+                if(name == "Paul")
+                {
+                    standardIntervall = 250f;
+                }
+
                 //moveLeft
                 //moveRight
                 //...
 
-                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle);  
+                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, standardIntervall);  
             }
         }
 

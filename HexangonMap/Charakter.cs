@@ -223,9 +223,9 @@ namespace Guus_Reise
             _charakterAnimation.DrawCharakter(camera);
         }
 
-        public void Play(string nameAnimation)
+        public void Play(string nameAnimation, float intervall)
         {
-            _charakterAnimation.Play(nameAnimation);
+            _charakterAnimation.Play(nameAnimation, intervall);
         }
 
         public void Stop()
