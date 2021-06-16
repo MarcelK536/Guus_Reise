@@ -44,7 +44,7 @@ namespace Guus_Reise
             base.Update();
             if (Active)
             {
-                HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
+                HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
 
                 if (btnQuitGame.IsClicked())
                 {
@@ -52,23 +52,26 @@ namespace Guus_Reise
                 }
                 if (btnConfirm.IsClicked())
                 {
-                    HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y];
-                    HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter;
-                    HexMap._board[Player1.activeTile.LogicalPosition.X, Player1.activeTile.LogicalPosition.Y].Charakter = null;
-                    HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].LogicalPosition;
-                    HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter.CanMove = false;
+                    HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y];
+                    HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
+                    HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter = null;
+                    HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].LogicalPosition;
+                    HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.CanMove = false;
 
                     foreach (Charakter charakter in HexMap.playableCharacter)
                     {
-                        if (charakter.LogicalPosition == Player1.activeTile.LogicalPosition)
+                        if (charakter.LogicalPosition == Player.activeTile.LogicalPosition)
                         {
-                            HexMap.playableCharacter[HexMap.playableCharacter.IndexOf(charakter)] = HexMap._board[Player1.moveTile.LogicalPosition.X, Player1.moveTile.LogicalPosition.Y].Charakter;
+                            HexMap.playableCharacter[HexMap.playableCharacter.IndexOf(charakter)] = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter;
                         }
                     }
                     
                     this.Active =! this.Active;
-                    Player1.activeTile = null;
-                    Player1.moveTile = null;
+                    Player.activeTile.IsActive = false;
+                    Player.activeTile = null;
+                    CharakterAnimationManager.ActiveHexExists = false;
+
+                    Player.moveTile = null;
                     fightTrue = false;
                     interactTrue = false;
                     
@@ -80,7 +83,7 @@ namespace Guus_Reise
                         //TODO FIGHT
                         Fighthandler.npcTiles = HexMap.enemyNeighbourTiles;
                         Fighthandler.playerTiles = HexMap.friendNeighbourTiles;
-                        Fighthandler.playerTiles.Add(Player1.activeTile);
+                        Fighthandler.playerTiles.Add(Player.activeTile);
                         GState = Game1.GameState.InFight;
                     }
                 }

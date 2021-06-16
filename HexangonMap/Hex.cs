@@ -8,12 +8,27 @@ namespace Guus_Reise
         private Point _logicalPosition;         //Position im _board Array
         private Tile _tile;
         private Charakter _charakter;
+        bool _isHovered = false;
+        bool _isActive = false;
 
         public Vector3 Position
         {
             get => _position;
             set => _position = value;
         }
+
+        public bool IsHovered 
+        {
+            get => _isHovered;
+            set => _isHovered = value;
+        }
+
+        public bool IsActive 
+        {
+            get => _isActive;
+            set => _isActive = value;
+        }
+
         public Point LogicalPosition
         {
             get => _logicalPosition;
@@ -36,7 +51,6 @@ namespace Guus_Reise
             this.LogicalPosition = logicalPosition;
             this.Tile = tile;
         }
-
         public void Draw(Camera camera)
         {
             this.Tile.Draw(camera);

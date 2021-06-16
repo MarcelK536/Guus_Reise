@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Guus_Reise
 {
-    class Player1
+    class Player
     {
         public static MouseState _prevMouseState;
         public static KeyboardState _prevKeyState;
@@ -47,14 +47,19 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < HexMap._board.GetLength(1); k++)
                 {
-
                     float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap.Camera.view, HexMap.Camera.projection, graphicsDevice.Viewport);
                     if (distance < minDistance)
                     {
                         minDistance = distance;
                         hoverTile = HexMap._board[i, k];
+                        hoverTile.IsHovered = true;
                         mouseOverSomething = true;
                     }
+                    else
+                    {
+                        HexMap._board[i, k].IsHovered = false;
+                    }
+                    
                 }
             }
 
@@ -67,6 +72,8 @@ namespace Guus_Reise
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released) //wenn zusätzlich die linke Maustaste gedrückt wird, wird das hoverTile zum activeTile
                     {
                         activeTile = hoverTile;
+                        activeTile.IsActive = true;
+                        CharakterAnimationManager.ActiveHexExists = true;
                     }
                 }
             }
@@ -130,7 +137,10 @@ namespace Guus_Reise
 
                 if (Mouse.GetState().RightButton == ButtonState.Pressed && _prevMouseState.RightButton == ButtonState.Released)    //wenn die rechte Maustaste gedrückt wird, wird das activeTile zurückgesetzt
                 {
+                    activeTile.IsActive = false;
                     activeTile = null;
+                    CharakterAnimationManager.ActiveHexExists = false;
+
                     moveTile = null;
                     actionMenu.Active = false;
                     HexMap.enemyNeighbourCount = 0;
@@ -141,6 +151,8 @@ namespace Guus_Reise
                     actionMenu.interactTrue = false;
                 }
             }
+           
+
             actionMenu.Update();
             _prevMouseState = mouseState;
             _prevKeyState = keystate;

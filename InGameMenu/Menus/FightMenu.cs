@@ -36,8 +36,8 @@ namespace Guus_Reise
             base.Update();
             if (Active)
             {
-                int x = Player1.activeTile.LogicalPosition.X;
-                int y = Player1.activeTile.LogicalPosition.Y;
+                int x = Player.activeTile.LogicalPosition.X;
+                int y = Player.activeTile.LogicalPosition.Y;
 
                 if (btnAttack1.IsClicked())
                 {
@@ -56,8 +56,8 @@ namespace Guus_Reise
             base.Draw(spriteBatch);
             if (Active)
             {
-                int x = Player1.activeTile.LogicalPosition.X;
-                int y = Player1.activeTile.LogicalPosition.Y;
+                int x = Player.activeTile.LogicalPosition.X;
+                int y = Player.activeTile.LogicalPosition.Y;
 
                 spriteBatch.Begin();
                 spriteBatch.DrawString(textFont, "Name: " + Fighthandler._fightBoard[x, y].Charakter.Name, btnAttack1.GetPosRightOf(), Color.Yellow);
