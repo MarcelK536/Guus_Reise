@@ -40,14 +40,7 @@ namespace Guus_Reise
             if (Keyboard.GetState().IsKeyDown(Keys.H) && _prevKeyState.IsKeyUp(Keys.H))
             {
                 SimpleMenu.DeactivateAllOtherMenus(levelUpMenu);
-                if (levelUpMenu.Active != true)
-                {
-                    HexMap.visManager.SetFocusToHex(activeTile);
-                }
-                else
-                {
-                    HexMap.visManager.SetCameraToMiddleOfMap();
-                }
+                HexMap.visManager.ManageCharakterViewH(levelUpMenu);
                 levelUpMenu.Active = !levelUpMenu.Active;
             }
 
@@ -151,6 +144,10 @@ namespace Guus_Reise
                     activeTile.IsActive = false;
                     activeTile = null;
                     HexMap.activeHex = null;
+                    if(HexMap.visManager.isDetailViewH)
+                    {
+                        HexMap.visManager.SetCameraToMiddleOfMap();
+                    }
 
                     moveTile = null;
                     actionMenu.Active = false;

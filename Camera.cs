@@ -22,6 +22,10 @@ namespace Guus_Reise
 
         public void MoveCamera(string symbol)
         {
+            if (HexMap.visManager.isDetailViewH)
+            {
+                HexMap.visManager.isDetailViewH = false;
+            }
             switch (symbol)
             {
                 case "w": this.view.Translation = new Vector3(0, -0.1f, 0.1f) + this.view.Translation; //bewegt camera nach vorne
@@ -71,6 +75,7 @@ namespace Guus_Reise
          */
         public void MoveCameraValue(string direction, float value)
         {
+
             switch (direction)
             {
                 case "Y":
