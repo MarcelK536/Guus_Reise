@@ -6,7 +6,7 @@ namespace Guus_Reise
     {
         public Matrix view;
         public Matrix projection;
-        Vector3 _currentTranslation = new Vector3(0, 0, 0);
+        Vector3 _currentTranslation = new Vector3(0, 0, 0); // Verschiebung der Camera relativ zur Anfangsposition (aus dem Konstruktor)
 
         public Vector3 CurrentTranslation
         {
@@ -60,6 +60,15 @@ namespace Guus_Reise
             }
         }
 
+        /* Bewegt die Camera sich um den Angegebenen Wert in gegebener Richtung
+         *      + Y - nach Unten
+         *      - Y - nach Oben
+         *      + X - nach Rechts
+         *      - X - nach Links
+         *      + zoom - hinein scrollen
+         *      - zoom - heraus scrollen
+         * Es werden jeweils die currentTRansaltion aktualisert
+         */
         public void MoveCameraValue(string direction, float value)
         {
             switch (direction)

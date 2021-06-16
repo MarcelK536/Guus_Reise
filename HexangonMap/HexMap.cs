@@ -13,10 +13,9 @@ namespace Guus_Reise
     {
         public static Hex[,] _board; //Spielbrett
         public static List<Point> possibleMoves = new List<Point>();
-        public static VisualisationManager visManager;
+        public static VisualisationManagerHexmap visManager;
 
-        private static Camera camera;
-        public static int lastwheel; // hilfsvariable für Camerazoom
+        private static Camera _camera;
 
         public static List<Charakter> npcs = new List<Charakter>();
         public static List<Charakter> playableCharacter = new List<Charakter>();
@@ -27,9 +26,8 @@ namespace Guus_Reise
         
         private static bool playerTurn;
 
-        private static KeyboardState _prevKeyState;
 
-        internal static Camera Camera { get => camera; set => camera = value; }
+        internal static Camera Camera { get => _camera; set => _camera = value; }
 
 
 
@@ -43,7 +41,7 @@ namespace Guus_Reise
 
             Createboard(tilemap, Content);
             CreateCharakter(names, charakterlevel, charPositions);
-            lastwheel = 0;
+
             Player._prevMouseState = Mouse.GetState();
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
@@ -51,7 +49,7 @@ namespace Guus_Reise
             Player.actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
-            _prevKeyState = Keyboard.GetState();
+
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -69,44 +67,6 @@ namespace Guus_Reise
             foreach(Charakter c in npcs)
             {
                 c.CharakterAnimation.Update(time);
-            }
-
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                Camera.MoveCamera("w");
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                Camera.MoveCamera("s");
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                Camera.MoveCamera("a");
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                Camera.MoveCamera("d");
-            }
-
-            if (Mouse.GetState().ScrollWheelValue > lastwheel)
-            {
-                lastwheel = Mouse.GetState().ScrollWheelValue;
-                Camera.MoveCamera("hoch");
-            }
-
-            if (Mouse.GetState().ScrollWheelValue < lastwheel)
-            {
-                lastwheel = Mouse.GetState().ScrollWheelValue;
-                Camera.MoveCamera("runter");
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.G) && _prevKeyState.IsKeyUp(Keys.G))
-            {
-                visManager.SetCameraToMiddleOfMap();
             }
 
             if (playerTurn)
@@ -150,8 +110,9 @@ namespace Guus_Reise
                     }
                 }
             }
-            _prevKeyState = Keyboard.GetState();
+            visManager.Update(time);
         }
+
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
         {
             for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
@@ -198,9 +159,9 @@ namespace Guus_Reise
                     }
                 }
             }
-            visManager = new VisualisationManager(tilemap.GetLength(0), tilemap.GetLength(1), Camera);
+            visManager = new VisualisationManagerHexmap(tilemap.GetLength(0), tilemap.GetLength(1), Camera);
+            //Fokus der Camera auf die Mitte der Karte setzen
             visManager.SetCameraToMiddleOfMap();
-
         }
 
 
