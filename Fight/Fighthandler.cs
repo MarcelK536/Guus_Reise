@@ -39,12 +39,31 @@ namespace Guus_Reise
                         Vector3 curRealPos = _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position;
                         _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]] = playerTiles[i];
                         _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter.LogicalPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
+                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].LogicalPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
                         _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position = curRealPos;
                         break;
                     }
                 }
             }
             initPlayers = true;
+        }
+
+        public static void DeInitPlayers()
+        {
+            for(int i = playerTiles.Count - 1; i >= 0; i--)
+            {
+                for(int j = charPositionsPlayer.GetLength(0)-1; j > 0; j--)
+                {
+                    if(_fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter != null)
+                    {
+                        Vector3 curRealPos = _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position;
+                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter.LogicalPosition = playerTiles[i].Charakter.LogicalPosition;
+                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].LogicalPosition = playerTiles[i].Charakter.LogicalPosition;
+                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position = curRealPos;
+                        break;
+                    }
+                }
+            }
         }
 
         public static void Update()
@@ -57,6 +76,7 @@ namespace Guus_Reise
             {
                 GState = Game1.GameState.InGame;
                 fightMenu.Active = false;
+                DeInitPlayers();
             }
             fightMenu.Active = true;
             fightMenu.Update();

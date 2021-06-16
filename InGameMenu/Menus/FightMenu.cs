@@ -46,6 +46,7 @@ namespace Guus_Reise
                 if (btnGiveUp.IsClicked())
                 {
                     Game1.GState = Game1.GameState.InGame;
+                    Fighthandler.DeInitPlayers();
                 }
             }
         }
@@ -59,8 +60,8 @@ namespace Guus_Reise
                 int y = Player1.activeTile.LogicalPosition.Y;
 
                 spriteBatch.Begin();
-                spriteBatch.DrawString(textFont, "Name: " + HexMap._board[x, y].Charakter.Name, btnAttack1.GetPosRightOf(), Color.Yellow);
-                spriteBatch.DrawString(textFont, "Widerstandskraft: " + HexMap._board[x, y].Charakter.Widerstandskraft, btnAttack2.GetPosRightOf(), Color.Yellow);
+                spriteBatch.DrawString(textFont, "Name: " + Fighthandler._fightBoard[x, y].Charakter.Name, btnAttack1.GetPosRightOf(), Color.Yellow);
+                spriteBatch.DrawString(textFont, "Widerstandskraft: " + Fighthandler._fightBoard[x, y].Charakter.Widerstandskraft, btnAttack2.GetPosRightOf(), Color.Yellow);
                 btnAttack1.Draw(spriteBatch, textFont);
                 btnAttack2.Draw(spriteBatch, textFont);
                 btnGiveUp.Draw(spriteBatch, textFont);
