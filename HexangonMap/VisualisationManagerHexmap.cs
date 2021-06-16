@@ -16,6 +16,7 @@ namespace Guus_Reise.HexangonMap
         public int lastwheel;
         private KeyboardState _prevKeyState;
 
+        public HexMap _hexmap;
 
         public VisualisationManagerHexmap(int length, int width, Camera camera)
         {
@@ -99,6 +100,26 @@ namespace Guus_Reise.HexangonMap
             _camera.MoveCameraValue("Y", valueY);
             _camera.MoveCameraValue("X", valueX);
             _camera.MoveCameraValue("zoom", -1*(valueZoom+2));
+
+        }
+
+        public void SetFocusToHex(Hex hex)
+        {
+            Point locicalPosition = hex.LogicalPosition;
+            float valueZoom = 6 - (_camera.CurrentTranslation.Y * 0.4f);
+            valueZoom = valueZoom + _camera.CurrentTranslation.Z;
+            float valueX = locicalPosition.X;
+            if(locicalPosition.Y % 2 != 0)
+            {
+                valueX += 0.5f;
+            }
+            valueX = valueX - _camera.CurrentTranslation.X;
+            float valueY = locicalPosition.Y * 0.5f;
+            valueY = valueY - _camera.CurrentTranslation.Y;
+
+            _camera.MoveCameraValue("Y", valueY);
+            _camera.MoveCameraValue("X", valueX);
+            _camera.MoveCameraValue("zoom", valueZoom);
 
         }
     }

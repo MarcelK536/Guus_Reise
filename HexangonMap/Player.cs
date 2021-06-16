@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {
@@ -30,6 +31,7 @@ namespace Guus_Reise
 
             float? minDistance = float.MaxValue;
             bool mouseOverSomething = false;
+            HexMap.hoveredHex = null;
             hoverTile = null;
             HexMap.possibleMoves.Clear();
 
@@ -38,6 +40,14 @@ namespace Guus_Reise
             if (Keyboard.GetState().IsKeyDown(Keys.H) && _prevKeyState.IsKeyUp(Keys.H))
             {
                 SimpleMenu.DeactivateAllOtherMenus(levelUpMenu);
+                if (levelUpMenu.Active != true)
+                {
+                    HexMap.visManager.SetFocusToHex(activeTile);
+                }
+                else
+                {
+                    HexMap.visManager.SetCameraToMiddleOfMap();
+                }
                 levelUpMenu.Active = !levelUpMenu.Active;
             }
 
@@ -53,6 +63,7 @@ namespace Guus_Reise
                         minDistance = distance;
                         hoverTile = HexMap._board[i, k];
                         hoverTile.IsHovered = true;
+                        HexMap.hoveredHex = hoverTile;
                         mouseOverSomething = true;
                     }
                     else
@@ -73,7 +84,7 @@ namespace Guus_Reise
                     {
                         activeTile = hoverTile;
                         activeTile.IsActive = true;
-                        CharakterAnimationManager.ActiveHexExists = true;
+                        HexMap.activeHex = activeTile;
                     }
                 }
             }
@@ -139,7 +150,7 @@ namespace Guus_Reise
                 {
                     activeTile.IsActive = false;
                     activeTile = null;
-                    CharakterAnimationManager.ActiveHexExists = false;
+                    HexMap.activeHex = null;
 
                     moveTile = null;
                     actionMenu.Active = false;

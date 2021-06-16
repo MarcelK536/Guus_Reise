@@ -11,7 +11,6 @@ namespace Guus_Reise.HexangonMap
     {
         private static KeyboardState _prevKeyState;
         private Vector3 _charakterPostion; //Position des Charakters
-        bool activeHexExists = false;
         
         Vector3 translation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
         private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
