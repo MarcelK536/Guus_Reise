@@ -15,6 +15,9 @@ namespace Guus_Reise
         public static List<Point> possibleMoves = new List<Point>();
         public static VisualisationManagerHexmap visManager;
 
+        public static Hex activeHex;
+        public static Hex hoveredHex;
+
         private static Camera _camera;
 
         public static List<Charakter> npcs = new List<Charakter>();
@@ -25,7 +28,6 @@ namespace Guus_Reise
         public static int friendlyNeighbourCount;
         
         private static bool playerTurn;
-
 
         internal static Camera Camera { get => _camera; set => _camera = value; }
 
@@ -111,6 +113,14 @@ namespace Guus_Reise
                 }
             }
             visManager.Update(time);
+            if(activeHex != null)
+            {
+                CharakterAnimationManager.ActiveHexExists = true;
+            }
+            else
+            {
+                CharakterAnimationManager.ActiveHexExists = false;
+            }
         }
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)

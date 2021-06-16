@@ -69,7 +69,7 @@ namespace Guus_Reise
                     this.Active =! this.Active;
                     Player.activeTile.IsActive = false;
                     Player.activeTile = null;
-                    CharakterAnimationManager.ActiveHexExists = false;
+                    HexMap.activeHex = null;
 
                     Player.moveTile = null;
                     fightTrue = false;
