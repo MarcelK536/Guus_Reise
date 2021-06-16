@@ -143,5 +143,24 @@ namespace Guus_Reise.HexangonMap
                 HexMap.visManager.SetCameraToMiddleOfMap();
             }
         }
+
+        public void VisMovement(Hex start, Hex target)
+        {
+            float valueX = 0;
+            float valueY = 0;
+            SetFocusToHex(start);
+            valueX = (target.LogicalPosition.X - start.LogicalPosition.X);
+            valueY = (target.LogicalPosition.Y - start.LogicalPosition.Y) * 0.5f;
+            if(start.LogicalPosition.Y % 2 == 0 && target.LogicalPosition.Y % 2 != 0)
+            {
+                valueX += 0.5f;
+            }
+            else if(start.LogicalPosition.Y % 2 != 0 && target.LogicalPosition.Y % 2 == 0)
+            {
+                valueX -= 0.5f;
+            }
+            _camera.MoveCameraValue("X", valueX);
+            _camera.MoveCameraValue("Y", valueY);
+        }
     }
 }

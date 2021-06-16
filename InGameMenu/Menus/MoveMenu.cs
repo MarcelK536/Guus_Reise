@@ -45,7 +45,8 @@ namespace Guus_Reise
             if (Active)
             {
                 HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
-
+                Hex targetHex = Player.moveTile;
+                Hex startHex = Player.activeTile;
                 if (btnQuitGame.IsClicked())
                 {
                     Game1.GState = Game1.GameState.MainMenu;
@@ -74,7 +75,9 @@ namespace Guus_Reise
                     Player.moveTile = null;
                     fightTrue = false;
                     interactTrue = false;
-                    
+
+                    HexMap.visManager.VisMovement(startHex, targetHex);
+
                 }
                 if (fightTrue)
                 {

@@ -7,7 +7,6 @@ namespace Guus_Reise
         public Matrix view;
         public Matrix projection;
         Vector3 _currentTranslation = new Vector3(0, 0, 0); // Verschiebung der Camera relativ zur Anfangsposition (aus dem Konstruktor)
-
         public Vector3 CurrentTranslation
         {
             get => _currentTranslation;
