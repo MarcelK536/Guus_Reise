@@ -10,6 +10,7 @@ namespace Guus_Reise
 {
     class Fighthandler
     {
+        //Original Tiles
         public static List<Hex> playerTiles = new List<Hex>();      //Der Initierende Spieler steht am Ende der Liste
         public static List<Hex> npcTiles = new List<Hex>();
 
@@ -36,11 +37,10 @@ namespace Guus_Reise
                 {
                     if (_fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter == null)
                     {
-                        Vector3 curRealPos = _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position;
+                        playerTiles[i].FightPosition = _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position;
+                        playerTiles[i].Charakter.LogicalFightPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
+                        playerTiles[i].LogicalFightPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
                         _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]] = playerTiles[i];
-                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter.LogicalPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
-                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].LogicalPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
-                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position = curRealPos;
                         break;
                     }
                 }
@@ -50,20 +50,7 @@ namespace Guus_Reise
 
         public static void DeInitPlayers()
         {
-            for(int i = playerTiles.Count - 1; i >= 0; i--)
-            {
-                for(int j = charPositionsPlayer.GetLength(0)-1; j > 0; j--)
-                {
-                    if(_fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter != null)
-                    {
-                        Vector3 curRealPos = _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position;
-                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter.LogicalPosition = playerTiles[i].Charakter.LogicalPosition;
-                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].LogicalPosition = playerTiles[i].Charakter.LogicalPosition;
-                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position = curRealPos;
-                        break;
-                    }
-                }
-            }
+            initPlayers = false;
         }
 
         public static void Update()

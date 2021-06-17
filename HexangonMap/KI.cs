@@ -33,7 +33,7 @@ namespace Guus_Reise
                         HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
                         HexMap._board[move.X, move.Y].Charakter = charakter;
                         HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
-                        charakter.LogicalPosition = move;
+                        charakter.LogicalBoardPosition = move;
                         charakter.CanMove = false;
                         break;
                     case 3:
