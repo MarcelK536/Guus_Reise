@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {
@@ -51,6 +52,17 @@ namespace Guus_Reise
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
+
+            // Aktualisieren der Charakter-Positionen
+            foreach(Charakter c in playableCharacter)
+            {
+                c.CharakterAnimation.Update();
+            }
+            foreach(Charakter c in npcs)
+            {
+                c.CharakterAnimation.Update();
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 _camera.MoveCamera("w");
@@ -107,6 +119,7 @@ namespace Guus_Reise
             {
                 KI.Update(time, graphicsDevice);
                 int movecounter = npcs.Count;
+
                 foreach (Charakter charakter in npcs)
                 {
                     if (!charakter.CanMove)
@@ -137,8 +150,17 @@ namespace Guus_Reise
             {
                 Player.Draw(spriteBatch, gameTime);
             }
-            
-            
+
+            //Zeichnen der Charaktere nach dem die komplette Map fertig ist (da es sonst zu nem Graphik-Bug kommt)
+            foreach(Charakter c in playableCharacter)
+            {
+                c.Draw(_camera);
+            }
+            foreach (Charakter c in npcs)
+            {
+                c.Draw(_camera);
+            }
+
         }
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
@@ -295,7 +317,7 @@ namespace Guus_Reise
         }
         public static void CreateCharakter(string[] names, int[] charakter, int[,] positions)
         {
-            //int[] hilf = new int[charakter.GetLength(1)];
+            int[] hilf = new int[charakter.GetLength(1)];
 
             for (int i = 0; i < charakter.GetLength(0); i++)
             {
