@@ -159,9 +159,8 @@ namespace Guus_Reise
                     actionMenu.interactTrue = false;
                 }
             }
-           
 
-            actionMenu.Update();
+            actionMenu.Update(time);
             _prevMouseState = mouseState;
             _prevKeyState = keystate;
         }

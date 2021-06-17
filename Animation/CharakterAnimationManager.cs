@@ -6,7 +6,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Content;
 using Guus_Reise.HexangonMap;
 
-namespace Guus_Reise
+namespace Guus_Reise.Animation
 {
     class CharakterAnimationManager
     {

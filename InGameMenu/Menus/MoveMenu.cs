@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using static Guus_Reise.Game1;
+using Guus_Reise.HexangonMap;
+using Guus_Reise.Animation;
 
 namespace Guus_Reise
 {
@@ -17,6 +19,8 @@ namespace Guus_Reise
         Button btnInteract;
         public bool fightTrue;
         public bool interactTrue;
+
+        float timer = 0;
         static public Texture2D menuTexture { get; set; }
 
         public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
@@ -39,7 +43,7 @@ namespace Guus_Reise
             menuButtons.Add(btnQuitGame);
         }
 
-        public override void Update()
+        public void Update(GameTime gametime)
         {
             base.Update();
             if (Active)
@@ -76,8 +80,8 @@ namespace Guus_Reise
                     fightTrue = false;
                     interactTrue = false;
 
-                    HexMap.visManager.VisMovement(startHex, targetHex);
-
+                    // Movement Animation starten
+                    MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
                 }
                 if (fightTrue)
                 {

@@ -8,16 +8,33 @@ namespace Guus_Reise.HexangonMap
 {
     class VisualisationManagerHexmap
     {
-        public Camera _camera;
+        public static  Camera _camera;
 
         public float lengthHexMap;
         public float widthHexMap;
        
         public int lastwheel;
         private KeyboardState _prevKeyState;
+        static Vector3 cameraTranslationStart = new Vector3(0, 0, 0);
 
+        public static bool isMovementStop = false;
+        public static bool isRunningMovement = false;
 
         public bool isDetailViewH;
+        static float timerMovement;
+
+        //Values for the Movement Animation
+        public static Hex startHex;
+        public static Hex targetHex;
+        public static string currentStep;
+        public static bool isMakeCameraSlide = false;
+        public static int waittime = 1000;
+        static float timerWait;
+        public static bool fokusValuesSet = false;
+        public static bool fokusSet = false;
+        static float valueZoom = 0;
+        static float valueX = 0;
+        static float valueY = 0;
 
         public VisualisationManagerHexmap(int length, int width, Camera camera)
         {
@@ -112,14 +129,13 @@ namespace Guus_Reise.HexangonMap
             float valueZoom = 6 - (_camera.CurrentTranslation.Y * 0.4f);
             valueZoom = valueZoom + _camera.CurrentTranslation.Z;
             float valueX = locicalPosition.X;
-            if(locicalPosition.Y % 2 != 0)
+            if (locicalPosition.Y % 2 != 0)
             {
                 valueX += 0.5f;
             }
             valueX = valueX - _camera.CurrentTranslation.X;
             float valueY = locicalPosition.Y * 0.5f;
             valueY = valueY - _camera.CurrentTranslation.Y;
-            
             _camera.MoveCameraValue("Y", valueY);
             _camera.MoveCameraValue("X", valueX);
             _camera.MoveCameraValue("zoom", valueZoom);
@@ -132,7 +148,7 @@ namespace Guus_Reise.HexangonMap
             {
                 if (HexMap.activeHex != null)
                 {
-                    HexMap.visManager.SetFocusToHex(HexMap.activeHex);
+                    SetFocusToHex(HexMap.activeHex);
                     isDetailViewH = true;
 
                 }
@@ -149,6 +165,7 @@ namespace Guus_Reise.HexangonMap
             float valueX = 0;
             float valueY = 0;
             SetFocusToHex(start);
+            _camera.MoveCameraValue("zoom", -6);
             valueX = (target.LogicalPosition.X - start.LogicalPosition.X);
             valueY = (target.LogicalPosition.Y - start.LogicalPosition.Y) * 0.5f;
             if(start.LogicalPosition.Y % 2 == 0 && target.LogicalPosition.Y % 2 != 0)
@@ -162,5 +179,6 @@ namespace Guus_Reise.HexangonMap
             _camera.MoveCameraValue("X", valueX);
             _camera.MoveCameraValue("Y", valueY);
         }
+
     }
 }

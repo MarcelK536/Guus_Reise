@@ -1,0 +1,264 @@
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Guus_Reise.Animation
+{
+    class MovementAnimation
+    {
+        public Camera _camera;
+        public Vector3 startTranslationCamera = new Vector3(0, 0, 0);
+
+        public Hex startHex;
+        public Hex targetHex;
+
+        public int currentStep;
+
+        public float timer = 0;
+        public bool isSlidingCamera = false;
+        public bool isWaiting = false;
+        public float waittime;
+        public int currIntervall;
+        public string currDirection;
+        public float currValue;
+
+        public bool isNewStep;
+
+        public List<string> ablauf;
+
+        public MovementAnimation(string type, Hex start, Hex target)
+        {
+           startHex = start;
+           targetHex = target;
+           _camera = HexMap.Camera;
+           switch (type)
+           {
+                case "CharakterMovement":
+                    ablauf = new List<string> { "FokusStartHex","Wait500", "ZoomOut" };
+                    break;
+           }
+            currentStep = 0;
+
+        }
+
+        #region Update
+
+        public void Update(GameTime gametime)
+        {
+            if(isSlidingCamera)
+            {
+                MakeCameraSlide(gametime, currIntervall, currDirection, currValue);
+            }
+            if(isWaiting)
+            {
+                Wait(gametime, waittime);
+            }
+            UpdateAnimation(gametime);
+        }
+
+        public void UpdateAnimation(GameTime gametime)
+        {
+            if(currentStep >= ablauf.Count)
+            {
+                Game1.GState = Game1.GameState.InGame;
+
+            }
+            else
+            {
+                if (ablauf[currentStep] == "FokusStartHex")
+                {
+                    HexMap.visManager.SetFocusToHex(startHex);
+                    currentStep++;
+                    isNewStep = true;
+                }
+                else if (ablauf[currentStep] == "ZoomOut")
+                {
+                    if (isNewStep)
+                    {
+                        SlideCamera(30, "zoom", -6);
+                        isNewStep = false;
+                    }
+                    if (!isSlidingCamera)
+                    {
+                        currentStep++;
+                        isNewStep = true;
+                    }
+                }
+                else if(ablauf[currentStep] == "Wait500")
+                {
+                    if(isNewStep)
+                    {
+                        isWaiting = true;
+                        waittime = 500;
+                        isNewStep = false;
+                    }
+                    else
+                    {
+                        if(!isWaiting)
+                        {
+                            currentStep++;
+                            isNewStep = true;
+                        }
+                    }
+                }
+            }
+
+        }
+        #endregion
+
+        public void Wait(GameTime gametime, float duration)
+        {
+            timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
+            if(timer > duration)
+            {
+                isWaiting = false;
+            }
+        }
+
+        #region Kamerabewegung
+        // Startet eine "smoothe" Kamerabewegung
+        public void SlideCamera(int intervall, string direction, float value)
+        {
+            isSlidingCamera = true;
+            currIntervall = intervall;
+            currDirection = direction;
+            currValue = value;
+        }
+
+        // Führt die Smoothe Kamerabewegung aus
+        public void MakeCameraSlide(GameTime gametime, int intervall, string direction, float value)
+        {
+            timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
+            if (startTranslationCamera == new Vector3(0, 0, 0))
+            {
+                startTranslationCamera = _camera.CurrentTranslation;
+            }
+            if (timer > intervall)
+            {
+                switch (direction)
+                {
+                    case "Y":
+                        if (value < 0)
+                        {
+                            _camera.MoveCamera("w");
+                            if (_camera.CurrentTranslation.Y <= startTranslationCamera.Y + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        else
+                        {
+                            _camera.MoveCamera("s");
+                            if (_camera.CurrentTranslation.Y >= startTranslationCamera.Y + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        break;
+                    case "X":
+                        if (value < 0)
+                        {
+                            _camera.MoveCamera("a");
+                            if (_camera.CurrentTranslation.X <= startTranslationCamera.X + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        else
+                        {
+                            _camera.MoveCamera("d");
+                            if (_camera.CurrentTranslation.X >= startTranslationCamera.X + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        break;
+                    case "zoom":
+                        if (value < 0)
+                        {
+                            _camera.MoveCamera("runter");
+                            if (_camera.CurrentTranslation.Z >= startTranslationCamera.Z - value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        else
+                        {
+                            _camera.MoveCamera("hoch");
+                            if (_camera.CurrentTranslation.Z <= startTranslationCamera.Z - value)
+                            {
+                                isSlidingCamera = false;
+                            }
+
+                        }
+                        break;
+                    case "diagOben":
+                        if (value < 0)
+                        {
+                            _camera.MoveCamera("diag4");
+                            if (_camera.CurrentTranslation.X <= startTranslationCamera.X + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        else
+                        {
+                            _camera.MoveCamera("diag1");
+                            if (_camera.CurrentTranslation.X >= startTranslationCamera.X + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        break;
+                    case "diagUnten":
+                        if (value < 0)
+                        {
+                            _camera.MoveCamera("diag3");
+                            if (_camera.CurrentTranslation.X <= startTranslationCamera.X + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        else
+                        {
+                            _camera.MoveCamera("diag2");
+                            if (_camera.CurrentTranslation.X >= startTranslationCamera.X + value)
+                            {
+                                isSlidingCamera = false;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                timer = 0;
+            }
+
+        }
+
+        //public void SetFocusHexSlide(Hex hex, GameTime gameTime)
+        //{
+        //    if (!fokusValuesSet)
+        //    {
+        //        Point locicalPosition = hex.LogicalPosition;
+        //        valueZoom = 6 - (_camera.CurrentTranslation.Y * 0.4f);
+        //        valueZoom = valueZoom + _camera.CurrentTranslation.Z;
+        //        valueX = locicalPosition.X;
+        //        if (locicalPosition.Y % 2 != 0)
+        //        {
+        //            valueX += 0.5f;
+        //        }
+        //        valueX = valueX - _camera.CurrentTranslation.X;
+        //        valueY = locicalPosition.Y * 0.5f;
+        //        valueY = valueY - _camera.CurrentTranslation.Y;
+        //        fokusValuesSet = true;
+        //    }
+        //    MakeCameraSlide(gameTime, 100, "X", valueX);
+        //    MakeCameraSlide(gameTime, 100, "zoom", valueZoom);
+        //    MakeCameraSlide(gameTime, 100, "Y", valueY);
+
+        //}
+        #endregion
+    }
+}

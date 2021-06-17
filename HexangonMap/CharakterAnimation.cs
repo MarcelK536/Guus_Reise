@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
+using Guus_Reise.Animation;
 
 namespace Guus_Reise.HexangonMap
 {
