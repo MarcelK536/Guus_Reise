@@ -14,7 +14,7 @@ namespace Guus_Reise
         public static List<Hex> playerTiles = new List<Hex>();      //Der Initierende Spieler steht am Ende der Liste
         public static List<Hex> npcTiles = new List<Hex>();
 
-        static int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
+        static readonly int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
         public static Hex[,] _fightBoard;
         public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
         public static int[,] charPositionsEnemy = new int[,] { { 6, 0 }, { 6, 1 }, { 6, 2 }, { 4, 1 } };   //Positionen für Gegner  Der dem Spieler gegenüber stehenenden Gegner ist an der Letzten Position
@@ -29,18 +29,26 @@ namespace Guus_Reise
             Createboard(fightMap, content);
         }
 
-        public static void InitPlayers()
+        public static void InitPlayers(List<Hex> tiles, int[,] places)
         {
-            for(int i = playerTiles.Count-1; i >= 0; i--) 
+            for(int i = tiles.Count-1; i >= 0; i--) 
             {
-                for(int j = charPositionsPlayer.GetLength(0)-1; j > 0; j--)
+                for(int j = places.GetLength(0)-1; j > 0; j--)
                 {
-                    if (_fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Charakter == null)
+                    if (_fightBoard[places[j, 0], places[j, 1]].Charakter == null)
                     {
-                        playerTiles[i].FightPosition = _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]].Position;
-                        playerTiles[i].Charakter.LogicalFightPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
-                        playerTiles[i].LogicalFightPosition = new Point(charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]);
-                        _fightBoard[charPositionsPlayer[j, 0], charPositionsPlayer[j, 1]] = playerTiles[i];
+                        tiles[i].FightPosition = _fightBoard[places[j, 0], places[j, 1]].BoardPosition;
+                        tiles[i].Charakter.LogicalFightPosition = new Point(places[j, 0], places[j, 1]);
+                        tiles[i].LogicalFightPosition = new Point(places[j, 0], places[j, 1]);
+
+                        tiles[i].LogicalPosition = tiles[i].LogicalFightPosition;
+                        tiles[i].Charakter.LogicalPosition = tiles[i].Charakter.LogicalFightPosition;
+                        tiles[i].Position = tiles[i].FightPosition;
+                        
+
+
+                        _fightBoard[places[j, 0], places[j, 1]] = tiles[i];
+
                         break;
                     }
                 }
@@ -48,8 +56,15 @@ namespace Guus_Reise
             initPlayers = true;
         }
 
-        public static void DeInitPlayers()
+        public static void DeInitPlayers(List<Hex> tiles)
         {
+            for(int i = tiles.Count-1; i >= 0; i--)
+            {
+                tiles[i].LogicalPosition = tiles[i].LogicalBoardPosition;
+                tiles[i].Charakter.LogicalPosition = tiles[i].Charakter.LogicalBoardPosition;
+                tiles[i].Position = tiles[i].BoardPosition;
+            }
+            
             initPlayers = false;
         }
 
@@ -57,13 +72,15 @@ namespace Guus_Reise
         {
             if (initPlayers == false)
             {
-                InitPlayers();
+                InitPlayers(playerTiles,charPositionsPlayer);
+                InitPlayers(npcTiles, charPositionsEnemy);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
                 GState = Game1.GameState.InGame;
                 fightMenu.Active = false;
-                DeInitPlayers();
+                DeInitPlayers(playerTiles);
+                DeInitPlayers(npcTiles);
             }
             fightMenu.Active = true;
             fightMenu.Update();
