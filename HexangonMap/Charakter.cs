@@ -184,9 +184,6 @@ namespace Guus_Reise
             this.KI = werte[11];
             this.Fähigkeitspunkte = werte[12];
             this.Level = werte[13];
-            this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
-            this.Color = new Vector3(0, 0, 0);
-            _charakterAnimation = new CharakterAnimation(HexMap._board[this.LogicalPosition.X, this.LogicalPosition.Y], this);
         }
 
         public int[] LevelToStats(int level, String klasse)
