@@ -80,6 +80,20 @@ namespace Guus_Reise
             this.LogicalBoardPosition = logicalPosition;
             this.Tile = tile;
         }
+
+        public Hex Clone()
+        {
+            Hex clone = new Hex(this.Position, this.LogicalPosition, this.Tile);
+            clone.Charakter = this.Charakter;
+            clone.BoardPosition = this.BoardPosition;
+            clone.LogicalPosition = this.LogicalPosition;
+            clone.Position = this.Position;
+            clone.IsHovered = this.IsHovered;
+            clone.IsActive = this.IsActive;
+
+            return clone;
+        }
+
         public void Draw(Camera camera)
         {
             if(Game1.GState == Game1.GameState.InFight)

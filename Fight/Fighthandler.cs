@@ -61,9 +61,53 @@ namespace Guus_Reise
                 tiles[i].LogicalPosition = tiles[i].LogicalBoardPosition;
                 tiles[i].Charakter.LogicalPosition = tiles[i].Charakter.LogicalBoardPosition;
                 tiles[i].Position = tiles[i].BoardPosition;
-            }
-            
+            }            
             initPlayers = false;
+        }
+
+        public static void ExitFight()
+        {
+            DeInitPlayers(playerTiles);
+            DeInitPlayers(npcTiles);
+
+            for (int i = _fightBoard.GetLength(0) - 1; i > 0; i--)
+            {
+                for (int j = _fightBoard.GetLength(1) - 1; j > 0; j--)
+                {
+                    if (_fightBoard[i, j] != null)
+                    {
+                        if (_fightBoard[i, j].Charakter != null)
+                        {
+                            Hex hilf = _fightBoard[i, j].Clone();
+                            int hilfIndex = playerTiles.IndexOf(_fightBoard[i,j]);
+                            bool isPlayerTile = true;
+                            if (hilfIndex == -1)
+                            {
+                                hilfIndex = npcTiles.IndexOf(_fightBoard[i, j]);
+                                isPlayerTile = false;
+                            }
+                            _fightBoard[i, j].Charakter = null;
+                            if (isPlayerTile == true)
+                            {
+                                playerTiles[hilfIndex] = hilf;
+                            }
+                            else
+                            {
+                                npcTiles[hilfIndex] = hilf;
+                            }
+                        }
+                    }
+                }
+            }
+
+            for(int i = playerTiles.Count-1; i >= 0; i--)
+            {
+                HexMap._board[playerTiles[i].LogicalBoardPosition.X, playerTiles[i].LogicalBoardPosition.Y] = playerTiles[i];
+            }
+            for(int i = npcTiles.Count-1; i >= 0; i--)
+            {
+                HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
+            }
         }
 
         public static void Update()
@@ -77,8 +121,7 @@ namespace Guus_Reise
             {
                 GState = Game1.GameState.InGame;
                 fightMenu.Active = false;
-                DeInitPlayers(playerTiles);
-                DeInitPlayers(npcTiles);
+                ExitFight();
             }
             fightMenu.Active = true;
             fightMenu.Update();
@@ -106,6 +149,8 @@ namespace Guus_Reise
                             Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
                             _fightBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
                         }
+
+                        _fightBoard[i, k].FightPosition = _fightBoard[i, k].BoardPosition;
                     }
                 }           
             }
