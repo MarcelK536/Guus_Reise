@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Guus_Reise.HexangonMap;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +24,9 @@ namespace Guus_Reise
         public static FightMenu fightMenu;
         public static bool initPlayers = false;
 
+        public static VisualisationManagerHexmap visFightManager;
+
+
         public static void Init(GraphicsDevice graphicsDevice, ContentManager content)
         {
             fightMenu = new FightMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
@@ -37,7 +41,7 @@ namespace Guus_Reise
                 {
                     if (_fightBoard[places[j, 0], places[j, 1]].Charakter == null)
                     {
-                        tiles[i].FightPosition = _fightBoard[places[j, 0], places[j, 1]].BoardPosition;
+                        tiles[i].FightPosition = _fightBoard[places[j, 0], places[j, 1]].FightPosition;
                         tiles[i].Charakter.LogicalFightPosition = new Point(places[j, 0], places[j, 1]);
                         tiles[i].LogicalFightPosition = new Point(places[j, 0], places[j, 1]);
 
@@ -110,7 +114,7 @@ namespace Guus_Reise
             }
         }
 
-        public static void Update()
+        public static void Update(GameTime gameTime)
         {
             if (initPlayers == false)
             {
@@ -125,7 +129,7 @@ namespace Guus_Reise
             }
             fightMenu.Active = true;
             fightMenu.Update();
-
+            visFightManager.Update(gameTime);
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
@@ -154,6 +158,8 @@ namespace Guus_Reise
                     }
                 }           
             }
+            visFightManager = new VisualisationManagerHexmap(_fightBoard.GetLength(0), _fightBoard.GetLength(1), HexMap.Camera);
+            visFightManager.SetCameraToMiddleOfMap();
         }
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)

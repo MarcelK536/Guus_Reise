@@ -41,7 +41,7 @@ namespace Guus_Reise
 
                 if (btnAttack1.IsClicked())
                 {
-                    HexMap._board[x, y].Charakter.Widerstandskraft++;    
+                    Fighthandler._fightBoard[x, y].Charakter.Widerstandskraft++;    
                 }
                 if (btnGiveUp.IsClicked())
                 {
