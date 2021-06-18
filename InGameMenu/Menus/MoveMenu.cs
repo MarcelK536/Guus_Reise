@@ -11,29 +11,32 @@ namespace Guus_Reise
 {
     class MoveMenu : SimpleMenu
     {
-        public GraphicsDevice GraphicsDevice{ get; }
         Button btnConfirm;
         Button btnAttack;
         Button btnQuitGame;
         Button btnInteract;
         public bool fightTrue;
         public bool interactTrue;
+        static public Texture2D menuTexture { get; set; }
 
-        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), new Texture2D(graphicsDevice, 350, 600), moveMenuFont,graphicsDevice)
+        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
         {
-            GraphicsDevice = graphicsDevice;
             btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
-                btnColor[i] = Color.Aquamarine;
+                btnColor[i] = Color.Aquamarine*0.5f;
             }
             btnTexture.SetData(btnColor);
             btnConfirm = new Button("Confirm Move", btnTexture, 1, btnClose.GetPosBelow());
+            menuButtons.Add(btnConfirm);
             btnAttack = new Button("Attack", btnTexture, 1, btnConfirm.GetPosBelow());
+            menuButtons.Add(btnAttack);
             btnInteract = new Button("Iteract", btnTexture, 1, btnAttack.GetPosBelow());
+            menuButtons.Add(btnInteract);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
+            menuButtons.Add(btnQuitGame);
         }
 
         public override void Update()
@@ -49,6 +52,7 @@ namespace Guus_Reise
                 }
                 if (btnConfirm.IsClicked())
                 {
+                    HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y];
                     HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                     HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter = null;
                     HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].LogicalPosition;
@@ -63,7 +67,10 @@ namespace Guus_Reise
                     }
                     
                     this.Active =! this.Active;
+                    Player.activeTile.IsActive = false;
                     Player.activeTile = null;
+                    CharakterAnimationManager.ActiveHexExists = false;
+
                     Player.moveTile = null;
                     fightTrue = false;
                     interactTrue = false;

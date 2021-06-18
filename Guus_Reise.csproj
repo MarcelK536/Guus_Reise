@@ -10,6 +10,11 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Content\Charakter\Timmae\moveRight\**" />
+    <EmbeddedResource Remove="Content\Charakter\Timmae\moveRight\**" />
+    <None Remove="Content\Charakter\Timmae\moveRight\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>
@@ -31,7 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\bin\DesktopGL\Content\" />
-    <Folder Include="Content\Charakter\" />
+    <Folder Include="Content\Charakter\Guu\idle\" />
+    <Folder Include="Content\Charakter\Paul\" />
+    <Folder Include="Content\Charakter\Peter\" />
     <Folder Include="Content\World\" />
   </ItemGroup>
   <ItemGroup>

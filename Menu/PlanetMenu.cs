@@ -26,6 +26,7 @@ namespace Guus_Reise.Menu
         static List<string> listOfPlanets;
         static int indexOfSelectedPlanet;
 
+        static GraphicsDeviceManager _graphics;
 
         static int index;
         static Vector2 worldScale = new Vector2(1.5f, 1.5f);
@@ -38,8 +39,9 @@ namespace Guus_Reise.Menu
 
 
 
-        public static void Init()
+        public static void Init(GraphicsDeviceManager graphics)
         {
+            _graphics = graphics;
             // here to insert Names of Planets
             List<string> planetNames = new List<string>{ "Planet 1", "Planet 2", "Planet 3"};
             indexOfSelectedPlanet = (planetNames.Count) / 2;
@@ -49,12 +51,12 @@ namespace Guus_Reise.Menu
             foreach(string planetName in planetNames)
             {
                 index = planetNames.IndexOf(planetName);
-                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 150 + index * 250, 250, false);
+                planetButtons[index] = new AnimatedButton(planetName,  worldTextures[index], planetButtonAnimations[index], worldScale, 200 + index * 300, 300, false);
             }
             planetButtons[indexOfSelectedPlanet].isFocused = true;
             bool test = planetButtons[indexOfSelectedPlanet].isFocused;
             // Set Button Back
-            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.3f, 650,20);
+            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800,20);
 
             // Set previous Keyboard State
             _prevKeyState = Keyboard.GetState();
@@ -95,7 +97,7 @@ namespace Guus_Reise.Menu
         // Test of Object at index index, are the current selected element, and if true, set a lower scale
         private static void SetMenuScale(int index)
         {
-            Vector2 ScaleSelectedWorld = new Vector2(2.3f, 2.3f);
+            Vector2 ScaleSelectedWorld = new Vector2(2.6f, 2.6f);
             if(indexOfSelectedPlanet == index)
             {
                 planetButtons[index].Scale = ScaleSelectedWorld;
@@ -240,6 +242,32 @@ namespace Guus_Reise.Menu
                 GState = GameState.MainMenu;
             }
             _prevKeyState = Keyboard.GetState();
+        }
+
+        public static void SetParametersFromWindowScale()
+        {
+            int index;
+            if (_graphics.IsFullScreen == true)
+            {
+                foreach (string planet in listOfPlanets)
+                {
+                    index = listOfPlanets.IndexOf(planet);
+                    planetButtons[index].ButtonX = planetButtons[index].ButtonX + 450;
+                    planetButtons[index].ButtonY = 600;
+                }
+                back.ButtonX = back.ButtonX + 900;
+
+            }
+            else
+            {
+                foreach (string planet in listOfPlanets)
+                {
+                    index = listOfPlanets.IndexOf(planet);
+                    planetButtons[index].ButtonX = planetButtons[index].ButtonX - 450;
+                    planetButtons[index].ButtonY = 300;
+                }
+                back.ButtonX = back.ButtonX - 900;
+            }
         }
     }
 }

@@ -47,14 +47,19 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < HexMap._board.GetLength(1); k++)
                 {
-
-                    float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap._camera.view, HexMap._camera.projection, graphicsDevice.Viewport);
+                    float? distance = HexMap.Intersects(mouseLocation, HexMap._board[i, k].Tile.Tile1, HexMap._board[i, k].Tile.World, HexMap.Camera.view, HexMap.Camera.projection, graphicsDevice.Viewport);
                     if (distance < minDistance)
                     {
                         minDistance = distance;
                         hoverTile = HexMap._board[i, k];
+                        hoverTile.IsHovered = true;
                         mouseOverSomething = true;
                     }
+                    else
+                    {
+                        HexMap._board[i, k].IsHovered = false;
+                    }
+                    
                 }
             }
 
@@ -67,6 +72,8 @@ namespace Guus_Reise
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released) //wenn zusätzlich die linke Maustaste gedrückt wird, wird das hoverTile zum activeTile
                     {
                         activeTile = hoverTile;
+                        activeTile.IsActive = true;
+                        CharakterAnimationManager.ActiveHexExists = true;
                     }
                 }
             }
@@ -91,6 +98,7 @@ namespace Guus_Reise
                         if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released && HexMap.possibleMoves.Contains(hoverTile.LogicalPosition)) //wenn ein possibleMove Tile geklickt wird, wird dieses aks Zug vorgemerkt
                         {
                             actionMenu.Active = true;
+                            SimpleMenu.DeactivateAllOtherMenus(actionMenu);
                             actionMenu.fightTrue = false;
                             actionMenu.interactTrue = false;
                             moveTile = hoverTile;
@@ -129,7 +137,10 @@ namespace Guus_Reise
 
                 if (Mouse.GetState().RightButton == ButtonState.Pressed && _prevMouseState.RightButton == ButtonState.Released)    //wenn die rechte Maustaste gedrückt wird, wird das activeTile zurückgesetzt
                 {
+                    activeTile.IsActive = false;
                     activeTile = null;
+                    CharakterAnimationManager.ActiveHexExists = false;
+
                     moveTile = null;
                     actionMenu.Active = false;
                     HexMap.enemyNeighbourCount = 0;
@@ -140,6 +151,8 @@ namespace Guus_Reise
                     actionMenu.interactTrue = false;
                 }
             }
+           
+
             actionMenu.Update();
             _prevMouseState = mouseState;
             _prevKeyState = keystate;

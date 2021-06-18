@@ -28,7 +28,7 @@ namespace Guus_Reise
 
         private static GameState _state;
 
-        public static GameState GState
+        internal static GameState GState
         {
             get => _state;
             set => _state = value;
@@ -48,11 +48,12 @@ namespace Guus_Reise
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
             base.Initialize();
-            MainMenu.Init();
+            MainMenu.Init(_graphics);
             Credits.Init();
+            CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
             HexMap.Init(Content, GraphicsDevice, _graphics);
-            PlanetMenu.Init();
-
+            PlanetMenu.Init(_graphics);
+            Fighthandler.Init(GraphicsDevice, Content);
         }
 
         protected override void LoadContent()
@@ -63,7 +64,6 @@ namespace Guus_Reise
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
-            Charakter.LoadContent(Content, _spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)
@@ -133,7 +133,8 @@ namespace Guus_Reise
                     HexMap.DrawInGame(_spriteBatch, gameTime);
                     break;
                 case GameState.InFight:
-                    Fighthandler.Draw();
+                    GraphicsDevice.Clear(Color.Coral);
+                    Fighthandler.Draw(_spriteBatch, gameTime);
                     break;
                 default:
                     break;
@@ -144,7 +145,7 @@ namespace Guus_Reise
         {
             if (_graphics.PreferredBackBufferWidth == 1000)
             {
-                _graphics.PreferredBackBufferWidth = 1500;
+                _graphics.PreferredBackBufferWidth = 1706;
                 _graphics.PreferredBackBufferHeight = 1024;
                 _graphics.IsFullScreen = true;
             }
@@ -156,6 +157,10 @@ namespace Guus_Reise
                 
             }
             _graphics.ApplyChanges();
+            PlanetMenu.SetParametersFromWindowScale();
+            MainMenu.SetParametersFromWindowScale();
+
+
         }
     }
 }

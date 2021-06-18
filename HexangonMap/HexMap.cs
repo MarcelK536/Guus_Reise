@@ -13,9 +13,9 @@ namespace Guus_Reise
     {
         public static Hex[,] _board; //Spielbrett
         public static List<Point> possibleMoves = new List<Point>();
+        public static VisualisationManagerHexmap visManager;
 
-        public static Camera _camera;
-        public static int lastwheel; // hilfsvariable für Camerazoom
+        private static Camera _camera;
 
         public static List<Charakter> npcs = new List<Charakter>();
         public static List<Charakter> playableCharacter = new List<Charakter>();
@@ -26,29 +26,35 @@ namespace Guus_Reise
         
         private static bool playerTurn;
 
+
+        internal static Camera Camera { get => _camera; set => _camera = value; }
+
+
+
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
             int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
             //int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1, 1 }, { 20, 7, 8, 9, 8, 8, 2, 4, 0, 0 } };         //input Array für die Charaktere
             int[] charakterlevel = new int[] { 5, 4, 4 };
-            string[] names = new string[] { "Guu", "Peter", "Paul" };       //input Array für Namen
+            string[] names = new string[] { "Guu", "Timmae", "Paul" };       //input Array für Namen
             int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 }, { 4, 2 } };   //input Array für Positionen
 
             Createboard(tilemap, Content);
             CreateCharakter(names, charakterlevel, charPositions);
-            lastwheel = 0;
+
             Player._prevMouseState = Mouse.GetState();
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
 
             Player.actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
-            Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice);
-            Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice);
+            Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
+            Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
         {
-            _camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
+            Camera = new Camera((float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight);
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
@@ -56,43 +62,11 @@ namespace Guus_Reise
             // Aktualisieren der Charakter-Positionen
             foreach(Charakter c in playableCharacter)
             {
-                c.CharakterAnimation.Update();
+                c.CharakterAnimation.Update(time);
             }
             foreach(Charakter c in npcs)
             {
-                c.CharakterAnimation.Update();
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
-            {
-                _camera.MoveCamera("w");
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                _camera.MoveCamera("s");
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                _camera.MoveCamera("a");
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                _camera.MoveCamera("d");
-            }
-
-            if (Mouse.GetState().ScrollWheelValue > lastwheel)
-            {
-                lastwheel = Mouse.GetState().ScrollWheelValue;
-                _camera.MoveCamera("hoch");
-            }
-
-            if (Mouse.GetState().ScrollWheelValue < lastwheel)
-            {
-                lastwheel = Mouse.GetState().ScrollWheelValue;
-                _camera.MoveCamera("runter");
+                c.CharakterAnimation.Update(time);
             }
 
             if (playerTurn)
@@ -136,14 +110,16 @@ namespace Guus_Reise
                     }
                 }
             }
+            visManager.Update(time);
         }
+
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
         {
             for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
-                    _board[i, k].Draw(_camera);
+                    _board[i, k].Draw(Camera);
                 }
             }
             if (playerTurn)
@@ -154,11 +130,11 @@ namespace Guus_Reise
             //Zeichnen der Charaktere nach dem die komplette Map fertig ist (da es sonst zu nem Graphik-Bug kommt)
             foreach(Charakter c in playableCharacter)
             {
-                c.Draw(_camera);
+                c.Draw(Camera);
             }
             foreach (Charakter c in npcs)
             {
-                c.Draw(_camera);
+                c.Draw(Camera);
             }
 
         }
@@ -183,11 +159,15 @@ namespace Guus_Reise
                     }
                 }
             }
+            visManager = new VisualisationManagerHexmap(tilemap.GetLength(0), tilemap.GetLength(1), Camera);
+            //Fokus der Camera auf die Mitte der Karte setzen
+            visManager.SetCameraToMiddleOfMap();
         }
+
+
         public static float? Intersects(Vector2 mouseLocation, Model model, Matrix world, Matrix view, Matrix projection, Viewport viewport) //gibt die küruzeste distanz zum Model zurück (null falls keine Kollision)
         {
             float? minDistance = null;
-
             for (int index = 0; index < model.Meshes.Count; index++)    //berechnet für jedes Mesh im Model einen sphere um den Punkt und überprüft auf strahlenkollision
             {
                 BoundingSphere sphere = model.Meshes[index].BoundingSphere;
@@ -318,6 +298,7 @@ namespace Guus_Reise
         public static void CreateCharakter(string[] names, int[] charakter, int[,] positions)
         {
             //int[] hilf = new int[charakter.GetLength(1)];
+            Hex curr;
 
             for (int i = 0; i < charakter.GetLength(0); i++)
             {
@@ -326,7 +307,8 @@ namespace Guus_Reise
                 //    hilf[k] = charakter[i, k];
                 //}
                 //_board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], hilf);
-                _board[positions[i, 0], positions[i, 1]].Charakter = new Charakter(names[i], charakter[i]);
+                curr = _board[positions[i, 0], positions[i, 1]];
+                curr.Charakter = new Charakter(names[i], charakter[i], curr, CharakterAnimationManager.GetCharakterAnimation(names[i]));
                 _board[positions[i, 0], positions[i, 1]].Charakter.LogicalPosition = _board[positions[i, 0], positions[i, 1]].LogicalPosition;
                 if (_board[positions[i, 0], positions[i, 1]].Charakter.IsNPC)
                 {
