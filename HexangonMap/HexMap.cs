@@ -317,7 +317,7 @@ namespace Guus_Reise
         }
         public static void CreateCharakter(string[] names, int[] charakter, int[,] positions)
         {
-            int[] hilf = new int[charakter.GetLength(1)];
+            //int[] hilf = new int[charakter.GetLength(1)];
 
             for (int i = 0; i < charakter.GetLength(0); i++)
             {
