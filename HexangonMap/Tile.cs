@@ -69,8 +69,8 @@ namespace Guus_Reise
                     this.Begehbarkeit = 1;
                     break;
             }
+            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(position));
 
-            this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) *Matrix.CreateRotationY(45)* Matrix.CreateTranslation(position));
         }
 
 

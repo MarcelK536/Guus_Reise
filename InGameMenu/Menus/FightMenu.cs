@@ -57,8 +57,8 @@ namespace Guus_Reise
             base.Draw(spriteBatch);
             if (Active)
             {
-                int x = Player.activeTile.LogicalPosition.X;
-                int y = Player.activeTile.LogicalPosition.Y;
+                int x = Player.activeTile.LogicalFightPosition.X;
+                int y = Player.activeTile.LogicalFightPosition.Y;
 
                 spriteBatch.Begin();
                 spriteBatch.DrawString(textFont, "Name: " + Fighthandler._fightBoard[x, y].Charakter.Name, btnAttack1.GetPosRightOf(), Color.Yellow);
