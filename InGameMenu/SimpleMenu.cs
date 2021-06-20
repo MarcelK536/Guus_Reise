@@ -12,6 +12,7 @@ namespace Guus_Reise
         public SpriteFont textFont;
         public Button btnClose;
         public float btnWidth;
+        public GraphicsDevice _graphicsDevice;
 
         public BlendDirection blendDirection;
         public List<Button> menuButtons= new List<Button>();
@@ -30,6 +31,7 @@ namespace Guus_Reise
         static List<SimpleMenu> allInstances = new List<SimpleMenu>();
         public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction)
         {
+            _graphicsDevice = graphicsDevice;
             pos = position;
             textFont = menuFont;
             btnWidth = menuFont.MeasureString("Close").X + 10;
@@ -59,13 +61,18 @@ namespace Guus_Reise
         {
             if (Active)
             {
-                if (btnClose.IsClicked()) 
+                if (btnClose.IsClicked() && needCloseBtn == true) 
                 {
                     Active = false;
                 }
             }
         }
         
+        public virtual void UpdatePosition(Vector2 newPos)
+        {
+            pos = newPos;
+            btnClose.MoveButton(newPos);
+        }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             if (blendDirection == BlendDirection.None)
@@ -108,11 +115,6 @@ namespace Guus_Reise
         public virtual Vector2 GetPositionBelow(Vector2 vector)
         {
             return new Vector2(vector.X, vector.Y + textFont.MeasureString("T").Y + 5); 
-        }
-
-        public virtual void Close(object INFO)
-        {
-            Active = false;
         }
 
         public static void DeactivateAllOtherMenus(SimpleMenu activeMenu)
