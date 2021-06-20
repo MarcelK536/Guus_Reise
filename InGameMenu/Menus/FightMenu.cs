@@ -14,6 +14,8 @@ namespace Guus_Reise
 
         public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
         {
+            //System.Diagnostics.Debug.WriteLine(graphicsDevice.Viewport.Bounds.Center.Y);
+            needCloseBtn = false;
             btnWidth = menuFont.MeasureString("Attack 1").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice,(int) btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
@@ -60,11 +62,39 @@ namespace Guus_Reise
                 int y = Player.activeTile.LogicalFightPosition.Y;
 
                 spriteBatch.Begin();
-                spriteBatch.DrawString(textFont, "Name: " + Fighthandler._fightBoard[x, y].Charakter.Name, btnAttack1.GetPosRightOf(), Color.Yellow);
-                spriteBatch.DrawString(textFont, "Widerstandskraft: " + Fighthandler._fightBoard[x, y].Charakter.Widerstandskraft, btnAttack2.GetPosRightOf(), Color.Yellow);
+                Vector2 textPosition = Vector2.Zero;
+                foreach (Hex hex in Fighthandler.playerTiles)
+                {
+                    if (textPosition == Vector2.Zero)
+                    {
+                        textPosition = btnAttack1.GetPosRightOf();
+                    }
+                    else
+                    {
+                        textPosition = GetPositionBelow(GetPositionBelow(textPosition));
+                    }
+                    spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.Widerstandskraft, GetPositionBelow(textPosition), Color.Yellow);
+                }
                 btnAttack1.Draw(spriteBatch, textFont);
                 btnAttack2.Draw(spriteBatch, textFont);
                 btnGiveUp.Draw(spriteBatch, textFont);
+
+                textPosition = Vector2.Zero;
+                foreach (Hex hex in Fighthandler.npcTiles)
+                {
+                    if (textPosition == Vector2.Zero)
+                    {
+                        textPosition = btnAttack1.GetPosRightOf() + Vector2.UnitX*(btnAttack1.GetPosRightOf().X + 200);
+                    }
+                    else
+                    {
+                        textPosition = GetPositionBelow(GetPositionBelow(textPosition));
+                    }
+                    spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.Widerstandskraft, GetPositionBelow(textPosition), Color.Yellow);
+                }
+
                 spriteBatch.End();
             }
         }

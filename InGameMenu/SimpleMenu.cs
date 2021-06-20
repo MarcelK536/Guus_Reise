@@ -16,6 +16,7 @@ namespace Guus_Reise
         public BlendDirection blendDirection;
         public List<Button> menuButtons= new List<Button>();
         public float menuWidth;
+        public bool needCloseBtn = true;
         
         public enum BlendDirection
         {
@@ -71,9 +72,12 @@ namespace Guus_Reise
             {
                 if (Active)
                 {
-                    spriteBatch.Begin();
-                    btnClose.Draw(spriteBatch, textFont);
-                    spriteBatch.End();
+                    if (needCloseBtn == true)
+                    {
+                        spriteBatch.Begin();
+                        btnClose.Draw(spriteBatch, textFont);
+                        spriteBatch.End();
+                    }
                 }
             }
             else if(blendDirection == BlendDirection.LeftToRight)
@@ -99,6 +103,11 @@ namespace Guus_Reise
                     button.ButtonX = (int)-menuWidth;
                 }
             }
+        }
+
+        public virtual Vector2 GetPositionBelow(Vector2 vector)
+        {
+            return new Vector2(vector.X, vector.Y + textFont.MeasureString("T").Y + 5); 
         }
 
         public virtual void Close(object INFO)
