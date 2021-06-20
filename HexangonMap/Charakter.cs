@@ -26,7 +26,9 @@ namespace Guus_Reise
         private int[] _currentFightStats;
         private int _bewegungsreichweite;
         private int _fpunkte;
-        private Point _logicalPosition;
+        private Point _logicalPosition;         //Position an welcher der Charakter gezeichnet wird
+        private Point _logicalFightPosition;    //Platzhalter für Position im Kampf
+        private Point _logicalBoardPosition;    //Platzhalter für Position auf Karte
 
         CharakterAnimation _charakterAnimation;
 
@@ -131,6 +133,16 @@ namespace Guus_Reise
             get => _logicalPosition;
             set => _logicalPosition = value;
         }
+        public Point LogicalFightPosition 
+        { 
+            get => _logicalFightPosition; 
+            set => _logicalFightPosition = value; 
+        }
+        public Point LogicalBoardPosition 
+        { 
+            get => _logicalBoardPosition; 
+            set => _logicalBoardPosition = value; 
+        }
 
 
         /*public Charakter (String name, int leben, int angriff, int abwehr, int wortgewand, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite)
@@ -149,7 +161,7 @@ namespace Guus_Reise
             this.Color = new Vector3(0, 0, 0);
         }*/
 
-        
+
         public Charakter(String klasse, int level, Hex hex, CharakterAnimation charakterAnimation)
         {
             int[] stats = LevelToStats(level, klasse);
@@ -220,6 +232,14 @@ namespace Guus_Reise
 
         public void Draw(Camera camera)
         {
+            if (Game1.GState == Game1.GameState.InFight)
+            {
+                LogicalPosition = LogicalFightPosition;
+            }
+            else
+            {
+                LogicalPosition = LogicalBoardPosition;
+            }
             _charakterAnimation.DrawCharakter(camera);
         }
 

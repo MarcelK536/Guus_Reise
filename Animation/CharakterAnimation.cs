@@ -92,6 +92,7 @@ namespace Guus_Reise.HexangonMap
 
         public void DrawCharakter(Camera camera)
         {
+            this.CharakterPostion = this.Hexagon.Position + this.translation;
             Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterPostion));
             foreach (var mesh in _planeModel.Meshes)
             {

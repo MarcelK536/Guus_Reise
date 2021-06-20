@@ -87,6 +87,7 @@ namespace Guus_Reise
                 {
                     if (btnAttack.IsClicked())
                     {
+                        //TODO UPDATE POSITION
                         //TODO FIGHT
                         Fighthandler.npcTiles = HexMap.enemyNeighbourTiles;
                         Fighthandler.playerTiles = HexMap.friendNeighbourTiles;

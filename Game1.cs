@@ -92,7 +92,7 @@ namespace Guus_Reise
                     HexMap.Update(gameTime, GraphicsDevice);
                     break;
                 case GameState.InFight:
-                    Fighthandler.Update();
+                    Fighthandler.Update(gameTime);
                     break;
                 case GameState.Exit:
                     Exit();

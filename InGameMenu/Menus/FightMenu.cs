@@ -41,11 +41,12 @@ namespace Guus_Reise
 
                 if (btnAttack1.IsClicked())
                 {
-                    HexMap._board[x, y].Charakter.Widerstandskraft++;    
+                    Fighthandler._fightBoard[x, y].Charakter.Widerstandskraft++;    
                 }
                 if (btnGiveUp.IsClicked())
                 {
                     Game1.GState = Game1.GameState.InGame;
+                    Fighthandler.ExitFight();
                 }
             }
         }
@@ -55,12 +56,12 @@ namespace Guus_Reise
             base.Draw(spriteBatch);
             if (Active)
             {
-                int x = Player.activeTile.LogicalPosition.X;
-                int y = Player.activeTile.LogicalPosition.Y;
+                int x = Player.activeTile.LogicalFightPosition.X;
+                int y = Player.activeTile.LogicalFightPosition.Y;
 
                 spriteBatch.Begin();
-                spriteBatch.DrawString(textFont, "Name: " + HexMap._board[x, y].Charakter.Name, btnAttack1.GetPosRightOf(), Color.Yellow);
-                spriteBatch.DrawString(textFont, "Widerstandskraft: " + HexMap._board[x, y].Charakter.Widerstandskraft, btnAttack2.GetPosRightOf(), Color.Yellow);
+                spriteBatch.DrawString(textFont, "Name: " + Fighthandler._fightBoard[x, y].Charakter.Name, btnAttack1.GetPosRightOf(), Color.Yellow);
+                spriteBatch.DrawString(textFont, "Widerstandskraft: " + Fighthandler._fightBoard[x, y].Charakter.Widerstandskraft, btnAttack2.GetPosRightOf(), Color.Yellow);
                 btnAttack1.Draw(spriteBatch, textFont);
                 btnAttack2.Draw(spriteBatch, textFont);
                 btnGiveUp.Draw(spriteBatch, textFont);
