@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Guus_Reise
 {
@@ -118,6 +119,18 @@ namespace Guus_Reise
 
                 default: break;
             }
+        }
+
+        // Funktion bewegt die Kamera um den Vektor direction
+        public void MoveCameraValue(Vector3 direction)
+        {
+            MoveCameraValue("X", direction.X);
+            MoveCameraValue("Y", direction.Y);
+            if (direction.Y != 0)
+            {
+                direction.Z -= direction.Y;
+            }
+            MoveCameraValue("Z", direction.Z);
         }
 
         public void MoveCameraValue(string direction, float value, int timeInMilliseconds, GameTime gameTime)

@@ -17,13 +17,20 @@ namespace Guus_Reise.Animation
 
         public float timer = 0;
         public bool isSlidingCamera = false;
+        public bool isSlidingCameraVector = false;
         public bool isWaiting = false;
         public float waittime;
         public int currIntervall;
         public string currDirection;
+        public Vector3 currMovementVector;
+        public Vector3 currTotalMovementVector;
         public float currValue;
 
         public bool isNewStep;
+
+        public bool xReady = false;
+        public bool yReady = false;
+        public bool zReady = false;
 
         public List<string> ablauf;
 
@@ -35,7 +42,7 @@ namespace Guus_Reise.Animation
            switch (type)
            {
                 case "CharakterMovement":
-                    ablauf = new List<string> { "FokusStartHex","Wait500", "ZoomOut" };
+                    ablauf = new List<string> { "FokusStartHex", "Wait500", "SlideHexToHex" };
                     break;
            }
             currentStep = 0;
@@ -49,6 +56,10 @@ namespace Guus_Reise.Animation
             if(isSlidingCamera)
             {
                 MakeCameraSlide(gametime, currIntervall, currDirection, currValue);
+            }
+            if(isSlidingCameraVector)
+            {
+                MakeCameraSlide(gametime, currIntervall, currMovementVector);
             }
             if(isWaiting)
             {
@@ -68,7 +79,7 @@ namespace Guus_Reise.Animation
             {
                 if (ablauf[currentStep] == "FokusStartHex")
                 {
-                    HexMap.visManager.SetFocusToHex(startHex);
+                    HexMap.visManager.SetFocusToHex(startHex, 6);
                     currentStep++;
                     isNewStep = true;
                 }
@@ -102,6 +113,23 @@ namespace Guus_Reise.Animation
                         }
                     }
                 }
+                else if (ablauf[currentStep] == "SlideHexToHex")
+                {
+                    if (isNewStep)
+                    {
+                        currIntervall = 20;
+                        isNewStep = false;
+                        SlideBetweenHex(currIntervall, startHex, targetHex);
+                    }
+                    else
+                    {
+                        if (!isSlidingCameraVector)
+                        {
+                            currentStep++;
+                            isNewStep = true;
+                        }
+                    }
+                }
             }
 
         }
@@ -117,6 +145,15 @@ namespace Guus_Reise.Animation
         }
 
         #region Kamerabewegung
+        public void SlideBetweenHex(int intervall, Hex startHex, Hex targetHex)
+        {
+            HexMap.visManager.SetFocusToHex(startHex,0);
+            Vector3 direction = HexMap.visManager.GetVectorBewtweenTwoHex(startHex, targetHex);
+            currTotalMovementVector = direction;
+            currMovementVector = NormOnLength(direction, 0.1f);
+            isSlidingCameraVector = true;
+        }
+
         // Startet eine "smoothe" Kamerabewegung
         public void SlideCamera(int intervall, string direction, float value)
         {
@@ -124,6 +161,78 @@ namespace Guus_Reise.Animation
             currIntervall = intervall;
             currDirection = direction;
             currValue = value;
+        }
+
+        public void SlideCamera(int intervall, Vector3 direction)
+        {
+            isSlidingCameraVector = true;
+            currIntervall = intervall;
+            currMovementVector = direction;
+        }
+
+        
+        public void MakeCameraSlide(GameTime gametime, int intervall, Vector3 direction)
+        {
+            timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
+            if (startTranslationCamera == new Vector3(0, 0, 0))
+            {
+                startTranslationCamera = _camera.CurrentTranslation;
+            }
+            if (timer > intervall)
+            {
+                _camera.MoveCameraValue(direction);
+                if(direction.Y < 0)
+                {
+                    if (_camera.CurrentTranslation.Y <= startTranslationCamera.Y + currTotalMovementVector.Y)
+                    {
+                        yReady = true;
+                    }
+                }
+                else
+                {
+                    if (_camera.CurrentTranslation.Y >= startTranslationCamera.Y + currTotalMovementVector.Y)
+                    {
+                        yReady = true;
+                    }
+                }
+                if(direction.X > 0)
+                {
+                    if (_camera.CurrentTranslation.X >= startTranslationCamera.X + currTotalMovementVector.X)
+                    {
+                        xReady = true;
+                    }
+                }
+                else
+                {
+                    if (_camera.CurrentTranslation.X <= startTranslationCamera.X + currTotalMovementVector.X)
+                    {
+                        xReady = true;
+                    }
+                }
+                if(direction.Z > 0)
+                {
+                    if (_camera.CurrentTranslation.Z <= startTranslationCamera.Z + currTotalMovementVector.Z)
+                    {
+                        zReady = true;
+                    }
+                }
+                else
+                {
+                    if (_camera.CurrentTranslation.Z >= startTranslationCamera.Z - currTotalMovementVector.Z)
+                    {
+                        zReady = true;
+                    }
+                }
+                timer = 0;
+            }
+            if(yReady == true && xReady == true && zReady == true)
+            {
+                yReady = false;
+                xReady = false;
+                zReady = false;
+                isSlidingCameraVector = false;
+
+            }
         }
 
         // Führt die Smoothe Kamerabewegung aus
@@ -237,28 +346,19 @@ namespace Guus_Reise.Animation
 
         }
 
-        //public void SetFocusHexSlide(Hex hex, GameTime gameTime)
-        //{
-        //    if (!fokusValuesSet)
-        //    {
-        //        Point locicalPosition = hex.LogicalPosition;
-        //        valueZoom = 6 - (_camera.CurrentTranslation.Y * 0.4f);
-        //        valueZoom = valueZoom + _camera.CurrentTranslation.Z;
-        //        valueX = locicalPosition.X;
-        //        if (locicalPosition.Y % 2 != 0)
-        //        {
-        //            valueX += 0.5f;
-        //        }
-        //        valueX = valueX - _camera.CurrentTranslation.X;
-        //        valueY = locicalPosition.Y * 0.5f;
-        //        valueY = valueY - _camera.CurrentTranslation.Y;
-        //        fokusValuesSet = true;
-        //    }
-        //    MakeCameraSlide(gameTime, 100, "X", valueX);
-        //    MakeCameraSlide(gameTime, 100, "zoom", valueZoom);
-        //    MakeCameraSlide(gameTime, 100, "Y", valueY);
-
-        //}
+        public Vector3 NormOnLength(Vector3 vector, float newLength)
+        {
+            double X = (double)vector.X;
+            double Y = (double)vector.Y;
+            double Z = (double)vector.Z;
+            double quadSum = Math.Abs(Math.Pow(X, 2)) + Math.Abs(Math.Pow(Y, 2)) + Math.Abs(Math.Pow(Z, 2));
+            double length = Math.Sqrt(quadSum);
+            Vector3 normVector = vector;
+            normVector.X = normVector.X * (newLength / (float)length);
+            normVector.Y = normVector.Y * (newLength / (float)length);
+            normVector.Z = normVector.Z * (newLength / (float)length);
+            return normVector;
+        }
         #endregion
     }
 }

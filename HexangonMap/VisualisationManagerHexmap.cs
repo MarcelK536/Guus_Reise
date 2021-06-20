@@ -87,6 +87,25 @@ namespace Guus_Reise.HexangonMap
             _prevKeyState = Keyboard.GetState();
         }
 
+        public Vector3 GetVectorBewtweenTwoHex(Hex startHex, Hex targetHex)
+        {
+
+            Vector2 coordinatesStart = GetMovmentCoordinatesOfHex(startHex);
+            Vector2 coordinatesTarget = GetMovmentCoordinatesOfHex(targetHex);
+            Vector3 vectorToTarget = new Vector3(coordinatesTarget.X - coordinatesStart.X, coordinatesTarget.Y - coordinatesStart.Y, 0);
+            return vectorToTarget;
+        }
+
+        public string GetDirectionBetweenTwoHex(Hex startHex, Hex targetHex)
+        {
+            Vector3 direction = GetVectorBewtweenTwoHex(startHex, targetHex);
+            if(direction.X != 0)
+            {
+
+            }
+            return "tets";
+        }
+
         // Setzt den Fokues der Camera auf die Mitte der Map, sodass die komplette Map zu sehen ist
         public void SetCameraToMiddleOfMap()
         {
@@ -123,11 +142,15 @@ namespace Guus_Reise.HexangonMap
 
         }
 
-        public void SetFocusToHex(Hex hex)
+        public void SetFocusToHex(Hex hex, float zoomValue)
         {
             Point locicalPosition = hex.LogicalPosition;
-            float valueZoom = 6 - (_camera.CurrentTranslation.Y * 0.4f);
-            valueZoom = valueZoom + _camera.CurrentTranslation.Z;
+            float valueZoom = 0;
+            if(zoomValue != 0)
+            {
+                valueZoom = zoomValue - (_camera.CurrentTranslation.Y * 0.4f);
+                valueZoom = valueZoom + _camera.CurrentTranslation.Z;
+            }
             float valueX = locicalPosition.X;
             if (locicalPosition.Y % 2 != 0)
             {
@@ -138,8 +161,25 @@ namespace Guus_Reise.HexangonMap
             valueY = valueY - _camera.CurrentTranslation.Y;
             _camera.MoveCameraValue("Y", valueY);
             _camera.MoveCameraValue("X", valueX);
-            _camera.MoveCameraValue("zoom", valueZoom);
+            if(zoomValue != 0)
+            {
+               _camera.MoveCameraValue("zoom", valueZoom);
+            }
+           
+        }
 
+        public Vector2 GetMovmentCoordinatesOfHex(Hex hex)
+        {
+            Point locicalPosition = hex.LogicalPosition;
+            float valueX = locicalPosition.X;
+            if (locicalPosition.Y % 2 != 0)
+            {
+                valueX += 0.5f;
+            }
+            valueX = valueX - _camera.CurrentTranslation.X;
+            float valueY = locicalPosition.Y * 0.5f;
+            valueY = valueY - _camera.CurrentTranslation.Y;
+            return new Vector2(valueX, valueY);
         }
 
         public void ManageCharakterViewH(SkillUpMenu charakterMenu)
@@ -148,7 +188,7 @@ namespace Guus_Reise.HexangonMap
             {
                 if (HexMap.activeHex != null)
                 {
-                    SetFocusToHex(HexMap.activeHex);
+                    SetFocusToHex(HexMap.activeHex,6);
                     isDetailViewH = true;
 
                 }
@@ -164,7 +204,7 @@ namespace Guus_Reise.HexangonMap
         {
             float valueX = 0;
             float valueY = 0;
-            SetFocusToHex(start);
+            SetFocusToHex(start,6);
             _camera.MoveCameraValue("zoom", -6);
             valueX = (target.LogicalPosition.X - start.LogicalPosition.X);
             valueY = (target.LogicalPosition.Y - start.LogicalPosition.Y) * 0.5f;
