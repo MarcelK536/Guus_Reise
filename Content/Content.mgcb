@@ -224,6 +224,13 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/texTimmae.png
 
+#begin Fonts/Jellee.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Jellee.spritefont
+
 #begin MainMenu/MainMenuFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

@@ -49,7 +49,7 @@ namespace Guus_Reise
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
 
-            Player.actionMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
+            Player.actionMenuFont = Content.Load<SpriteFont>("Fonts\\Jellee");
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
 
