@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using static Guus_Reise.Game1;
+using Guus_Reise.HexangonMap;
+using Guus_Reise.Animation;
 
 namespace Guus_Reise
 {
@@ -17,6 +19,8 @@ namespace Guus_Reise
         Button btnInteract;
         public bool fightTrue;
         public bool interactTrue;
+
+        float timer = 0;
         static public Texture2D menuTexture { get; set; }
 
         public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
@@ -39,13 +43,14 @@ namespace Guus_Reise
             menuButtons.Add(btnQuitGame);
         }
 
-        public override void Update()
+        public void Update(GameTime gametime)
         {
             base.Update();
             if (Active)
             {
                 HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
-
+                Hex targetHex = Player.moveTile;
+                Hex startHex = Player.activeTile;
                 if (btnQuitGame.IsClicked())
                 {
                     Game1.GState = Game1.GameState.MainMenu;
@@ -69,12 +74,14 @@ namespace Guus_Reise
                     this.Active =! this.Active;
                     Player.activeTile.IsActive = false;
                     Player.activeTile = null;
-                    CharakterAnimationManager.ActiveHexExists = false;
+                    HexMap.activeHex = null;
 
                     Player.moveTile = null;
                     fightTrue = false;
                     interactTrue = false;
-                    
+
+                    // Movement Animation starten
+                    MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
                 }
                 if (fightTrue)
                 {

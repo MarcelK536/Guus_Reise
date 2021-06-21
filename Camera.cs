@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 
 namespace Guus_Reise
 {
@@ -7,7 +8,6 @@ namespace Guus_Reise
         public Matrix view;
         public Matrix projection;
         Vector3 _currentTranslation = new Vector3(0, 0, 0); // Verschiebung der Camera relativ zur Anfangsposition (aus dem Konstruktor)
-
         public Vector3 CurrentTranslation
         {
             get => _currentTranslation;
@@ -22,6 +22,10 @@ namespace Guus_Reise
 
         public void MoveCamera(string symbol)
         {
+            if (HexMap.visManager.isDetailViewH)
+            {
+                HexMap.visManager.isDetailViewH = false;
+            }
             switch (symbol)
             {
                 case "w": this.view.Translation = new Vector3(0, -0.1f, 0.1f) + this.view.Translation; //bewegt camera nach vorne
@@ -55,6 +59,30 @@ namespace Guus_Reise
                         _currentTranslation.Z = _currentTranslation.Z + 0.5f;
                     } 
                     break;
+                case "diag1":
+                    this.view.Translation = new Vector3(-0.05f, -0.05f, 0.05f) + this.view.Translation;
+                    _currentTranslation.Y = _currentTranslation.Y - 0.05f;
+                    _currentTranslation.Z = _currentTranslation.Z - 0.05f;
+                    _currentTranslation.X = _currentTranslation.X + 0.05f;
+                    break;
+                case "diag2":
+                    this.view.Translation = new Vector3(-0.05f, 0.05f, -0.05f) + this.view.Translation;
+                    _currentTranslation.Y = _currentTranslation.Y + 0.05f;
+                    _currentTranslation.Z = _currentTranslation.Z + 0.05f;
+                    _currentTranslation.X = _currentTranslation.X + 0.05f;
+                    break;
+                case "diag3":
+                    this.view.Translation = new Vector3(0.05f, 0.05f, -0.05f) + this.view.Translation;
+                    _currentTranslation.Y = _currentTranslation.Y + 0.05f;
+                    _currentTranslation.Z = _currentTranslation.Z + 0.05f;
+                    _currentTranslation.X = _currentTranslation.X - 0.05f;
+                    break;
+                case "diag4":
+                    this.view.Translation = new Vector3(0.05f, -0.05f, 0.05f) + this.view.Translation;
+                    _currentTranslation.Y = _currentTranslation.Y - 0.05f;
+                    _currentTranslation.Z = _currentTranslation.Z - 0.05f;
+                    _currentTranslation.X = _currentTranslation.X - 0.05f;
+                    break;
 
                 default: break;
             }
@@ -71,6 +99,7 @@ namespace Guus_Reise
          */
         public void MoveCameraValue(string direction, float value)
         {
+
             switch (direction)
             {
                 case "Y":
@@ -80,6 +109,41 @@ namespace Guus_Reise
 
                 case "X":
                     this.view.Translation = new Vector3(-1*value, 0, 0) + this.view.Translation; //camera rechts
+                    _currentTranslation.X = _currentTranslation.X + value;
+                    break;
+
+                case "zoom":
+                    this.view.Translation = new Vector3(0, 0, value) + this.view.Translation;
+                    _currentTranslation.Z = _currentTranslation.Z - value;
+                    break;
+
+                default: break;
+            }
+        }
+
+        // Funktion bewegt die Kamera um den Vektor direction
+        public void MoveCameraValue(Vector3 direction)
+        {
+            MoveCameraValue("X", direction.X);
+            MoveCameraValue("Y", direction.Y);
+            if (direction.Y != 0)
+            {
+                direction.Z -= direction.Y;
+            }
+            MoveCameraValue("Z", direction.Z);
+        }
+
+        public void MoveCameraValue(string direction, float value, int timeInMilliseconds, GameTime gameTime)
+        {
+            switch (direction)
+            {
+                case "Y":
+                    this.view.Translation = new Vector3(0, value, -1 * value) + this.view.Translation; //camera nach hinte
+                    _currentTranslation.Y = _currentTranslation.Y + value;
+                    break;
+
+                case "X":
+                    this.view.Translation = new Vector3(-1 * value, 0, 0) + this.view.Translation; //camera rechts
                     _currentTranslation.X = _currentTranslation.X + value;
                     break;
 

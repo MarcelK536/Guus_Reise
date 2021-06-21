@@ -6,6 +6,7 @@ using System.Linq;
 //Adding SubClasses within Folders
 using Guus_Reise.Menu;
 using Guus_Reise.HexangonMap;
+using Guus_Reise.Animation;
 
 namespace Guus_Reise
 {
@@ -23,7 +24,8 @@ namespace Guus_Reise
             InFight,
             Exit,
             Credits,
-            PlanetMenu
+            PlanetMenu,
+            MovementAnimation
         }
 
         private static GameState _state;
@@ -95,6 +97,9 @@ namespace Guus_Reise
                 case GameState.Exit:
                     Exit();
                     break;
+                case GameState.MovementAnimation:
+                    MovementAnimationManager.UdpateMovement(gameTime);
+                    break;
                 default:
                     break;
             }
@@ -135,6 +140,10 @@ namespace Guus_Reise
                 case GameState.InFight:
                     GraphicsDevice.Clear(Color.Coral);
                     Fighthandler.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.MovementAnimation:
+                    GraphicsDevice.Clear(Color.CornflowerBlue);
+                    HexMap.DrawInGame(_spriteBatch, gameTime);
                     break;
                 default:
                     break;
