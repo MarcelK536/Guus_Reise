@@ -19,7 +19,14 @@ namespace Guus_Reise
                         break;
                     case 2:
                         Point near = NearestPlayerCharacter(charakter);
-                        List<Node> path = FindPath(near, charakter.LogicalPosition);
+                        List<Hex> neighbours = HexMap.GetNeighbourTiles(HexMap._board[near.X, near.Y]);
+                        neighbours.RemoveAll(e => e.Charakter != null);
+                        List<Point> neighbourpoints = new List<Point>();
+                        for(int i = 0; i< neighbours.Count; i++)
+                        {
+                            neighbourpoints.Add(neighbours[i].LogicalPosition);
+                        }
+                        List<Node> path = FindPath(neighbourpoints, charakter.LogicalPosition);
                         path.Reverse();
                         HexMap.CalculatePossibleMoves(charakter.LogicalPosition.X, charakter.LogicalPosition.Y, charakter.Bewegungsreichweite, HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
                         Point move = charakter.LogicalPosition;
@@ -61,7 +68,7 @@ namespace Guus_Reise
             return nearest;
         }
 
-        private static List<Node> FindPath(Point ziel, Point start)
+        private static List<Node> FindPath(List<Point> ziel, Point start)
         {
             List<Node> openList = new List<Node>();
             List<Node> closedList = new List<Node>();
@@ -75,7 +82,7 @@ namespace Guus_Reise
                 openList.RemoveAt(0);
                 int x = currentNode.Position.X;
                 int y = currentNode.Position.Y;
-                if(currentNode.Position == ziel)
+                if(ziel.Contains(currentNode.Position))
                 {
                     path.Add(currentNode);
                     while(currentNode.Prev != null)
