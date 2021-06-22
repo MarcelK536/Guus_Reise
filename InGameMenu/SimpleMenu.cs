@@ -90,7 +90,7 @@ namespace Guus_Reise
             {
                 if (menuWidth < btn.TextureDefault.Width)
                 {
-                    menuWidth = btn.TextureDefault.Width;
+                    menuWidth = btn.TextureDefault.Width + 10;
                 }
             }
         }
@@ -112,9 +112,9 @@ namespace Guus_Reise
             Color[] bkgColor = new Color[menuBackground.Width * menuBackground.Height];
             for (int i = 0; i < bkgColor.Length; i++)
             {
-                bkgColor[i] = color;
+                bkgColor[i] = color*0.3f;
             }
-
+            menuBackground.SetData(bkgColor);
             bkgTexture = menuBackground;
         }
         public virtual void UpdatePosition(Vector2 newPos)
@@ -128,6 +128,9 @@ namespace Guus_Reise
             {
                 if (Active)
                 {
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(bkgTexture, pos, Color.White);
+                    spriteBatch.End();
                     if (needCloseBtn == true)
                     {
                         spriteBatch.Begin();
@@ -140,15 +143,15 @@ namespace Guus_Reise
             {
                 DrawBlendLeftToRight(spriteBatch);
             }
-            spriteBatch.Begin();
-            spriteBatch.Draw(bkgTexture, pos, Color.Black);
-            spriteBatch.End();
         }
 
         public virtual void DrawBlendLeftToRight(SpriteBatch spriteBatch)
         {
             if (Active)
             {
+                spriteBatch.Begin();
+                spriteBatch.Draw(bkgTexture, pos, Color.White);
+                spriteBatch.End();
                 BlendIn();
                 spriteBatch.Begin();
                 btnClose.Draw(spriteBatch, textFont);

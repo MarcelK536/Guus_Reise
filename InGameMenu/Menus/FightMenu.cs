@@ -31,6 +31,10 @@ namespace Guus_Reise
             menuButtons.Add(btnAttack2);
             btnGiveUp = new Button("Give Up", btnTexture, 1, btnAttack2.GetPosBelow());
             menuButtons.Add(btnGiveUp);
+
+            SetMenuHeight();
+            SetMenuWidth();
+            SetBackgroundTexture(Color.MistyRose);
         }
 
         public override void Update()

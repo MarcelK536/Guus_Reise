@@ -41,6 +41,11 @@ namespace Guus_Reise
             menuButtons.Add(btnInteract);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
             menuButtons.Add(btnQuitGame);
+
+
+            SetMenuHeight();
+            SetMenuWidth();
+            SetBackgroundTexture(Color.GhostWhite);
         }
 
         public void Update(GameTime gametime)
