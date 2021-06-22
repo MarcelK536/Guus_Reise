@@ -210,7 +210,7 @@ namespace Guus_Reise
                     }
                     stats[9] = 5;
                     stats[10] = 1;
-                    stats[11] = 1;
+                    stats[11] = 2;
                     stats[12] = 0;
                     stats[13] = level;
                     break;
