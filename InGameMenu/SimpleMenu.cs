@@ -16,6 +16,7 @@ namespace Guus_Reise
 
         public Texture2D bkgTexture;
         public Color bkgColor = Color.BlanchedAlmond;
+        public Vector2 bkgPos;
 
         public BlendDirection blendDirection;
         public List<Button> menuButtons= new List<Button>();
@@ -63,7 +64,7 @@ namespace Guus_Reise
             menuHeight = menuButtons[menuButtons.Count-1].GetPosBelow().Y;
 
             SetBackgroundTexture(bkgColor);
-
+            bkgPos = pos;
             allInstances.Add(this);
         }
 
@@ -148,12 +149,10 @@ namespace Guus_Reise
         public virtual void DrawBlendLeftToRight(SpriteBatch spriteBatch)
         {
             if (Active)
-            {
-                spriteBatch.Begin();
-                spriteBatch.Draw(bkgTexture, pos, Color.White);
-                spriteBatch.End();
+            {   
                 BlendIn();
                 spriteBatch.Begin();
+                spriteBatch.Draw(bkgTexture, bkgPos, Color.White);
                 btnClose.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }
@@ -163,6 +162,7 @@ namespace Guus_Reise
                 {
                     button.ButtonX = (int)-menuWidth;
                 }
+                bkgPos.X = (int)-menuWidth;
             }
         }
 
@@ -199,11 +199,16 @@ namespace Guus_Reise
         {
             foreach (Button button in menuButtons)
             {
-                if (button.ButtonX < 0)
+                if (button.ButtonX < pos.X)
                 {
-                    button.ButtonX += 2;
+                    button.ButtonX += 6;
                 }
             }
+            if(bkgPos.X < pos.X)
+            {
+                bkgPos.X += 6;
+            }
+
         }
     }
 }
