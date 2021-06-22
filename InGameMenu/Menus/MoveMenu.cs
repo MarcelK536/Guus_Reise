@@ -79,7 +79,20 @@ namespace Guus_Reise
                 {
                     if (btnAttack.IsClicked())
                     {
-                        //TODO FIGHT
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
+                        HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter = null; 
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].LogicalPosition;
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.CanMove = false;
+
+                        foreach (Charakter charakter in HexMap.playableCharacter)
+                        {
+                            if (charakter.LogicalPosition == Player.activeTile.LogicalPosition)
+                            {
+                                HexMap.playableCharacter[HexMap.playableCharacter.IndexOf(charakter)] = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter;
+                            }
+                        }
+                        Player.activeTile = Player.moveTile;
+
                         Fighthandler.npcTiles = HexMap.enemyNeighbourTiles;
                         Fighthandler.playerTiles = HexMap.friendNeighbourTiles;
                         Fighthandler.playerTiles.Add(Player.activeTile);
