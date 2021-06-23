@@ -50,7 +50,7 @@ namespace Guus_Reise
                         tiles[i].Position = tiles[i].FightPosition;
 
                         _fightBoard[places[j, 0], places[j, 1]] = tiles[i];
-                        System.Diagnostics.Debug.WriteLine("Test");
+
                         break;
                     }
                 }

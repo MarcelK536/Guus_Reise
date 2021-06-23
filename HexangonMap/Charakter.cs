@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -10,7 +11,8 @@ namespace Guus_Reise
     {
         private String _name;
         private bool _npc;
-        private int _ki;
+        private int _ki;                //speichert welche KI verwendet werden soll
+        private List<Point> _patroullienPunkte;
         private bool _canMove;
         private int _level;
         private int _xp;
@@ -23,7 +25,7 @@ namespace Guus_Reise
         private int _ingoranz;          //social Abwehr
         private int _geschwindigkeit;   //Aktionspunkte des Charakters im Kampf
         private int _glueck;            //wirkt sich auf kritische trefferchance aus
-        private int[] _currentFightStats;
+        private int[] _currentFightStats; //zum speichern der aktuellen stats im Kampf (wird zu beginn eines neuen resetet)
         private int _bewegungsreichweite;
         private int _fpunkte;
         private Point _logicalPosition;         //Position an welcher der Charakter gezeichnet wird
@@ -52,6 +54,11 @@ namespace Guus_Reise
         {
             get => _ki;
             set => _ki = value;
+        }
+        public List<Point> Patroullienpunkte
+        {
+            get => _patroullienPunkte;
+            set => _patroullienPunkte = value;
         }
         public bool CanMove
         {
@@ -222,7 +229,7 @@ namespace Guus_Reise
                     }
                     stats[9] = 5;
                     stats[10] = 1;
-                    stats[11] = 1;
+                    stats[11] = 2;
                     stats[12] = 0;
                     stats[13] = level;
                     break;

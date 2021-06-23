@@ -12,17 +12,29 @@ namespace Guus_Reise
         {
             foreach(Charakter charakter in HexMap.npcs)
             {
+                Point near;
+                List<Hex> neighbours = new List<Hex>();
+                List<Point> neighbourpoints = new List<Point>();
+                List<Node> path = new List<Node>();
+                Point move;
+                float distance;
                 switch (charakter.KI)
                 {
-                    case 1:
+                    case 1:         //steht still
                         charakter.CanMove = false;
                         break;
-                    case 2:
-                        Point near = NearestPlayerCharacter(charakter);
-                        List<Node> path = FindPath(near, charakter.LogicalPosition);
+                    case 2:         //rennt von anfang an auf den nächsten Spieler zu
+                        near = NearestPlayerCharacter(charakter);
+                        neighbours = HexMap.GetNeighbourTiles(HexMap._board[near.X, near.Y]);
+                        neighbours.RemoveAll(e => e.Charakter != null);
+                        for(int i = 0; i< neighbours.Count; i++)
+                        {
+                            neighbourpoints.Add(neighbours[i].LogicalPosition);
+                        }
+                        path = FindPath(neighbourpoints, charakter.LogicalPosition);
                         path.Reverse();
                         HexMap.CalculatePossibleMoves(charakter.LogicalPosition.X, charakter.LogicalPosition.Y, charakter.Bewegungsreichweite, HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
-                        Point move = charakter.LogicalPosition;
+                        move = charakter.LogicalPosition;
                         for(int i = 0; i < path.Count; i++)
                         {
                             if (HexMap.possibleMoves.Contains(path[i].Position))
@@ -32,18 +44,102 @@ namespace Guus_Reise
                         }
                         HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
                         HexMap._board[move.X, move.Y].Charakter = charakter;
+                        HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
                         charakter.LogicalBoardPosition = move;
-                        HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;                       
                         charakter.CanMove = false;
                         break;
-                    case 3:
+                    case 3: //rennt auf Spieler zu sobald er sich in gewisser Reichweite befindet
+                        near = NearestPlayerCharacter(charakter);
+                        distance = DistanceToNearestPlayer(charakter, near);
+                        if (distance < charakter.Bewegungsreichweite)
+                        {
+                            neighbours = HexMap.GetNeighbourTiles(HexMap._board[near.X, near.Y]);
+                            neighbours.RemoveAll(e => e.Charakter != null);
+                            for (int i = 0; i < neighbours.Count; i++)
+                            {
+                                neighbourpoints.Add(neighbours[i].LogicalPosition);
+                            }
+                            path = FindPath(neighbourpoints, charakter.LogicalPosition);
+                            path.Reverse();
+                            HexMap.CalculatePossibleMoves(charakter.LogicalPosition.X, charakter.LogicalPosition.Y, charakter.Bewegungsreichweite, HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
+                            move = charakter.LogicalPosition;
+                            for (int i = 0; i < path.Count; i++)
+                            {
+                                if (HexMap.possibleMoves.Contains(path[i].Position))
+                                {
+                                    move = path[i].Position;
+                                }
+                            }
+                            HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
+                            HexMap._board[move.X, move.Y].Charakter = charakter;
+                            charakter.LogicalPosition = move;
+                        }
+                        charakter.CanMove = false;
                         break;
+                    case 4: //patroulliert bis der Spieler sich in gewisser Reichweite befindet
+                        near = NearestPlayerCharacter(charakter);
+                        distance = DistanceToNearestPlayer(charakter, near);
+                        if (distance < charakter.Bewegungsreichweite)
+                        {
+                            neighbours = HexMap.GetNeighbourTiles(HexMap._board[near.X, near.Y]);
+                            neighbours.RemoveAll(e => e.Charakter != null);
+                            for (int i = 0; i < neighbours.Count; i++)
+                            {
+                                neighbourpoints.Add(neighbours[i].LogicalPosition);
+                            }
+                            path = FindPath(neighbourpoints, charakter.LogicalPosition);
+                            path.Reverse();
+                            HexMap.CalculatePossibleMoves(charakter.LogicalPosition.X, charakter.LogicalPosition.Y, charakter.Bewegungsreichweite, HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
+                            move = charakter.LogicalPosition;
+                            for (int i = 0; i < path.Count; i++)
+                            {
+                                if (HexMap.possibleMoves.Contains(path[i].Position))
+                                {
+                                    move = path[i].Position;
+                                }
+                            }
+                            HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
+                            HexMap._board[move.X, move.Y].Charakter = charakter;
+                            charakter.LogicalPosition = move;
+                        }
+                        else
+                        {
+                            if (charakter.LogicalPosition == charakter.Patroullienpunkte[0])
+                            {
+                                charakter.Patroullienpunkte.Add(charakter.Patroullienpunkte[0]);
+                                charakter.Patroullienpunkte.RemoveAt(0);
+                            }
+                            neighbourpoints.Add(charakter.Patroullienpunkte[0]);                           
+                            path = FindPath(neighbourpoints, charakter.LogicalPosition);
+                            path.Reverse();
+                            HexMap.CalculatePossibleMoves(charakter.LogicalPosition.X, charakter.LogicalPosition.Y, charakter.Bewegungsreichweite, HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
+                            move = charakter.LogicalPosition;
+                            for (int i = 0; i < path.Count; i++)
+                            {
+                                if (HexMap.possibleMoves.Contains(path[i].Position))
+                                {
+                                    move = path[i].Position;
+                                }
+                            }
+                            HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
+                            HexMap._board[move.X, move.Y].Charakter = charakter;
+                            charakter.LogicalPosition = move;
+                        }
+                        charakter.CanMove = false;
+                            break;
                     default: charakter.CanMove = false;
                         break;
                 }
             }
         }
-
+        private static float DistanceToNearestPlayer(Charakter charakter, Point near)
+        {
+            Vector3 hilf1 = new Vector3(charakter.LogicalPosition.X - (charakter.LogicalPosition.Y - (charakter.LogicalPosition.Y & 1)) / 2, -(charakter.LogicalPosition.X - (charakter.LogicalPosition.Y - (charakter.LogicalPosition.Y & 1)) / 2) - charakter.LogicalPosition.Y, charakter.LogicalPosition.Y);
+            Vector3 hilf2 = new Vector3(near.X - (near.Y - (near.Y & 1)) / 2, -(near.X - (near.Y - (near.Y & 1)) / 2) - near.Y, near.Y);
+            float hilf3 = Math.Max(Math.Abs(hilf1.X - hilf2.X), Math.Abs(hilf1.Y - hilf2.Y));
+            hilf3 = Math.Max(hilf3, Math.Abs(hilf1.Z - hilf2.Z));
+            return hilf3;
+        }
         private static Point NearestPlayerCharacter(Charakter character)
         {
             Vector3 hilf = HexMap._board[character.LogicalPosition.X, character.LogicalPosition.Y].Position;
@@ -61,7 +157,7 @@ namespace Guus_Reise
             return nearest;
         }
 
-        private static List<Node> FindPath(Point ziel, Point start)
+        private static List<Node> FindPath(List<Point> ziel, Point start)
         {
             List<Node> openList = new List<Node>();
             List<Node> closedList = new List<Node>();
@@ -75,7 +171,7 @@ namespace Guus_Reise
                 openList.RemoveAt(0);
                 int x = currentNode.Position.X;
                 int y = currentNode.Position.Y;
-                if(currentNode.Position == ziel)
+                if(ziel.Contains(currentNode.Position))
                 {
                     path.Add(currentNode);
                     while(currentNode.Prev != null)
