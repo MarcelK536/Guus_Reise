@@ -40,7 +40,12 @@ namespace Guus_Reise
             btnPlusIgnoranz = new Button("+", btnTexture, 1, btnPlusLautstaerke.GetPosBelow());
             btnPlusGeschwindigkeit = new Button("+", btnTexture, 1, btnPlusIgnoranz.GetPosBelow());
             btnPlusGlueck = new Button("+", btnTexture, 1, btnPlusGeschwindigkeit.GetPosBelow());
+            menuButtons.Add(btnPlusGlueck);
             //btnPlusBewegung = new Button("+", btnTexture, 1, btnPlusGlueck.GetPosBelow());
+
+            SetMenuHeight();
+            menuWidth = btnClose.TextureDefault.Width + moveMenuFont.MeasureString("Name: ").X;
+            SetBackgroundTexture(bkgColor);
         }
 
         public override void Update()
@@ -113,11 +118,18 @@ namespace Guus_Reise
                 if (HexMap._board[x, y].Charakter == null)
                 {
                     spriteBatch.Begin();
+                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewaehlt").X;
+                    menuHeight = btnClose.GetPosBelow().Y;
+                    SetBackgroundTexture(bkgColor);
                     spriteBatch.DrawString(textFont, "Kein Charakter ausgewaehlt", btnClose.GetPosRightOf(), Color.Yellow);
                     spriteBatch.End();
                 }
                 else
                 {
+                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Name: " + HexMap._board[x, y].Charakter.Name + " Punkte: " + HexMap._board[x, y].Charakter.Fähigkeitspunkte).X;
+                    SetMenuHeight();
+                    SetBackgroundTexture(bkgColor);
+
                     spriteBatch.Begin();
                     spriteBatch.DrawString(textFont, "Name: " + HexMap._board[x, y].Charakter.Name + " Punkte: " + HexMap._board[x, y].Charakter.Fähigkeitspunkte, btnClose.GetPosRightOf(), Color.Yellow);
                     btnPlusWiderstandskraft.Draw(spriteBatch, textFont);

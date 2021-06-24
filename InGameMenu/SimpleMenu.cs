@@ -64,7 +64,14 @@ namespace Guus_Reise
             menuHeight = menuButtons[menuButtons.Count-1].GetPosBelow().Y;
 
             SetBackgroundTexture(bkgColor);
-            bkgPos = pos;
+            if (needCloseBtn == true)
+            {
+                bkgPos = pos;
+            }
+            else 
+            {
+                bkgPos = btnClose.GetPosBelow();
+            }
             allInstances.Add(this);
         }
 
@@ -130,7 +137,7 @@ namespace Guus_Reise
                 if (Active)
                 {
                     spriteBatch.Begin();
-                    spriteBatch.Draw(bkgTexture, pos, Color.White);
+                    spriteBatch.Draw(bkgTexture, bkgPos, Color.White);
                     spriteBatch.End();
                     if (needCloseBtn == true)
                     {
