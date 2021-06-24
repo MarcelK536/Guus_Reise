@@ -78,6 +78,7 @@ namespace Guus_Reise
         {
             this.BoardPosition = position;
             this.LogicalBoardPosition = logicalPosition;
+            this.LogicalPosition = this.LogicalBoardPosition;
             this.Tile = tile;
         }
 
