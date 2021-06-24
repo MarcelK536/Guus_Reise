@@ -89,6 +89,11 @@ namespace Guus_Reise.HexangonMap
             get => _charakter;
             set => _charakter = value;
         }
+        
+        public void UpdateHex(Hex hexagon)
+        {
+            Hexagon = hexagon;
+        }
 
         public void DrawCharakter(Camera camera)
         {
