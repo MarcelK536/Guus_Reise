@@ -22,6 +22,7 @@ namespace Guus_Reise
         public static SpriteFont actionMenuFont;
 
         public static SkillUpMenu levelUpMenu;
+        public static LevelObjectiveMenu objectiveMenu;
 
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
@@ -42,6 +43,10 @@ namespace Guus_Reise
                 SimpleMenu.DeactivateAllOtherMenus(levelUpMenu);
                 HexMap.visManager.ManageCharakterViewH(levelUpMenu);
                 levelUpMenu.Active = !levelUpMenu.Active;
+            }
+            if(Keyboard.GetState().IsKeyDown(Keys.G) && _prevKeyState.IsKeyUp(Keys.G))
+            {
+                objectiveMenu.Active = !objectiveMenu.Active;
             }
 
             HexMap.NoGlow();
@@ -161,6 +166,7 @@ namespace Guus_Reise
             }
 
             actionMenu.Update(time);
+            objectiveMenu.Update(time);
             _prevMouseState = mouseState;
             _prevKeyState = keystate;
         }
@@ -172,6 +178,7 @@ namespace Guus_Reise
             {
                 levelUpMenu.Draw(spriteBatch);
             }
+            objectiveMenu.Draw(spriteBatch);
         }
     }
 }

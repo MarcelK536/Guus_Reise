@@ -173,6 +173,26 @@ namespace Guus_Reise
             }
         }
 
+        public virtual void DrawBlendTopToBottom(SpriteBatch spriteBatch)
+        {
+            if (Active)
+            {
+                BlendIn();
+                spriteBatch.Begin();
+                spriteBatch.Draw(bkgTexture, bkgPos, Color.White);
+                btnClose.Draw(spriteBatch, textFont);
+                spriteBatch.End();
+            }
+            else
+            {
+                foreach (Button button in menuButtons)
+                {
+                    button.ButtonX = (int)-menuHeight;
+                }
+                bkgPos.Y = (int)-menuHeight;
+            }
+        }
+
         public virtual Vector2 GetPositionBelow(Vector2 vector)
         {
             return new Vector2(vector.X, vector.Y + textFont.MeasureString("T").Y + 5); 
@@ -204,18 +224,34 @@ namespace Guus_Reise
 
         public virtual void BlendIn()
         {
-            foreach (Button button in menuButtons)
+            if (blendDirection == BlendDirection.LeftToRight)
             {
-                if (button.ButtonX < pos.X)
+                foreach (Button button in menuButtons)
                 {
-                    button.ButtonX += 6;
+                    if (button.ButtonX < pos.X)
+                    {
+                        button.ButtonX += 6;
+                    }
+                }
+                if (bkgPos.X < pos.X)
+                {
+                    bkgPos.X += 6;
                 }
             }
-            if(bkgPos.X < pos.X)
+            if (blendDirection == BlendDirection.TopToBottom)
             {
-                bkgPos.X += 6;
+                foreach(Button button in menuButtons)
+                {
+                    if(button.ButtonX < pos.Y)
+                    {
+                        button.ButtonX += 6;
+                    }
+                }
+                if(bkgPos.Y < pos.Y)
+                {
+                    bkgPos.Y += 6;
+                }
             }
-
         }
     }
 }

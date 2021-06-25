@@ -51,6 +51,8 @@ namespace Guus_Reise
         public void Update(GameTime gametime)
         {
             base.Update();
+            menuHeight = btnQuitGame.GetPosBelow().Y;
+            SetBackgroundTexture(bkgColor);
             if (Active)
             {
                 HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
@@ -151,7 +153,6 @@ namespace Guus_Reise
                         }
                     }
                 }
-                
                 btnQuitGame.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }

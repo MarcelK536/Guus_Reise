@@ -8,7 +8,6 @@ namespace Guus_Reise
 {
     class SkillUpMenu : SimpleMenu
     {
-        public GraphicsDevice GraphicsDevice { get; }
         Button btnPlusWiderstandskraft;
         Button btnPlusKoerperkraft;
         Button btnPlusBeweglichkeit;
@@ -23,7 +22,6 @@ namespace Guus_Reise
 
         public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,  graphicsDevice, blend) 
         {
-            GraphicsDevice = graphicsDevice;
             Texture2D btnTexture = new Texture2D(graphicsDevice, 25, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
