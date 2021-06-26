@@ -151,6 +151,10 @@ namespace Guus_Reise
             {
                 DrawBlendLeftToRight(spriteBatch);
             }
+            else if(blendDirection == BlendDirection.TopToBottom)
+            {
+                DrawBlendTopToBottom(spriteBatch);
+            }
         }
 
         public virtual void DrawBlendLeftToRight(SpriteBatch spriteBatch)
@@ -187,7 +191,7 @@ namespace Guus_Reise
             {
                 foreach (Button button in menuButtons)
                 {
-                    button.ButtonX = (int)-menuHeight;
+                    button.ButtonY = (int)-menuHeight;
                 }
                 bkgPos.Y = (int)-menuHeight;
             }
@@ -242,9 +246,9 @@ namespace Guus_Reise
             {
                 foreach(Button button in menuButtons)
                 {
-                    if(button.ButtonX < pos.Y)
+                    if(button.ButtonY < pos.Y)
                     {
-                        button.ButtonX += 6;
+                        button.ButtonY += 6;
                     }
                 }
                 if(bkgPos.Y < pos.Y)

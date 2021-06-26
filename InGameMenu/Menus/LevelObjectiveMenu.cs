@@ -12,17 +12,22 @@ namespace Guus_Reise
         public LevelObjectiveMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
             
-            pos = new Vector2(0,_graphicsDevice.Viewport.Width / 2);
-            
-            menuHeight = menuFont.MeasureString("Placeholder").Y * 2;
+            pos = new Vector2((_graphicsDevice.Viewport.Width / 2)-90,0);
+            bkgPos = pos;
+            btnClose.MoveButton(pos - Vector2.UnitX * btnClose.TextureDefault.Width);
+            menuHeight = menuFont.MeasureString("Placeholder").Y;
             menuWidth = _graphicsDevice.Viewport.Width / 2;
         }
 
         public void Update(GameTime time)
         {
             base.Update();
-            menuWidth = _graphicsDevice.Viewport.Width / 2;
+
+            menuWidth = _graphicsDevice.Viewport.Width / 2 + 60;
+            pos.X = _graphicsDevice.Viewport.Width / 2 - 90;
+            bkgPos = pos;
             SetBackgroundTexture(bkgColor);
+            
 
             var found = HexMap.playableCharacter.Find(c => c.LogicalBoardPosition == HexMap._board[7, 7].LogicalBoardPosition);
             if(found != null)
@@ -37,6 +42,7 @@ namespace Guus_Reise
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            
             base.Draw(spriteBatch);
 
             if (Active)
