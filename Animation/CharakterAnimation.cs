@@ -118,6 +118,29 @@ namespace Guus_Reise.HexangonMap
             }
         }
 
+        public void DrawCharakterSpecificHex(Camera camera, Hex hex)
+        {
+            this.CharakterPostion = hex.Position + this.translation;
+            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterPostion));
+            foreach (var mesh in _planeModel.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.TextureEnabled = true;
+                    effect.Texture = _curTex;
+                    //effect.LightingEnabled = true;
+                    //effect.EnableDefaultLighting();
+                    //effect.PreferPerPixelLighting = true;
+                    effect.World = world;
+                    effect.View = camera.view;
+                    effect.Projection = camera.projection;
+                    //effect.DiffuseColor = this.Glow;
+                    effect.AmbientLightColor = this._color;
+                }
+                mesh.Draw();
+            }
+        }
+
         public void Update(GameTime gametime)
         {
             _charakterPostion = _hexagon.Position + translation;

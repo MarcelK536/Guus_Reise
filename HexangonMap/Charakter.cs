@@ -31,7 +31,7 @@ namespace Guus_Reise
         private Point _logicalPosition;         //Position an welcher der Charakter gezeichnet wird
         private Point _logicalFightPosition;    //Platzhalter für Position im Kampf
         private Point _logicalBoardPosition;    //Platzhalter für Position auf Karte
-
+        private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
 
 
@@ -44,6 +44,11 @@ namespace Guus_Reise
         {
             get => _npc;
             set => _npc = value;
+        }
+        public bool IsMoving
+        {
+            get => _isMoving;
+            set => _isMoving = value;
         }
         public CharakterAnimation CharakterAnimation
         {
@@ -203,6 +208,7 @@ namespace Guus_Reise
             this.KI = werte[11];
             this.Fähigkeitspunkte = werte[12];
             this.Level = werte[13];
+            _isMoving = false;
         }
 
         public int[] LevelToStats(int level, String klasse)
@@ -249,8 +255,19 @@ namespace Guus_Reise
                 LogicalPosition = LogicalBoardPosition;
                 _charakterAnimation.UpdateHex(HexMap._board[this.LogicalPosition.X, this.LogicalPosition.Y]);
             }
-
-            _charakterAnimation.DrawCharakter(camera);
+            if(Game1.GState == Game1.GameState.MovementAnimation)
+            {
+                if(!IsMoving)
+                {
+                    _charakterAnimation.DrawCharakter(camera);
+                }
+                
+                
+            }
+            else
+            {
+                _charakterAnimation.DrawCharakter(camera);
+            }
         }
 
         public void Play(string nameAnimation, float intervall)

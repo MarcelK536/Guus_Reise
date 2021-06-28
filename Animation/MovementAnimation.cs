@@ -42,10 +42,11 @@ namespace Guus_Reise.Animation
            switch (type)
            {
                 case "CharakterMovement":
-                    ablauf = new List<string> { "FokusStartHex", "Wait500", "SlideHexToHex" };
+                    ablauf = new List<string> { "FokusStartHex", "Wait500", "SlideHexToHex","ZoomOut" };
                     break;
            }
-            currentStep = 0;
+           currentStep = 0;
+           targetHex.Charakter.IsMoving = true;
 
         }
 
@@ -134,6 +135,11 @@ namespace Guus_Reise.Animation
 
         }
         #endregion
+
+        public void Draw()
+        {
+            targetHex.Charakter.CharakterAnimation.DrawCharakterSpecificHex(_camera, startHex);
+        }
 
         public void Wait(GameTime gametime, float duration)
         {

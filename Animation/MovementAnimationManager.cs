@@ -20,6 +20,11 @@ namespace Guus_Reise.Animation
         {
             _currentMovementAnimation.Update(gametime);
         }
+
+        public static void DrawMovementAnimation()
+        {
+            _currentMovementAnimation.Draw();
+        }
     }
 }
 
