@@ -242,11 +242,14 @@ namespace Guus_Reise
             if (Game1.GState == Game1.GameState.InFight)
             {
                 LogicalPosition = LogicalFightPosition;
+                _charakterAnimation.UpdateHex(Fighthandler._fightBoard[this.LogicalPosition.X, this.LogicalPosition.Y]);
             }
             else
             {
                 LogicalPosition = LogicalBoardPosition;
+                _charakterAnimation.UpdateHex(HexMap._board[this.LogicalPosition.X, this.LogicalPosition.Y]);
             }
+
             _charakterAnimation.DrawCharakter(camera);
         }
 

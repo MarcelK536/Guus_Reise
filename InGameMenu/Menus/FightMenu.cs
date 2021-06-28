@@ -14,7 +14,6 @@ namespace Guus_Reise
 
         public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
         {
-            //System.Diagnostics.Debug.WriteLine(graphicsDevice.Viewport.Bounds.Center.Y);
             needCloseBtn = false;
             btnWidth = menuFont.MeasureString("Attack 1").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice,(int) btnWidth, 50);
@@ -33,8 +32,8 @@ namespace Guus_Reise
             menuButtons.Add(btnGiveUp);
 
             SetMenuHeight();
-            SetMenuWidth();
-            SetBackgroundTexture(Color.MistyRose);
+            menuWidth = graphicsDevice.Viewport.Width;
+            SetBackgroundTexture(Color.Green);
         }
 
         public override void Update()
@@ -56,6 +55,9 @@ namespace Guus_Reise
                 }
             }
             UpdatePosition(new Vector2(0, _graphicsDevice.Viewport.Bounds.Center.Y));
+            SetMenuHeight();
+            bkgPos.Y = _graphicsDevice.Viewport.Height / 2;
+            menuWidth = _graphicsDevice.Viewport.Width;
             btnAttack1.MoveButton(btnClose.GetPosBelow());
             btnAttack2.MoveButton(btnAttack1.GetPosBelow());
             btnGiveUp.MoveButton(btnAttack2.GetPosBelow());
@@ -66,6 +68,7 @@ namespace Guus_Reise
             base.Draw(spriteBatch);
             if (Active)
             {
+                SetBackgroundTexture(Color.Green);
                 spriteBatch.Begin();
                 Vector2 textPosition = Vector2.Zero;
                 foreach (Hex hex in Fighthandler.playerTiles)
