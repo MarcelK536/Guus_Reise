@@ -42,7 +42,7 @@ namespace Guus_Reise.Animation
            switch (type)
            {
                 case "CharakterMovement":
-                    ablauf = new List<string> { "FokusStartHex", "Wait500", "SlideHexToHex","ZoomOut" };
+                    ablauf = new List<string> { "FokusStartHex", "Wait500", "SlideHexToHex","ZoomOut"};
                     break;
            }
            currentStep = 0;
@@ -54,10 +54,6 @@ namespace Guus_Reise.Animation
 
         public void Update(GameTime gametime)
         {
-            if(isSlidingCamera)
-            {
-                MakeCameraSlide(gametime, currIntervall, currDirection, currValue);
-            }
             if(isSlidingCameraVector)
             {
                 MakeCameraSlide(gametime, currIntervall, currMovementVector);
@@ -88,10 +84,11 @@ namespace Guus_Reise.Animation
                 {
                     if (isNewStep)
                     {
-                        SlideCamera(30, "zoom", -6);
+                        Vector3 zoomValue = new Vector3(0, 0, -4f);
+                        SlideCamera(3, zoomValue);
                         isNewStep = false;
                     }
-                    if (!isSlidingCamera)
+                    if (!isSlidingCameraVector)
                     {
                         currentStep++;
                         isNewStep = true;
@@ -118,7 +115,7 @@ namespace Guus_Reise.Animation
                 {
                     if (isNewStep)
                     {
-                        currIntervall = 20;
+                        currIntervall = 10;
                         isNewStep = false;
                         SlideBetweenHex(currIntervall, startHex, targetHex);
                     }
@@ -157,7 +154,7 @@ namespace Guus_Reise.Animation
             HexMap.visManager.SetFocusToHex(startHex,0);
             Vector3 direction = HexMap.visManager.GetVectorBewtweenTwoHex(startHex, targetHex);
             currTotalMovementVector = direction;
-            currMovementVector = NormOnLength(direction, 0.1f);
+            currMovementVector = NormOnLength(direction, 0.01f);
             isSlidingCameraVector = true;
         }
 
@@ -172,9 +169,10 @@ namespace Guus_Reise.Animation
 
         public void SlideCamera(int intervall, Vector3 direction)
         {
-            isSlidingCameraVector = true;
             currIntervall = intervall;
-            currMovementVector = direction;
+            currTotalMovementVector = direction;
+            currMovementVector = NormOnLength(direction, 0.1f);
+            isSlidingCameraVector = true;
         }
 
         
@@ -184,6 +182,18 @@ namespace Guus_Reise.Animation
             if (startTranslationCamera == new Vector3(0, 0, 0))
             {
                 startTranslationCamera = _camera.CurrentTranslation;
+            }
+            if (direction.Y == 0)
+            {
+                yReady = true;
+            }
+            if (direction.X == 0)
+            {
+                xReady = true;
+            }
+            if(direction.Z == 0)
+            {
+                zReady = true;
             }
             if (timer > intervall)
             {
@@ -218,7 +228,7 @@ namespace Guus_Reise.Animation
                 }
                 if(direction.Z > 0)
                 {
-                    if (_camera.CurrentTranslation.Z <= startTranslationCamera.Z + currTotalMovementVector.Z)
+                    if (_camera.CurrentTranslation.Z <= startTranslationCamera.Z - currTotalMovementVector.Z)
                     {
                         zReady = true;
                     }
