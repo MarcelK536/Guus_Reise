@@ -47,7 +47,7 @@ namespace Guus_Reise.Animation
            }
            currentStep = 0;
            targetHex.Charakter.IsMoving = true;
-
+           targetHex.Charakter.CharakterAnimation.CharakterMovementPostion = targetHex.Charakter.CharakterAnimation.Translation + startHex.Position;
         }
 
         #region Update
@@ -138,7 +138,8 @@ namespace Guus_Reise.Animation
 
         public void Draw()
         {
-            targetHex.Charakter.CharakterAnimation.DrawCharakterSpecificHex(_camera, startHex);
+            
+            targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
         }
 
         public void Wait(GameTime gametime, float duration)

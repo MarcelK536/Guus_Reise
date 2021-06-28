@@ -12,6 +12,7 @@ namespace Guus_Reise.HexangonMap
     {
         private static KeyboardState _prevKeyState;
         private Vector3 _charakterPostion; //Position des Charakters
+        private Vector3 _charakterMovementPostion;
         
         Vector3 translation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
         private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
@@ -61,6 +62,7 @@ namespace Guus_Reise.HexangonMap
             _charakter = charakter;
             _hexagon = hexagon;
             _charakterPostion = hexagon.Position + translation;
+            _charakterMovementPostion = _charakterPostion;
             _glow = new Vector3(0.1f, 0.1f, 0.1f);
             _color = new Vector3(0, 0, 0);
         }
@@ -84,12 +86,24 @@ namespace Guus_Reise.HexangonMap
             set => _charakterPostion = value;
         }
 
+        public Vector3 CharakterMovementPostion
+        {
+            get => _charakterMovementPostion;
+            set => _charakterMovementPostion = value;
+        }
+
         public Charakter Charakter
         {
             get => _charakter;
             set => _charakter = value;
         }
-        
+
+        public Vector3 Translation
+        {
+            get => translation;
+            set => translation = value;
+        }
+
         public void UpdateHex(Hex hexagon)
         {
             Hexagon = hexagon;
@@ -118,10 +132,9 @@ namespace Guus_Reise.HexangonMap
             }
         }
 
-        public void DrawCharakterSpecificHex(Camera camera, Hex hex)
+        public void DrawCharakterMovementPosition(Camera camera)
         {
-            this.CharakterPostion = hex.Position + this.translation;
-            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterPostion));
+            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterMovementPostion));
             foreach (var mesh in _planeModel.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
