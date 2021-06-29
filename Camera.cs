@@ -128,7 +128,7 @@ namespace Guus_Reise
             MoveCameraValue("Y", direction.Y);
             if (direction.Y != 0)
             {
-                direction.Z -= direction.Y;
+                direction.Z -= direction.Y/3;
             }
             MoveCameraValue("zoom", direction.Z);
         }
