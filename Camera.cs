@@ -130,7 +130,7 @@ namespace Guus_Reise
             {
                 direction.Z -= direction.Y;
             }
-            MoveCameraValue("Z", direction.Z);
+            MoveCameraValue("zoom", direction.Z);
         }
 
         public void MoveCameraValue(string direction, float value, int timeInMilliseconds, GameTime gameTime)

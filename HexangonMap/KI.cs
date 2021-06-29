@@ -44,6 +44,7 @@ namespace Guus_Reise
                         }
                         HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
                         HexMap._board[move.X, move.Y].Charakter = charakter;
+                        HexMap._board[move.X, move.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[move.X, move.Y];
                         HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
                         charakter.LogicalBoardPosition = move;
                         charakter.CanMove = false;

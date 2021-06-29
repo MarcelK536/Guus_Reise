@@ -144,6 +144,7 @@ namespace Guus_Reise
                 case GameState.MovementAnimation:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
                     HexMap.DrawInGame(_spriteBatch, gameTime);
+                    MovementAnimationManager.DrawMovementAnimation();
                     break;
                 default:
                     break;
