@@ -43,6 +43,8 @@ namespace Guus_Reise.HexangonMap
 
         bool isPlayAnimation = false;
 
+        string _animationPlanner = "";
+
         public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, float standardintervall)
         {
             _standardIntervall = standardintervall;
@@ -71,6 +73,12 @@ namespace Guus_Reise.HexangonMap
         {
             get => _hexagon;
             set => _hexagon = value;
+        }
+
+        public string AnimationPlanner
+        {
+            get => _animationPlanner;
+            set => _animationPlanner = value;
         }
 
         public Vector3 CharakterScale
@@ -162,28 +170,43 @@ namespace Guus_Reise.HexangonMap
                 _curTex = currentAnimation[currentFrame];
                 UpdateAnimation(gametime);
             }
-
-            if (!_hexagon.IsHovered)
+            if(Game1.GState == Game1.GameState.MovementAnimation)
             {
-                if(!_hexagon.IsActive)
-                {
-                    StopAnimation();
-                }
-            }
-            if (_hexagon.IsHovered)
-            {
-                if(CharakterAnimationManager.ActiveHexExists)
-                {
-                    if(_hexagon.IsActive)
-                    {
-                        Play("Idle", _standardIntervall);
-                    }
-                }
-                else
+                if (_animationPlanner == "l")
                 {
                     Play("Idle", _standardIntervall);
                 }
-                
+                if (_animationPlanner == "stop")
+                {
+                    StopAnimation();
+                    _animationPlanner = "";
+                }
+            }
+            else
+            {
+                if (!_hexagon.IsHovered)
+                {
+                    if (!_hexagon.IsActive)
+                    {
+                        StopAnimation();
+                    }
+                }
+                if (_hexagon.IsHovered)
+                {
+                    if (CharakterAnimationManager.ActiveHexExists)
+                    {
+                        if (_hexagon.IsActive)
+                        {
+                            Play("Idle", _standardIntervall);
+                        }
+                    }
+                    else
+                    {
+                        Play("Idle", _standardIntervall);
+                    }
+
+                }
+
             }
 
             _prevKeyState = Keyboard.GetState();
