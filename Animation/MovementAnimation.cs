@@ -64,6 +64,7 @@ namespace Guus_Reise.Animation
 
         public void Update(GameTime gametime)
         {
+            targetHex.Charakter.CharakterAnimation.Update(gametime);
             if (isSlidingCameraVector)
             {
                 MakeCameraSlide(gametime, currIntervall, currMovementVector);
@@ -209,6 +210,7 @@ namespace Guus_Reise.Animation
             currDirectionMovement = NormOnLength(directionMovement, 0.01f);
             currIntervall = intervall;
             isSlidingCharakter = true;
+            movingCharakter.CharakterAnimation.AnimationPlanner = "l";
         }
 
         public void MakeCameraSlide(GameTime gametime, int intervall, Vector3 direction)
@@ -357,6 +359,7 @@ namespace Guus_Reise.Animation
                     xReadyCharakter = false;
                     zReadyCharakter = false;
                     isSlidingCharakter = false;
+                    movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
                 }
             }
         }

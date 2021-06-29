@@ -22,6 +22,7 @@ namespace Guus_Reise.Animation
         public static void UdpateMovement(GameTime gametime)
         {
             _currentMovementAnimation.Update(gametime);
+
         }
 
         public static void DrawMovementAnimation()
