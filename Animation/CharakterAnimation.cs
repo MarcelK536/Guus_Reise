@@ -19,7 +19,7 @@ namespace Guus_Reise.HexangonMap
         //static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
 
         private List<Texture2D> idle;
-        //static List<Texture2D> moveLeft;
+        private List<Texture2D> jump;
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
         //static List<Texture2D> moveFront;
@@ -45,10 +45,11 @@ namespace Guus_Reise.HexangonMap
 
         string _animationPlanner = "";
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, float standardintervall)
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, float standardintervall)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
+            jump = animJump;
             _planeModel = planeModel;
             _texCharakter = texCharakter;
             _curTex = _texCharakter;
@@ -174,7 +175,7 @@ namespace Guus_Reise.HexangonMap
             {
                 if (_animationPlanner == "l")
                 {
-                    Play("Idle", _standardIntervall);
+                    Play("Jump", _standardIntervall);
                 }
                 if (_animationPlanner == "stop")
                 {
@@ -236,6 +237,9 @@ namespace Guus_Reise.HexangonMap
             {
                 case "Idle":
                     currentAnimation = idle;
+                    break;
+                case "Jump":
+                    currentAnimation = jump;
                     break;
                 default:
                     currentAnimation = idle;

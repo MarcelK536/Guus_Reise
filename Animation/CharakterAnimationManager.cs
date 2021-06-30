@@ -40,6 +40,7 @@ namespace Guus_Reise.Animation
                 Texture2D texCharakter = content.Load<Texture2D>("Charakter\\"+name+"\\tex"+name);
 
                 List<Texture2D> idle = new List<Texture2D>();
+                List<Texture2D> jump = new List<Texture2D>();
                 //...
 
                 int indexCharakter = charakterNames.IndexOf(name);
@@ -56,7 +57,20 @@ namespace Guus_Reise.Animation
                     idle.Add(curr);
                 }
 
-                if(name == "Paul")
+                //Jump
+
+                curPath = path + "\\Jump";
+                di = new DirectoryInfo(curPath);
+                numberOfFrames = di.GetFiles().Length;
+
+                for (int i = 0; i < numberOfFrames; i++)
+                {
+                    string number = (i + 1).ToString();
+                    Texture2D curr = content.Load<Texture2D>("Charakter\\" + name + "\\Jump\\" + name + "Jump" + number);
+                    jump.Add(curr);
+                }
+
+                if (name == "Paul")
                 {
                     standardIntervall = 250f;
                 }
@@ -65,7 +79,7 @@ namespace Guus_Reise.Animation
                 //moveRight
                 //...
 
-                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, standardIntervall);  
+                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, standardIntervall);  
             }
         }
 
