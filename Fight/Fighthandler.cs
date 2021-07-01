@@ -35,6 +35,7 @@ namespace Guus_Reise
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
         {
+            //ToDo Check if Tiles > 4
             for(int i = tiles.Count-1; i >= 0; i--) 
             {
                 for(int j = places.GetLength(0)-1; j > 0; j--)
