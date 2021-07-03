@@ -23,6 +23,7 @@ namespace Guus_Reise
 
         public static FightMenu fightMenu;
         public static bool initPlayers = false;
+        public static FightTurnBar turnBar;
 
         public static VisualisationManagerHexmap visFightManager;
 
@@ -35,6 +36,7 @@ namespace Guus_Reise
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
         {
+            //ToDo Check if Tiles > 4
             for(int i = tiles.Count-1; i >= 0; i--) 
             {
                 for(int j = places.GetLength(0)-1; j > 0; j--)
@@ -50,6 +52,9 @@ namespace Guus_Reise
                         tiles[i].Position = tiles[i].FightPosition;
 
                         _fightBoard[places[j, 0], places[j, 1]] = tiles[i];
+
+                        Random random = new Random();
+                        _fightBoard[places[j, 0], places[j, 1]].Charakter.Geschwindigkeit = random.Next(0, 10);
 
                         break;
                     }
@@ -114,12 +119,13 @@ namespace Guus_Reise
             }
         }
 
-        public static void Update(GameTime gameTime)
+        public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
             if (initPlayers == false)
             {
                 InitPlayers(playerTiles,charPositionsPlayer);
                 InitPlayers(npcTiles, charPositionsEnemy);
+                turnBar = new FightTurnBar(graphicsDevice, playerTiles, npcTiles);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Q))
             {
@@ -129,6 +135,7 @@ namespace Guus_Reise
             }
             fightMenu.Active = true;
             fightMenu.Update();
+            turnBar.Update(graphicsDevice);
             visFightManager.Update(gameTime);
         }
 
@@ -180,8 +187,9 @@ namespace Guus_Reise
                         }
                     }
                 }
+                turnBar.Draw(spriteBatch, gameTime);
             }
-        
+
             fightMenu.Draw(spriteBatch);
         }
 

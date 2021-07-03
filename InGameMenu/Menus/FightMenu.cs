@@ -9,13 +9,13 @@ namespace Guus_Reise
     class FightMenu : SimpleMenu
     {
         Button btnGiveUp;
-        Button btnAttack1;
-        Button btnAttack2;
+        Button btnAttack;
+        Button btnChangeWeapon;
 
         public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
         {
             needCloseBtn = false;
-            btnWidth = menuFont.MeasureString("Attack 1").X + 10;
+            btnWidth = menuFont.MeasureString("Change Weapon").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice,(int) btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -24,11 +24,11 @@ namespace Guus_Reise
             }
             btnTexture.SetData(btnColor);
 
-            btnAttack1 = new Button("Attack 1", btnTexture, 1, pos);
-            menuButtons.Add(btnAttack1);
-            btnAttack2 = new Button("Attack 2", btnTexture, 1, btnAttack1.GetPosBelow());
-            menuButtons.Add(btnAttack2);
-            btnGiveUp = new Button("Give Up", btnTexture, 1, btnAttack2.GetPosBelow());
+            btnAttack = new Button("Attack", btnTexture, 1, pos);
+            menuButtons.Add(btnAttack);
+            btnChangeWeapon = new Button("Change Weapon", btnTexture, 1, btnAttack.GetPosBelow());
+            menuButtons.Add(btnChangeWeapon);
+            btnGiveUp = new Button("Give Up", btnTexture, 1, btnChangeWeapon.GetPosBelow());
             menuButtons.Add(btnGiveUp);
 
             SetMenuHeight();
@@ -44,7 +44,7 @@ namespace Guus_Reise
                 int x = Player.activeTile.LogicalPosition.X;
                 int y = Player.activeTile.LogicalPosition.Y;
 
-                if (btnAttack1.IsClicked())
+                if (btnAttack.IsClicked())
                 {
                     Fighthandler._fightBoard[x, y].Charakter.Widerstandskraft++;    
                 }
@@ -58,9 +58,9 @@ namespace Guus_Reise
             SetMenuHeight();
             bkgPos.Y = _graphicsDevice.Viewport.Height / 2;
             menuWidth = _graphicsDevice.Viewport.Width;
-            btnAttack1.MoveButton(btnClose.GetPosBelow());
-            btnAttack2.MoveButton(btnAttack1.GetPosBelow());
-            btnGiveUp.MoveButton(btnAttack2.GetPosBelow());
+            btnAttack.MoveButton(btnClose.GetPosBelow());
+            btnChangeWeapon.MoveButton(btnAttack.GetPosBelow());
+            btnGiveUp.MoveButton(btnChangeWeapon.GetPosBelow());
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -75,7 +75,7 @@ namespace Guus_Reise
                 {
                     if (textPosition == Vector2.Zero)
                     {
-                        textPosition = btnAttack1.GetPosRightOf();
+                        textPosition = btnAttack.GetPosRightOf();
                     }
                     else
                     {
@@ -84,8 +84,8 @@ namespace Guus_Reise
                     spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
                     spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.Widerstandskraft, GetPositionBelow(textPosition), Color.Yellow);
                 }
-                btnAttack1.Draw(spriteBatch, textFont);
-                btnAttack2.Draw(spriteBatch, textFont);
+                btnAttack.Draw(spriteBatch, textFont);
+                btnChangeWeapon.Draw(spriteBatch, textFont);
                 btnGiveUp.Draw(spriteBatch, textFont);
 
                 textPosition = Vector2.Zero;
@@ -93,7 +93,7 @@ namespace Guus_Reise
                 {
                     if (textPosition == Vector2.Zero)
                     {
-                        textPosition = btnAttack1.GetPosRightOf() + Vector2.UnitX*(btnAttack1.GetPosRightOf().X + 200);
+                        textPosition = btnAttack.GetPosRightOf() + Vector2.UnitX*(btnAttack.GetPosRightOf().X + 200);
                     }
                     else
                     {
