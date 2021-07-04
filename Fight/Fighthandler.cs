@@ -188,9 +188,17 @@ namespace Guus_Reise
                     }
                 }
                 turnBar.Draw(spriteBatch, gameTime);
+
+                if (turnBar.ReturnCurrentCharakter().IsNPC == false)
+                {
+                    fightMenu.Draw(spriteBatch);
+                }
+                else
+                {
+                    turnBar.RemoveCharakter(turnBar.ReturnCurrentCharakter());
+                }
             }
 
-            fightMenu.Draw(spriteBatch);
         }
 
        /* public static void CalculateMoves(List<Moves> player, List<Moves> npc)

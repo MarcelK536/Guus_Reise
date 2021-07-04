@@ -44,7 +44,7 @@ namespace Guus_Reise
 
         public void InitNextTurn()
         {
-            NextTurn = FightCharacters.OrderBy(e => e.Geschwindigkeit).ToList();
+            NextTurn = FightCharacters.OrderByDescending(e => e.Geschwindigkeit).ToList();
         }
 
         public void AddCharakter(Charakter c)  //Fügt Charakter zur Liste hinzu
@@ -64,6 +64,11 @@ namespace Guus_Reise
         public void ReSort()
         {
             NextTurn = NextTurn.OrderBy(e => e.Geschwindigkeit).ToList();
+        }
+
+        public Charakter ReturnCurrentCharakter()
+        {
+            return NextTurn.First();
         }
 
         public void UpdateBarTexture(GraphicsDevice graphicsDevice)
