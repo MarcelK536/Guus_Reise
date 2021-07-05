@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Input;
 using System.Timers;
 
 namespace Guus_Reise
@@ -85,11 +86,27 @@ namespace Guus_Reise
         {
             if (Active)
             {
-                if (btnClose.IsClicked() && needCloseBtn == true) 
+                if (btnClose.IsClicked() && needCloseBtn == true || ClickedOutside()) 
                 {
                     Active = false;
                 }
             }
+        }
+
+        public virtual bool ClickedOutside()
+        {
+            //TODO: Implement function, currently Blending does not work
+            /* 
+            MouseState mouseState = Mouse.GetState();
+            if (mouseState.X < pos.X || mouseState.Y < pos.Y || mouseState.X > pos.X+menuWidth || mouseState.Y > pos.Y + menuHeight)
+            {
+                if(mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    return true;
+                }
+            }
+            */
+            return false;
         }
 
         public virtual void SetMenuWidth()
