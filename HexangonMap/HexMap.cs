@@ -134,10 +134,6 @@ namespace Guus_Reise
                     _board[i, k].Draw(Camera);
                 }
             }
-            if (playerTurn)
-            {
-                Player.Draw(spriteBatch, gameTime);
-            }
 
             //Zeichnen der Charaktere nach dem die komplette Map fertig ist (da es sonst zu nem Graphik-Bug kommt)
             foreach(Charakter c in playableCharacter)
@@ -147,6 +143,11 @@ namespace Guus_Reise
             foreach (Charakter c in npcs)
             {
                 c.Draw(Camera);
+            }
+
+            if (playerTurn)
+            {
+                Player.Draw(spriteBatch, gameTime);
             }
 
         }

@@ -18,12 +18,12 @@ namespace Guus_Reise
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
-            btnWidth = menuFont.MeasureString("Faehigkeitenpunkte").X;
+            btnWidth = menuFont.MeasureString("Faehigkeitenpunkte ").X;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
-                btnColor[i] = Color.Red * 0.8f;
+                btnColor[i] = Color.YellowGreen * 0.8f;
             }
             btnTexture.SetData(btnColor);
             btnLevelUp = new Button("Faehigkeitenpunkte", btnTexture, 1, btnClose.GetPosBelow());
@@ -75,10 +75,13 @@ namespace Guus_Reise
                 }
                 else
                 {
+                    Vector2 textPos = new Vector2(btnLevelUp.GetTextPosRightOf().X,btnClose.GetTextPosRightOf().Y);
                     spriteBatch.Begin();
                     menuWidth = 600;
                     menuHeight = 300;
-                    spriteBatch.DrawString(textFont, HexMap._board[x,y].Charakter.Name, btnClose.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont,"Name: " + HexMap._board[x,y].Charakter.Name, textPos, Color.Yellow);
+                    textPos.Y += textFont.MeasureString("Placeholder").Y*1.5f;
+                    spriteBatch.DrawString(textFont,"Level: " + HexMap._board[x, y].Charakter.Level, textPos, Color.Yellow);
                     btnLevelUp.Draw(spriteBatch, textFont);
                     btnSkillWechsel.Draw(spriteBatch, textFont);
                     btnWaffenWechsel.Draw(spriteBatch, textFont);

@@ -181,6 +181,11 @@ namespace Guus_Reise
             return new Vector2(this.ButtonX + this.TextureDefault.Width + 10, this.ButtonY);
         }
 
+        public Vector2 GetTextPosRightOf()
+        {
+            return new Vector2(this.ButtonX + this.TextureDefault.Width + 10, this.ButtonY + (this.TextureDefault.Height / 8));
+        }
+
         //Returns Position Vector to Place Something below Button
         public Vector2 GetPosBelow()
         {
