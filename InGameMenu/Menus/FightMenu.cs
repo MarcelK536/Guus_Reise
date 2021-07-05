@@ -51,6 +51,7 @@ namespace Guus_Reise
                 if (btnGiveUp.IsClicked())
                 {
                     Game1.GState = Game1.GameState.InGame;
+                    Active = false;
                     Fighthandler.ExitFight();
                 }
             }
