@@ -258,6 +258,5 @@ namespace Guus_Reise
             }
             spriteBatch.DrawString(spriteFont, this.Name, this.GetTextPos(spriteFont), Color.Black);          
         }
-
     }
 }

@@ -11,8 +11,14 @@ namespace Guus_Reise
         Button btnLevelUp;
         Button btnWaffenWechsel;
         Button btnSkillWechsel;
+
+        GraphicsDevice graphics;
+
+        List<String> weapons = new List<String> { "Waffe 1", "Waffe 2", "Waffe 3", "Waffe 4", "Waffe 5", "Waffe 6" };
+        WeaponMenu weaponMenu;
         public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
+            graphics = graphicsDevice;
             menuWidth = 600;
             menuHeight = 300;
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
@@ -47,12 +53,28 @@ namespace Guus_Reise
 
             if (Active)
             {
-                if (btnLevelUp.IsClicked())
+
+
+                if(weaponMenu != null && weaponMenu.Active)
                 {
-                    Player.levelUpMenu.Active = true;
-                    Player.charakterMenu.Active = false;
+                    weaponMenu.Update();
+                }
+                else
+                {
+                    if (btnLevelUp.IsClicked())
+                    {
+                        Player.levelUpMenu.Active = true;
+                        Player.charakterMenu.Active = false;
+                    }
+                    if (btnWaffenWechsel.IsClicked())
+                    {
+                        weaponMenu = new WeaponMenu(weapons, btnClose.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                        weaponMenu.Active = true;
+                    }
                 }
             }
+
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -86,6 +108,11 @@ namespace Guus_Reise
                     btnSkillWechsel.Draw(spriteBatch, textFont);
                     btnWaffenWechsel.Draw(spriteBatch, textFont);
                     spriteBatch.End();
+                }
+
+                if (weaponMenu != null && weaponMenu.Active)
+                {
+                    weaponMenu.Draw(spriteBatch);
                 }
             }
         }

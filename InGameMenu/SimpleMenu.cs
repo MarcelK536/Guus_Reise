@@ -131,6 +131,18 @@ namespace Guus_Reise
             }
         }
 
+        public virtual void SetBackgroundTexture(Color color, float transparence)
+        {
+            Texture2D menuBackground = new Texture2D(_graphicsDevice, (int)menuWidth, (int)menuHeight);
+            Color[] bkgColor = new Color[menuBackground.Width * menuBackground.Height];
+            for (int i = 0; i < bkgColor.Length; i++)
+            {
+                bkgColor[i] = color * transparence;
+            }
+            menuBackground.SetData(bkgColor);
+            bkgTexture = menuBackground;
+        }
+
         public virtual void SetBackgroundTexture(Color color)
         {
             Texture2D menuBackground = new Texture2D(_graphicsDevice, (int)menuWidth, (int)menuHeight);
