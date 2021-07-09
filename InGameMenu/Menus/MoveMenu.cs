@@ -84,7 +84,7 @@ namespace Guus_Reise
                     interactTrue = false;
 
                     // Movement Animation starten
-               // MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
+                    MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
                 }
                 if (fightTrue)
                 {

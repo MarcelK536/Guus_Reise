@@ -20,6 +20,8 @@ namespace Guus_Reise.HexangonMap
 
         private List<Texture2D> idle;
         private List<Texture2D> jump;
+        private List<Texture2D> walkLeft;
+        private List<Texture2D> walkRight;
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
         //static List<Texture2D> moveFront;
@@ -45,11 +47,13 @@ namespace Guus_Reise.HexangonMap
 
         string _animationPlanner = "";
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, float standardintervall)
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, float standardintervall)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
             jump = animJump;
+            walkLeft = animWalkLeft;
+            walkRight = animWalkRight;
             _planeModel = planeModel;
             _texCharakter = texCharakter;
             _curTex = _texCharakter;
@@ -173,9 +177,13 @@ namespace Guus_Reise.HexangonMap
             }
             if(Game1.GState == Game1.GameState.MovementAnimation)
             {
-                if (_animationPlanner == "l")
+                if (_animationPlanner == "Left")
                 {
-                    Play("Jump", _standardIntervall);
+                    Play("WalkLeft", _standardIntervall);
+                }
+                if(_animationPlanner == "Right")
+                {
+                    Play("WalkRight", _standardIntervall);
                 }
                 if (_animationPlanner == "stop")
                 {
@@ -240,6 +248,12 @@ namespace Guus_Reise.HexangonMap
                     break;
                 case "Jump":
                     currentAnimation = jump;
+                    break;
+                case "WalkLeft":
+                    currentAnimation = walkLeft;
+                    break;
+                case "WalkRight":
+                    currentAnimation = walkRight;
                     break;
                 default:
                     currentAnimation = idle;

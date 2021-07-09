@@ -210,7 +210,15 @@ namespace Guus_Reise.Animation
             currDirectionMovement = NormOnLength(directionMovement, 0.01f);
             currIntervall = intervall;
             isSlidingCharakter = true;
-            movingCharakter.CharakterAnimation.AnimationPlanner = "l";
+            if(directionMovement.X < 0)
+            {
+                movingCharakter.CharakterAnimation.AnimationPlanner = "Left";
+            }
+            else
+            {
+                movingCharakter.CharakterAnimation.AnimationPlanner = "Right";
+            }
+            
         }
 
         public void MakeCameraSlide(GameTime gametime, int intervall, Vector3 direction)
