@@ -33,12 +33,18 @@ namespace Guus_Reise
         private Point _logicalBoardPosition;    //Platzhalter für Position auf Karte
         private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
-
+        private Weapon _currWeapon = Weapon.weapons[0];
 
         public String Name
         {
             get => _name;
             set => _name = value;
+        }
+
+        public Weapon Weapon
+        {
+            get => _currWeapon;
+            set => _currWeapon = value;
         }
         public bool IsNPC
         {
