@@ -7,5 +7,10 @@ namespace Guus_Reise.Fight
 {
     class FightKI
     {
+        public void MakeGreedyMove()
+        {
+            Charakter boi = Fighthandler.turnBar.ReturnCurrentCharakter();
+            double bestdmg = 
+        }
     }
 }

@@ -53,8 +53,15 @@ namespace Guus_Reise
 
                         _fightBoard[places[j, 0], places[j, 1]] = tiles[i];
 
-                        Random random = new Random();
-                        _fightBoard[places[j, 0], places[j, 1]].Charakter.Geschwindigkeit = random.Next(0, 10);
+                        tiles[i].Charakter.CurrentFightStats[0] = tiles[i].Charakter.Widerstandskraft;
+                        tiles[i].Charakter.CurrentFightStats[1] = tiles[i].Charakter.Koerperkraft;
+                        tiles[i].Charakter.CurrentFightStats[2] = tiles[i].Charakter.Beweglichkeit;
+                        tiles[i].Charakter.CurrentFightStats[3] = tiles[i].Charakter.Abwehr;
+                        tiles[i].Charakter.CurrentFightStats[4] = tiles[i].Charakter.Wortgewandheit;
+                        tiles[i].Charakter.CurrentFightStats[5] = tiles[i].Charakter.Lautstaerke;
+                        tiles[i].Charakter.CurrentFightStats[6] = tiles[i].Charakter.Ignoranz;
+                        tiles[i].Charakter.CurrentFightStats[7] = tiles[i].Charakter.Geschwindigkeit;
+                        tiles[i].Charakter.CurrentFightStats[8] = tiles[i].Charakter.Glueck;
 
                         break;
                     }
@@ -133,8 +140,16 @@ namespace Guus_Reise
                 fightMenu.Active = false;
                 ExitFight();
             }
-            fightMenu.Active = true;
-            fightMenu.Update();
+            if (turnBar.ReturnCurrentCharakter().IsNPC == false)
+            {
+                fightMenu.Active = true;
+                fightMenu.Update();
+            }
+            else
+            {
+                fightMenu.Active = false;
+            }
+            
             turnBar.Update(graphicsDevice);
             visFightManager.Update(gameTime);
         }
@@ -193,12 +208,18 @@ namespace Guus_Reise
                 {
                     fightMenu.Draw(spriteBatch);
                 }
-                else
-                {
-                    turnBar.RemoveCharakter(turnBar.ReturnCurrentCharakter());
-                }
             }
 
+        }
+
+        public static float GetBaseDmg(Charakter charakter, Weapon weapon)
+        {
+            float erg = weapon.BaseSchaden;
+            erg += charakter.CurrentFightStats[1] * weapon.ScalingKK;
+            erg += charakter.CurrentFightStats[2] * weapon.ScalingBW;
+            erg += charakter.CurrentFightStats[4] * weapon.ScalingWG;
+            erg += charakter.CurrentFightStats[5] * weapon.ScalingLS;
+            return erg;
         }
 
        /* public static void CalculateMoves(List<Moves> player, List<Moves> npc)

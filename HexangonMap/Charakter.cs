@@ -26,7 +26,7 @@ namespace Guus_Reise
         private int _ingoranz;          //social Abwehr
         private int _geschwindigkeit;   //Aktionspunkte des Charakters im Kampf
         private int _glueck;            //wirkt sich auf kritische trefferchance aus
-        private int[] _currentFightStats; //zum speichern der aktuellen stats im Kampf (wird zu beginn eines neuen resetet)
+        private int[] _currentFightStats = new int[9]; //zum speichern der aktuellen stats im Kampf (wird zu beginn eines neuen resetet)
         private int _bewegungsreichweite;
         private int _fpunkte;
         private Point _logicalPosition;         //Position an welcher der Charakter gezeichnet wird
