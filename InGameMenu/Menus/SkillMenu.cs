@@ -12,6 +12,7 @@ namespace Guus_Reise
     {
         Texture2D btnTexture;
         Texture2D btnTextureSelected;
+        bool SkillsToolTip = false;
         public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
         {
             menuWidth = 200;
@@ -69,6 +70,11 @@ namespace Guus_Reise
                 }
 
                 spriteBatch.GraphicsDevice.ScissorRectangle = tempScissorRect;
+                if(SkillsToolTip == true)
+                {
+                    
+                }
+
                 spriteBatch.End();
             }
         }
@@ -105,6 +111,10 @@ namespace Guus_Reise
                     else if(HexMap._board[x,y].Charakter.Skills.Count < 4)
                     {
                         HexMap._board[x, y].Charakter.Skills.Add(Skill.skills.Where(p => p.Name == btn.Name).First());
+                    }
+                    else if(HexMap._board[x,y].Charakter.Skills.Count >= 4)
+                    {
+                        SkillsToolTip = true;
                     }
                 }
             }
