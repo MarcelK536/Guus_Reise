@@ -35,6 +35,7 @@ namespace Guus_Reise
         private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
         private Weapon _currWeapon = Weapon.weapons[0];
+        private List<Skill> _currSkills = new List<Skill>() { Skill.skills[0], Skill.skills[1] };
         public List<Weapon> _inventar;
         public List<Skill> _skills;
 
@@ -49,6 +50,13 @@ namespace Guus_Reise
             get => _currWeapon;
             set => _currWeapon = value;
         }
+
+        public List<Skill> Skills
+        {
+            get => _currSkills;
+            set => _currSkills = value;
+        }
+
         public bool IsNPC
         {
             get => _npc;

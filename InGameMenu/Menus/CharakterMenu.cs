@@ -15,6 +15,7 @@ namespace Guus_Reise
         GraphicsDevice graphics;
 
         WeaponMenu weaponMenu;
+        SkillMenu skillMenu;
         public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
             graphics = graphicsDevice;
@@ -56,6 +57,10 @@ namespace Guus_Reise
                 {
                     weaponMenu.Update(time);
                 }
+                if(skillMenu != null && skillMenu.Active)
+                {
+                    skillMenu.Update(time);
+                }
                 else
                 {
                     if (btnLevelUp.IsClicked())
@@ -65,8 +70,13 @@ namespace Guus_Reise
                     }
                     if (btnWaffenWechsel.IsClicked())
                     {
-                        weaponMenu = new WeaponMenu(Weapon.weapons, btnClose.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                        weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                         weaponMenu.Active = true;
+                    }
+                    if (btnSkillWechsel.IsClicked())
+                    {
+                        skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                        skillMenu.Active = true;
                     }
                 }
             }
@@ -110,6 +120,10 @@ namespace Guus_Reise
                 if (weaponMenu != null && weaponMenu.Active)
                 {
                     weaponMenu.Draw(spriteBatch);
+                }
+                if (skillMenu != null && skillMenu.Active)
+                {
+                    skillMenu.Draw(spriteBatch);
                 }
             }
         }

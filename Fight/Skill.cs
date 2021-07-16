@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework.Content;
 
-namespace Guus_Reise.Fight
+namespace Guus_Reise
 {
     class Skill
     {
@@ -39,7 +39,11 @@ namespace Guus_Reise.Fight
         public static void LoadSkills(ContentManager Content)
         {
             skills.Add(new Skill("Hieb", 10, 0.7f));
-            skills.Add(new Skill("Stoß", 8, 0.6f));
+            skills.Add(new Skill("Stoss", 8, 0.6f));
+            skills.Add(new Skill("Hieb2", 10, 0.7f));
+            skills.Add(new Skill("Stoss2", 8, 0.6f));
+            skills.Add(new Skill("Hieb3", 10, 0.7f));
+            skills.Add(new Skill("Stoss3", 8, 0.6f));
         }
     }
 }

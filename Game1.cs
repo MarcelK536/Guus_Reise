@@ -54,6 +54,7 @@ namespace Guus_Reise
             Credits.Init();
             CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
             Weapon.LoadWeapons(Content);                        //Waffen müssen vor den Charakteren initialisert werden
+            Skill.LoadSkills(Content);
             HexMap.Init(Content, GraphicsDevice, _graphics);
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);
