@@ -147,7 +147,9 @@ namespace Guus_Reise
             }
             else
             {
+                FightKI.MakeGreedyMove();
                 fightMenu.Active = false;
+                turnBar.ReSort();
             }
             
             turnBar.Update(graphicsDevice);
