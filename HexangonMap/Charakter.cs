@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Guus_Reise.HexangonMap;
+using Guus_Reise.Fight;
 
 namespace Guus_Reise
 {
@@ -34,6 +35,8 @@ namespace Guus_Reise
         private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
         private Weapon _currWeapon = Weapon.weapons[0];
+        public List<Weapon> _inventar;
+        public List<Skill> _skills;
 
         public String Name
         {
