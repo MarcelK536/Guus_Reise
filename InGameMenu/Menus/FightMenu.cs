@@ -42,7 +42,7 @@ namespace Guus_Reise
             SetBackgroundTexture(Color.Green);
         }
 
-        public override void Update()
+        public void Update(GameTime time)
         {
             base.Update();
             if (Active)
@@ -54,11 +54,13 @@ namespace Guus_Reise
                 {
                     attackMenu = new AttackMenu(btnAttack.GetPosRightOf(), textFont, graphics, BlendDirection.None);
                     attackMenu.Active = true;
+                    weaponMenu.Active = false;
                 }
                 if (btnChangeWeapon.IsClicked())
                 {
                     weaponMenu = new WeaponMenu(Weapon.weapons, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                     weaponMenu.Active = true;
+                    attackMenu.Active = false;
                 }
                 if (btnGiveUp.IsClicked())
                 {
@@ -77,11 +79,11 @@ namespace Guus_Reise
 
             if (weaponMenu != null && weaponMenu.Active)
             {
-                weaponMenu.Update();
+                weaponMenu.Update(time);
             }
             if (attackMenu != null && attackMenu.Active)
             {
-                attackMenu.Update();
+                attackMenu.Update(time);
             }
         }
 
