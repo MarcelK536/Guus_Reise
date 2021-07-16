@@ -134,7 +134,7 @@ namespace Guus_Reise
                 ExitFight();
             }
             fightMenu.Active = true;
-            fightMenu.Update();
+            fightMenu.Update(gameTime);
             turnBar.Update(graphicsDevice);
             visFightManager.Update(gameTime);
         }

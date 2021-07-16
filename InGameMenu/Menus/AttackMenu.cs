@@ -44,7 +44,7 @@ namespace Guus_Reise
             }
         }
 
-        public override void Update() 
+        public void Update(GameTime time) 
         {
             foreach (Button btn in menuButtons)
             {
