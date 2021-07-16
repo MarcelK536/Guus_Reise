@@ -10,7 +10,7 @@ namespace Guus_Reise.Fight
         public void MakeGreedyMove()
         {
             Charakter boi = Fighthandler.turnBar.ReturnCurrentCharakter();
-            double bestdmg = 
+            double bestdmg = Fighthandler.GetBaseDmg(boi, boi.Weapon);
         }
     }
 }
