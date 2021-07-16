@@ -54,13 +54,19 @@ namespace Guus_Reise
                 {
                     attackMenu = new AttackMenu(btnAttack.GetPosRightOf(), textFont, graphics, BlendDirection.None);
                     attackMenu.Active = true;
-                    weaponMenu.Active = false;
+                    if (weaponMenu != null) 
+                    { 
+                        weaponMenu.Active = false; 
+                    }
                 }
                 if (btnChangeWeapon.IsClicked())
                 {
                     weaponMenu = new WeaponMenu(Weapon.weapons, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                     weaponMenu.Active = true;
-                    attackMenu.Active = false;
+                    if (attackMenu != null)
+                    {
+                        attackMenu.Active = false;
+                    }
                 }
                 if (btnGiveUp.IsClicked())
                 {

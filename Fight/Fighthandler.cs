@@ -143,7 +143,7 @@ namespace Guus_Reise
             if (turnBar.ReturnCurrentCharakter().IsNPC == false)
             {
                 fightMenu.Active = true;
-                fightMenu.Update();
+                fightMenu.Update(gameTime);
             }
             else
             {
