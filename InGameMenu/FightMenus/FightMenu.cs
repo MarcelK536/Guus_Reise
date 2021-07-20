@@ -87,7 +87,7 @@ namespace Guus_Reise
             {
                 weaponMenu.Update(time);
             }
-            if (attackMenu != null && attackMenu.Active)
+            if ((attackMenu != null && attackMenu.Active)|| FightPlayer.isSelecting == true)
             {
                 attackMenu.Update(time);
             }

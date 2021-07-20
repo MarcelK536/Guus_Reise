@@ -47,24 +47,30 @@ namespace Guus_Reise
 
         public void Update(GameTime time) 
         {
-            foreach (Button btn in menuButtons)
+            if (FightPlayer.isSelecting == true)
             {
-                if (btn.Name == "Close")
-                {
-                    continue;
-                }
-                if (btn.IsClicked())
-                {
-                    Skill selSkill = Skill.skills.Where(p => p.Name == btn.Name).First();
-                    Active = false;
-                    FightPlayer.MakeMove(selSkill);
-                    Fighthandler.turnBar.ReSort();
-                    
-                }
+                FightPlayer.PrepareMove();
             }
-            if (btnClose.IsClicked())
+            else
             {
-                Active = false;
+                foreach (Button btn in menuButtons)
+                {
+                    if (btn.Name == "Close")
+                    {
+                        continue;
+                    }
+                    if (btn.IsClicked())
+                    {
+                        Skill selSkill = Skill.skills.Where(p => p.Name == btn.Name).First();
+                        Active = false;
+                        FightPlayer.SaveMove(selSkill);
+                        Fighthandler.turnBar.ReSort();
+                    }
+                }
+                if (btnClose.IsClicked())
+                {
+                    Active = false;
+                }
             }
         }
 
