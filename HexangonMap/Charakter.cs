@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Guus_Reise.HexangonMap;
-using Guus_Reise.Fight;
 
 namespace Guus_Reise
 {

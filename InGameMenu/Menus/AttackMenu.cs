@@ -11,6 +11,7 @@ namespace Guus_Reise
     {
         Charakter currCharakter;
         Texture2D btnTexture;
+        public static GraphicsDevice graphicDevice;
         public AttackMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
         {
             menuWidth = 200;
@@ -18,9 +19,9 @@ namespace Guus_Reise
             btnWidth = 25;
             Vector2 btnPosition = btnClose.GetPosBelow();
 
-            int x = Player.activeTile.LogicalPosition.X;
-            int y = Player.activeTile.LogicalPosition.Y;
-            currCharakter = HexMap._board[x, y].Charakter;
+            currCharakter = Fighthandler.turnBar.ReturnCurrentCharakter(); 
+
+            graphicDevice = graphicsDevice;
 
             foreach (Skill s in currCharakter.Skills)
             {
@@ -55,7 +56,10 @@ namespace Guus_Reise
                 if (btn.IsClicked())
                 {
                     Skill selSkill = Skill.skills.Where(p => p.Name == btn.Name).First();
-                    //ToDo Select Charakter
+                    Active = false;
+                    FightPlayer.MakeMove(selSkill);
+                    Fighthandler.turnBar.ReSort();
+                    
                 }
             }
             if (btnClose.IsClicked())
