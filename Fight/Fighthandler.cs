@@ -144,6 +144,7 @@ namespace Guus_Reise
             {
                 fightMenu.Active = true;
                 fightMenu.Update(gameTime);
+                turnBar.ReSort();
             }
             else
             {

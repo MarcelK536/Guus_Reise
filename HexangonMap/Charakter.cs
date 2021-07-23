@@ -33,10 +33,10 @@ namespace Guus_Reise
         private Point _logicalBoardPosition;    //Platzhalter für Position auf Karte
         private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
-        private Weapon _currWeapon = Weapon.weapons[0];
-        private List<Skill> _currSkills = new List<Skill>() { Skill.skills[0], Skill.skills[1] };
-        public List<Weapon> _inventar;
-        public List<Skill> _skills;
+        private Weapon _currWeapon = Weapon.weapons[0];         //Ausgewählte Waffe Standard Faust
+        private List<Skill> _currSkills = new List<Skill>() { Guus_Reise.Skill.skills[0], Guus_Reise.Skill.skills[1] }; //Ausgewählte Skills
+        public List<Weapon> _inventar;          //Liste aller für den Spieler verfügbaren Waffen
+        public List<Skill> _skills;             //Liste aller für den Spieler verfügbaren Skills
 
         public String Name
         {
@@ -50,10 +50,22 @@ namespace Guus_Reise
             set => _currWeapon = value;
         }
 
-        public List<Skill> Skills
+        public List<Weapon> WeaponInv
+        {
+            get => _inventar;
+            set => _inventar = value;
+        }
+
+        public List<Skill> Skill
         {
             get => _currSkills;
             set => _currSkills = value;
+        }
+
+        public List<Skill> SkillInv
+        {
+            get => _skills;
+            set => _skills = value;
         }
 
         public bool IsNPC
@@ -199,7 +211,10 @@ namespace Guus_Reise
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);
         }
+        public Charakter()
+        {
 
+        }
         public void SetCharakter(String name, int[] werte)
         {
             this.Name = name;
@@ -320,6 +335,41 @@ namespace Guus_Reise
             {
                 winner.XP += hilf;
             }
+        }
+
+        public Charakter Clone()
+        {
+            Charakter temp = new Charakter();
+            temp.Name = this.Name;
+            temp.IsNPC = this.IsNPC;
+            temp.KI = this.KI;
+            temp.Patroullienpunkte = this.Patroullienpunkte;
+            temp.CanMove = this.CanMove;
+            temp.Level = this.Level;
+            temp.XP = this.XP;
+            temp.Widerstandskraft = this.Widerstandskraft;
+            temp.Koerperkraft = this.Koerperkraft;
+            temp.Beweglichkeit = this.Beweglichkeit;
+            temp.Abwehr = this.Abwehr;
+            temp.Wortgewandheit = this.Wortgewandheit;
+            temp.Lautstaerke = this.Lautstaerke;
+            temp.Ignoranz = this.Ignoranz;
+            temp.Geschwindigkeit = this.Geschwindigkeit;
+            temp.Glueck = this.Glueck;
+            temp.CurrentFightStats = this.CurrentFightStats;
+            temp.Bewegungsreichweite = this.Bewegungsreichweite;
+            temp.Fähigkeitspunkte = this.Fähigkeitspunkte;
+            temp.LogicalPosition = this.LogicalPosition;        
+            temp.LogicalFightPosition = this.LogicalFightPosition;
+            temp.LogicalBoardPosition = this.LogicalBoardPosition;
+            temp.IsMoving = this.IsMoving;
+            temp.CharakterAnimation = this.CharakterAnimation;
+            temp.Weapon = this.Weapon;
+            temp.Skill = this.Skill;
+            temp.WeaponInv = this.WeaponInv;
+            temp.SkillInv = this.SkillInv;
+
+            return temp;
         }
     }
 }
