@@ -12,7 +12,7 @@ namespace Guus_Reise
         public static bool isSelecting = false;
         public static Skill _selSkill = null;
         public static Hex clickedTile = null;
-        public static MouseState _prevMouseState = Mouse.GetState();
+        public static MouseState _prevMouseState;
 
         public static void PrepareMove()
         {
@@ -61,17 +61,16 @@ namespace Guus_Reise
                     }
                 }
             }
-            _prevMouseState = mouseState;
-            mouseState = Mouse.GetState();
 
             if (mouseOverSomething && Fighthandler._fightBoard[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y] != null)
             {
                 Fighthandler._fightBoard[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.3f, 0.3f, 0.3f);
-                if (mouseState.LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released)
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released)
                 {
                     clickedTile = hoverTile;
                 }
             }
+            _prevMouseState = mouseState;
         }
 
         public static void MakeMove(Skill selSkill, Hex clickedTile)
