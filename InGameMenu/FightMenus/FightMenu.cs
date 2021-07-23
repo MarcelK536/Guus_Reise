@@ -112,7 +112,7 @@ namespace Guus_Reise
                         textPosition = GetPositionBelow(GetPositionBelow(textPosition));
                     }
                     spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.Widerstandskraft, GetPositionBelow(textPosition), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                 }
                 btnAttack.Draw(spriteBatch, textFont);
                 btnChangeWeapon.Draw(spriteBatch, textFont);
@@ -130,7 +130,7 @@ namespace Guus_Reise
                         textPosition = GetPositionBelow(GetPositionBelow(textPosition));
                     }
                     spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.Widerstandskraft, GetPositionBelow(textPosition), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                 }
                 spriteBatch.End();
 

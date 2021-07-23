@@ -12,6 +12,8 @@ namespace Guus_Reise
         public static bool isSelecting = false;
         public static Skill _selSkill = null;
         public static Hex clickedTile = null;
+        public static MouseState _prevMouseState = Mouse.GetState();
+
         public static void PrepareMove()
         {
             if(isSelecting == true)
@@ -22,6 +24,8 @@ namespace Guus_Reise
             {
                 isSelecting = false;
                 MakeMove(_selSkill, clickedTile);
+                clickedTile.Tile.Glow = new Vector3(0f, 0f, 0f);
+                clickedTile = null;
             }
         }
 
@@ -39,7 +43,7 @@ namespace Guus_Reise
             Hex hoverTile = null;
             MouseState mouseState = Mouse.GetState();
             Vector2 mouseLocation = new Vector2(mouseState.X, mouseState.Y);
-            MouseState _prevMouseState = Mouse.GetState();
+            
 
             for (int i = 0; i < Fighthandler._fightBoard.GetLength(0); i++) //berechnet ob die Maus über einem Tile steht, sowie dieses Tile
             {
@@ -57,11 +61,13 @@ namespace Guus_Reise
                     }
                 }
             }
+            _prevMouseState = mouseState;
+            mouseState = Mouse.GetState();
 
             if (mouseOverSomething && Fighthandler._fightBoard[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y] != null)
             {
                 Fighthandler._fightBoard[hoverTile.LogicalPosition.X, hoverTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.3f, 0.3f, 0.3f);
-                if (Mouse.GetState().LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released)
+                if (mouseState.LeftButton == ButtonState.Pressed && _prevMouseState.LeftButton == ButtonState.Released)
                 {
                     clickedTile = hoverTile;
                 }

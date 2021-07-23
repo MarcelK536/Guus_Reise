@@ -234,7 +234,8 @@ namespace Guus_Reise
             switch (klasse)
             {
                 case "Guu":
-                    for(int i = 0; i<=8; i++)
+                    stats[0] = 10;
+                    for (int i = 1; i<=8; i++)
                     {
                         stats[i] = 0;
                     }
