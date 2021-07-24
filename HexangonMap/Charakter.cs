@@ -7,6 +7,7 @@ using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {
+    [Serializable]
     class Charakter
     {
         private String _name;
@@ -211,9 +212,36 @@ namespace Guus_Reise
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);
         }
-        public Charakter()
+        public Charakter(Charakter toClone)
         {
-
+            Name = toClone.Name;
+            IsNPC = toClone.IsNPC;
+            KI = toClone.KI;
+            Patroullienpunkte = toClone.Patroullienpunkte;
+            CanMove = toClone.CanMove;
+            Level = toClone.Level;
+            XP = toClone.XP;
+            Widerstandskraft = toClone.Widerstandskraft;
+            Koerperkraft = toClone.Koerperkraft;
+            Beweglichkeit = toClone.Beweglichkeit;
+            Abwehr = toClone.Abwehr;
+            Wortgewandheit = toClone.Wortgewandheit;
+            Lautstaerke = toClone.Lautstaerke;
+            Ignoranz = toClone.Ignoranz;
+            Geschwindigkeit = toClone.Geschwindigkeit;
+            Glueck = toClone.Glueck;
+            Array.Copy(CurrentFightStats, toClone.CurrentFightStats, CurrentFightStats.Length);
+            Bewegungsreichweite = toClone.Bewegungsreichweite;
+            Fähigkeitspunkte = toClone.Fähigkeitspunkte;
+            LogicalPosition = toClone.LogicalPosition;
+            LogicalFightPosition = toClone.LogicalFightPosition;
+            LogicalBoardPosition = toClone.LogicalBoardPosition;
+            IsMoving = toClone.IsMoving;
+            CharakterAnimation = toClone.CharakterAnimation;
+            Weapon = toClone.Weapon;
+            Skill = toClone.Skill;
+            WeaponInv = toClone.WeaponInv;
+            SkillInv = toClone.SkillInv;
         }
         public void SetCharakter(String name, int[] werte)
         {
@@ -339,37 +367,44 @@ namespace Guus_Reise
 
         public Charakter Clone()
         {
-            Charakter temp = new Charakter();
-            temp.Name = this.Name;
-            temp.IsNPC = this.IsNPC;
-            temp.KI = this.KI;
-            temp.Patroullienpunkte = this.Patroullienpunkte;
-            temp.CanMove = this.CanMove;
-            temp.Level = this.Level;
-            temp.XP = this.XP;
-            temp.Widerstandskraft = this.Widerstandskraft;
-            temp.Koerperkraft = this.Koerperkraft;
-            temp.Beweglichkeit = this.Beweglichkeit;
-            temp.Abwehr = this.Abwehr;
-            temp.Wortgewandheit = this.Wortgewandheit;
-            temp.Lautstaerke = this.Lautstaerke;
-            temp.Ignoranz = this.Ignoranz;
-            temp.Geschwindigkeit = this.Geschwindigkeit;
-            temp.Glueck = this.Glueck;
-            temp.CurrentFightStats = this.CurrentFightStats;
-            temp.Bewegungsreichweite = this.Bewegungsreichweite;
-            temp.Fähigkeitspunkte = this.Fähigkeitspunkte;
-            temp.LogicalPosition = this.LogicalPosition;        
-            temp.LogicalFightPosition = this.LogicalFightPosition;
-            temp.LogicalBoardPosition = this.LogicalBoardPosition;
-            temp.IsMoving = this.IsMoving;
-            temp.CharakterAnimation = this.CharakterAnimation;
-            temp.Weapon = this.Weapon;
-            temp.Skill = this.Skill;
-            temp.WeaponInv = this.WeaponInv;
-            temp.SkillInv = this.SkillInv;
 
+            /*
+            Charakter temp = new Charakter
+            {
+                Name = this.Name,
+                IsNPC = this.IsNPC,
+                KI = this.KI,
+                Patroullienpunkte = this.Patroullienpunkte,
+                CanMove = this.CanMove,
+                Level = this.Level,
+                XP = this.XP,
+                Widerstandskraft = this.Widerstandskraft,
+                Koerperkraft = this.Koerperkraft,
+                Beweglichkeit = this.Beweglichkeit,
+                Abwehr = this.Abwehr,
+                Wortgewandheit = this.Wortgewandheit,
+                Lautstaerke = this.Lautstaerke,
+                Ignoranz = this.Ignoranz,
+                Geschwindigkeit = this.Geschwindigkeit,
+                Glueck = this.Glueck,
+                CurrentFightStats = this.CurrentFightStats,
+                Bewegungsreichweite = this.Bewegungsreichweite,
+                Fähigkeitspunkte = this.Fähigkeitspunkte,
+                LogicalPosition = this.LogicalPosition,
+                LogicalFightPosition = this.LogicalFightPosition,
+                LogicalBoardPosition = this.LogicalBoardPosition,
+                IsMoving = this.IsMoving,
+                CharakterAnimation = this.CharakterAnimation,
+                Weapon = this.Weapon,
+                Skill = this.Skill,
+                WeaponInv = this.WeaponInv,
+                SkillInv = this.SkillInv
+            };
+            
             return temp;
+            */
+
+            return new Charakter(this);
         }
     }
 }

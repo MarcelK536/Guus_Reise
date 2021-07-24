@@ -150,6 +150,7 @@ namespace Guus_Reise
             {
                 FightKI.MakeGreedyMove();
                 fightMenu.Active = false;
+                System.Threading.Thread.Sleep(500);
                 turnBar.ReSort();
             }
             

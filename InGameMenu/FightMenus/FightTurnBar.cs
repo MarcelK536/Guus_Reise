@@ -10,8 +10,8 @@ namespace Guus_Reise
     class FightTurnBar
     {
         List<Charakter> FightCharacters = new List<Charakter>(); //Liste mit allen Charaktern die im Kampf sind
-        List<Charakter> NextTurn = new List<Charakter>(); //Liste wo am Index 0 der nächste Charakter ist der angreifen darf
-        List<Charakter> _prevNextTurn = new List<Charakter>();
+        public List<Charakter> NextTurn = new List<Charakter>(); //Liste wo am Index 0 der nächste Charakter ist der angreifen darf
+        public List<Charakter> _prevNextTurn = new List<Charakter>();
 
         Texture2D barTexture;
         SpriteFont barFont = Player.actionMenuFont;
@@ -51,14 +51,16 @@ namespace Guus_Reise
 
         public List<Charakter> CreateCopy(List<Charakter> currList)
         {
-            List<Charakter> tempCopy = new List<Charakter>();
+            
+             List<Charakter> tempCopy = new List<Charakter>();
 
-            for(int i =0; i< currList.Count; i++)
-            {
-                tempCopy.Add(currList[i].Clone());
-            }
+             for(int i =0; i< currList.Count; i++)
+             {
+                 tempCopy.Add(currList[i].Clone());
+             }
 
-            return tempCopy;
+             return tempCopy;
+            
         }
 
         public void AddCharakter(Charakter c)  //Fügt Charakter zur Liste hinzu
@@ -103,13 +105,13 @@ namespace Guus_Reise
             }
             for(int i=0; i < newList.Count; i++)
             {
-                if(newList[i].Name != NextTurn[i].Name)
-                {
-                    if(newList[i].LogicalFightPosition != NextTurn[i].LogicalFightPosition)
+                    if (!Enumerable.SequenceEqual(newList[i].CurrentFightStats, NextTurn[i].CurrentFightStats))
                     {
-                        return false;
+                        if (newList[i].Name == NextTurn[i].Name)
+                        {
+                            return false;
+                        }
                     }
-                }
             }
             return true;
         }
