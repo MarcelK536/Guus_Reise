@@ -230,7 +230,7 @@ namespace Guus_Reise
             Ignoranz = toClone.Ignoranz;
             Geschwindigkeit = toClone.Geschwindigkeit;
             Glueck = toClone.Glueck;
-            Array.Copy(CurrentFightStats, toClone.CurrentFightStats, CurrentFightStats.Length);
+            Array.Copy(toClone.CurrentFightStats, CurrentFightStats, CurrentFightStats.Length);
             Bewegungsreichweite = toClone.Bewegungsreichweite;
             Fähigkeitspunkte = toClone.Fähigkeitspunkte;
             LogicalPosition = toClone.LogicalPosition;

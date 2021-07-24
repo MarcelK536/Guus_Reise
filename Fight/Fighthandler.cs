@@ -13,7 +13,8 @@ namespace Guus_Reise
     {
         //Original Tiles
         public static List<Hex> playerTiles = new List<Hex>();      //Der Initierende Spieler steht am Ende der Liste
-        public static List<Hex> npcTiles = new List<Hex>();
+        public static List<Hex> npcTiles = new List<Hex>();         //Liste der NPC
+        public static List<Hex> waitList = new List<Hex>();         //Überlauf Liste falls im Kampf mehr als 4 Spieler / NPCs vorhanden
 
         static readonly int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
         public static Hex[,] _fightBoard;
@@ -36,7 +37,14 @@ namespace Guus_Reise
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
         {
-            //ToDo Check if Tiles > 4
+            if(tiles.Count > 4)
+            {
+                for(int i = 3; i > tiles.Count; i++)
+                {
+                    waitList.Add(tiles[i]);
+                }
+                tiles.RemoveRange(3, tiles.Count - 3);
+            }
             for(int i = tiles.Count-1; i >= 0; i--) 
             {
                 for(int j = places.GetLength(0)-1; j > 0; j--)
@@ -156,6 +164,19 @@ namespace Guus_Reise
             
             turnBar.Update(graphicsDevice);
             visFightManager.Update(gameTime);
+            //RemoveDeadCharacters(npcTiles);
+            //RemoveDeadCharacters(playerTiles);
+        }
+
+        public static void RemoveDeadCharacters(List<Hex> tiles)
+        {
+            foreach (Hex hexTiles in tiles)
+            {
+                if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
+                {
+                    hexTiles.Charakter = null;
+                }
+            }
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
