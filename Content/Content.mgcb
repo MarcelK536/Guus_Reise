@@ -217,6 +217,42 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/WalkLeft/PaulWalkLeft1.png
 
+#begin Charakter/Paul/WalkLeft/PaulWalkLeft1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/WalkLeft/PaulWalkLeft1.png
+
+#begin Charakter/Paul/WalkLeft/PaulWalkLeft2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/WalkLeft/PaulWalkLeft2.png
+
+#begin Charakter/Paul/WalkLeft/PaulWalkLeft3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/WalkLeft/PaulWalkLeft3.png
+
 #begin Charakter/Paul/WalkRight/PaulWalkRight1.png
 /importer:TextureImporter
 /processor:TextureProcessor
