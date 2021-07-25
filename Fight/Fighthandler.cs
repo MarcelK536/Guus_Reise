@@ -13,7 +13,8 @@ namespace Guus_Reise
     {
         //Original Tiles
         public static List<Hex> playerTiles = new List<Hex>();      //Der Initierende Spieler steht am Ende der Liste
-        public static List<Hex> npcTiles = new List<Hex>();
+        public static List<Hex> npcTiles = new List<Hex>();         //Liste der NPC
+        public static List<Hex> waitList = new List<Hex>();         //Überlauf Liste falls im Kampf mehr als 4 Spieler / NPCs vorhanden
 
         static readonly int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
         public static Hex[,] _fightBoard;
@@ -36,7 +37,14 @@ namespace Guus_Reise
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
         {
-            //ToDo Check if Tiles > 4
+            if(tiles.Count > 4)
+            {
+                for(int i = 3; i > tiles.Count; i++)
+                {
+                    waitList.Add(tiles[i]);
+                }
+                tiles.RemoveRange(3, tiles.Count - 3);
+            }
             for(int i = tiles.Count-1; i >= 0; i--) 
             {
                 for(int j = places.GetLength(0)-1; j > 0; j--)
@@ -53,8 +61,15 @@ namespace Guus_Reise
 
                         _fightBoard[places[j, 0], places[j, 1]] = tiles[i];
 
-                        Random random = new Random();
-                        _fightBoard[places[j, 0], places[j, 1]].Charakter.Geschwindigkeit = random.Next(0, 10);
+                        tiles[i].Charakter.CurrentFightStats[0] = tiles[i].Charakter.Widerstandskraft;
+                        tiles[i].Charakter.CurrentFightStats[1] = tiles[i].Charakter.Koerperkraft;
+                        tiles[i].Charakter.CurrentFightStats[2] = tiles[i].Charakter.Beweglichkeit;
+                        tiles[i].Charakter.CurrentFightStats[3] = tiles[i].Charakter.Abwehr;
+                        tiles[i].Charakter.CurrentFightStats[4] = tiles[i].Charakter.Wortgewandheit;
+                        tiles[i].Charakter.CurrentFightStats[5] = tiles[i].Charakter.Lautstaerke;
+                        tiles[i].Charakter.CurrentFightStats[6] = tiles[i].Charakter.Ignoranz;
+                        tiles[i].Charakter.CurrentFightStats[7] = tiles[i].Charakter.Geschwindigkeit;
+                        tiles[i].Charakter.CurrentFightStats[8] = tiles[i].Charakter.Glueck;
 
                         break;
                     }
@@ -133,10 +148,35 @@ namespace Guus_Reise
                 fightMenu.Active = false;
                 ExitFight();
             }
-            fightMenu.Active = true;
-            fightMenu.Update();
+            if (turnBar.ReturnCurrentCharakter().IsNPC == false)
+            {
+                fightMenu.Active = true;
+                fightMenu.Update(gameTime);
+                turnBar.ReSort();
+            }
+            else
+            {
+                FightKI.MakeGreedyMove();
+                fightMenu.Active = false;
+                System.Threading.Thread.Sleep(500);
+                turnBar.ReSort();
+            }
+            
             turnBar.Update(graphicsDevice);
             visFightManager.Update(gameTime);
+            //RemoveDeadCharacters(npcTiles);
+            //RemoveDeadCharacters(playerTiles);
+        }
+
+        public static void RemoveDeadCharacters(List<Hex> tiles)
+        {
+            foreach (Hex hexTiles in tiles)
+            {
+                if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
+                {
+                    hexTiles.Charakter = null;
+                }
+            }
         }
 
         public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
@@ -188,9 +228,23 @@ namespace Guus_Reise
                     }
                 }
                 turnBar.Draw(spriteBatch, gameTime);
+
+                if (turnBar.ReturnCurrentCharakter().IsNPC == false)
+                {
+                    fightMenu.Draw(spriteBatch);
+                }
             }
 
-            fightMenu.Draw(spriteBatch);
+        }
+
+        public static float GetBaseDmg(Charakter charakter, Weapon weapon)
+        {
+            float erg = weapon.BaseSchaden;
+            erg += charakter.CurrentFightStats[1] * weapon.ScalingKK;
+            erg += charakter.CurrentFightStats[2] * weapon.ScalingBW;
+            erg += charakter.CurrentFightStats[4] * weapon.ScalingWG;
+            erg += charakter.CurrentFightStats[5] * weapon.ScalingLS;
+            return erg;
         }
 
        /* public static void CalculateMoves(List<Moves> player, List<Moves> npc)

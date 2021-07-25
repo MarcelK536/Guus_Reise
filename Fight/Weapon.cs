@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Guus_Reise
 {
     class Weapon
     {
+        public static List<Weapon> weapons = new List<Weapon>();
+
         private String _name;
         private bool _isHiebwaffe;
         private bool _isStoßwaffe;
@@ -126,6 +130,12 @@ namespace Guus_Reise
             this.MinBW = stats[12];
             this.MinWG = stats[13];
             this.MinLS = stats[14];
+        }
+
+        public static void LoadWeapons(ContentManager Content)
+        {
+            weapons.Add(new Weapon("Faust", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("Messer", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
         }
 
         private bool IntToAttribute(int zahl)

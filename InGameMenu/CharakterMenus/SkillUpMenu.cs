@@ -48,9 +48,14 @@ namespace Guus_Reise
 
         public override void Update()
         {
-            base.Update();
             if (Active)
             {
+                if (btnClose.IsClicked())
+                {
+                    Player.levelUpMenu.Active = false;
+                    Player.charakterMenu.Active = true;
+                }
+
                 int x = Player.activeTile.LogicalPosition.X;
                 int y = Player.activeTile.LogicalPosition.Y;
                 if (btnPlusWiderstandskraft.IsClicked() && HexMap._board[x,y].Charakter.Fähigkeitspunkte > 0)

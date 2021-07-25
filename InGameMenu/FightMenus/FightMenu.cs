@@ -11,9 +11,15 @@ namespace Guus_Reise
         Button btnGiveUp;
         Button btnAttack;
         Button btnChangeWeapon;
+        GraphicsDevice graphics;
+
+
+        WeaponMenu weaponMenu;
+        AttackMenu attackMenu;
 
         public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
         {
+            graphics = graphicsDevice;
             needCloseBtn = false;
             btnWidth = menuFont.MeasureString("Change Weapon").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice,(int) btnWidth, 50);
@@ -36,7 +42,7 @@ namespace Guus_Reise
             SetBackgroundTexture(Color.Green);
         }
 
-        public override void Update()
+        public void Update(GameTime time)
         {
             base.Update();
             if (Active)
@@ -46,11 +52,26 @@ namespace Guus_Reise
 
                 if (btnAttack.IsClicked())
                 {
-                    Fighthandler._fightBoard[x, y].Charakter.Widerstandskraft++;    
+                    attackMenu = new AttackMenu(btnAttack.GetPosRightOf(), textFont, graphics, BlendDirection.None);
+                    attackMenu.Active = true;
+                    if (weaponMenu != null) 
+                    { 
+                        weaponMenu.Active = false; 
+                    }
+                }
+                if (btnChangeWeapon.IsClicked())
+                {
+                    weaponMenu = new WeaponMenu(Weapon.weapons, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                    weaponMenu.Active = true;
+                    if (attackMenu != null)
+                    {
+                        attackMenu.Active = false;
+                    }
                 }
                 if (btnGiveUp.IsClicked())
                 {
                     Game1.GState = Game1.GameState.InGame;
+                    Active = false;
                     Fighthandler.ExitFight();
                 }
             }
@@ -61,6 +82,15 @@ namespace Guus_Reise
             btnAttack.MoveButton(btnClose.GetPosBelow());
             btnChangeWeapon.MoveButton(btnAttack.GetPosBelow());
             btnGiveUp.MoveButton(btnChangeWeapon.GetPosBelow());
+
+            if (weaponMenu != null && weaponMenu.Active)
+            {
+                weaponMenu.Update(time);
+            }
+            if ((attackMenu != null && attackMenu.Active)|| FightPlayer.isSelecting == true)
+            {
+                attackMenu.Update(time);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -82,7 +112,7 @@ namespace Guus_Reise
                         textPosition = GetPositionBelow(GetPositionBelow(textPosition));
                     }
                     spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.Widerstandskraft, GetPositionBelow(textPosition), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                 }
                 btnAttack.Draw(spriteBatch, textFont);
                 btnChangeWeapon.Draw(spriteBatch, textFont);
@@ -100,10 +130,20 @@ namespace Guus_Reise
                         textPosition = GetPositionBelow(GetPositionBelow(textPosition));
                     }
                     spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.Widerstandskraft, GetPositionBelow(textPosition), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
+                }
+                spriteBatch.End();
+
+                if (weaponMenu != null && weaponMenu.Active)
+                {
+                    weaponMenu.Draw(spriteBatch);
+                }
+                if (attackMenu != null && attackMenu.Active)
+                {
+                    attackMenu.Draw(spriteBatch);
                 }
 
-                spriteBatch.End();
+
             }
         }
     }
