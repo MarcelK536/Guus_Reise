@@ -7,6 +7,7 @@ using Guus_Reise.HexangonMap;
 
 namespace Guus_Reise
 {
+    [Serializable]
     class Charakter
     {
         private String _name;
@@ -25,7 +26,7 @@ namespace Guus_Reise
         private int _ingoranz;          //social Abwehr
         private int _geschwindigkeit;   //Aktionspunkte des Charakters im Kampf
         private int _glueck;            //wirkt sich auf kritische trefferchance aus
-        private int[] _currentFightStats; //zum speichern der aktuellen stats im Kampf (wird zu beginn eines neuen resetet)
+        private int[] _currentFightStats = new int[9]; //zum speichern der aktuellen stats im Kampf (wird zu beginn eines neuen resetet)
         private int _bewegungsreichweite;
         private int _fpunkte;
         private Point _logicalPosition;         //Position an welcher der Charakter gezeichnet wird
@@ -33,13 +34,41 @@ namespace Guus_Reise
         private Point _logicalBoardPosition;    //Platzhalter für Position auf Karte
         private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
-
+        private Weapon _currWeapon = Weapon.weapons[0];         //Ausgewählte Waffe Standard Faust
+        private List<Skill> _currSkills = new List<Skill>() { Guus_Reise.Skill.skills[0], Guus_Reise.Skill.skills[1] }; //Ausgewählte Skills
+        public List<Weapon> _inventar;          //Liste aller für den Spieler verfügbaren Waffen
+        public List<Skill> _skills;             //Liste aller für den Spieler verfügbaren Skills
 
         public String Name
         {
             get => _name;
             set => _name = value;
         }
+
+        public Weapon Weapon
+        {
+            get => _currWeapon;
+            set => _currWeapon = value;
+        }
+
+        public List<Weapon> WeaponInv
+        {
+            get => _inventar;
+            set => _inventar = value;
+        }
+
+        public List<Skill> Skill
+        {
+            get => _currSkills;
+            set => _currSkills = value;
+        }
+
+        public List<Skill> SkillInv
+        {
+            get => _skills;
+            set => _skills = value;
+        }
+
         public bool IsNPC
         {
             get => _npc;
@@ -183,7 +212,37 @@ namespace Guus_Reise
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);
         }
-
+        public Charakter(Charakter toClone)
+        {
+            Name = toClone.Name;
+            IsNPC = toClone.IsNPC;
+            KI = toClone.KI;
+            Patroullienpunkte = toClone.Patroullienpunkte;
+            CanMove = toClone.CanMove;
+            Level = toClone.Level;
+            XP = toClone.XP;
+            Widerstandskraft = toClone.Widerstandskraft;
+            Koerperkraft = toClone.Koerperkraft;
+            Beweglichkeit = toClone.Beweglichkeit;
+            Abwehr = toClone.Abwehr;
+            Wortgewandheit = toClone.Wortgewandheit;
+            Lautstaerke = toClone.Lautstaerke;
+            Ignoranz = toClone.Ignoranz;
+            Geschwindigkeit = toClone.Geschwindigkeit;
+            Glueck = toClone.Glueck;
+            Array.Copy(toClone.CurrentFightStats, CurrentFightStats, CurrentFightStats.Length);
+            Bewegungsreichweite = toClone.Bewegungsreichweite;
+            Fähigkeitspunkte = toClone.Fähigkeitspunkte;
+            LogicalPosition = toClone.LogicalPosition;
+            LogicalFightPosition = toClone.LogicalFightPosition;
+            LogicalBoardPosition = toClone.LogicalBoardPosition;
+            IsMoving = toClone.IsMoving;
+            CharakterAnimation = toClone.CharakterAnimation;
+            Weapon = toClone.Weapon;
+            Skill = toClone.Skill;
+            WeaponInv = toClone.WeaponInv;
+            SkillInv = toClone.SkillInv;
+        }
         public void SetCharakter(String name, int[] werte)
         {
             this.Name = name;
@@ -218,7 +277,8 @@ namespace Guus_Reise
             switch (klasse)
             {
                 case "Guu":
-                    for(int i = 0; i<=8; i++)
+                    stats[0] = 10;
+                    for (int i = 1; i<=8; i++)
                     {
                         stats[i] = 0;
                     }
@@ -303,6 +363,11 @@ namespace Guus_Reise
             {
                 winner.XP += hilf;
             }
+        }
+
+        public Charakter Clone()
+        {
+            return new Charakter(this);
         }
     }
 }

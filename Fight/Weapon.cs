@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Guus_Reise
 {
     class Weapon
     {
+        public static List<Weapon> weapons = new List<Weapon>();
+
         private String _name;
         private bool _isHiebwaffe;
         private bool _isStoßwaffe;
@@ -128,6 +132,12 @@ namespace Guus_Reise
             this.MinLS = stats[14];
         }
 
+        public static void LoadWeapons(ContentManager Content)
+        {
+            weapons.Add(new Weapon("Faust", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("Messer", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
+        }
+
         private bool IntToAttribute(int zahl)
         {
             bool hilf;
@@ -169,6 +179,38 @@ namespace Guus_Reise
                     break;
                 default:
                     hilf = 'O';
+                    break;
+            }
+            return hilf;
+        }
+        public static float IntToScale(int zahl)
+        {
+            float hilf;
+            switch (zahl)
+            {
+                case 0:
+                    hilf = 0.0f;
+                    break;
+                case 1:
+                    hilf = 0.1f;
+                    break;
+                case 2:
+                    hilf = 0.25f;
+                    break;
+                case 3:
+                    hilf = 0.5f;
+                    break;
+                case 4:
+                    hilf = 0.75f;
+                    break;
+                case 5:
+                    hilf = 1.0f;
+                    break;
+                case 6:
+                    hilf = 1.5f;
+                    break;
+                default:
+                    hilf = 0.0f;
                     break;
             }
             return hilf;

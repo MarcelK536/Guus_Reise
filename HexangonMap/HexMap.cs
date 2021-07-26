@@ -36,14 +36,14 @@ namespace Guus_Reise
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
-            int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-            //int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1, 1 }, { 20, 7, 8, 9, 8, 8, 2, 4, 0, 0 } };         //input Array für die Charaktere
-            int[] charakterlevel = new int[] { 5, 4, 4 };
-            string[] names = new string[] { "Guu", "Timmae", "Paul" };       //input Array für Namen
-            int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 }, { 4, 2 } };   //input Array für Positionen
+            _board = LevelDatabase.L1.Board;
+            playableCharacter = LevelDatabase.L1.PlayableCharacters;
+            npcs = LevelDatabase.L1.NPCCharacters;
 
-            Createboard(tilemap, Content);
-            CreateCharakter(names, charakterlevel, charPositions);
+            visManager = new VisualisationManagerHexmap(_board.GetLength(0), _board.GetLength(1), Camera);
+            //Fokus der Camera auf die Mitte der Karte setzen
+            visManager.SetCameraToMiddleOfMap();
+
 
             Player._prevMouseState = Mouse.GetState();
             Player._prevKeyState = Keyboard.GetState();
@@ -53,6 +53,7 @@ namespace Guus_Reise
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
+            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -133,10 +134,6 @@ namespace Guus_Reise
                     _board[i, k].Draw(Camera);
                 }
             }
-            if (playerTurn)
-            {
-                Player.Draw(spriteBatch, gameTime);
-            }
 
             //Zeichnen der Charaktere nach dem die komplette Map fertig ist (da es sonst zu nem Graphik-Bug kommt)
             foreach(Charakter c in playableCharacter)
@@ -148,10 +145,17 @@ namespace Guus_Reise
                 c.Draw(Camera);
             }
 
+            if (playerTurn)
+            {
+                Player.Draw(spriteBatch, gameTime);
+            }
+
         }
-        public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
+
+        public static Hex[,] CreateHexboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
-            _board = new Hex[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
+            Hex[,] createBoard;
+            createBoard = new Hex[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
 
             for (int i = 0; i < tilemap.GetLength(0); i++)
             {
@@ -160,21 +164,18 @@ namespace Guus_Reise
                     if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                     {
                         Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        _board[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        createBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
 
                     }
                     else
                     {
                         Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        _board[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        createBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
                     }
                 }
             }
-            visManager = new VisualisationManagerHexmap(tilemap.GetLength(0), tilemap.GetLength(1), Camera);
-            //Fokus der Camera auf die Mitte der Karte setzen
-            visManager.SetCameraToMiddleOfMap();
+            return createBoard;
         }
-
 
         public static float? Intersects(Vector2 mouseLocation, Model model, Matrix world, Matrix view, Matrix projection, Viewport viewport) //gibt die küruzeste distanz zum Model zurück (null falls keine Kollision)
         {
