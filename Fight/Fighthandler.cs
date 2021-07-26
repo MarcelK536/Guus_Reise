@@ -164,17 +164,20 @@ namespace Guus_Reise
             
             turnBar.Update(graphicsDevice);
             visFightManager.Update(gameTime);
-            //RemoveDeadCharacters(npcTiles);
-            //RemoveDeadCharacters(playerTiles);
+            RemoveDeadCharacters(npcTiles);
+            RemoveDeadCharacters(playerTiles);
         }
 
         public static void RemoveDeadCharacters(List<Hex> tiles)
         {
             foreach (Hex hexTiles in tiles)
             {
-                if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
+                if (hexTiles.Charakter != null)
                 {
-                    hexTiles.Charakter = null;
+                    if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
+                    {
+                        hexTiles.Charakter = null;
+                    }
                 }
             }
         }
