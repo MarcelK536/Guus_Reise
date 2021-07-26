@@ -174,6 +174,7 @@ namespace Guus_Reise
             RemoveDeadCharacters(playerTiles);
 
             WinFight();
+            LoseFight();
         }
 
         public static void RemoveDeadCharacters(List<Hex> tiles)
@@ -214,6 +215,23 @@ namespace Guus_Reise
             if(noEnemysLeft == true)
             {
                 ExitFight();
+            }
+        }
+
+        public static void LoseFight()
+        {
+            bool guuDead = true;
+            foreach (Hex h in playerTiles)
+            {
+                if(h.Charakter != null && h.Charakter.Name == "Guu")
+                {
+                    guuDead = false;
+                }
+            }
+
+            if(guuDead == true)
+            {
+                Game1.GState = Game1.GameState.MainMenu; //TODO GAMEOVER Screen
             }
         }
 
