@@ -36,18 +36,6 @@ namespace Guus_Reise
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
-            /*
-            int[,] tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-            //int[,] charakter = new int[,] { { 20, 10, 8, 5, 5, 8, 2, 5, 0, 0 }, { 20, 7, 8, 9, 8, 8, 2, 4, 1, 1 }, { 20, 7, 8, 9, 8, 8, 2, 4, 0, 0 } };         //input Array für die Charaktere
-            int[] charakterlevel = new int[] { 5, 4, 4 };
-            string[] names = new string[] { "Guu", "Timmae", "Paul" };       //input Array für Namen
-            int[,] charPositions = new int[,] { { 0, 1 }, { 4, 4 }, { 4, 2 } };   //input Array für Positionen
-            
-            Createboard(tilemap, Content);
-            CreateCharakter(names, charakterlevel, charPositions);
-            */
-            
-
             _board = LevelDatabase.L1.Board;
             playableCharacter = LevelDatabase.L1.PlayableCharacters;
             npcs = LevelDatabase.L1.NPCCharacters;
@@ -163,34 +151,6 @@ namespace Guus_Reise
             }
 
         }
-
-        /*
-        public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
-        {
-            _board = new Hex[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
-
-            for (int i = 0; i < tilemap.GetLength(0); i++)
-            {
-                for (int k = 0; k < tilemap.GetLength(1); k++)
-                {
-                    if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
-                    {
-                        Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        _board[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
-
-                    }
-                    else
-                    {
-                        Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        _board[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
-                    }
-                }
-            }
-            visManager = new VisualisationManagerHexmap(tilemap.GetLength(0), tilemap.GetLength(1), Camera);
-            //Fokus der Camera auf die Mitte der Karte setzen
-            visManager.SetCameraToMiddleOfMap();
-        }
-        */
 
         public static Hex[,] CreateHexboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
