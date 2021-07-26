@@ -176,6 +176,7 @@ namespace Guus_Reise
                 {
                     if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
                     {
+                        turnBar.RemoveCharakter(hexTiles.Charakter);
                         hexTiles.Charakter = null;
                     }
                 }
