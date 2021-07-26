@@ -76,6 +76,10 @@ namespace Guus_Reise
         public static void MakeMove(Skill selSkill, Hex clickedTile)
         {
             Charakter boi = Fighthandler.turnBar.ReturnCurrentCharakter();
+            for(int i = 1; i < Fighthandler.turnBar.NextTurn.Count; i++)
+            {
+                Fighthandler.turnBar.NextTurn[i].Geschwindigkeit -= boi.Geschwindigkeit;
+            }
             double basedmg = Fighthandler.GetBaseDmg(boi, boi.Weapon);
             Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[0] -= (int)(basedmg * selSkill.MoveValue) - Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[3];
             boi.CurrentFightStats[7] = (int)(selSkill.Geschwindigkeit - Math.Pow(0.95, (boi.Geschwindigkeit - selSkill.Geschwindigkeit)));

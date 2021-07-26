@@ -28,6 +28,10 @@ namespace Guus_Reise
             }
 
             Fighthandler.playerTiles[player].Charakter.CurrentFightStats[0] -= (int)bestdmg;
+            for (int i = 1; i < Fighthandler.turnBar.NextTurn.Count; i++)
+            {
+                Fighthandler.turnBar.NextTurn[i].Geschwindigkeit -= boi.Geschwindigkeit;
+            }
             boi.CurrentFightStats[7] = (int)(name.Geschwindigkeit - Math.Pow(0.95, (boi.Geschwindigkeit - name.Geschwindigkeit))); 
         }
     }
