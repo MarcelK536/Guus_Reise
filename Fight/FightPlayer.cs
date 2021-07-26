@@ -83,6 +83,10 @@ namespace Guus_Reise
             double basedmg = Fighthandler.GetBaseDmg(boi, boi.Weapon);
             Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[0] -= (int)(basedmg * selSkill.MoveValue) *(20/20+ Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[3]);
             boi.CurrentFightStats[7] = (int)(selSkill.Geschwindigkeit - Math.Pow(0.95, (boi.Geschwindigkeit - selSkill.Geschwindigkeit)));
+            if (clickedTile.Charakter.CurrentFightStats[0] <= 0)
+            {
+                boi.GainXp(boi, clickedTile.Charakter);
+            }
             isSelecting = false;
         }
     }
