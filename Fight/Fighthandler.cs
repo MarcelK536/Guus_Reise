@@ -83,16 +83,20 @@ namespace Guus_Reise
             for(int i = tiles.Count-1; i >= 0; i--)
             {
                 tiles[i].LogicalPosition = tiles[i].LogicalBoardPosition;
-                tiles[i].Charakter.LogicalPosition = tiles[i].Charakter.LogicalBoardPosition;
+                if (tiles[i].Charakter != null)
+                {
+                    tiles[i].Charakter.LogicalPosition = tiles[i].Charakter.LogicalBoardPosition;
+                }
                 tiles[i].Position = tiles[i].BoardPosition;
             }            
-            initPlayers = false;
         }
 
         public static void ExitFight()
         {
             DeInitPlayers(playerTiles);
             DeInitPlayers(npcTiles);
+
+            initPlayers = false;
 
             for (int i = _fightBoard.GetLength(0) - 1; i > 0; i--)
             {
@@ -132,6 +136,8 @@ namespace Guus_Reise
             {
                 HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
             }
+
+            Game1.GState = Game1.GameState.InGame;
         }
 
         public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
@@ -166,6 +172,8 @@ namespace Guus_Reise
             visFightManager.Update(gameTime);
             RemoveDeadCharacters(npcTiles);
             RemoveDeadCharacters(playerTiles);
+
+            WinFight();
         }
 
         public static void RemoveDeadCharacters(List<Hex> tiles)
@@ -177,9 +185,35 @@ namespace Guus_Reise
                     if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
                     {
                         turnBar.RemoveCharakter(hexTiles.Charakter);
+                        if (hexTiles.Charakter.IsNPC)
+                        {
+                            HexMap.npcs.Remove(hexTiles.Charakter);
+                        }
+                        if (!hexTiles.Charakter.IsNPC)
+                        {
+                            HexMap.playableCharacter.Remove(hexTiles.Charakter);
+                        }
+
                         hexTiles.Charakter = null;
                     }
                 }
+            }
+        }
+
+        public static void WinFight()
+        {
+            bool noEnemysLeft = true;
+            foreach (Hex h in npcTiles)
+            {
+                if(h.Charakter != null)
+                {
+                    noEnemysLeft = false;
+                }
+            }
+
+            if(noEnemysLeft == true)
+            {
+                ExitFight();
             }
         }
 
