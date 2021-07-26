@@ -13,8 +13,8 @@ namespace Guus_Reise
             double basedmg = Fighthandler.GetBaseDmg(boi, boi.Weapon);
             double bestdmg = 0;
             int player = 0;
-            Skill name = boi.Skills[0];
-            foreach(Skill s in boi.Skills)
+            Skill name = boi.Skill[0];
+            foreach(Skill s in boi.Skill)
             {
                 for(int i=0; i < Fighthandler.playerTiles.Count; i++)
                 {

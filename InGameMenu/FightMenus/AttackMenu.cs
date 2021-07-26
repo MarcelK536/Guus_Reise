@@ -23,7 +23,7 @@ namespace Guus_Reise
 
             graphicDevice = graphicsDevice;
 
-            foreach (Skill s in currCharakter.Skills)
+            foreach (Skill s in currCharakter.Skill)
             {
                 if (btnWidth < textFont.MeasureString(s.Name).X)
                 {
@@ -38,7 +38,7 @@ namespace Guus_Reise
             }
             btnTexture.SetData(btnColor);
 
-            foreach (Skill s in currCharakter.Skills)
+            foreach (Skill s in currCharakter.Skill)
             {
                 menuButtons.Add(new Button(s.Name, btnTexture, 1, btnPosition));
                 btnPosition.Y += btnTexture.Height + 10;

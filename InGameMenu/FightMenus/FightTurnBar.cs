@@ -10,7 +10,8 @@ namespace Guus_Reise
     class FightTurnBar
     {
         List<Charakter> FightCharacters = new List<Charakter>(); //Liste mit allen Charaktern die im Kampf sind
-        List<Charakter> NextTurn = new List<Charakter>(); //Liste wo am Index 0 der nächste Charakter ist der angreifen darf
+        public List<Charakter> NextTurn = new List<Charakter>(); //Liste wo am Index 0 der nächste Charakter ist der angreifen darf
+        public List<Charakter> _prevNextTurn = new List<Charakter>();
 
         Texture2D barTexture;
         SpriteFont barFont = Player.actionMenuFont;
@@ -45,12 +46,28 @@ namespace Guus_Reise
         public void InitNextTurn()
         {
             NextTurn = FightCharacters.OrderBy(e => e.CurrentFightStats[7]).ToList();
+            _prevNextTurn = CreateCopy(NextTurn);
+        }
+
+        public List<Charakter> CreateCopy(List<Charakter> currList)
+        {
+            
+             List<Charakter> tempCopy = new List<Charakter>();
+
+             for(int i =0; i< currList.Count; i++)
+             {
+                 tempCopy.Add(currList[i].Clone());
+             }
+
+             return tempCopy;
+            
         }
 
         public void AddCharakter(Charakter c)  //Fügt Charakter zur Liste hinzu
         {
             NextTurn.Add(c);
             ReSort();
+            _prevNextTurn = CreateCopy(NextTurn);
         }
 
         public void RemoveCharakter(Charakter c)
@@ -59,11 +76,44 @@ namespace Guus_Reise
             {
                 NextTurn.Remove(c);
             }
+            _prevNextTurn = CreateCopy(NextTurn);
         }
 
         public void ReSort()
         {
-            NextTurn = NextTurn.OrderBy(e => e.CurrentFightStats[7]).ToList();
+            if (!IsSameList(_prevNextTurn))
+            {
+                List<Charakter> sortedList = NextTurn.OrderBy(e => e.CurrentFightStats[7]).ToList(); //Sortiert Aufsteigend
+                if (IsSameList(sortedList))
+                {
+                    NextTurn.Add(NextTurn.First());
+                    NextTurn.Remove(NextTurn.First());
+                }
+                else
+                {
+                    NextTurn = sortedList;
+                }
+                _prevNextTurn = CreateCopy(NextTurn);
+            }
+        }
+
+        public bool IsSameList(List<Charakter> newList)
+        {
+            if(newList.Count != NextTurn.Count)
+            {
+                return false;
+            }
+            for(int i=0; i < newList.Count; i++)
+            {
+                    if (!Enumerable.SequenceEqual(newList[i].CurrentFightStats, NextTurn[i].CurrentFightStats))
+                    {
+                        if (newList[i].Name == NextTurn[i].Name)
+                        {
+                            return false;
+                        }
+                    }
+            }
+            return true;
         }
 
         public Charakter ReturnCurrentCharakter()

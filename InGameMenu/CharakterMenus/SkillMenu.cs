@@ -92,7 +92,7 @@ namespace Guus_Reise
                 {
                     continue;
                 }
-                if(HexMap._board[x, y].Charakter.Skills.Where(p => p.Name == btn.Name).Any())
+                if(HexMap._board[x, y].Charakter.Skill.Where(p => p.Name == btn.Name).Any())
                 {
                     btn.TextureDefault = btnTextureSelected;
                     btn.TextureHover = btnTextureSelected;
@@ -104,15 +104,15 @@ namespace Guus_Reise
                 }
                 if (btn.IsClicked())
                 {
-                    if(HexMap._board[x, y].Charakter.Skills.Where(p => p.Name == btn.Name).Any())
+                    if(HexMap._board[x, y].Charakter.Skill.Where(p => p.Name == btn.Name).Any())
                     {
-                        HexMap._board[x, y].Charakter.Skills.Remove(Skill.skills.Where(p => p.Name == btn.Name).First());
+                        HexMap._board[x, y].Charakter.Skill.Remove(Skill.skills.Where(p => p.Name == btn.Name).First());
                     }
-                    else if(HexMap._board[x,y].Charakter.Skills.Count < 4)
+                    else if(HexMap._board[x,y].Charakter.Skill.Count < 4)
                     {
-                        HexMap._board[x, y].Charakter.Skills.Add(Skill.skills.Where(p => p.Name == btn.Name).First());
+                        HexMap._board[x, y].Charakter.Skill.Add(Skill.skills.Where(p => p.Name == btn.Name).First());
                     }
-                    else if(HexMap._board[x,y].Charakter.Skills.Count >= 4)
+                    else if(HexMap._board[x,y].Charakter.Skill.Count >= 4)
                     {
                         SkillsToolTip = true;
                     }
