@@ -183,5 +183,37 @@ namespace Guus_Reise
             }
             return hilf;
         }
+        public static float IntToScale(int zahl)
+        {
+            float hilf;
+            switch (zahl)
+            {
+                case 0:
+                    hilf = 0.0f;
+                    break;
+                case 1:
+                    hilf = 0.1f;
+                    break;
+                case 2:
+                    hilf = 0.25f;
+                    break;
+                case 3:
+                    hilf = 0.5f;
+                    break;
+                case 4:
+                    hilf = 0.75f;
+                    break;
+                case 5:
+                    hilf = 1.0f;
+                    break;
+                case 6:
+                    hilf = 1.5f;
+                    break;
+                default:
+                    hilf = 0.0f;
+                    break;
+            }
+            return hilf;
+        }
     }
 }
