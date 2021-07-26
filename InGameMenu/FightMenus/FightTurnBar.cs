@@ -50,17 +50,13 @@ namespace Guus_Reise
         }
 
         public List<Charakter> CreateCopy(List<Charakter> currList)
-        {
-            
+        {       
              List<Charakter> tempCopy = new List<Charakter>();
-
              for(int i =0; i< currList.Count; i++)
              {
                  tempCopy.Add(currList[i].Clone());
              }
-
              return tempCopy;
-            
         }
 
         public void AddCharakter(Charakter c)  //Fügt Charakter zur Liste hinzu

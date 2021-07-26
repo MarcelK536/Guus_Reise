@@ -367,43 +367,6 @@ namespace Guus_Reise
 
         public Charakter Clone()
         {
-
-            /*
-            Charakter temp = new Charakter
-            {
-                Name = this.Name,
-                IsNPC = this.IsNPC,
-                KI = this.KI,
-                Patroullienpunkte = this.Patroullienpunkte,
-                CanMove = this.CanMove,
-                Level = this.Level,
-                XP = this.XP,
-                Widerstandskraft = this.Widerstandskraft,
-                Koerperkraft = this.Koerperkraft,
-                Beweglichkeit = this.Beweglichkeit,
-                Abwehr = this.Abwehr,
-                Wortgewandheit = this.Wortgewandheit,
-                Lautstaerke = this.Lautstaerke,
-                Ignoranz = this.Ignoranz,
-                Geschwindigkeit = this.Geschwindigkeit,
-                Glueck = this.Glueck,
-                CurrentFightStats = this.CurrentFightStats,
-                Bewegungsreichweite = this.Bewegungsreichweite,
-                Fähigkeitspunkte = this.Fähigkeitspunkte,
-                LogicalPosition = this.LogicalPosition,
-                LogicalFightPosition = this.LogicalFightPosition,
-                LogicalBoardPosition = this.LogicalBoardPosition,
-                IsMoving = this.IsMoving,
-                CharakterAnimation = this.CharakterAnimation,
-                Weapon = this.Weapon,
-                Skill = this.Skill,
-                WeaponInv = this.WeaponInv,
-                SkillInv = this.SkillInv
-            };
-            
-            return temp;
-            */
-
             return new Charakter(this);
         }
     }
