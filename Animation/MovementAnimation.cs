@@ -48,6 +48,8 @@ namespace Guus_Reise.Animation
         public List<Hex> oldNpcPos;
         public List<Hex> newNpcPos;
         public List<Charakter> movingCharakters;
+        public bool[,] readyMatrix;
+        public int readyCounter = 0;
 
 
         public List<string> ablauf;
@@ -77,6 +79,7 @@ namespace Guus_Reise.Animation
             movingCharakters = movednpcs;
             movementType = type;
             _camera = HexMap.Camera;
+            currDirectionMovementList = new List<Vector3>();
             switch (type)
             {
                 case "NPCMovemernt":
@@ -84,11 +87,15 @@ namespace Guus_Reise.Animation
                     break;
             }
             currentStep = 0;
-
-            foreach(Hex  targetHex in newHex)
+            readyMatrix = new bool[newHex.Count, 4];
+            foreach(Charakter charakter in movingCharakters)
             {
-                targetHex.Charakter.IsMoving = true;
-                targetHex.Charakter.CharakterAnimation.CharakterMovementPostion = targetHex.Charakter.CharakterAnimation.Translation + startHex.Position;
+                charakter.IsMoving = true;
+                charakter.CharakterAnimation.CharakterMovementPostion = charakter.CharakterAnimation.Translation + oldNpcPos[movingCharakters.IndexOf(charakter)].Position;
+                readyMatrix[movingCharakters.IndexOf(charakter),0] = false;
+                readyMatrix[movingCharakters.IndexOf(charakter),1] = false;
+                readyMatrix[movingCharakters.IndexOf(charakter),2] = false;
+                readyMatrix[movingCharakters.IndexOf(charakter),3] = false;
             }
             
         }
@@ -124,9 +131,7 @@ namespace Guus_Reise.Animation
             {
                 foreach(Charakter movedCharakter in movingCharakters)
                 {
-                    movingCharakter = movedCharakter;
-                    MakeCharakterSlide(gametime, currIntervall, currDirectionMovementList[indexCharakter]);
-                    indexCharakter++;
+                    MakeCharakterSlidePlural(gametime, currIntervall);
                 }
             }
             UpdateAnimation(gametime);
@@ -245,8 +250,18 @@ namespace Guus_Reise.Animation
 
         public void Draw()
         {
-
-            targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
+            if(movementType == "NPCMovemernt")
+            {
+                foreach(Hex targetHex in newNpcPos)
+                {
+                    targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
+                }
+            }
+            else
+            {
+                targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
+            }
+            
         }
 
         public void Wait(GameTime gametime, float duration)
@@ -299,15 +314,17 @@ namespace Guus_Reise.Animation
 
         public void CharakterWalkPlural(int intervall)
         {
-            foreach(Hex targetHex in newNpcPos)
+            currIntervall = intervall;
+            foreach (Hex targetHex in newNpcPos)
             {
+                var index = newNpcPos.IndexOf(targetHex);
                 directionMovement = new Vector3(0, 0, 0);
-                directionMovement.X = targetHex.Position.X - startHex.Position.X;
-                directionMovement.Y = targetHex.Position.Y - startHex.Position.Y;
-                directionMovement.Z = targetHex.Position.Z - startHex.Position.Z;
-                currDirectionMovementList.Add(NormOnLength(directionMovement, 0.01f));
+                directionMovement.X = targetHex.Position.X - oldNpcPos[index].Position.X;
+                directionMovement.Y = targetHex.Position.Y - oldNpcPos[index].Position.Y;
+                directionMovement.Z = targetHex.Position.Z - oldNpcPos[index].Position.Z;
+                Vector3 moveVector = NormOnLength(directionMovement, 0.01f);
+                currDirectionMovementList.Add(moveVector);
                 movingCharakter = targetHex.Charakter;
-                currIntervall = intervall;
                 if (directionMovement.X < 0)
                 {
                     movingCharakter.CharakterAnimation.AnimationPlanner = "Left";
@@ -469,6 +486,101 @@ namespace Guus_Reise.Animation
                     movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
                 }
             }
+        }
+
+        public void MakeCharakterSlidePlural(GameTime gametime, int intervall)
+        {
+            timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
+            if(readyCounter == movingCharakters.Count)
+            {
+                isSlidingCharakterPlural = false;
+                return;
+            }
+            foreach (Vector3 direction in currDirectionMovementList)
+            {
+                    var index = currDirectionMovementList.IndexOf(direction);
+                    var movingCharakter = movingCharakters[index];
+
+                    if (readyMatrix[index,0] == true)
+                    {
+                        continue;
+                    }
+                
+                    if (direction.Y == 0)
+                    {
+                        readyMatrix[index, 2] = true;
+                    }
+                    if (direction.X == 0)
+                    {
+                        readyMatrix[index, 1] = true;
+                    }
+                    if (direction.Z == 0)
+                    {
+                        readyMatrix[index, 3] = true;
+                    }
+
+                    if (timer > intervall)
+                    {
+                        if (timer > intervall)
+                        {
+                            MoveCharakterValue(direction);
+                            if (direction.Y < 0)
+                            {
+                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y <= (newNpcPos[index].Position.Y + newNpcPos[index].Charakter.CharakterAnimation.Translation.Y))
+                                {
+                                    readyMatrix[index, 2] = true;
+                                }
+                            }
+                            else
+                            {
+                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y >= (newNpcPos[index].Position.Y + newNpcPos[index].Charakter.CharakterAnimation.Translation.Y))
+                                {
+                                    readyMatrix[index, 2] = true;
+                                }
+                            }
+                            if (direction.X > 0)
+                            {
+                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X >= (newNpcPos[index].Position.X + newNpcPos[index].Charakter.CharakterAnimation.Translation.X))
+                                {
+                                    readyMatrix[index, 1] = true;
+                                }
+                            }
+                            else
+                            {
+                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X <= (newNpcPos[index].Position.X + newNpcPos[index].Charakter.CharakterAnimation.Translation.X))
+                                {
+                                    readyMatrix[index, 1] = true;
+                                }
+                            }
+                            if (direction.Z > 0)
+                            {
+                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z >= (newNpcPos[index].Position.Z + newNpcPos[index].Charakter.CharakterAnimation.Translation.Z))
+                                {
+                                    readyMatrix[index, 3] = true;
+                                }
+                            }
+                            else
+                            {
+                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z <= (newNpcPos[index].Position.Z + newNpcPos[index].Charakter.CharakterAnimation.Translation.Z))
+                                {
+                                    readyMatrix[index, 3] = true;
+                                }
+                            }
+                            timer = 0;
+                        }
+
+                        if (readyMatrix[index, 2] == true && readyMatrix[index, 1] == true && readyMatrix[index, 3] == true)
+                        {
+
+                            readyMatrix[index, 0] = true;
+                            ++readyCounter;
+                            movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+                            continue;
+                        }
+                }
+            }
+            
+            
         }
 
         public void MoveCharakterValue(Vector3 direction)

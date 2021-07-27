@@ -159,9 +159,9 @@ namespace Guus_Reise
                 }
 
             }
-            if(makeAnimation == true)
+            if (makeAnimation == true)
             {
-
+                MovementAnimationManager.InitNPCMovement("NPCMovemernt", npcOldHex, npcNewHex, npcs);
             }
         }
         private static float DistanceToNearestPlayer(Charakter charakter, Point near)
