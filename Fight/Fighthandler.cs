@@ -83,16 +83,20 @@ namespace Guus_Reise
             for(int i = tiles.Count-1; i >= 0; i--)
             {
                 tiles[i].LogicalPosition = tiles[i].LogicalBoardPosition;
-                tiles[i].Charakter.LogicalPosition = tiles[i].Charakter.LogicalBoardPosition;
+                if (tiles[i].Charakter != null)
+                {
+                    tiles[i].Charakter.LogicalPosition = tiles[i].Charakter.LogicalBoardPosition;
+                }
                 tiles[i].Position = tiles[i].BoardPosition;
             }            
-            initPlayers = false;
         }
 
         public static void ExitFight()
         {
             DeInitPlayers(playerTiles);
             DeInitPlayers(npcTiles);
+
+            initPlayers = false;
 
             for (int i = _fightBoard.GetLength(0) - 1; i > 0; i--)
             {
@@ -132,6 +136,8 @@ namespace Guus_Reise
             {
                 HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
             }
+
+            Game1.GState = Game1.GameState.InGame;
         }
 
         public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
@@ -164,18 +170,68 @@ namespace Guus_Reise
             
             turnBar.Update(graphicsDevice);
             visFightManager.Update(gameTime);
-            //RemoveDeadCharacters(npcTiles);
-            //RemoveDeadCharacters(playerTiles);
+            RemoveDeadCharacters(npcTiles);
+            RemoveDeadCharacters(playerTiles);
+
+            WinFight();
+            LoseFight();
         }
 
         public static void RemoveDeadCharacters(List<Hex> tiles)
         {
             foreach (Hex hexTiles in tiles)
             {
-                if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
+                if (hexTiles.Charakter != null)
                 {
-                    hexTiles.Charakter = null;
+                    if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
+                    {
+                        turnBar.RemoveCharakter(hexTiles.Charakter);
+                        if (hexTiles.Charakter.IsNPC)
+                        {
+                            HexMap.npcs.Remove(hexTiles.Charakter);
+                        }
+                        if (!hexTiles.Charakter.IsNPC)
+                        {
+                            HexMap.playableCharacter.Remove(hexTiles.Charakter);
+                        }
+
+                        hexTiles.Charakter = null;
+                    }
                 }
+            }
+        }
+
+        public static void WinFight()
+        {
+            bool noEnemysLeft = true;
+            foreach (Hex h in npcTiles)
+            {
+                if(h.Charakter != null)
+                {
+                    noEnemysLeft = false;
+                }
+            }
+
+            if(noEnemysLeft == true)
+            {
+                ExitFight();
+            }
+        }
+
+        public static void LoseFight()
+        {
+            bool guuDead = true;
+            foreach (Hex h in playerTiles)
+            {
+                if(h.Charakter != null && h.Charakter.Name == "Guu")
+                {
+                    guuDead = false;
+                }
+            }
+
+            if(guuDead == true)
+            {
+                Game1.GState = Game1.GameState.MainMenu; //TODO GAMEOVER Screen
             }
         }
 
@@ -240,10 +296,10 @@ namespace Guus_Reise
         public static float GetBaseDmg(Charakter charakter, Weapon weapon)
         {
             float erg = weapon.BaseSchaden;
-            erg += charakter.CurrentFightStats[1] * weapon.ScalingKK;
-            erg += charakter.CurrentFightStats[2] * weapon.ScalingBW;
-            erg += charakter.CurrentFightStats[4] * weapon.ScalingWG;
-            erg += charakter.CurrentFightStats[5] * weapon.ScalingLS;
+            erg += charakter.CurrentFightStats[1] * Weapon.IntToScale(weapon.ScalingKK);
+            erg += charakter.CurrentFightStats[2] * Weapon.IntToScale(weapon.ScalingBW);
+            erg += charakter.CurrentFightStats[4] * Weapon.IntToScale(weapon.ScalingWG);
+            erg += charakter.CurrentFightStats[5] * Weapon.IntToScale(weapon.ScalingLS);
             return erg;
         }
 

@@ -103,16 +103,19 @@ namespace Guus_Reise
                 Vector2 textPosition = Vector2.Zero;
                 foreach (Hex hex in Fighthandler.playerTiles)
                 {
-                    if (textPosition == Vector2.Zero)
+                    if (hex.Charakter != null)
                     {
-                        textPosition = btnAttack.GetPosRightOf();
+                        if (textPosition == Vector2.Zero)
+                        {
+                            textPosition = btnAttack.GetPosRightOf();
+                        }
+                        else
+                        {
+                            textPosition = GetPositionBelow(GetPositionBelow(textPosition));
+                        }
+                        spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
+                        spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                     }
-                    else
-                    {
-                        textPosition = GetPositionBelow(GetPositionBelow(textPosition));
-                    }
-                    spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                 }
                 btnAttack.Draw(spriteBatch, textFont);
                 btnChangeWeapon.Draw(spriteBatch, textFont);
@@ -121,16 +124,19 @@ namespace Guus_Reise
                 textPosition = Vector2.Zero;
                 foreach (Hex hex in Fighthandler.npcTiles)
                 {
-                    if (textPosition == Vector2.Zero)
+                    if (hex.Charakter != null)
                     {
-                        textPosition = btnAttack.GetPosRightOf() + Vector2.UnitX*(btnAttack.GetPosRightOf().X + 200);
+                        if (textPosition == Vector2.Zero)
+                        {
+                            textPosition = btnAttack.GetPosRightOf() + Vector2.UnitX * (btnAttack.GetPosRightOf().X + 200);
+                        }
+                        else
+                        {
+                            textPosition = GetPositionBelow(GetPositionBelow(textPosition));
+                        }
+                        spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
+                        spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                     }
-                    else
-                    {
-                        textPosition = GetPositionBelow(GetPositionBelow(textPosition));
-                    }
-                    spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                    spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                 }
                 spriteBatch.End();
 
