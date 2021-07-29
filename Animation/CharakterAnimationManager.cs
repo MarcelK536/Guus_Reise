@@ -23,6 +23,12 @@ namespace Guus_Reise.Animation
             set => _activeHexExists = value;
         }
 
+        public static CharakterAnimation[] CharakterAnimations
+        {
+            get => charakterAnimations;
+            set => charakterAnimations = value;
+        }
+
         public static void Init(ContentManager content)
         {
             charakterNames = new List<string> {"Guu", "Timmae", "Peter", "Paul" };

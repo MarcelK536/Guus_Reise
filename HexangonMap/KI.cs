@@ -161,6 +161,7 @@ namespace Guus_Reise
             }
             if (makeAnimation == true)
             {
+                HexMap.NoGlow();
                 MovementAnimationManager.InitNPCMovement("NPCMovemernt", npcOldHex, npcNewHex, npcs);
             }
         }

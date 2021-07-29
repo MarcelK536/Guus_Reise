@@ -85,6 +85,7 @@ namespace Guus_Reise
 
                     // Movement Animation starten
                     MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
+                    
                 }
                 if (fightTrue)
                 {
