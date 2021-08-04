@@ -15,13 +15,12 @@ namespace Guus_Reise.HexangonMap
        
         public int lastwheel;
         private KeyboardState _prevKeyState;
-        static Vector3 cameraTranslationStart = new Vector3(0, 0, 0);
 
         public static bool isMovementStop = false;
         public static bool isRunningMovement = false;
 
         public bool isDetailViewH;
-        static float timerMovement;
+
 
         //Values for the Movement Animation
         public static Hex startHex;
@@ -29,12 +28,10 @@ namespace Guus_Reise.HexangonMap
         public static string currentStep;
         public static bool isMakeCameraSlide = false;
         public static int waittime = 1000;
-        static float timerWait;
+
         public static bool fokusValuesSet = false;
         public static bool fokusSet = false;
-        static float valueZoom = 0;
-        static float valueX = 0;
-        static float valueY = 0;
+
 
         public VisualisationManagerHexmap(int length, int width, Camera camera)
         {

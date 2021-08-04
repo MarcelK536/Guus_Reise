@@ -129,10 +129,10 @@ namespace Guus_Reise.Animation
             {
                 MakeCharakterSlidePlural(gametime, currIntervall);
             }
-            UpdateAnimation(gametime);
+            UpdateAnimation();
         }
 
-        public void UpdateAnimation(GameTime gametime)
+        public void UpdateAnimation()
         {
             if (currentStep >= ablauf.Count)
             {
@@ -184,7 +184,7 @@ namespace Guus_Reise.Animation
                     {
                         currIntervall = 7;
                         isNewStep = false;
-                        SlideBetweenHex(currIntervall, startHex, targetHex);
+                        SlideBetweenHex(startHex, targetHex);
                     }
                     else
                     {
@@ -202,7 +202,7 @@ namespace Guus_Reise.Animation
                         currIntervall = 7;
                         isNewStep = false;
                         movingCharakter = targetHex.Charakter;
-                        SlideBetweenHex(currIntervall, startHex, targetHex);
+                        SlideBetweenHex(startHex, targetHex);
                         CharakterWalk(currIntervall);
                     }
                     else
@@ -270,7 +270,7 @@ namespace Guus_Reise.Animation
         }
 
         #region Kamerabewegung
-        public void SlideBetweenHex(int intervall, Hex startHex, Hex targetHex)
+        public void SlideBetweenHex(Hex startHex, Hex targetHex)
         {
             HexMap.visManager.SetFocusToHex(startHex, 0);
             Vector3 direction = HexMap.visManager.GetVectorBewtweenTwoHex(startHex, targetHex);
@@ -290,10 +290,12 @@ namespace Guus_Reise.Animation
 
         public void CharakterWalk(int intervall)
         {
-            directionMovement = new Vector3(0, 0, 0);
-            directionMovement.X = targetHex.Position.X - startHex.Position.X;
-            directionMovement.Y = targetHex.Position.Y - startHex.Position.Y;
-            directionMovement.Z = targetHex.Position.Z - startHex.Position.Z;
+            directionMovement = new Vector3(0, 0, 0)
+            {
+                X = targetHex.Position.X - startHex.Position.X,
+                Y = targetHex.Position.Y - startHex.Position.Y,
+                Z = targetHex.Position.Z - startHex.Position.Z
+            };
             currDirectionMovement = NormOnLength(directionMovement, 0.01f);
             currIntervall = intervall;
             isSlidingCharakter = true;
@@ -314,10 +316,12 @@ namespace Guus_Reise.Animation
             foreach (Hex targetHex in newNpcPos)
             {
                 var index = newNpcPos.IndexOf(targetHex);
-                directionMovement = new Vector3(0, 0, 0);
-                directionMovement.X = targetHex.Position.X - oldNpcPos[index].Position.X;
-                directionMovement.Y = targetHex.Position.Y - oldNpcPos[index].Position.Y;
-                directionMovement.Z = targetHex.Position.Z - oldNpcPos[index].Position.Z;
+                directionMovement = new Vector3(0, 0, 0)
+                {
+                    X = targetHex.Position.X - oldNpcPos[index].Position.X,
+                    Y = targetHex.Position.Y - oldNpcPos[index].Position.Y,
+                    Z = targetHex.Position.Z - oldNpcPos[index].Position.Z
+                };
                 Vector3 moveVector = NormOnLength(directionMovement, 0.01f);
                 currDirectionMovementList[index] = moveVector;
                 movingCharakter = targetHex.Charakter;
@@ -405,7 +409,6 @@ namespace Guus_Reise.Animation
                 xReady = false;
                 zReady = false;
                 isSlidingCameraVector = false;
-
             }
         }
 
@@ -657,9 +660,9 @@ namespace Guus_Reise.Animation
                 double quadSum = Math.Abs(Math.Pow(X, 2)) + Math.Abs(Math.Pow(Y, 2)) + Math.Abs(Math.Pow(Z, 2));
                 double length = Math.Sqrt(quadSum);
                 Vector3 normVector = vector;
-                normVector.X = normVector.X * (newLength / (float)length);
-                normVector.Y = normVector.Y * (newLength / (float)length);
-                normVector.Z = normVector.Z * (newLength / (float)length);
+                normVector.X *= (newLength / (float)length);
+                normVector.Y *= (newLength / (float)length);
+                normVector.Z *= (newLength / (float)length);
                 return normVector;
             }
             #endregion

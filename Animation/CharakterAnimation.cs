@@ -18,10 +18,10 @@ namespace Guus_Reise.HexangonMap
         private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
         //static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
 
-        private List<Texture2D> idle;
-        private List<Texture2D> jump;
-        private List<Texture2D> walkLeft;
-        private List<Texture2D> walkRight;
+        private readonly List<Texture2D> idle;
+        private readonly List<Texture2D> jump;
+        private readonly List<Texture2D> walkLeft;
+        private readonly List<Texture2D> walkRight;
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
         //static List<Texture2D> moveFront;
@@ -29,8 +29,7 @@ namespace Guus_Reise.HexangonMap
 
         Hex _hexagon;
         Charakter _charakter;
-        
-        Model _planeModel;
+        readonly Model _planeModel;
         Texture2D _texCharakter;
         Texture2D _curTex;
         private List<Texture2D> currentAnimation;
@@ -240,24 +239,14 @@ namespace Guus_Reise.HexangonMap
             {
                 throw new InvalidOperationException("Animation kann nicht null sein");
             }
-            switch(nameAnimation)
+            currentAnimation = nameAnimation switch
             {
-                case "Idle":
-                    currentAnimation = idle;
-                    break;
-                case "Jump":
-                    currentAnimation = jump;
-                    break;
-                case "WalkLeft":
-                    currentAnimation = walkLeft;
-                    break;
-                case "WalkRight":
-                    currentAnimation = walkRight;
-                    break;
-                default:
-                    currentAnimation = idle;
-                    break;
-            }
+                "Idle" => idle,
+                "Jump" => jump,
+                "WalkLeft" => walkLeft,
+                "WalkRight" => walkRight,
+                _ => idle,
+            };
             _currentIntervall = intervall;
             isPlayAnimation = true;
         }

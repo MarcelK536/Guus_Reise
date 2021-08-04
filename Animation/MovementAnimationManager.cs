@@ -34,8 +34,6 @@ namespace Guus_Reise.Animation
         public static void DrawMovementAnimation()
         {
             _currentMovementAnimation.Draw();
-
-            
         }
     }
 }
