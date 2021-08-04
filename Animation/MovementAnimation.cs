@@ -123,7 +123,7 @@ namespace Guus_Reise.Animation
             }
             if (isSlidingCharakter)
             {
-                MakeCharakterSlide(gametime, currIntervall, currDirectionMovement);
+                MakeCharakterSlide(gametime, currIntervall, currDirectionMovement,0);
             }
             if(isSlidingCharakterPlural)
             {
@@ -248,9 +248,9 @@ namespace Guus_Reise.Animation
             if (movementType == "NPCMovemernt")
             {
                 foreach (Hex targetHex in newNpcPos)
-                    {
+                {
                         targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
-                    }
+                }
                 CharakterAnimationManager.GetCharakterAnimation("Guu").DrawCharakterMovementPosition(_camera);
             }
             else
@@ -297,7 +297,7 @@ namespace Guus_Reise.Animation
             currDirectionMovement = NormOnLength(directionMovement, 0.01f);
             currIntervall = intervall;
             isSlidingCharakter = true;
-            if(directionMovement.X < 0)
+            if (directionMovement.X < 0)
             {
                 movingCharakter.CharakterAnimation.AnimationPlanner = "Left";
             }
@@ -305,8 +305,8 @@ namespace Guus_Reise.Animation
             {
                 movingCharakter.CharakterAnimation.AnimationPlanner = "Right";
             }
-            
-        }
+
+}
 
         public void CharakterWalkPlural(int intervall)
         {
@@ -409,21 +409,38 @@ namespace Guus_Reise.Animation
             }
         }
 
-        public void MakeCharakterSlide(GameTime gametime, int intervall, Vector3 direction)
+        public void MakeCharakterSlide(GameTime gametime, int intervall, Vector3 direction, int index)
         {
             timer += (float)gametime.ElapsedGameTime.TotalMilliseconds;
-            if (direction.Y == 0)
+            float vergleichsWertX;
+            float vergleichsWertY;
+            float vergleischWertZ;
+            if (movementType != "NPCMovemernt")
             {
-                yReadyCharakter = true;
+                vergleichsWertX = (targetHex.Position.X + targetHex.Charakter.CharakterAnimation.Translation.X);
+                vergleichsWertY = (targetHex.Position.Y + targetHex.Charakter.CharakterAnimation.Translation.Y);
+                vergleischWertZ = (targetHex.Position.Z + targetHex.Charakter.CharakterAnimation.Translation.Z);
+
+                if (direction.Y == 0)
+                {
+                    yReadyCharakter = true;
+                }
+                if (direction.X == 0)
+                {
+                    xReadyCharakter = true;
+                }
+                if (direction.Z == 0)
+                {
+                    zReadyCharakter = true;
+                }
             }
-            if (direction.X == 0)
+            else
             {
-                xReadyCharakter = true;
+                vergleichsWertX = (newNpcPos[index].Position.X + newNpcPos[index].Charakter.CharakterAnimation.Translation.X);
+                vergleichsWertY = (newNpcPos[index].Position.Y + newNpcPos[index].Charakter.CharakterAnimation.Translation.Y);
+                vergleischWertZ = (newNpcPos[index].Position.Z + newNpcPos[index].Charakter.CharakterAnimation.Translation.Z);
             }
-            if (direction.Z == 0)
-            {
-                zReadyCharakter = true;
-            }
+
             if (timer > intervall)
             {
                 if (timer > intervall)
@@ -431,56 +448,134 @@ namespace Guus_Reise.Animation
                     MoveCharakterValue(movingCharakter, direction);
                     if (direction.Y < 0)
                     {
-                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y <= (targetHex.Position.Y + targetHex.Charakter.CharakterAnimation.Translation.Y))
+                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y <= vergleichsWertY)
                         {
-                            yReadyCharakter = true;
+                            if(movementType == "NPCMovemernt")
+                            {
+                                readyMatrix[index, 2] = true;
+                            }
+                            else
+                            {
+                                yReadyCharakter = true;
+                            }
+                            
                         }
                     }
                     else
                     {
-                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y >= (targetHex.Position.Y + targetHex.Charakter.CharakterAnimation.Translation.Y))
+                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y >= vergleichsWertY)
                         {
-                            yReadyCharakter = true;
+                            if (movementType == "NPCMovemernt")
+                            {
+                                readyMatrix[index, 2] = true;
+                            }
+                            else
+                            {
+                                yReadyCharakter = true;
+                            }
+                            
                         }
                     }
                     if (direction.X > 0)
                     {
-                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X >= (targetHex.Position.X + targetHex.Charakter.CharakterAnimation.Translation.X))
+                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X >= vergleichsWertX)
                         {
-                            xReadyCharakter = true;
+                            if (movementType == "NPCMovemernt")
+                            {
+                                readyMatrix[index, 1] = true;
+                            }
+                            else
+                            {
+                                xReadyCharakter = true;
+                            }
                         }
                     }
                     else
                     {
-                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X <= (targetHex.Position.X + targetHex.Charakter.CharakterAnimation.Translation.X))
+                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X <= vergleichsWertX)
                         {
-                            xReadyCharakter = true;
+                            if (movementType == "NPCMovemernt")
+                            {
+                                readyMatrix[index, 1] = true;
+                            }
+                            else
+                            {
+                                xReadyCharakter = true;
+                            }
                         }
                     }
                     if (direction.Z > 0)
                     {
-                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z >= (targetHex.Position.Z + targetHex.Charakter.CharakterAnimation.Translation.Z))
+                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z >= vergleischWertZ)
                         {
-                            zReadyCharakter = true;
+                            if (movementType == "NPCMovemernt")
+                            {
+                                readyMatrix[index, 3] = true;
+                            }
+                            else
+                            {
+                                zReadyCharakter = true;
+                            }
                         }
                     }
                     else
                     {
-                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z <= (targetHex.Position.Z + targetHex.Charakter.CharakterAnimation.Translation.Z))
+                        if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z <= vergleischWertZ)
                         {
-                            zReadyCharakter = true;
+                            if (movementType == "NPCMovemernt")
+                            {
+                                readyMatrix[index, 3] = true;
+                            }
+                            else
+                            {
+                                zReadyCharakter = true;
+                            }
+                            
                         }
                     }
-                    timer = 0;
+
+                    //Timer zurücksetzen
+                    if(movementType == "NPCMovemernt")
+                    {
+                        if (timer2 == 1)
+                        {
+                            timer2 = 0;
+                            timer = 0;
+                        }
+                        else
+                        {
+                            ++timer2;
+                        }
+                    }
+                    else
+                    {
+                        timer = 0;
+                    } 
                 }
-                if (yReadyCharakter == true && xReadyCharakter == true && zReadyCharakter == true)
+
+                //Abfrage ob Animationen fertig sind
+                if(movementType == "NPCMovemernt")
                 {
-                    yReadyCharakter = false;
-                    xReadyCharakter = false;
-                    zReadyCharakter = false;
-                    isSlidingCharakter = false;
-                    movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+                    
+                    if (readyMatrix[index, 2] == true && readyMatrix[index, 1] == true && readyMatrix[index, 3] == true)
+                    {
+
+                        readyMatrix[index, 0] = true;
+                        ++readyCounter;
+                        movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+                    }
                 }
+                else
+                {
+                    if (yReadyCharakter == true && xReadyCharakter == true && zReadyCharakter == true)
+                    {
+                        yReadyCharakter = false;
+                        xReadyCharakter = false;
+                        zReadyCharakter = false;
+                        isSlidingCharakter = false;
+                        movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+                    }
+                }    
             }
         }
 
@@ -493,98 +588,31 @@ namespace Guus_Reise.Animation
                 readyCounter = 0;
                 return;
             }
+
             foreach (Charakter charakter in movingCharakters)
             {
                 var index = movingCharakters.IndexOf(charakter);
-                var movingCharakter = charakter;
+                movingCharakter = charakter;
                 var direction = currDirectionMovementList[index];
 
-                    if (readyMatrix[index,0] == true)
-                    {
-                        continue;
-                    }
+                if (readyMatrix[index,0] == true)
+                {
+                    continue;
+                }
                 
-                    if (direction.Y == 0)
-                    {
-                        readyMatrix[index, 2] = true;
-                    }
-                    if (direction.X == 0)
-                    {
-                        readyMatrix[index, 1] = true;
-                    }
-                    if (direction.Z == 0)
-                    {
-                        readyMatrix[index, 3] = true;
-                    }
-
-                    if (timer > intervall)
-                    {
-                        if (timer > intervall)
-                        {
-                            MoveCharakterValue(movingCharakter, direction);
-                            if (direction.Y < 0)
-                            {
-                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y <= (newNpcPos[index].Position.Y + newNpcPos[index].Charakter.CharakterAnimation.Translation.Y))
-                                {
-                                    readyMatrix[index, 2] = true;
-                                }
-                            }
-                            else
-                            {
-                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y >= (newNpcPos[index].Position.Y + newNpcPos[index].Charakter.CharakterAnimation.Translation.Y))
-                                {
-                                    readyMatrix[index, 2] = true;
-                                }
-                            }
-                            if (direction.X > 0)
-                            {
-                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X >= (newNpcPos[index].Position.X + newNpcPos[index].Charakter.CharakterAnimation.Translation.X))
-                                {
-                                    readyMatrix[index, 1] = true;
-                                }
-                            }
-                            else
-                            {
-                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X <= (newNpcPos[index].Position.X + newNpcPos[index].Charakter.CharakterAnimation.Translation.X))
-                                {
-                                    readyMatrix[index, 1] = true;
-                                }
-                            }
-                            if (direction.Z > 0)
-                            {
-                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z >= (newNpcPos[index].Position.Z + newNpcPos[index].Charakter.CharakterAnimation.Translation.Z))
-                                {
-                                    readyMatrix[index, 3] = true;
-                                }
-                            }
-                            else
-                            {
-                                if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z <= (newNpcPos[index].Position.Z + newNpcPos[index].Charakter.CharakterAnimation.Translation.Z))
-                                {
-                                    readyMatrix[index, 3] = true;
-                                }
-                            }
-                        if(timer2 == 1)
-                        {
-                            timer2 = 0;
-                            timer = 0;
-                        }
-                        else
-                        {
-                            ++timer2;
-                        }
-                            
-                        }
-                        if (readyMatrix[index, 2] == true && readyMatrix[index, 1] == true && readyMatrix[index, 3] == true)
-                        {
-
-                            readyMatrix[index, 0] = true;
-                            ++readyCounter;
-                            movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
-                        }
-
-                    }
-                    
+                if (direction.Y == 0)
+                {
+                    readyMatrix[index, 2] = true;
+                }
+                if (direction.X == 0)
+                {
+                    readyMatrix[index, 1] = true;
+                }
+                if (direction.Z == 0)
+                {
+                    readyMatrix[index, 3] = true;
+                }
+                MakeCharakterSlide(gametime, intervall, direction, index);  
             }
             
 

@@ -181,11 +181,11 @@ namespace Guus_Reise.HexangonMap
                 {
                     Play("WalkLeft", _standardIntervall);
                 }
-                if(_animationPlanner == "Right")
+                else if(_animationPlanner == "Right")
                 {
                     Play("WalkRight", _standardIntervall);
                 }
-                if (_animationPlanner == "stop")
+                else if (_animationPlanner == "stop")
                 {
                     StopAnimation();
                     _animationPlanner = "";
@@ -213,7 +213,6 @@ namespace Guus_Reise.HexangonMap
                     {
                         Play("Idle", _standardIntervall);
                     }
-
                 }
 
             }

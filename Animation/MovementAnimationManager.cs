@@ -8,7 +8,6 @@ namespace Guus_Reise.Animation
     class MovementAnimationManager
     {
         static MovementAnimation _currentMovementAnimation;
-        static List<Vector3> _npcPositions;
 
         public static void Init(string type, Hex start, Hex target)
         {
