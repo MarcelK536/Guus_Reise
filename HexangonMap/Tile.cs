@@ -64,7 +64,7 @@ namespace Guus_Reise
                     this.Type = "Straße";
                     this.Begehbarkeit = 0.5f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
+                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonTerrain2");
                     this.Type = "Wiese";
                     this.Begehbarkeit = 1;
                     break;
