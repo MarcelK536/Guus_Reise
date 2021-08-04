@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace Guus_Reise.Animation
 {
     class MovementAnimationManager
     {
-        static MovementAnimation _currentMovementAnimation;
+        public static MovementAnimation _currentMovementAnimation;
 
         public static void Init(string type, Hex start, Hex target)
         {

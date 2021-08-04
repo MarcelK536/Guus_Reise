@@ -61,7 +61,7 @@ namespace Guus_Reise.Animation
             switch (type)
             {
                 case "CharakterMovement":
-                    ablauf = new List<string> { "FokusStartHex", "Wait500", "SlideHexToHexWalk", "ZoomOut" };
+                    ablauf = new List<string> { "FokusStartHex", "Wait500", "SlideHexToHexWalk", "ZoomOut","Wait500"};
                     break;
             }
             currentStep = 0;
@@ -79,7 +79,7 @@ namespace Guus_Reise.Animation
             currDirectionMovementList = new Vector3[oldNpcPos.Count];
             switch (type)
             {
-                case "NPCMovemernt":
+                case "NPCMovement":
                     ablauf = new List<string> { "FokusOnCenter", "Wait500", "CharakterMovementPlural" };
                     break;
             }
@@ -102,7 +102,7 @@ namespace Guus_Reise.Animation
 
         public void Update(GameTime gametime)
         {
-            if(movementType == "NPCMovemernt")
+            if(movementType == "NPCMovement")
             {
                 foreach(Hex targetHex in newNpcPos)
                 {
@@ -137,7 +137,7 @@ namespace Guus_Reise.Animation
             if (currentStep >= ablauf.Count)
             {
                 Game1.GState = Game1.GameState.InGame;
-
+                return;
             }
             else
             {
@@ -244,20 +244,24 @@ namespace Guus_Reise.Animation
 
         public void Draw()
         {
-
-            if (movementType == "NPCMovemernt")
+            if (movementType == "NPCMovement")
             {
+                foreach (Charakter c in HexMap.playableCharacter)
+                {
+                    c.Draw(_camera);
+                }
                 foreach (Hex targetHex in newNpcPos)
                 {
+                    if(targetHex.Charakter.IsMoving == true)
+                    {
                         targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
+                    }
                 }
-                CharakterAnimationManager.GetCharakterAnimation("Guu").DrawCharakterMovementPosition(_camera);
             }
             else
             {
                 targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
             }
-
         }
 
         public void Wait(GameTime gametime, float duration)
@@ -418,7 +422,7 @@ namespace Guus_Reise.Animation
             float vergleichsWertX;
             float vergleichsWertY;
             float vergleischWertZ;
-            if (movementType != "NPCMovemernt")
+            if (movementType != "NPCMovement")
             {
                 vergleichsWertX = (targetHex.Position.X + targetHex.Charakter.CharakterAnimation.Translation.X);
                 vergleichsWertY = (targetHex.Position.Y + targetHex.Charakter.CharakterAnimation.Translation.Y);
@@ -453,7 +457,7 @@ namespace Guus_Reise.Animation
                     {
                         if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y <= vergleichsWertY)
                         {
-                            if(movementType == "NPCMovemernt")
+                            if(movementType == "NPCMovement")
                             {
                                 readyMatrix[index, 2] = true;
                             }
@@ -468,7 +472,7 @@ namespace Guus_Reise.Animation
                     {
                         if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Y >= vergleichsWertY)
                         {
-                            if (movementType == "NPCMovemernt")
+                            if (movementType == "NPCMovement")
                             {
                                 readyMatrix[index, 2] = true;
                             }
@@ -483,7 +487,7 @@ namespace Guus_Reise.Animation
                     {
                         if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X >= vergleichsWertX)
                         {
-                            if (movementType == "NPCMovemernt")
+                            if (movementType == "NPCMovement")
                             {
                                 readyMatrix[index, 1] = true;
                             }
@@ -497,7 +501,7 @@ namespace Guus_Reise.Animation
                     {
                         if (movingCharakter.CharakterAnimation.CharakterMovementPostion.X <= vergleichsWertX)
                         {
-                            if (movementType == "NPCMovemernt")
+                            if (movementType == "NPCMovement")
                             {
                                 readyMatrix[index, 1] = true;
                             }
@@ -511,7 +515,7 @@ namespace Guus_Reise.Animation
                     {
                         if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z >= vergleischWertZ)
                         {
-                            if (movementType == "NPCMovemernt")
+                            if (movementType == "NPCMovement")
                             {
                                 readyMatrix[index, 3] = true;
                             }
@@ -525,7 +529,7 @@ namespace Guus_Reise.Animation
                     {
                         if (movingCharakter.CharakterAnimation.CharakterMovementPostion.Z <= vergleischWertZ)
                         {
-                            if (movementType == "NPCMovemernt")
+                            if (movementType == "NPCMovement")
                             {
                                 readyMatrix[index, 3] = true;
                             }
@@ -538,7 +542,7 @@ namespace Guus_Reise.Animation
                     }
 
                     //Timer zurücksetzen
-                    if(movementType == "NPCMovemernt")
+                    if(movementType == "NPCMovement")
                     {
                         if (timer2 == 1)
                         {
@@ -557,7 +561,7 @@ namespace Guus_Reise.Animation
                 }
 
                 //Abfrage ob Animationen fertig sind
-                if(movementType == "NPCMovemernt")
+                if(movementType == "NPCMovement")
                 {
                     
                     if (readyMatrix[index, 2] == true && readyMatrix[index, 1] == true && readyMatrix[index, 3] == true)

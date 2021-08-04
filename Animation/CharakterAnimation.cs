@@ -121,10 +121,9 @@ namespace Guus_Reise.HexangonMap
             Hexagon = hexagon;
         }
 
-        public void DrawCharakter(Camera camera)
+        public void Draw(Camera camera, Vector3 position)
         {
-            this.CharakterPostion = this.Hexagon.Position + this.translation;
-            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterPostion));
+            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(position));
             foreach (var mesh in _planeModel.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -144,26 +143,15 @@ namespace Guus_Reise.HexangonMap
             }
         }
 
+        public void DrawCharakter(Camera camera)
+        {
+            this.CharakterPostion = this.Hexagon.Position + this.translation;
+            Draw(camera, _charakterPostion);
+        }
+
         public void DrawCharakterMovementPosition(Camera camera)
         {
-            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterMovementPostion));
-            foreach (var mesh in _planeModel.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.TextureEnabled = true;
-                    effect.Texture = _curTex;
-                    //effect.LightingEnabled = true;
-                    //effect.EnableDefaultLighting();
-                    //effect.PreferPerPixelLighting = true;
-                    effect.World = world;
-                    effect.View = camera.view;
-                    effect.Projection = camera.projection;
-                    //effect.DiffuseColor = this.Glow;
-                    effect.AmbientLightColor = this._color;
-                }
-                mesh.Draw();
-            }
+            Draw(camera, _charakterMovementPostion);
         }
 
         public void Update(GameTime gametime)
@@ -171,8 +159,24 @@ namespace Guus_Reise.HexangonMap
             _charakterPostion = _hexagon.Position + translation;
             if(isPlayAnimation)
             {
-                _curTex = currentAnimation[currentFrame];
-                UpdateAnimation(gametime);
+                if(Game1.GState == Game1.GameState.MovementAnimation)
+                {
+                    if (MovementAnimationManager._currentMovementAnimation.movementType == "NPCMovement")
+                    {
+                        _curTex = currentAnimation[0];
+                    }
+                    else
+                    {
+                        _curTex = currentAnimation[currentFrame];
+                        UpdateAnimation(gametime);
+                    }
+
+                }
+                else
+                {
+                    _curTex = currentAnimation[currentFrame];
+                    UpdateAnimation(gametime);
+                }
             }
             if(Game1.GState == Game1.GameState.MovementAnimation)
             {

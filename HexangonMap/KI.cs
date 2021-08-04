@@ -162,7 +162,7 @@ namespace Guus_Reise
             if (makeAnimation == true)
             {
                 HexMap.NoGlow();
-                MovementAnimationManager.InitNPCMovement("NPCMovemernt", npcOldHex, npcNewHex, npcs);
+                MovementAnimationManager.InitNPCMovement("NPCMovement", npcOldHex, npcNewHex, npcs);
             }
         }
         private static float DistanceToNearestPlayer(Charakter charakter, Point near)

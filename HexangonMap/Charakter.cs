@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Guus_Reise.HexangonMap;
+using Guus_Reise.Animation;
 
 namespace Guus_Reise
 {
@@ -317,11 +318,21 @@ namespace Guus_Reise
             }
             if(Game1.GState == Game1.GameState.MovementAnimation)
             {
-                if(!IsMoving)
+                if(MovementAnimationManager._currentMovementAnimation.movementType != "NPCMovement")
                 {
-                    _charakterAnimation.DrawCharakter(camera);
+                    if (!IsMoving)
+                    {
+                        _charakterAnimation.DrawCharakter(camera);
+                    }
                 }
-                
+                else
+                {
+                    if(_charakterAnimation.Charakter.IsNPC != true)
+                    {
+                        _charakterAnimation.DrawCharakter(camera);
+                    }
+                    
+                }
                 
             }
             else
@@ -329,18 +340,6 @@ namespace Guus_Reise
                 _charakterAnimation.DrawCharakter(camera);
             }
         }
-
-        public void Play(string nameAnimation, float intervall)
-        {
-            _charakterAnimation.Play(nameAnimation, intervall);
-        }
-
-        public void Stop()
-        {
-            _charakterAnimation.StopAnimation();
-        }
-
-
 
         public void GainXp(Charakter winner, Charakter looser)
         {
