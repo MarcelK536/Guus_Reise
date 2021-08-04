@@ -32,7 +32,7 @@ namespace Guus_Reise.Animation
         public Vector3 currTotalMovementVector;
         public Vector3 currDirectionMovement;
         public Vector3[] currDirectionMovementList;
-        Charakter movingCharakter;
+        public Charakter movingCharakter;
 
         public bool isNewStep;
 
@@ -244,12 +244,16 @@ namespace Guus_Reise.Animation
 
         public void Draw()
         {
+            foreach(Charakter c in HexMap.playableCharacter)
+            {
+                c.Draw(_camera);
+            }
+            foreach (Charakter c in HexMap.npcs)
+            {
+                c.Draw(_camera);
+            }
             if (movementType == "NPCMovement")
             {
-                foreach (Charakter c in HexMap.playableCharacter)
-                {
-                    c.Draw(_camera);
-                }
                 foreach (Hex targetHex in newNpcPos)
                 {
                     if(targetHex.Charakter.IsMoving == true)
@@ -656,19 +660,19 @@ namespace Guus_Reise.Animation
             }
         }
 
-            public Vector3 NormOnLength(Vector3 vector, float newLength)
-            {
-                double X = (double)vector.X;
-                double Y = (double)vector.Y;
-                double Z = (double)vector.Z;
-                double quadSum = Math.Abs(Math.Pow(X, 2)) + Math.Abs(Math.Pow(Y, 2)) + Math.Abs(Math.Pow(Z, 2));
-                double length = Math.Sqrt(quadSum);
-                Vector3 normVector = vector;
-                normVector.X *= (newLength / (float)length);
-                normVector.Y *= (newLength / (float)length);
-                normVector.Z *= (newLength / (float)length);
-                return normVector;
-            }
+        public Vector3 NormOnLength(Vector3 vector, float newLength)
+        {
+            double X = (double)vector.X;
+            double Y = (double)vector.Y;
+            double Z = (double)vector.Z;
+            double quadSum = Math.Abs(Math.Pow(X, 2)) + Math.Abs(Math.Pow(Y, 2)) + Math.Abs(Math.Pow(Z, 2));
+            double length = Math.Sqrt(quadSum);
+            Vector3 normVector = vector;
+            normVector.X *= (newLength / (float)length);
+            normVector.Y *= (newLength / (float)length);
+            normVector.Z *= (newLength / (float)length);
+            return normVector;
+        }
             #endregion
     }
 }

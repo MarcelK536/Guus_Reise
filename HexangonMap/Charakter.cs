@@ -320,18 +320,18 @@ namespace Guus_Reise
             {
                 if(MovementAnimationManager._currentMovementAnimation.movementType != "NPCMovement")
                 {
-                    if (!IsMoving)
+                    if (this != MovementAnimationManager._currentMovementAnimation.movingCharakter)
                     {
                         _charakterAnimation.DrawCharakter(camera);
                     }
-                }
+            }
                 else
                 {
-                    if(_charakterAnimation.Charakter.IsNPC != true)
+                    if (_charakterAnimation.Charakter.IsNPC != true)
                     {
                         _charakterAnimation.DrawCharakter(camera);
                     }
-                    
+
                 }
                 
             }
