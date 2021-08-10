@@ -108,7 +108,7 @@ namespace Guus_Reise
                 LogicalPosition = LogicalBoardPosition;
             }
             this.Tile.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(Position));
-            this.Tile.Draw(camera);
+            this.Tile.DrawShader(camera);
         }
 
     }

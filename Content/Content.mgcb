@@ -435,6 +435,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Jellee.spritefont
 
+#begin LightShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:LightShader.fx
+
 #begin MainMenu/MainMenuFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

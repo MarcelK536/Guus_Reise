@@ -13,6 +13,7 @@ namespace Guus_Reise
         private Vector3 _color;                 
         private Matrix _world;
         private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
+        private Effect _shader;
 
         public string Type
         {
@@ -49,6 +50,7 @@ namespace Guus_Reise
         {
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
+            this._shader = contentmanager.Load<Effect>("LightShader");
             switch (type)
             {
 
@@ -88,6 +90,25 @@ namespace Guus_Reise
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
                     effect.AmbientLightColor = this.Color;
+                }
+                mesh.Draw();
+            }
+        }
+
+        public void DrawShader(Camera camera)
+        {
+            Vector4 greene = new Vector4(0f, 1f, 0f, 1);
+
+            foreach (var mesh in _tile.Meshes)
+            {
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                    part.Effect = _shader;
+                  
+                    _shader.Parameters["World"].SetValue(_world);
+                    _shader.Parameters["View"].SetValue(camera.view);
+                    _shader.Parameters["Projection"].SetValue(camera.projection);
+                    _shader.Parameters["Color"].SetValue(greene);
                 }
                 mesh.Draw();
             }
