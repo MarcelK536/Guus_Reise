@@ -221,7 +221,8 @@ namespace Guus_Reise
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
                     _board[i, k].Tile.Glow = new Vector3(0.1f, 0.1f, 0.1f);
-                    _board[i, k].Tile.Color = new Vector3(0, 0, 0);
+                    _board[i, k].Tile.Color = new Vector3(0.6f, 0.6f, 0.6f);
+                    _board[i, k].Tile.isglowing = false;
                 }
             }
         }
@@ -230,6 +231,7 @@ namespace Guus_Reise
             if (bewegung >= 0)
             {
                 _board[x, y].Tile.Glow = new Vector3(0.2f, 0.2f, 0.2f);
+                _board[x, y].Tile.isglowing = true;
 
                 if (_board[x, y].Charakter != null && activeTile.LogicalPosition != new Point(x,y)) //erkennt andere charaktere
                 {

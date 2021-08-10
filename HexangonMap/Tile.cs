@@ -14,6 +14,7 @@ namespace Guus_Reise
         private Matrix _world;
         private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
         private Effect _shader;
+        private bool _isglowing;
 
         #region Colors
         Vector4 greene = new Vector4(0f, 0.6f, 0f, 1);
@@ -31,7 +32,13 @@ namespace Guus_Reise
             get => _type;
             set => _type = value;
         }
-        
+
+        public bool isglowing
+        {
+            get => _isglowing;
+            set => _isglowing = value;
+        }
+
         public Model Tile1
         {
             get => _tile;
@@ -109,7 +116,10 @@ namespace Guus_Reise
         public void DrawShader(Camera camera, bool ishoverd, bool isactiv)
         {
 
-            Vector4 glowe = new Vector4(Glow, 1);
+            float glowe = Glow.Length()*2;
+
+            
+            //Vector4 colore = new Vector4(glowe*Color.X, glowe * Color.Y, glowe * Color.Z, 1);
             Vector4 colore = new Vector4(Color, 1);
 
 
@@ -122,14 +132,15 @@ namespace Guus_Reise
                     _shader.Parameters["World"].SetValue(_world);
                     _shader.Parameters["View"].SetValue(camera.view);
                     _shader.Parameters["Projection"].SetValue(camera.projection);
-                    /*
-                    if (isactiv)
+
+
+                    if (ishoverd)
                     {
-                        _shader.Parameters["Color"].SetValue(lightgreene);
+                        _shader.Parameters["Color"].SetValue(new Vector4(1,1,1,1));
                     }
-                    else if (ishoverd)
+                    else if (_isglowing)
                     {
-                        _shader.Parameters["Color"].SetValue(lightgreye);
+                        _shader.Parameters["Color"].SetValue(colore);
                     }
                     else
                     {
@@ -155,9 +166,8 @@ namespace Guus_Reise
                         }
 
 
-                    }*/
+                    }
 
-                    _shader.Parameters["Color"].SetValue(colore);
                 }
                 mesh.Draw();
               
