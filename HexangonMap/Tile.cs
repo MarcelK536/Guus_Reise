@@ -15,6 +15,17 @@ namespace Guus_Reise
         private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
         private Effect _shader;
 
+        #region Colors
+        Vector4 greene = new Vector4(0f, 0.6f, 0f, 1);
+        Vector4 greye = new Vector4(0.5f, 0.5f, 0.5f, 1);
+        Vector4 rede = new Vector4(0.7f, 0f, 0f, 1);
+
+        Vector4 lightgreye = new Vector4(0.9f, 0.9f, 0.9f, 1);
+        Vector4 lightgreene = new Vector4(0f, 0.9f, 0f, 1);
+        #endregion
+
+
+
         public string Type
         {
             get => _type;
@@ -95,9 +106,12 @@ namespace Guus_Reise
             }
         }
 
-        public void DrawShader(Camera camera)
+        public void DrawShader(Camera camera, bool ishoverd, bool isactiv)
         {
-            Vector4 greene = new Vector4(0f, 1f, 0f, 1);
+
+            Vector4 glowe = new Vector4(Glow, 1);
+            Vector4 colore = new Vector4(Color, 1);
+
 
             foreach (var mesh in _tile.Meshes)
             {
@@ -108,9 +122,45 @@ namespace Guus_Reise
                     _shader.Parameters["World"].SetValue(_world);
                     _shader.Parameters["View"].SetValue(camera.view);
                     _shader.Parameters["Projection"].SetValue(camera.projection);
-                    _shader.Parameters["Color"].SetValue(greene);
+                    /*
+                    if (isactiv)
+                    {
+                        _shader.Parameters["Color"].SetValue(lightgreene);
+                    }
+                    else if (ishoverd)
+                    {
+                        _shader.Parameters["Color"].SetValue(lightgreye);
+                    }
+                    else
+                    {
+                        if (this.Type == "Wald")
+                        {
+                            _shader.Parameters["Color"].SetValue(greene);
+                        }
+                        else if (this.Type == "Berg")
+                        {
+                            _shader.Parameters["Color"].SetValue(greye);
+                        }
+                        else if (this.Type == "Wiese")
+                        {
+                            _shader.Parameters["Color"].SetValue(greene);
+                        }
+                        else if (this.Type == "Straße")
+                        {
+                            _shader.Parameters["Color"].SetValue(greye);
+                        }
+                        else
+                        {
+                            _shader.Parameters["Color"].SetValue(rede);
+                        }
+
+
+                    }*/
+
+                    _shader.Parameters["Color"].SetValue(colore);
                 }
                 mesh.Draw();
+              
             }
         }
     }
