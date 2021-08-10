@@ -39,7 +39,8 @@ namespace Guus_Reise
 
         public void Draw(Camera camera)
         {
-            this.Tile.Draw(camera);
+            this.Tile.DrawShader(camera);
+    
         }
 
     }

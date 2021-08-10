@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,6 +13,9 @@ namespace Guus_Reise
         private Vector3 _color;                 
         private Matrix _world;
         private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
+        private Texture2D _texture;
+        private Effect _shader;
+
 
         public string Type
         {
@@ -49,6 +52,7 @@ namespace Guus_Reise
         {
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
+            this._shader = contentmanager.Load<Effect>("World\\LightShader");
             switch (type)
             {
 
@@ -76,6 +80,8 @@ namespace Guus_Reise
 
         public void Draw(Camera camera)
         {
+            //achtung wenn man nach dem shader wieder etwas ohne shader zeichnen möchte
+            //muss man bei den modelen wieder das basic effect ding rein setzen
             foreach (var mesh in _tile.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -92,5 +98,32 @@ namespace Guus_Reise
                 mesh.Draw();
             }
         }
-    }
+        public void DrawShader(Camera camera)
+        {
+            float m = 0;
+            Vector4 greene = new Vector4(0f, 0.5f, 0f, 1f);
+            foreach (ModelMesh mesh in _tile.Meshes)
+            {
+
+
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                   
+                    part.Effect = _shader;
+                    _shader.Parameters["World"].SetValue(_world);
+                    _shader.Parameters["View"].SetValue(camera.view);
+                    _shader.Parameters["Projection"].SetValue(camera.projection);
+                    _shader.Parameters["Color"].SetValue(greene);
+            
+
+
+                    if (this._texture != null)
+                    {
+                        _shader.Parameters["ModelTex"].SetValue(_texture);
+                    }
+                }
+                mesh.Draw();
+            }
+        }
+        }
 }

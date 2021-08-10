@@ -121,13 +121,13 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 //float4 resDunkel = VertexTexCol * Diffuse + Specular;
 
-	float4 light = float4(0, 0, 1, 0);
+	float4 light = float4(0, 1, 0, 0);
 	
 	float4 normal = input.Normal;
 
 	float ang = dot(light, normal);
 
-	return saturate(float4(ang*Color.r, ang * Color.g, ang * Color.b, 1));
+	return saturate(float4(ang*Color.r, ang * Color.g, ang * Color.b, Color.a));
 
 
 	//float4 resHell = VertexTexCol + Diffuse * Diff + Specular;
