@@ -185,7 +185,7 @@ namespace Guus_Reise
                 charakterMenu.Draw(spriteBatch);
                 levelUpMenu.Draw(spriteBatch);
             }
-            objectiveMenu.Draw(spriteBatch);
+            objectiveMenu.Draw(spriteBatch, HexMap.lvlObjectives, HexMap.lvlObjectiveText);
         }
     }
 }

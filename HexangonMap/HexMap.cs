@@ -29,6 +29,8 @@ namespace Guus_Reise
         public static int friendlyNeighbourCount;
         
         private static bool playerTurn;
+        public static bool[] lvlObjectives;
+        public static string[] lvlObjectiveText;
 
         internal static Camera Camera { get => _camera; set => _camera = value; }
 
@@ -39,6 +41,8 @@ namespace Guus_Reise
             _board = LevelDatabase.L1.Board;
             playableCharacter = LevelDatabase.L1.PlayableCharacters;
             npcs = LevelDatabase.L1.NPCCharacters;
+            lvlObjectives = LevelDatabase.L1.LevelObjective;
+            lvlObjectiveText = LevelDatabase.L1.LevelObjectiveText;
 
             visManager = new VisualisationManagerHexmap(_board.GetLength(0), _board.GetLength(1), Camera);
             //Fokus der Camera auf die Mitte der Karte setzen
