@@ -30,7 +30,8 @@ namespace Guus_Reise
 
         public static void UpdateObjective()
         {
-            //L1objective = {LevelObjectives.GoToHexAny(HexMap.playableCharacter, new Point(7, 7)), LevelObjectives.EliminateAllEnemys(HexMap.npcs)};
+            L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new Point(7, 7));
+            L1objective[1] = LevelObjectives.EliminateAllEnemys(HexMap.npcs);
         }
     }
 }

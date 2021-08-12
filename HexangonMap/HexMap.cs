@@ -127,6 +127,7 @@ namespace Guus_Reise
             {
                 CharakterAnimationManager.ActiveHexExists = false;
             }
+            LevelDatabase.UpdateObjective();
         }
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
