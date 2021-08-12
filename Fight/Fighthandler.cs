@@ -136,7 +136,11 @@ namespace Guus_Reise
             {
                 HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
             }
-
+            Player.activeTile.IsActive = false;
+            Player.activeTile = null;
+            HexMap.activeHex = null;
+            HexMap.NoGlow();
+            Player.actionMenu.Active = false;
             Game1.GState = Game1.GameState.InGame;
         }
 
