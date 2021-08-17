@@ -38,11 +38,11 @@ namespace Guus_Reise
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
-            _board = LevelDatabase.L1.Board;
-            playableCharacter = LevelDatabase.L1.PlayableCharacters;
-            npcs = LevelDatabase.L1.NPCCharacters;
-            lvlObjectives = LevelDatabase.L1.LevelObjective;
-            lvlObjectiveText = LevelDatabase.L1.LevelObjectiveText;
+            _board = LevelDatabase.W1L1.Board;
+            playableCharacter = LevelDatabase.W1L1.PlayableCharacters;
+            npcs = LevelDatabase.W1L1.NPCCharacters;
+            lvlObjectives = LevelDatabase.W1L1.LevelObjective;
+            lvlObjectiveText = LevelDatabase.W1L1.LevelObjectiveText;
 
             visManager = new VisualisationManagerHexmap(_board.GetLength(0), _board.GetLength(1), Camera);
             //Fokus der Camera auf die Mitte der Karte setzen
