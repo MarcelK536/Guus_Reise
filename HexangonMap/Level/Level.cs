@@ -9,16 +9,22 @@ namespace Guus_Reise
 {
     class Level
     {
-        string levelObjective;
+        string[] levelObjectiveText;
+        bool[] levelObjective;
         List<Charakter> characterList; //All Characters
         List<Charakter> playableCharacters = new List<Charakter>();
         List<Charakter> npcCharacters = new List<Charakter>();
         Hex[,] board;
 
-        internal string LevelObjective 
+        internal string[] LevelObjectiveText 
         { 
-            get => levelObjective; 
-            set => levelObjective = value; 
+            get => levelObjectiveText; 
+            set => levelObjectiveText = value; 
+        }
+        internal bool[] LevelObjective
+        {
+            get => levelObjective;
+            set => levelObjective = value;
         }
 
         internal List<Charakter> CharacterList
@@ -43,16 +49,18 @@ namespace Guus_Reise
             set => board = value; 
         }
 
-        public Level(List<Charakter> charakters, int[,] tilemap, string objective,ContentManager content)  //Init Level with existing Characters
+        public Level(List<Charakter> charakters, int[,] tilemap, string[] objectiveText,bool[] objective,ContentManager content)  //Init Level with existing Characters
         {
             LevelObjective = objective;
+            LevelObjectiveText = objectiveText;
             CharacterList = charakters;
             Board = HexMap.CreateHexboard(tilemap, content);
         }
 
-        public Level(string[] charNames, int[] charLevel, int[,] charPos, int[,] tilemap, string objective, ContentManager content)  //Init Level with new Characters
+        public Level(string[] charNames, int[] charLevel, int[,] charPos, int[,] tilemap, string[] objectiveText, bool[] objective, ContentManager content)  //Init Level with new Characters
         {
             LevelObjective = objective;
+            LevelObjectiveText = objectiveText;
             Board = HexMap.CreateHexboard(tilemap, content);
             if (CharacterList == null)
             {

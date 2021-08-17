@@ -74,22 +74,22 @@ namespace Guus_Reise
             switch (type)
             {
 
-                case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
+                case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald");
                     this.Type = "Wald";
                     this.Begehbarkeit = 2;
                     break;
-                case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexaBerg");
+                case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
                 //    this._texture = contentmanager.Load<Texture2D>("TileModels\\TexGrau");
                 //    this._texture = contentmanager.Load<Texture2D>("TileModels\\TexLila");
                     break;
-                case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonLeer");
-                    this.Type = "Straße";
+                case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
+                    this.Type = "Wueste";
                     this.Begehbarkeit = 0.5f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonTerrain2");
-                    this.Type = "Wiese";
+                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
+                    this.Type = "Wasser";
                     this.Begehbarkeit = 1;
                     break;
             }
@@ -155,12 +155,12 @@ namespace Guus_Reise
                         else if (this.Type == "Berg")
                         {
                             _shader.Parameters["Color"].SetValue(greye);
-                        } 
-                        else if (this.Type == "Wiese")
-                        {
-                            _shader.Parameters["Color"].SetValue(greene);
                         }
-                        else if (this.Type == "Straße")
+                        else if (this.Type == "Wasser")
+                        {
+                            _shader.Parameters["Color"].SetValue(greye);
+                        }
+                        else if (this.Type == "Wueste")
                         {
                             _shader.Parameters["Color"].SetValue(greye);
                         }
