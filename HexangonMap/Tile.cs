@@ -84,8 +84,8 @@ namespace Guus_Reise
                     this.Type = "Wueste";
                     this.Begehbarkeit = 0.5f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
-                    this.Type = "Wiese";
+                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
+                    this.Type = "Wasser";
                     this.Begehbarkeit = 1;
                     break;
             }
@@ -152,9 +152,9 @@ namespace Guus_Reise
                         {
                             _shader.Parameters["Color"].SetValue(greye);
                         }
-                        else if (this.Type == "Wiese")
+                        else if (this.Type == "Wasser")
                         {
-                            _shader.Parameters["Color"].SetValue(greene);
+                            _shader.Parameters["Color"].SetValue(greye);
                         }
                         else if (this.Type == "Wueste")
                         {
