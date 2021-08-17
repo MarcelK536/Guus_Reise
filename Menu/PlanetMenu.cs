@@ -22,7 +22,8 @@ namespace Guus_Reise.Menu
         static Texture2D[] worldTextures;
         static AnimatedSprite[] planetButtonAnimations;
         static AnimatedButton[] planetButtons;
-        static Button back;
+        static Button btnBack;
+        static Button btnLoadGame;
         static List<string> listOfPlanets;
         static int indexOfSelectedPlanet;
 
@@ -56,7 +57,8 @@ namespace Guus_Reise.Menu
             planetButtons[indexOfSelectedPlanet].isFocused = true;
             bool test = planetButtons[indexOfSelectedPlanet].isFocused;
             // Set Button Back
-            back = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800,20);
+            btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
+            btnBack = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800,20);
 
             // Set previous Keyboard State
             _prevKeyState = Keyboard.GetState();
@@ -74,7 +76,7 @@ namespace Guus_Reise.Menu
             planetButtonAnimations = new AnimatedSprite[listOfPlanets.Count];
             worldTextures = new Texture2D[listOfPlanets.Count];
 
-            //Content for Button Back
+            //Content for Button Back & Load
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
@@ -188,7 +190,9 @@ namespace Guus_Reise.Menu
             spriteBatch.Begin();
 
             // Draw Back-Button
-            back.Draw(spriteBatch, mainMenuFont);
+            btnBack.Draw(spriteBatch, mainMenuFont);
+
+            btnLoadGame.Draw(spriteBatch, mainMenuFont);
 
             // Draw Planet-Buttons
             foreach(AnimatedButton planet in planetButtons)
@@ -237,9 +241,13 @@ namespace Guus_Reise.Menu
                     GState = GameState.InGame;
                 }
             }
-            if (back.IsClicked() == true)
+            if (btnBack.IsClicked() == true)
             {
                 GState = GameState.MainMenu;
+            }
+            if(btnLoadGame.IsClicked() == true)
+            {
+                //TODO LOAD GAME
             }
             _prevKeyState = Keyboard.GetState();
         }
@@ -255,7 +263,7 @@ namespace Guus_Reise.Menu
                     planetButtons[index].ButtonX = planetButtons[index].ButtonX + 450;
                     planetButtons[index].ButtonY = 600;
                 }
-                back.ButtonX = back.ButtonX + 900;
+                btnBack.ButtonX = btnBack.ButtonX + 900;
 
             }
             else
@@ -266,7 +274,7 @@ namespace Guus_Reise.Menu
                     planetButtons[index].ButtonX = planetButtons[index].ButtonX - 450;
                     planetButtons[index].ButtonY = 300;
                 }
-                back.ButtonX = back.ButtonX - 900;
+                btnBack.ButtonX = btnBack.ButtonX - 900;
             }
         }
     }
