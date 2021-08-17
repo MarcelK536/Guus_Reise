@@ -12,7 +12,7 @@ namespace Guus_Reise
         static int currentLevel = 1;
         #region Welt1
         #region Level1Data
-        readonly static int[,] W1L1tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
+        readonly static int[,] W1L1tilemap = new int[,] { { 1, 2, 1, 1, 1, 1, 3, 1 }, { 1, 1, 1, 3, 1, 2, 1, 1 }, { 1, 1, 2, 1, 3, 1, 3, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 4, 1, 1, 2, 1, 1 }, { 1, 1, 1, 4, 1, 1, 1, 1 }, { 1, 1, 1, 4, 1, 1, 1, 1 }, { 1, 2, 3, 2, 1, 4, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
         readonly static int[] W1L1charLevel = new int[] { 5, 4, 4 };
         readonly static string[] W1L1charNames = new string[] { "Guu", "Timmae", "Paul" };       //input Array für Namen
         readonly static int[,] W1L1charPos = new int[,] { { 0, 1 }, { 4, 4 }, { 4, 2 } };   //input Array für Positionen

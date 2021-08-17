@@ -13,10 +13,9 @@ namespace Guus_Reise
         private Vector3 _color;                 
         private Matrix _world;
         private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
-        private Effect _shader;
         private bool _isglowing;
-        private Texture2D[] _texture;
-        private int texcount;
+
+
 
         #region Colors
         Vector4 greene = new Vector4(0f, 0.6f, 0f, 1);
@@ -69,10 +68,6 @@ namespace Guus_Reise
         public Tile(Vector3 position, int type, ContentManager contentmanager)
         {
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
-            this.Color = new Vector3(0, 0, 0);
-            this._shader = contentmanager.Load<Effect>("LightShader");
-
-            _texture = new Texture2D[4];
 
             switch (type)
             {
@@ -80,19 +75,10 @@ namespace Guus_Reise
                 case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald");
                     this.Type = "Wald";
                     this.Begehbarkeit = 2;
-
-                    this._texture[0] = contentmanager.Load<Texture2D>("TileModels\\yellowDarkGreen");
-                    this._texture[1] = contentmanager.Load<Texture2D>("TileModels\\waldBoden");
-                    this._texture[2] = contentmanager.Load<Texture2D>("TileModels\\texBark");
-                    this._texture[3] = contentmanager.Load<Texture2D>("TileModels\\texBark2");
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
-                  
-                    this._texture[1] = contentmanager.Load<Texture2D>("TileModels\\TexturesCom_RockBlocky0072_2_seamless_S");
-                    this._texture[0] = contentmanager.Load<Texture2D>("TileModels\\kiesBoden");
-                    texcount = 2;
                     break;
                 case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
                     this.Type = "Wueste";
@@ -121,97 +107,9 @@ namespace Guus_Reise
                     effect.World = this.World;
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
-                    effect.AmbientLightColor = this.Color;
+                    //effect.AmbientLightColor = this.Color;
                 }
                 mesh.Draw();
-            }
-        }
-
-        public void DrawShader(Camera camera, bool ishoverd, bool isactiv)
-        {
-
-            float glowe = Glow.Length()*2;
-
-            
-            //Vector4 colore = new Vector4(glowe*Color.X, glowe * Color.Y, glowe * Color.Z, 1);
-            Vector4 colore = new Vector4(Color, 1);
-            int meshCounter = 0;
-
-            foreach (var mesh in _tile.Meshes)
-            {
-                foreach (ModelMeshPart part in mesh.MeshParts)
-                {
-                    part.Effect = _shader;
-                  
-                    _shader.Parameters["World"].SetValue(_world);
-                    _shader.Parameters["View"].SetValue(camera.view);
-                    _shader.Parameters["Projection"].SetValue(camera.projection);
-                    _shader.Parameters["maxTexCount"].SetValue(texcount);
-
-                    
-                    if (this.Type == "Berg")
-                    {
-                        if(meshCounter == 0)
-                        {
-                            _shader.Parameters["tex1"].SetValue(_texture[0]);
-                            _shader.Parameters["currentTex"].SetValue(meshCounter);
-                            meshCounter++;
-                        }
-                     
-                        else if(meshCounter==1)
-                        {
-                            _shader.Parameters["tex2"].SetValue(_texture[1]);
-                            _shader.Parameters["currentTex"].SetValue(meshCounter);
-                            meshCounter++;
-                        }
-                    }
-                    if (this.Type == "Wald")
-                    {
-                        _shader.Parameters["tex1"].SetValue(_texture[0]);
-                        _shader.Parameters["tex2"].SetValue(_texture[1]);
-                        _shader.Parameters["tex3"].SetValue(_texture[2]);
-
-                    }
-
-                    /*
-                    if (ishoverd)
-                    {
-                        _shader.Parameters["Color"].SetValue(new Vector4(1,1,1,1));
-                    }
-                    else if (_isglowing)
-                    {
-                        _shader.Parameters["Color"].SetValue(colore);
-                    }
-                    else
-                    {
-                        if (this.Type == "Wald")
-                        {
-                            _shader.Parameters["Color"].SetValue(greene);
-                        }
-                        else if (this.Type == "Berg")
-                        {
-                            _shader.Parameters["Color"].SetValue(greye);
-                        }
-                        else if (this.Type == "Wasser")
-                        {
-                            _shader.Parameters["Color"].SetValue(greye);
-                        }
-                        else if (this.Type == "Wueste")
-                        {
-                            _shader.Parameters["Color"].SetValue(greye);
-                        }
-                        else
-                        {
-                            _shader.Parameters["Color"].SetValue(rede);
-                        }
-                      
-
-                    }
-                    */
-
-                }
-                mesh.Draw();
-              
             }
         }
     }
