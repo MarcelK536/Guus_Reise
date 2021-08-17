@@ -15,6 +15,7 @@ namespace Guus_Reise
         private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
         private Effect _shader;
         private bool _isglowing;
+        private Texture2D _texture;
 
         #region Colors
         Vector4 greene = new Vector4(0f, 0.6f, 0f, 1);
@@ -69,6 +70,7 @@ namespace Guus_Reise
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
             this.Color = new Vector3(0, 0, 0);
             this._shader = contentmanager.Load<Effect>("LightShader");
+
             switch (type)
             {
 
@@ -79,6 +81,8 @@ namespace Guus_Reise
                 case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexaBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
+                //    this._texture = contentmanager.Load<Texture2D>("TileModels\\TexGrau");
+                //    this._texture = contentmanager.Load<Texture2D>("TileModels\\TexLila");
                     break;
                 case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonLeer");
                     this.Type = "Straße";
@@ -151,7 +155,7 @@ namespace Guus_Reise
                         else if (this.Type == "Berg")
                         {
                             _shader.Parameters["Color"].SetValue(greye);
-                        }
+                        } 
                         else if (this.Type == "Wiese")
                         {
                             _shader.Parameters["Color"].SetValue(greene);
@@ -164,7 +168,7 @@ namespace Guus_Reise
                         {
                             _shader.Parameters["Color"].SetValue(rede);
                         }
-
+                      
 
                     }
 
