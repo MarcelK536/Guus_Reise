@@ -225,7 +225,7 @@ namespace Guus_Reise
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
-                    _board[i, k].Tile.Glow = new Vector3(0.1f, 0.1f, 0.1f);
+                    _board[i, k].Tile.Glow = new Vector3(1f, 1f, 1f);
                     _board[i, k].Tile.Color = new Vector3(0.6f, 0.6f, 0.6f);
                     _board[i, k].Tile.isglowing = false;
                 }
