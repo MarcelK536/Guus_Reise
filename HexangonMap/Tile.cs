@@ -76,7 +76,7 @@ namespace Guus_Reise
                     this.Type = "Wald";
                     this.Begehbarkeit = 2;
                     break;
-                case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexaBerg");
+                case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
                     break;
