@@ -41,15 +41,20 @@ namespace Guus_Reise
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            
+        public void Draw(SpriteBatch spriteBatch, bool[] objectives, string[] objText)
+        {          
             base.Draw(spriteBatch);
+            Vector2 orgPos = pos;
 
             if (Active)
             {
                 spriteBatch.Begin();
-                spriteBatch.DrawString(textFont, "Go to the Bottom Right Tile. Status: " + objective1.ToString(), pos, Color.Yellow);
+                for(int i=0; i<objectives.Length;i++)
+                {
+                    spriteBatch.DrawString(textFont, objText[i]+" Status: " + objectives[i], pos, Color.Yellow);
+                    pos.Y += textFont.MeasureString("Placeholder").Y;
+                }
+                pos = orgPos;
                 spriteBatch.End();
             }
         }
