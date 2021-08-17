@@ -72,7 +72,7 @@ namespace Guus_Reise
             switch (type)
             {
 
-                case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
+                case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald");
                     this.Type = "Wald";
                     this.Begehbarkeit = 2;
                     break;
