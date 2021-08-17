@@ -12,7 +12,9 @@
 float4x4 World;
 float4x4 View;
 float4x4 Projection;
-
+texture tex1, tex2, tex3;
+int maxTexCount;
+int currentTex;
 float4 Color = float4 (0.5f, 0.5f, 0.5f, 1.0f);
 
 
@@ -36,12 +38,19 @@ float3 ViewVector;
 
 */
 
-sampler2D TextureSampler = sampler_state {
-	Texture = (ModelTex);
-	MinFilter = Linear;
-	MagFilter = Linear;
-	AddressU = Clamp;
-	AddressV = Clamp;
+sampler Texture1Sampler = sampler_state {
+	Texture = <tex1>;
+
+};
+
+sampler Texture2Sampler = sampler_state {
+	Texture = <tex2>;
+
+};
+
+sampler Texture3Sampler = sampler_state {
+	Texture = <tex3>;
+
 };
 
 
@@ -80,61 +89,52 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
 }
 
+
+
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	/*	//Texture zeichnen
 
-	float4 VertexTexCol = tex2D(TextureSampler, input.TexCoords);
+	float4 color1 = tex2D(Texture1Sampler, input.TexCoords);
+	float4 color2;
+	float4 color3;
 
-	//Diffuse
-
-	float4 normal = input.Normal;
-	float4 DiffuseCol = saturate(dot(normal, DiffuseLightDirection));
-
-
-
-	float4 Diffuse = DiffuseCol * DiffuseIntensity * DiffuseColor;
-
-	//Specular
-
-	float3 light = normalize(SpecularLightDirection);
-	normal = normalize(input.Normal);
-	float3 v = normalize(mul(normalize(ViewVector), World));  // normalize(ViewVector);
-	float Diff = saturate(dot(light, normal));
-
-	float3 r = normalize(2 * Diff * normal - light);
-	float dotProduct = abs(dot(r, v));
-
-	float4 Specular = SpecularIntensity * SpecularColor * max(1, pow(dotProduct, Shiny));
-*/
-//* length(DiffuseCol) wenn was schief läuft, das am Ende von 99 einsetzen xD
-
-/*Fuer Einstellungen vom ersten Screenshot ersetze die Zeilen 99 & 107 mit:
-	float4 SpecularIntensity * SpecularColor * max(pow(dotProduct, Shiny), 3.5f);
-	float4 res = VertexTexCol * Diffuse + Specular;
-*/
+	if (maxTexCount > 0)
+	{
+		color1 = tex2D(Texture1Sampler, input.TexCoords);
+	}
+	if (maxTexCount > 1) 
+	{
+		color2 = tex2D(Texture2Sampler, input.TexCoords);
+	}
+	if (maxTexCount > 2)
+	{
+		color3 = tex2D(Texture3Sampler, input.TexCoords);
+	}
 
 
 
-//Ergebnisse
-//WICHTIG es gibt zwei Möglichkeiten Hell/Dunkel -> Einfach auskommentieren 
 
-//float4 resDunkel = VertexTexCol * Diffuse + Specular;
-
-	float4 light = float4(0, 1, 0, 0);
+	float4 light = float4(0, 1, 1, 0);
 	
 	float4 normal = input.Normal;
 
 	float ang = dot(light, normal);
 
-	return saturate(float4(ang*Color.r, ang * Color.g, ang * Color.b, 1));
 
 
-	//float4 resHell = VertexTexCol + Diffuse * Diff + Specular;
+	if (maxTexCount > 1 && currentTex == 1)
+	{
+		color1 = color2;
+	}
+	if (maxTexCount > 2)
+	{
+		color1 = color3;
 
-				//laut der Formel das "richtige" ist aber super hell und wird nicht dunkel :/
+	}
 
-	//return saturate(float4(resHell.r, resHell.g, resHell.b, 1.0f));
+	return saturate(float4(ang*color1.r, ang * color1.g, ang * color1.b, color1.a));
+
+
 
 }
 
