@@ -80,11 +80,11 @@ namespace Guus_Reise
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
                     break;
-                case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonLeer");
-                    this.Type = "Straße";
+                case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
+                    this.Type = "Wueste";
                     this.Begehbarkeit = 0.5f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonTerrain2");
+                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
                     this.Type = "Wiese";
                     this.Begehbarkeit = 1;
                     break;
@@ -156,7 +156,7 @@ namespace Guus_Reise
                         {
                             _shader.Parameters["Color"].SetValue(greene);
                         }
-                        else if (this.Type == "Straße")
+                        else if (this.Type == "Wueste")
                         {
                             _shader.Parameters["Color"].SetValue(greye);
                         }
