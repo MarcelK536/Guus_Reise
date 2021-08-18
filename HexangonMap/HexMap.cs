@@ -32,6 +32,9 @@ namespace Guus_Reise
         public static bool[] lvlObjectives;
         public static string[] lvlObjectiveText;
 
+        public static int firsttimeCounter = 0;
+        public static bool firsttime = true;
+
         internal static Camera Camera { get => _camera; set => _camera = value; }
 
 
@@ -231,12 +234,33 @@ namespace Guus_Reise
                 }
             }
         }
+
+        public static void StartGlow() //setzt den gesamten Glow der Map zurück
+        {
+            for (int i = 0; i < _board.GetLength(0); i++)
+            {
+                for (int k = 0; k < _board.GetLength(1); k++)
+                {
+                    _board[i, k].Tile.Glow = new Vector3(0.2f, 0.2f, 0.2f);
+                    _board[i, k].Tile.isglowing = true;
+                }
+            }
+        }
+
         public static void CalculatePossibleMoves(int x, int y, float bewegung, Hex activeTile) //hebt alle möglichen Züge hervor und speichert diese in possibleMoves
         {
+            ++firsttimeCounter;
+            if(firsttime == true)
+            {
+                firsttime = false;
+                StartGlow();
+            }
             if (bewegung >= 0)
             {
-                _board[x, y].Tile.Glow = new Vector3(0.2f, 0.2f, 0.2f);
-                _board[x, y].Tile.isglowing = true;
+                _board[x, y].Tile.Glow = new Vector3(1f, 1f, 1f);
+                _board[x, y].Tile.Color = new Vector3(0.6f, 0.6f, 0.6f);
+                _board[x, y].Tile.isglowing = false;
+
 
                 if (_board[x, y].Charakter != null && activeTile.LogicalPosition != new Point(x,y)) //erkennt andere charaktere
                 {
@@ -312,6 +336,11 @@ namespace Guus_Reise
             else
             {
                 possibleMoves.Remove(new Point(x, y));
+            }
+            --firsttimeCounter;
+            if(firsttimeCounter == 0)
+            {
+                firsttime = true;
             }
         }
         public static void CreateCharakter(string[] names, int[] charakter, int[,] positions)
