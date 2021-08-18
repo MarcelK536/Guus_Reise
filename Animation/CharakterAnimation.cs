@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise.HexangonMap
 {
@@ -46,7 +47,10 @@ namespace Guus_Reise.HexangonMap
 
         string _animationPlanner = "";
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, float standardintervall)
+        SoundEffect[] _sounds;
+
+
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, float standardintervall, SoundEffect[] sounds)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
@@ -56,6 +60,7 @@ namespace Guus_Reise.HexangonMap
             _planeModel = planeModel;
             _texCharakter = texCharakter;
             _curTex = _texCharakter;
+            _sounds = sounds;
 
             // Set previous Keyboard State
             _prevKeyState = Keyboard.GetState();
@@ -253,6 +258,8 @@ namespace Guus_Reise.HexangonMap
             };
             _currentIntervall = intervall;
             isPlayAnimation = true;
+            _sounds[0].Play();
+        
         }
 
         // Setzen der Texture wieder auf die Standardtextur
