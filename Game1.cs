@@ -12,7 +12,7 @@ namespace Guus_Reise
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
+        public static GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private static KeyboardState _prevKeyState;
 
@@ -70,6 +70,7 @@ namespace Guus_Reise
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
+            MovementAnimationManager.LoadTextures(Content, _spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)
@@ -173,6 +174,11 @@ namespace Guus_Reise
             _graphics.ApplyChanges();
             PlanetMenu.SetParametersFromWindowScale();
             MainMenu.SetParametersFromWindowScale();
+            if(_state == GameState.MovementAnimation)
+            {
+                MovementAnimationManager.SetParameterFromWindowScale();
+            }
+            
 
 
         }
