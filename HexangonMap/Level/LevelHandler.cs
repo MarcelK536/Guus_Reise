@@ -13,8 +13,8 @@ namespace Guus_Reise
 
         public static ContentManager contentLevel;
 
-        static int currentWorld = 1;
-        static int currentLevel = 1;
+        public static int currentWorld = 1;
+        public static int currentLevel = 1;
 
         readonly static int maxWorld = 3;
         readonly static int maxLevel = 3;
@@ -38,13 +38,16 @@ namespace Guus_Reise
             switch (currentWorld, currentLevel)
             {
                 case (1, 1):
-                    activeLevel = new Level(LevelDatabase.W1L1charNames, LevelDatabase.W1L1charLevel, LevelDatabase.W1L1charPos, LevelDatabase.W1L1tilemap, LevelDatabase.W1L1objectiveText, LevelDatabase.W1L1objective, contentLevel);
+                    activeLevel = new Level(LevelDatabase.W1L1playerNames, LevelDatabase.W1L1playerStats, LevelDatabase.W1L1playerPos, LevelDatabase.W1L1tilemap, LevelDatabase.W1L1objectiveText, LevelDatabase.W1L1objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W1L1npcNames, LevelDatabase.W1L1npcStats, LevelDatabase.W1L1npcPos);
                     return activeLevel;
                 case (1, 2):
-                    activeLevel = new Level(LevelDatabase.W1L2charNames, LevelDatabase.W1L2charLevel, LevelDatabase.W1L2charPos, LevelDatabase.W1L2tilemap, LevelDatabase.W1L2objectiveText, LevelDatabase.W1L2objective, contentLevel);
+                    activeLevel = new Level(LevelDatabase.W1L2playerNames, LevelDatabase.W1L2playerStats, LevelDatabase.W1L2playerPos, LevelDatabase.W1L2tilemap, LevelDatabase.W1L2objectiveText, LevelDatabase.W1L2objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W1L2npcNames, LevelDatabase.W1L2npcStats, LevelDatabase.W1L2npcPos);
                     return activeLevel;
                 case (2, 1):
-                    activeLevel = new Level(LevelDatabase.W2L1charNames, LevelDatabase.W2L1charLevel, LevelDatabase.W2L1charPos, LevelDatabase.W2L1tilemap, LevelDatabase.W2L1objectiveText, LevelDatabase.W2L1objective, contentLevel);
+                    activeLevel = new Level(LevelDatabase.W2L1playerNames, LevelDatabase.W2L1playerStats, LevelDatabase.W2L1playerPos, LevelDatabase.W2L1tilemap, LevelDatabase.W2L1objectiveText, LevelDatabase.W2L1objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L1npcNames, LevelDatabase.W2L1npcStats, LevelDatabase.W2L1npcPos);
                     return activeLevel;
             }
             return activeLevel;
