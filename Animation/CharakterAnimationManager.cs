@@ -5,6 +5,8 @@ using System.Text;
 using System.IO;
 using Microsoft.Xna.Framework.Content;
 using Guus_Reise.HexangonMap;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace Guus_Reise.Animation
 {
@@ -13,6 +15,7 @@ namespace Guus_Reise.Animation
         static List<string> charakterNames;
         static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
         static CharakterAnimation[] charakterAnimations;
+        static SoundEffect[] _sounds;
 
         static bool _activeHexExists = false;
         // (Idle, moveLeft, moveRight, moveFront, moveBack, readyToFight)
@@ -33,6 +36,7 @@ namespace Guus_Reise.Animation
         {
             charakterNames = new List<string> {"Guu", "Timmae", "Peter", "Paul" };
             charakterAnimations = new CharakterAnimation[charakterNames.Count];
+            _sounds = new SoundEffect[charakterNames.Count];
             string curPath;
             string path;
             int numberOfFrames;
@@ -110,8 +114,8 @@ namespace Guus_Reise.Animation
                 //moveLeft
                 //moveRight
                 //...
-
-                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, standardIntervall);  
+                _sounds[indexCharakter] = content.Load<SoundEffect>("Sounds\\guu_wave");
+                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, standardIntervall, _sounds);  
             }
         }
 
