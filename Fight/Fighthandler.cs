@@ -21,6 +21,8 @@ namespace Guus_Reise
         public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
         public static int[,] charPositionsEnemy = new int[,] { { 6, 0 }, { 6, 1 }, { 6, 2 }, { 4, 1 } };   //Positionen für Gegner  Der dem Spieler gegenüber stehenenden Gegner ist an der Letzten Position
 
+        public static bool createdBoard = false;
+        public static ContentManager contentFight;
 
         public static FightMenu fightMenu;
         public static bool initPlayers = false;
@@ -32,7 +34,7 @@ namespace Guus_Reise
         public static void Init(GraphicsDevice graphicsDevice, ContentManager content)
         {
             fightMenu = new FightMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
-            Createboard(fightMap, content);
+            contentFight = content;
         }
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
@@ -142,11 +144,17 @@ namespace Guus_Reise
             HexMap.activeHex = null;
             HexMap.NoGlow();
             Player.actionMenu.Active = false;
+            createdBoard = false;
             Game1.GState = Game1.GameState.InGame;
         }
 
         public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
+            if (createdBoard == false)
+            {
+                Createboard(fightMap);
+                createdBoard = true;
+            }
             if (initPlayers == false)
             {
                 InitPlayers(playerTiles,charPositionsPlayer);
@@ -199,7 +207,6 @@ namespace Guus_Reise
                         {
                             HexMap.playableCharacter.Remove(hexTiles.Charakter);
                         }
-
                         hexTiles.Charakter = null;
                     }
                 }
@@ -240,7 +247,7 @@ namespace Guus_Reise
             }
         }
 
-        public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
+        public static void Createboard(int[,] tilemap)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
             _fightBoard = new Hex[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
 
@@ -252,13 +259,13 @@ namespace Guus_Reise
                     {
                         if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                         {
-                            Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                            Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], contentFight);
                             _fightBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
 
                         }
                         else
                         {
-                            Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                            Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], contentFight);
                             _fightBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
                         }
 
@@ -295,7 +302,6 @@ namespace Guus_Reise
                     fightMenu.Draw(spriteBatch);
                 }
             }
-
         }
 
         public static float GetBaseDmg(Charakter charakter, Weapon weapon)
