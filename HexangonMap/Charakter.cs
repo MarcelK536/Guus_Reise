@@ -186,7 +186,7 @@ namespace Guus_Reise
         }
 
 
-        public Charakter (String name, int level, int xp, int leben, int angriff1, int angriff2, int abwehr, int wortgewand1, int wortgewand2, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite, int fpunkte)
+        public Charakter (String name, int level, int xp, int leben, int angriff1, int angriff2, int abwehr, int wortgewand1, int wortgewand2, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite, int fpunkte, Hex hex, CharakterAnimation charakterAnimation)
         {
             this.Name = name;
             this.Level = level;
@@ -203,14 +203,45 @@ namespace Guus_Reise
             this.Bewegungsreichweite = bewegungsreichweite;
             this.Fähigkeitspunkte = fpunkte;
             IsMoving = false;
+
+            _charakterAnimation = charakterAnimation;
+
+            //Fehlende Parameter für die CharakterAnimation setzen
+            charakterAnimation.SetParametersAfterInitCharakter(this, hex);
         }
 
 
-        public Charakter(String klasse, int level, Hex hex, CharakterAnimation charakterAnimation)
+        public Charakter(String name, int level, int ki, Hex hex, CharakterAnimation charakterAnimation)
         {
-            int[] stats = LevelToStats(level, klasse);
-            SetCharakter(klasse, stats);
+            int[] stats = LevelToStats(level);
+            SetCharakter(name, stats);
+            this.KI = ki;
             _charakterAnimation = charakterAnimation;
+
+            if (this.KI == 4)
+            {
+                switch (LevelHandler.currentWorld, LevelHandler.currentLevel)
+                {
+                    case (1, 1):
+                        for (int i = 0; i < LevelDatabase.W1L1npcPatroulPoints.GetLength(0); i++)
+                        {
+                            this.Patroullienpunkte.Add(new Point(LevelDatabase.W1L1npcPatroulPoints[i, 0], LevelDatabase.W1L1npcPatroulPoints[i, 1]));
+                        }
+                        break;
+                    case (1, 2):
+                        for (int i = 0; i < LevelDatabase.W1L2npcPatroulPoints.GetLength(0); i++)
+                        {
+                            this.Patroullienpunkte.Add(new Point(LevelDatabase.W1L2npcPatroulPoints[i, 0], LevelDatabase.W1L2npcPatroulPoints[i, 1]));
+                        }
+                        break;
+                    case (2, 1):
+                        for (int i = 0; i < LevelDatabase.W2L1npcPatroulPoints.GetLength(0); i++)
+                        {
+                            this.Patroullienpunkte.Add(new Point(LevelDatabase.W2L1npcPatroulPoints[i, 0], LevelDatabase.W2L1npcPatroulPoints[i, 1]));
+                        }
+                        break;
+                }
+            }
 
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);
@@ -259,50 +290,25 @@ namespace Guus_Reise
             this.Geschwindigkeit = werte[7];
             this.Glueck = werte[8];
             this.Bewegungsreichweite = werte[9];
-            if (werte[10] == 0)
-            {
-                this.IsNPC = false;
-            }
-            if (werte[10] == 1)
-            {
-                this.IsNPC = true;
-            }
-            this.KI = werte[11];
+            this.IsNPC = true;            
             this.Fähigkeitspunkte = werte[12];
             this.Level = werte[13];
             _isMoving = false;
         }
 
-        public int[] LevelToStats(int level, String klasse)
+        public int[] LevelToStats(int level)
         {
             int[] stats = new int[14];
             int fpoints = level * 3 + 37;
-            switch (klasse)
+            
+            for(int i=0; i<=8; i++)
             {
-                case "Guu":
-                    stats[0] = 10;
-                    for (int i = 1; i<=8; i++)
-                    {
-                        stats[i] = 0;
-                    }
-                    stats[9] = 5;
-                    stats[10] = 0;
-                    stats[11] = 0;
-                    stats[12] = fpoints;
-                    stats[13] = level;
-                    break;
-                default:
-                    for(int i=0; i<=8; i++)
-                    {
-                        stats[i] = fpoints / 9;
-                    }
-                    stats[9] = 5;
-                    stats[10] = 1;
-                    stats[11] = 2;
-                    stats[12] = 0;
-                    stats[13] = level;
-                    break;
+                stats[i] = fpoints / 9;
             }
+            stats[9] = 5;
+            stats[11] = 2;
+            stats[12] = 0;
+            stats[13] = level;
             return stats;
         }
 

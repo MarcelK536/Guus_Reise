@@ -57,44 +57,63 @@ namespace Guus_Reise
             Board = HexMap.CreateHexboard(tilemap, content);
         }
 
-        public Level(string[] charNames, int[] charLevel, int[,] charPos, int[,] tilemap, string[] objectiveText, bool[] objective, ContentManager content)  //Init Level with new Characters
+        public Level(string[] charNames, int[,] charStats, int[,] charPos, int[,] tilemap, string[] objectiveText, bool[] objective, ContentManager content)  //Init Level with new Characters
         {
             LevelObjective = objective;
             LevelObjectiveText = objectiveText;
             Board = HexMap.CreateHexboard(tilemap, content);
             if (CharacterList == null)
             {
-                CharacterList = CreateCharakters(Board, charNames, charLevel, charPos);
+                CharacterList = CreateCharakters(Board, charNames, charStats, charPos);
             }
             else
             {
-                CharacterList.Union(CreateCharakters(Board, charNames, charLevel, charPos));    //current Characters are Merged with new Charakters Duplicates will be removed 
+                CharacterList.Union(CreateCharakters(Board, charNames, charStats, charPos));    //current Characters are Merged with new Charakters Duplicates will be removed 
             }
         }
 
-        public void AddNewCharacter(Hex[,] levelBoard, string[] charNames, int[] charLevel, int[,] charPos)
-        {
-            CharacterList.Union(CreateCharakters(levelBoard, charNames, charLevel, charPos));
-        }
-
-        public List<Charakter> CreateCharakters(Hex[,] levelBoard, string[] charNames, int[] charLevel, int[,] charPos)
+        public void AddNewCharacter(Hex[,] levelBoard, string[] charNames, int[,] charStats, int[,] charPos)
         {
             List<Charakter> createdCharakters = new List<Charakter>();
             for (int i = 0; i < charNames.GetLength(0); i++)
             {
-                Charakter currChar = new Charakter(charNames[i], charLevel[i], levelBoard[charPos[i, 0], charPos[i, 0]], CharakterAnimationManager.GetCharakterAnimation(charNames[i]));
                 Hex currHex = levelBoard[charPos[i, 0], charPos[i, 1]];
+                Charakter currChar = new Charakter(charNames[i], charStats[i, 0], charStats[i, 1], currHex, CharakterAnimationManager.GetCharakterAnimation(charNames[i]));
                 currHex.Charakter = currChar;
-                levelBoard[charPos[i, 0], charPos[i, 1]].Charakter.LogicalBoardPosition = levelBoard[charPos[i, 0], charPos[i, 1]].LogicalPosition;
-                if (levelBoard[charPos[i, 0], charPos[i, 1]].Charakter.IsNPC)
+                currHex.Charakter.LogicalBoardPosition = currHex.LogicalPosition;
+                createdCharakters.Add(currChar);
+                if (currHex.Charakter.IsNPC)
                 {
-                    levelBoard[charPos[i, 0], charPos[i, 1]].Charakter.CanMove = false;
-                    NPCCharacters.Add(levelBoard[charPos[i, 0], charPos[i, 1]].Charakter);
+                    currHex.Charakter.CanMove = false;
+                    NPCCharacters.Add(currHex.Charakter);
                 }
                 else
                 {
-                    levelBoard[charPos[i, 0], charPos[i, 1]].Charakter.CanMove = true;
-                    PlayableCharacters.Add(levelBoard[charPos[i, 0], charPos[i, 1]].Charakter);
+                    currHex.Charakter.CanMove = true;
+                    PlayableCharacters.Add(currHex.Charakter);
+                }
+            }
+            CharacterList.Union(createdCharakters);
+        }
+
+        public List<Charakter> CreateCharakters(Hex[,] levelBoard, string[] charNames, int[,] charStats, int[,] charPos)
+        {
+            List<Charakter> createdCharakters = new List<Charakter>();
+            for (int i = 0; i < charNames.GetLength(0); i++)
+            {
+                Hex currHex = levelBoard[charPos[i, 0], charPos[i, 1]];
+                Charakter currChar = new Charakter(charNames[i], charStats[i, 0], charStats[i, 1], charStats[i, 2], charStats[i, 3], charStats[i, 4], charStats[i, 5], charStats[i, 6], charStats[i, 7], charStats[i, 8], charStats[i, 9], charStats[i, 10], charStats[i, 11], charStats[i, 12], currHex, CharakterAnimationManager.GetCharakterAnimation(charNames[i]));               
+                currHex.Charakter = currChar;
+                currHex.Charakter.LogicalBoardPosition = currHex.LogicalPosition;
+                if (currHex.Charakter.IsNPC)
+                {
+                    currHex.Charakter.CanMove = false;
+                    NPCCharacters.Add(currHex.Charakter);
+                }
+                else
+                {
+                    currHex.Charakter.CanMove = true;
+                    PlayableCharacters.Add(currHex.Charakter);
                 }
 
                 createdCharakters.Add(currChar);
