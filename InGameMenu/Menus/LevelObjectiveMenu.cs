@@ -8,7 +8,6 @@ namespace Guus_Reise
 {
     class LevelObjectiveMenu : SimpleMenu
     {
-        bool objective1 = false;
         public LevelObjectiveMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
             
@@ -28,17 +27,6 @@ namespace Guus_Reise
             btnClose.MoveButton(pos - Vector2.UnitX * btnClose.TextureDefault.Width);
             bkgPos = pos;
             SetBackgroundTexture(bkgColor);
-            
-
-            var found = HexMap.playableCharacter.Find(c => c.LogicalBoardPosition == HexMap._board[7, 7].LogicalBoardPosition);
-            if(found != null)
-            {
-                objective1 = true;
-            }
-            else 
-            {
-                objective1 = false; 
-            }
         }
 
         public void Draw(SpriteBatch spriteBatch, bool[] objectives, string[] objText)

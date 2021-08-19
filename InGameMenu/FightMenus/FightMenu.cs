@@ -11,6 +11,7 @@ namespace Guus_Reise
         Button btnGiveUp;
         Button btnAttack;
         Button btnChangeWeapon;
+        Button btnCancelAttack;
         GraphicsDevice graphics;
 
 
@@ -36,7 +37,8 @@ namespace Guus_Reise
             menuButtons.Add(btnChangeWeapon);
             btnGiveUp = new Button("Give Up", btnTexture, 1, btnChangeWeapon.GetPosBelow());
             menuButtons.Add(btnGiveUp);
-
+            btnCancelAttack = new Button("Cancel Attack", btnTexture, 1, btnChangeWeapon.GetPos());
+            menuButtons.Add(btnCancelAttack);
             SetMenuHeight();
             menuWidth = graphicsDevice.Viewport.Width;
             SetBackgroundTexture(Color.Green);
@@ -50,22 +52,32 @@ namespace Guus_Reise
                 int x = Player.activeTile.LogicalPosition.X;
                 int y = Player.activeTile.LogicalPosition.Y;
 
-                if (btnAttack.IsClicked())
+                if (FightPlayer.isSelecting == false)
                 {
-                    attackMenu = new AttackMenu(btnAttack.GetPosRightOf(), textFont, graphics, BlendDirection.None);
-                    attackMenu.Active = true;
-                    if (weaponMenu != null) 
-                    { 
-                        weaponMenu.Active = false; 
+                    if (btnAttack.IsClicked())
+                    {
+                        attackMenu = new AttackMenu(btnAttack.GetPosRightOf(), textFont, graphics, BlendDirection.None);
+                        attackMenu.Active = true;
+                        if (weaponMenu != null)
+                        {
+                            weaponMenu.Active = false;
+                        }
+                    }
+                    if (btnChangeWeapon.IsClicked())
+                    {
+                        weaponMenu = new WeaponMenu(Weapon.weapons, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                        weaponMenu.Active = true;
+                        if (attackMenu != null)
+                        {
+                            attackMenu.Active = false;
+                        }
                     }
                 }
-                if (btnChangeWeapon.IsClicked())
+                else
                 {
-                    weaponMenu = new WeaponMenu(Weapon.weapons, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                    weaponMenu.Active = true;
-                    if (attackMenu != null)
+                    if (btnCancelAttack.IsClicked())
                     {
-                        attackMenu.Active = false;
+                        FightPlayer.CancelAttack();
                     }
                 }
                 if (btnGiveUp.IsClicked())
@@ -117,8 +129,16 @@ namespace Guus_Reise
                         spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
                     }
                 }
-                btnAttack.Draw(spriteBatch, textFont);
-                btnChangeWeapon.Draw(spriteBatch, textFont);
+                if (FightPlayer.isSelecting == false)
+                {
+                    btnAttack.Draw(spriteBatch, textFont);
+                    btnChangeWeapon.Draw(spriteBatch, textFont);
+                }
+                else
+                {
+                    spriteBatch.DrawString(textFont, "Select Enemy to Attack", pos, Color.Yellow);
+                    btnCancelAttack.Draw(spriteBatch, textFont);
+                }
                 btnGiveUp.Draw(spriteBatch, textFont);
 
                 textPosition = Vector2.Zero;

@@ -35,6 +35,12 @@ namespace Guus_Reise
             isSelecting = true;
         }
 
+        public static void CancelAttack()
+        {
+            isSelecting = false;
+            _selSkill = null;
+        }
+
         public static void getTile()
         {
             float? minDistance = float.MaxValue;
