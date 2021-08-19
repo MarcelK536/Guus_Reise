@@ -8,8 +8,8 @@ namespace Guus_Reise
 {
     class LevelHandler
     {
-        List<Charakter> _currentPlayableCharacters = new List<Charakter>();
-        List<Charakter> _currentNPCs = new List<Charakter>();
+       static List<Charakter> _currentPlayableCharacters = new List<Charakter>();
+       static List<Charakter> _currentNPCs = new List<Charakter>();
 
         public static ContentManager contentLevel;
 
@@ -66,13 +66,13 @@ namespace Guus_Reise
                     break;
             }
         }
-        public void UpdateLevel()
+        public static void UpdateLevel()
         {
             UpdateObjective();
             CheckIfLevelCondtionMet();
         }
 
-        public void CheckIfLevelCondtionMet()
+        public static void CheckIfLevelCondtionMet()
         {
             bool conditionsMet = true;
             foreach(Boolean condition in activeLevel.LevelObjective)
@@ -89,14 +89,15 @@ namespace Guus_Reise
             }
         }
 
-        public void InitNewLevel()
+        public static void InitNewLevel()
         {
             UpdateLevelCounter();
             CopyCharacters(activeLevel.CharacterList);
             activeLevel = InitLevel();
+            HexMap.InitBoard();
         }
 
-        public void UpdateLevelCounter()
+        public static void UpdateLevelCounter()
         {
             if(currentLevel+1 > maxLevel)
             {
@@ -116,7 +117,7 @@ namespace Guus_Reise
             }
         }
 
-        public void CopyCharacters(List<Charakter> toCopy)
+        public static void CopyCharacters(List<Charakter> toCopy)
         {
             foreach (Charakter c in toCopy)
             {

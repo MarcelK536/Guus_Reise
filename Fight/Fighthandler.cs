@@ -97,7 +97,8 @@ namespace Guus_Reise
             DeInitPlayers(npcTiles);
 
             initPlayers = false;
-
+            fightMenu.Active = false;
+            
             for (int i = _fightBoard.GetLength(0) - 1; i > 0; i--)
             {
                 for (int j = _fightBoard.GetLength(1) - 1; j > 0; j--)
