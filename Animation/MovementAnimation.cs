@@ -277,7 +277,11 @@ namespace Guus_Reise.Animation
             {
                 foreach (Charakter charakter in movingCharakters)
                 {
-                    movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+                    if(movingCharakter != null)
+                    {
+                        movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+                    }
+                    
                 }
             }
             else

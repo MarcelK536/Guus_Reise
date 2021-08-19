@@ -13,8 +13,15 @@ namespace Guus_Reise
     public class Game1 : Game
     {
         public static GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        public static SpriteBatch _spriteBatch;
         private static KeyboardState _prevKeyState;
+
+        public static Texture2D textureSoundButton;
+        public static Texture2D textureSoundButtonOff;
+        public static SpriteFont mainMenuFont;
+
+        public static bool defaultValueSoundOn = false;
+        
 
         public enum GameState
         {
@@ -65,6 +72,9 @@ namespace Guus_Reise
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            textureSoundButton  = Content.Load<Texture2D>("Buttons\\ButtonSound");
+            textureSoundButtonOff = Content.Load<Texture2D>("Buttons\\soundButtonOff");
+            mainMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
             MainMenu.LoadTexture(Content);
             PlanetMenu.LoadTexture(Content, _spriteBatch);
@@ -177,6 +187,10 @@ namespace Guus_Reise
             if(_state == GameState.MovementAnimation)
             {
                 MovementAnimationManager.SetParameterFromWindowScale();
+            }
+            if(_state == GameState.InGame)
+            {
+                HexMap.SetParameterFromWindowScale();
             }
             
 

@@ -17,6 +17,8 @@ namespace Guus_Reise.Animation
         static CharakterAnimation[] charakterAnimations;
         static SoundEffect[] _sounds;
 
+        public static bool animationSound;
+
         static bool _activeHexExists = false;
         // (Idle, moveLeft, moveRight, moveFront, moveBack, readyToFight)
 
@@ -25,6 +27,7 @@ namespace Guus_Reise.Animation
             get => _activeHexExists;
             set => _activeHexExists = value;
         }
+
 
         public static CharakterAnimation[] CharakterAnimations
         {
@@ -36,7 +39,10 @@ namespace Guus_Reise.Animation
         {
             charakterNames = new List<string> {"Guu", "Timmae", "Peter", "Paul" };
             charakterAnimations = new CharakterAnimation[charakterNames.Count];
+
+            animationSound = Game1.defaultValueSoundOn;
             _sounds = new SoundEffect[charakterNames.Count];
+
             string curPath;
             string path;
             int numberOfFrames;

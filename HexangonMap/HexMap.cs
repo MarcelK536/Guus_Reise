@@ -19,6 +19,8 @@ namespace Guus_Reise
         public static Hex activeHex;
         public static Hex hoveredHex;
 
+        public static Button btSoundEinstellungen;
+
         private static Camera _camera;
 
         public static List<Charakter> npcs = new List<Charakter>();
@@ -47,7 +49,18 @@ namespace Guus_Reise
             //Fokus der Camera auf die Mitte der Karte setzen
             visManager.SetCameraToMiddleOfMap();
 
-
+            //Sound-Button
+            btSoundEinstellungen = new Button("", Game1.textureSoundButton, Game1.textureSoundButton, 0.3f, 830, 10);
+            if (Game1.defaultValueSoundOn == false)
+            {
+                btSoundEinstellungen.TextureHover = Game1.textureSoundButtonOff;
+                btSoundEinstellungen.TextureDefault = Game1.textureSoundButtonOff;
+            }
+            
+            if(Game1._graphics.IsFullScreen == true)
+            {
+                SetParameterFromWindowScale();
+            }
             Player._prevMouseState = Mouse.GetState();
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
@@ -74,6 +87,22 @@ namespace Guus_Reise
         }
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
+
+            //Sound-Einstellungen
+            if(btSoundEinstellungen.IsClicked())
+            {
+                CharakterAnimationManager.animationSound = !CharakterAnimationManager.animationSound;
+                if(CharakterAnimationManager.animationSound)
+                {
+                    btSoundEinstellungen.TextureDefault = Game1.textureSoundButton;
+                    btSoundEinstellungen.TextureHover = Game1.textureSoundButton;
+                }
+                else
+                {
+                    btSoundEinstellungen.TextureDefault = Game1.textureSoundButtonOff;
+                    btSoundEinstellungen.TextureHover = Game1.textureSoundButtonOff;
+                }
+            }
 
             // Aktualisieren der Charakter-Positionen
             foreach(Charakter c in playableCharacter)
@@ -163,6 +192,13 @@ namespace Guus_Reise
                 Player.Draw(spriteBatch, gameTime);
             }
 
+            if(Game1.GState == Game1.GameState.InGame)
+            {
+                Game1._spriteBatch.Begin();
+                btSoundEinstellungen.Draw(Game1._spriteBatch, Game1.mainMenuFont);
+                Game1._spriteBatch.End();
+            }
+            
         }
 
         public static Hex[,] CreateHexboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
@@ -401,6 +437,25 @@ namespace Guus_Reise
             }
 
             return list;
+        }
+
+        public static void SetParameterFromWindowScale()
+        {
+            if (Game1._graphics.IsFullScreen == true)
+            {
+
+                //Sound Einstellungen
+                btSoundEinstellungen.ButtonX = btSoundEinstellungen.ButtonX + 870;
+                btSoundEinstellungen.ButtonY = btSoundEinstellungen.ButtonY + 10;
+                btSoundEinstellungen.Scale = btSoundEinstellungen.Scale + 0.1f;
+            }
+            else
+            {
+                //Sound Einstellungen
+                btSoundEinstellungen.ButtonX = btSoundEinstellungen.ButtonX - 870;
+                btSoundEinstellungen.ButtonY = btSoundEinstellungen.ButtonY - 10;
+                btSoundEinstellungen.Scale = btSoundEinstellungen.Scale - 0.1f;
+            }
         }
     }
 }
