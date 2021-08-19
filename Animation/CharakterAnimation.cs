@@ -179,6 +179,10 @@ namespace Guus_Reise.HexangonMap
                 }
                 else
                 {
+                    if(currentAnimation.Count == currentFrame)
+                    {
+                        currentFrame--;
+                    }
                     _curTex = currentAnimation[currentFrame];
                     UpdateAnimation(gametime);
                 }

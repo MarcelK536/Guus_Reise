@@ -139,6 +139,7 @@ namespace Guus_Reise.Animation
         {
             if (currentStep >= ablauf.Count)
             {
+                ResetAnimation();
                 Game1.GState = Game1.GameState.InGame;
                 return;
             }
