@@ -186,21 +186,24 @@ namespace Guus_Reise
         }
 
 
-        /*public Charakter (String name, int leben, int angriff, int abwehr, int wortgewand, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite)
+        public Charakter (String name, int level, int xp, int leben, int angriff1, int angriff2, int abwehr, int wortgewand1, int wortgewand2, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite, int fpunkte)
         {
             this.Name = name;
+            this.Level = level;
+            this.XP = xp;
             this.Widerstandskraft = leben;
-            this.Koerperkraft = angriff;
+            this.Koerperkraft = angriff1;
+            this.Beweglichkeit = angriff2;
             this.Abwehr = abwehr;
-            this.Wortgewandheit = wortgewand;
+            this.Wortgewandheit = wortgewand1;
+            this.Lautstaerke = wortgewand2;
             this.Ignoranz = ignoranz;
             this.Geschwindigkeit = geschwindigkeit;
             this.Glueck = glück;
             this.Bewegungsreichweite = bewegungsreichweite;
-            this.Fähigkeitspunkte = 0;
-            this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
-            this.Color = new Vector3(0, 0, 0);
-        }*/
+            this.Fähigkeitspunkte = fpunkte;
+            IsMoving = false;
+        }
 
 
         public Charakter(String klasse, int level, Hex hex, CharakterAnimation charakterAnimation)
