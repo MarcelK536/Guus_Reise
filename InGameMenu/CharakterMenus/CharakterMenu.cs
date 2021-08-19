@@ -32,7 +32,7 @@ namespace Guus_Reise
                 btnColor[i] = Color.YellowGreen * 0.8f;
             }
             btnTexture.SetData(btnColor);
-            btnLevelUp = new Button("Faehigkeitenpunkte", btnTexture, 1, btnClose.GetPosBelow());
+            btnLevelUp = new Button("Fähigkeitenpunkte", btnTexture, 1, btnClose.GetPosBelow());
             menuButtons.Add(btnLevelUp);
             btnWaffenWechsel = new Button("Waffenwechsel", btnTexture, 1, btnLevelUp.GetPosBelow());
             menuButtons.Add(btnWaffenWechsel);
@@ -96,10 +96,10 @@ namespace Guus_Reise
                 if (HexMap._board[x, y].Charakter == null)
                 {
                     spriteBatch.Begin();
-                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewaehlt").X;
+                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
                     menuHeight = btnClose.GetPosBelow().Y;
                     SetBackgroundTexture(bkgColor);
-                    spriteBatch.DrawString(textFont, "Kein Charakter ausgewaehlt", btnClose.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Kein Charakter ausgewählt", btnClose.GetPosRightOf(), Color.Yellow);
                     spriteBatch.End();
                 }
                 else
