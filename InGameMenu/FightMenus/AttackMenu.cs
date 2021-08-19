@@ -49,6 +49,7 @@ namespace Guus_Reise
         {
             if (FightPlayer.isSelecting == true)
             {
+                Active = false;
                 FightPlayer.PrepareMove();
             }
             else

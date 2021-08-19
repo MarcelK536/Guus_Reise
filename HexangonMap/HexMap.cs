@@ -38,11 +38,7 @@ namespace Guus_Reise
 
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
-            _board = LevelHandler.activeLevel.Board;
-            playableCharacter = LevelHandler.activeLevel.PlayableCharacters;
-            npcs = LevelHandler.activeLevel.NPCCharacters;
-            lvlObjectives = LevelHandler.activeLevel.LevelObjective;
-            lvlObjectiveText = LevelHandler.activeLevel.LevelObjectiveText;
+            InitBoard();
 
             visManager = new VisualisationManagerHexmap(_board.GetLength(0), _board.GetLength(1), Camera);
             //Fokus der Camera auf die Mitte der Karte setzen
@@ -58,6 +54,15 @@ namespace Guus_Reise
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
             Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+        }
+
+        public static void InitBoard()
+        {
+            _board = LevelHandler.activeLevel.Board;
+            playableCharacter = LevelHandler.activeLevel.PlayableCharacters;
+            npcs = LevelHandler.activeLevel.NPCCharacters;
+            lvlObjectives = LevelHandler.activeLevel.LevelObjective;
+            lvlObjectiveText = LevelHandler.activeLevel.LevelObjectiveText;
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -127,7 +132,7 @@ namespace Guus_Reise
             {
                 CharakterAnimationManager.ActiveHexExists = false;
             }
-            LevelHandler.UpdateObjective();
+            LevelHandler.UpdateLevel();
         }
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
