@@ -8,7 +8,6 @@ namespace Guus_Reise
 {
     class LevelObjectiveMenu : SimpleMenu
     {
-        bool objective1 = false;
         public LevelObjectiveMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
             
