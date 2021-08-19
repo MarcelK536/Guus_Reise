@@ -11,31 +11,43 @@ namespace Guus_Reise
         List<Charakter> _currentPlayableCharacters = new List<Charakter>();
         List<Charakter> _currentNPCs = new List<Charakter>();
 
+        public static ContentManager contentLevel;
+
         static int currentWorld = 1;
         static int currentLevel = 1;
 
-        public static Level currLevel;
+        readonly static int maxWorld = 3;
+        readonly static int maxLevel = 3;
+
+        public static Level activeLevel;
+
+
+        public static void InitContent(ContentManager content)
+        {
+            contentLevel = content;
+            activeLevel = InitLevel();
+        }
 
         /// <summary>
         /// Initizialized the Level. Needs to be done before Loading new Levels.
         /// </summary>
 
-        public static Level InitLevel(ContentManager content)
+        public static Level InitLevel()
         {
             
             switch (currentWorld, currentLevel)
             {
                 case (1, 1):
-                    currLevel = new Level(LevelDatabase.W1L1charNames, LevelDatabase.W1L1charLevel, LevelDatabase.W1L1charPos, LevelDatabase.W1L1tilemap, LevelDatabase.W1L1objectiveText, LevelDatabase.W1L1objective, content);
-                    return currLevel;
+                    activeLevel = new Level(LevelDatabase.W1L1charNames, LevelDatabase.W1L1charLevel, LevelDatabase.W1L1charPos, LevelDatabase.W1L1tilemap, LevelDatabase.W1L1objectiveText, LevelDatabase.W1L1objective, contentLevel);
+                    return activeLevel;
                 case (1, 2):
-                    currLevel = new Level(LevelDatabase.W1L2charNames, LevelDatabase.W1L2charLevel, LevelDatabase.W1L2charPos, LevelDatabase.W1L2tilemap, LevelDatabase.W1L2objectiveText, LevelDatabase.W1L2objective, content);
-                    return currLevel;
+                    activeLevel = new Level(LevelDatabase.W1L2charNames, LevelDatabase.W1L2charLevel, LevelDatabase.W1L2charPos, LevelDatabase.W1L2tilemap, LevelDatabase.W1L2objectiveText, LevelDatabase.W1L2objective, contentLevel);
+                    return activeLevel;
                 case (2, 1):
-                    currLevel = new Level(LevelDatabase.W2L1charNames, LevelDatabase.W2L1charLevel, LevelDatabase.W2L1charPos, LevelDatabase.W2L1tilemap, LevelDatabase.W2L1objectiveText, LevelDatabase.W2L1objective, content);
-                    return currLevel;
+                    activeLevel = new Level(LevelDatabase.W2L1charNames, LevelDatabase.W2L1charLevel, LevelDatabase.W2L1charPos, LevelDatabase.W2L1tilemap, LevelDatabase.W2L1objectiveText, LevelDatabase.W2L1objective, contentLevel);
+                    return activeLevel;
             }
-            return currLevel;
+            return activeLevel;
         }
 
         public static void UpdateObjective()
@@ -52,6 +64,70 @@ namespace Guus_Reise
                 case (2, 1):
 
                     break;
+            }
+        }
+        public void UpdateLevel()
+        {
+            UpdateObjective();
+            CheckIfLevelCondtionMet();
+        }
+
+        public void CheckIfLevelCondtionMet()
+        {
+            bool conditionsMet = true;
+            foreach(Boolean condition in activeLevel.LevelObjective)
+            {
+                if(condition == false)
+                {
+                    conditionsMet = false;
+                }
+            }
+
+            if(conditionsMet == true)
+            {
+                InitNewLevel();
+            }
+        }
+
+        public void InitNewLevel()
+        {
+            UpdateLevelCounter();
+            CopyCharacters(activeLevel.CharacterList);
+            activeLevel = InitLevel();
+        }
+
+        public void UpdateLevelCounter()
+        {
+            if(currentLevel+1 > maxLevel)
+            {
+                currentLevel = 1;
+                if (currentWorld + 1 < maxWorld)
+                {
+                    currentWorld += 1;
+                }
+                else
+                {
+                    //End of the Game
+                }
+            }
+            else
+            {
+                currentLevel += 1;
+            }
+        }
+
+        public void CopyCharacters(List<Charakter> toCopy)
+        {
+            foreach (Charakter c in toCopy)
+            {
+                if (c.IsNPC)
+                {
+                    _currentNPCs.Add(c.Clone());
+                }
+                else
+                {
+                    _currentPlayableCharacters.Add(c.Clone());
+                }
             }
         }
     }

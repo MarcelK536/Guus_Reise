@@ -15,8 +15,9 @@ namespace Guus_Reise
     {
         Button btnConfirm;
         Button btnAttack;
-        Button btnQuitGame;
         Button btnInteract;
+        Button btnSaveGame;
+        Button btnQuitGame;
         public bool fightTrue;
         public bool interactTrue;
 
@@ -39,9 +40,10 @@ namespace Guus_Reise
             menuButtons.Add(btnAttack);
             btnInteract = new Button("Iteract", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnInteract);
+            btnSaveGame = new Button("Save", btnTexture, 1, btnAttack.GetPosBelow());
+            menuButtons.Add(btnSaveGame);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
             menuButtons.Add(btnQuitGame);
-
 
             SetMenuHeight();
             SetMenuWidth();
@@ -61,6 +63,10 @@ namespace Guus_Reise
                 if (btnQuitGame.IsClicked())
                 {
                     Game1.GState = Game1.GameState.MainMenu;
+                }
+                if (btnSaveGame.IsClicked())
+                {
+                    //TODO SAVE GAME
                 }
                 if (btnConfirm.IsClicked())
                 {
@@ -129,18 +135,21 @@ namespace Guus_Reise
 
                 if (!fightTrue && !interactTrue)
                 {
-                    btnQuitGame.MoveButton(btnConfirm.GetPosBelow());
+                    btnSaveGame.MoveButton(btnConfirm.GetPosBelow());
+                    btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
                 }
                 else
                 {
                     if (fightTrue)
                     {
                         btnAttack.Draw(spriteBatch, textFont);
-                        btnQuitGame.MoveButton(btnAttack.GetPosBelow());
+                        btnSaveGame.MoveButton(btnAttack.GetPosBelow());
+                        btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
                         if (interactTrue)
                         {
                             btnInteract.Draw(spriteBatch, textFont);
-                            btnQuitGame.MoveButton(btnInteract.GetPosBelow());
+                            btnSaveGame.MoveButton(btnInteract.GetPosBelow());
+                            btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
                         }
                     }
                     else
@@ -149,10 +158,12 @@ namespace Guus_Reise
                         {
                             btnInteract.MoveButton(btnConfirm.GetPosBelow());
                             btnInteract.Draw(spriteBatch, textFont);
-                            btnQuitGame.MoveButton(btnInteract.GetPosBelow());
+                            btnSaveGame.MoveButton(btnInteract.GetPosBelow());
+                            btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
                         }
                     }
                 }
+                btnSaveGame.Draw(spriteBatch, textFont);
                 btnQuitGame.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }
