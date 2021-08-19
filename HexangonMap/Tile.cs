@@ -107,7 +107,11 @@ namespace Guus_Reise
                     effect.World = this.World;
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
-                    effect.AmbientLightColor = this.Color;
+                    effect.AmbientLightColor = new Vector3(0.1f,0.1f,0.1f);
+                    if(this.Color.X == 0 || this.Color.Y == 0 || this.Color.Z == 0)
+                    {
+                        effect.AmbientLightColor = this.Color;
+                    }
 
                 }
                 mesh.Draw();
