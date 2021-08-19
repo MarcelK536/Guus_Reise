@@ -107,11 +107,8 @@ namespace Guus_Reise
                     effect.World = this.World;
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
+                    effect.AmbientLightColor = this.Color;
 
-                    if(this._type == "Wald")
-                    {
-                        effect.AmbientLightColor = this.Color;
-                    }
                 }
                 mesh.Draw();
             }
