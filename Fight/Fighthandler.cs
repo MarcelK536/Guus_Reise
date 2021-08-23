@@ -228,7 +228,14 @@ namespace Guus_Reise
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
             {
-                currentMenuStatus = (currentMenuStatus - 1) % menuStatusList.Count;
+                if(currentMenuStatus == 0)
+                {
+                    currentMenuStatus = 1;
+                }
+                else
+                {
+                    currentMenuStatus = (currentMenuStatus - 1) % menuStatusList.Count;
+                }             
             }
 
             if (initPlayers == true)
