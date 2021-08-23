@@ -354,7 +354,8 @@ namespace Guus_Reise
                         case 1:
                             if (Game1._graphics.IsFullScreen == true)
                             {
-
+                                posX = _graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 40;
+                                posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
                             }
                             else
                             {
@@ -365,7 +366,15 @@ namespace Guus_Reise
                         case 2:
                             if (Game1._graphics.IsFullScreen == true)
                             {
-
+                                if (index == 0)
+                                {
+                                    posX = _graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                }
+                                else
+                                {
+                                    posX = _graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                }
+                                posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
                             }
                             else
                             {
@@ -385,7 +394,23 @@ namespace Guus_Reise
                         case 4:
                             if (Game1._graphics.IsFullScreen == true)
                             {
+                                if (index < 2)
+                                {
+                                    posY = (hoeheArena) + 20;
+                                }
+                                else
+                                {
+                                    posY = (hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
+                                }
 
+                                if (index == 0 || index == 2)
+                                {
+                                    posX = _graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                }
+                                else
+                                {
+                                    posX = _graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                }
                             }
                             else
                             {
@@ -429,7 +454,8 @@ namespace Guus_Reise
                         case 1:
                             if (Game1._graphics.IsFullScreen == true)
                             {
-
+                                posX = 40;
+                                posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
                             }
                             else
                             {
@@ -440,7 +466,15 @@ namespace Guus_Reise
                         case 2:
                             if (Game1._graphics.IsFullScreen == true)
                             {
-
+                                if (index == 0)
+                                {
+                                    posX = 20;
+                                }
+                                else
+                                {
+                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                }
+                                posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
                             }
                             else
                             {
@@ -458,23 +492,46 @@ namespace Guus_Reise
                         case 3:
 
                         case 4:
-                            if (index < 2)
+                            if(Game1._graphics.IsFullScreen == true)
                             {
-                                posY = (hoeheArena) + 20;
-                            }
-                            else
-                            {
-                                posY = (hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
-                            }
+                                if (index < 2)
+                                {
+                                    posY = (hoeheArena) + 20;
+                                }
+                                else
+                                {
+                                    posY = (hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
+                                }
 
-                            if (index == 0 || index == 2)
-                            {
-                                posX =  20;
+                                if (index == 0 || index == 2)
+                                {
+                                    posX = 20;
+                                }
+                                else
+                                {
+                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                }
                             }
                             else
                             {
-                                posX = 20 +  2*(int)infoBoxesPlayer[i].boxSize.Y - 2;
-                            }
+                                if (index < 2)
+                                {
+                                    posY = (hoeheArena) + 20;
+                                }
+                                else
+                                {
+                                    posY = (hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
+                                }
+
+                                if (index == 0 || index == 2)
+                                {
+                                    posX = 20;
+                                }
+                                else
+                                {
+                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                }
+                            }                          
                             break;
                     }
                     infoBoxesPlayer[i]._infoboxY = posY;
@@ -610,6 +667,12 @@ namespace Guus_Reise
             {
                 hoeheArena =  ((_graphicsDevice.Viewport.Height / 2) + _graphicsDevice.Viewport.Height / 2 / 2)-100;
             }
+            if(initPlayers)
+            {
+                SetPositionsCharakterboxes("NPC");
+                SetPositionsCharakterboxes("Player");
+            }
+            
         }
     }
 }
