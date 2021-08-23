@@ -22,6 +22,8 @@ namespace Guus_Reise
         public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
         public static int[,] charPositionsEnemy = new int[,] { { 6, 0 }, { 6, 1 }, { 6, 2 }, { 4, 1 } };   //Positionen für Gegner  Der dem Spieler gegenüber stehenenden Gegner ist an der Letzten Position
 
+        public static bool createdBoard = false;
+        public static ContentManager contentFight;
 
         public static FightMenu fightMenu;
         public static bool initPlayers = false;
@@ -54,6 +56,7 @@ namespace Guus_Reise
         {
             _graphicsDevice = graphicsDevice;
             hoeheArena = ((_graphicsDevice.Viewport.Height / 2) + _graphicsDevice.Viewport.Height / 2 / 2);
+            contentFight = content;
             hoehePanel = _graphicsDevice.Viewport.Height - hoeheArena;
             SetParameterFromWindowScale();
             texPanel = content.Load<Texture2D>("Fight\\FightMenuPanel2");
@@ -61,7 +64,6 @@ namespace Guus_Reise
             backgroundTexture = content.Load<Texture2D>("Fight\\backgroundFight");
             playerCharakterInfobox = content.Load<Texture2D>("Buttons\\PlayercharakterSheet");
             enemyCharakterInfobox = content.Load<Texture2D>("Buttons\\EnemycharakterSheet");
-            Createboard(fightMap, content);
             currentMenuStatus = 0;
         }
 
@@ -207,11 +209,17 @@ namespace Guus_Reise
             HexMap.activeHex = null;
             HexMap.NoGlow();
             Player.actionMenu.Active = false;
+            createdBoard = false;
             Game1.GState = Game1.GameState.InGame;
         }
 
         public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
+            if (createdBoard == false)
+            {
+                Createboard(fightMap);
+                createdBoard = true;
+            }
 
             // Test if an swipe in left or right direktion was initialized
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
@@ -296,7 +304,6 @@ namespace Guus_Reise
                         {
                             HexMap.playableCharacter.Remove(hexTiles.Charakter);
                         }
-
                         hexTiles.Charakter = null;
                     }
                 }
@@ -487,7 +494,7 @@ namespace Guus_Reise
             }
         }
 
-        public static void Createboard(int[,] tilemap, ContentManager Content)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
+        public static void Createboard(int[,] tilemap)                                 //generiert die Map, jedes Tile wird einzeln erstell und im _board gespeichert
         {
             _fightBoard = new Hex[tilemap.GetLength(0), tilemap.GetLength(1)];       //hier wird die größe von _board festgelegt, immer so groß wie der eingabe array -> ermöglicht dynamische Mapgröße
 
@@ -499,13 +506,13 @@ namespace Guus_Reise
                     {
                         if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                         {
-                            Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                            Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], contentFight);
                             _fightBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
 
                         }
                         else
                         {
-                            Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
+                            Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], contentFight);
                             _fightBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
                         }
 
@@ -562,7 +569,6 @@ namespace Guus_Reise
                         infoBoxesNPCs[i].Draw(spriteBatch);
                     }
                 }
-
                 turnBar.Draw(spriteBatch, gameTime);
 
                 
