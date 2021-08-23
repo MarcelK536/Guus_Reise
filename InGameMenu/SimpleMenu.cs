@@ -24,6 +24,8 @@ namespace Guus_Reise
         public float menuWidth;
         public float menuHeight;
         public bool needCloseBtn = true;
+
+
         
         public enum BlendDirection
         {
@@ -154,6 +156,13 @@ namespace Guus_Reise
             menuBackground.SetData(bkgColor);
             bkgTexture = menuBackground;
         }
+
+        public virtual void SetBackgroundTexturePicture(Texture2D texPicture)
+        {
+            Texture2D menuBackground = texPicture;
+            bkgTexture = menuBackground;
+        }
+
         public virtual void UpdatePosition(Vector2 newPos)
         {
             pos = newPos;
@@ -166,7 +175,8 @@ namespace Guus_Reise
                 if (Active)
                 {
                     spriteBatch.Begin();
-                    spriteBatch.Draw(bkgTexture, bkgPos, Color.White);
+                    //spriteBatch.Draw(bkgTexture, bkgPos, Color.White);
+                    spriteBatch.Draw(bkgTexture, new Rectangle((int)bkgPos.X, (int)bkgPos.Y, (int)menuWidth, (int)menuHeight), Color.White);
                     spriteBatch.End();
                     if (needCloseBtn == true)
                     {

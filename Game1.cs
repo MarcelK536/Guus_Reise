@@ -18,6 +18,8 @@ namespace Guus_Reise
 
         public static Texture2D textureSoundButton;
         public static Texture2D textureSoundButtonOff;
+        public static Texture2D buttonPlanke;
+
         public static SpriteFont mainMenuFont;
 
         public static bool defaultValueSoundOn = false;
@@ -57,6 +59,7 @@ namespace Guus_Reise
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
             base.Initialize();
+            InformationComponents.Init(GraphicsDevice, Content);
             MainMenu.Init(_graphics);
             Credits.Init();  
             CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
@@ -74,6 +77,7 @@ namespace Guus_Reise
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             textureSoundButton  = Content.Load<Texture2D>("Buttons\\ButtonSound");
             textureSoundButtonOff = Content.Load<Texture2D>("Buttons\\soundButtonOff");
+            buttonPlanke = Content.Load<Texture2D>("Buttons\\buttonPlanke");
             mainMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
             MainMenu.LoadTexture(Content);
@@ -81,6 +85,7 @@ namespace Guus_Reise
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
             MovementAnimationManager.LoadTextures(Content, _spriteBatch);
+            
         }
 
         protected override void Update(GameTime gameTime)
@@ -153,7 +158,7 @@ namespace Guus_Reise
                     HexMap.DrawInGame(_spriteBatch, gameTime);
                     break;
                 case GameState.InFight:
-                    GraphicsDevice.Clear(Color.Coral);
+                    GraphicsDevice.Clear(Color.Black);
                     Fighthandler.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.MovementAnimation:
@@ -192,7 +197,11 @@ namespace Guus_Reise
             {
                 HexMap.SetParameterFromWindowScale();
             }
-            
+            if (_state == GameState.InFight)
+            {
+                Fighthandler.SetParameterFromWindowScale();
+            }
+
 
 
         }

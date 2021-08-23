@@ -17,8 +17,8 @@ namespace Guus_Reise
         SpriteFont barFont = Player.actionMenuFont;
 
         Vector2 barPos;
-        int barWidth;
-        int barHeight;
+        public int barWidth;
+        public int barHeight;
 
         Vector2 charPos;
 
@@ -26,6 +26,7 @@ namespace Guus_Reise
         {
             barHeight = 50;
             barWidth = 400;
+
             UpdateBarTexture(graphicsDevice);
             barPos.X = graphicsDevice.Viewport.Width / 2 - barTexture.Width / 2;
             barPos.Y = 50;
@@ -146,5 +147,6 @@ namespace Guus_Reise
             charPos = barPos;
             spriteBatch.End();
         }
+
     }
 }
