@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Guus_Reise.InGameMenu.MenuComponents;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,14 +21,45 @@ namespace Guus_Reise
         WeaponMenu weaponMenu;
         AttackMenu attackMenu;
 
-        Texture2D panelTexture;
+        public int _hoehePanel;
+
+        public Texture2D texPanel1;
+
+        public Texture2D _currentTex;
+
+        public Texture2D textureEditbutton;
+        public Texture2D textureEditbuttonHover;
+
+        public Texture2D playerCharakterInfobox;
+        public Texture2D enemyCharakterInfobox;
+
+        public CharakterBox[] infoBoxesPlayer;
+        public CharakterBox[] infoBoxesNPCs;
+
+        public Vector2 _positionPanel;
+        public Vector2 _sizePanel;
+
+        public int currentMenuStatus;
+        public List<string> menuStatusList = new List<string> { "Attack", "CharakterUebersicht" };
+
+        public bool _isInModeCharakterEdit = false;
+
+        private KeyboardState _prevKeyState;
 
 
         public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
         {
+            InitFightMenu(Fighthandler.contentFight);
+
+            SetParameterFromWindowScale();
+
+            _positionPanel = new Vector2(0, Fighthandler.hoeheArena);
+            _currentTex = texPanel1;
+            _sizePanel = new Vector2(_hoehePanel, Fighthandler._graphicsDevice.Viewport.Width);
+
             graphics = graphicsDevice;
             needCloseBtn = false;
-            panelTexture = Fighthandler.texPanel;
+
             btnWidth = menuFont.MeasureString("Change Weapon").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice,(int) btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
@@ -43,15 +77,123 @@ namespace Guus_Reise
             menuButtons.Add(btnGiveUp);
             btnCancelAttack = new Button("Cancel Attack", btnTexture, 1, btnChangeWeapon.GetPos());
             menuButtons.Add(btnCancelAttack);
-            SetMenuHeight();
+
             menuWidth = graphicsDevice.Viewport.Width;
-            menuHeight = graphicsDevice.Viewport.Height - Fighthandler.hoeheArena;
-            SetBackgroundTexturePicture(panelTexture);
+            menuHeight = _hoehePanel;
+            SetBackgroundTexturePicture(_currentTex);
+        }
+
+        public void InitFightMenu(ContentManager content)
+        {
+            texPanel1 = content.Load<Texture2D>("Fight\\FightMenuPanel2");
+            playerCharakterInfobox = content.Load<Texture2D>("Buttons\\PlayercharakterSheet");
+            enemyCharakterInfobox = content.Load<Texture2D>("Buttons\\EnemycharakterSheet");
+            currentMenuStatus = 0;
+            textureEditbutton = content.Load<Texture2D>("Buttons\\pencil");
+            textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
+
+        }
+
+        public void InitCharakterboxes(List<Hex> fightTiles)
+        {
+            //Charakterboxen
+            bool isNPC = false;
+            foreach (Hex playerHex in fightTiles)
+            {
+                int index = fightTiles.IndexOf(playerHex);
+                //NPCs
+                if (playerHex.Charakter.IsNPC)
+                {
+                    if (infoBoxesNPCs == null)
+                    {
+                        infoBoxesNPCs = new CharakterBox[fightTiles.Count];
+                    }
+                    infoBoxesNPCs[index] = new CharakterBox(playerHex.Charakter, 0.2f, 0, 0, true);
+                    isNPC = true;
+                }
+                //Player
+                else
+                {
+                    if (infoBoxesPlayer == null)
+                    {
+                        infoBoxesPlayer = new CharakterBox[fightTiles.Count];
+                    }
+                    infoBoxesPlayer[index] = new CharakterBox(playerHex.Charakter, 0.2f, 0, 0, true);
+                }
+            }
+            if (isNPC)
+            {
+                SetPositionsCharakterboxes("NPC");
+            }
+            else
+            {
+                SetPositionsCharakterboxes("Player");
+            }
+        }
+
+        public void CheckMenuStatus()
+        {
+            if (menuStatusList[currentMenuStatus] == "CharakterUebersicht")
+            {
+                //Charakterboxen
+                foreach (CharakterBox info in infoBoxesNPCs)
+                {
+                    info.UpdateCharakterboxParameters();
+                }
+
+                foreach (CharakterBox info in infoBoxesPlayer)
+                {
+                    info.UpdateCharakterboxParameters();
+                }
+            }
+        }
+
+        public void UpdatePanel(GameTime gameTime)
+        {
+            SetParameterFromWindowScale();
+
+            // Test if an swipe in left or right direktion was initialized
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
+            {
+                currentMenuStatus = (currentMenuStatus + 1) % menuStatusList.Count;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
+            {
+                if (currentMenuStatus == 0)
+                {
+                    currentMenuStatus = 1;
+                }
+                else
+                {
+                    currentMenuStatus = (currentMenuStatus - 1) % menuStatusList.Count;
+                }
+            }
+
+            if (_isInModeCharakterEdit)
+            {
+
+            }
+            else
+            {
+                CheckMenuStatus();
+            }
+
+
+
+            _prevKeyState = Keyboard.GetState();
         }
 
         public void Update(GameTime time)
         {
             base.Update();
+
+            _positionPanel.Y = Fighthandler.hoeheArena;
+
+            if (Fighthandler.initPlayers)
+            {
+                UpdatePanel(time);
+            }
+            
             if (Active)
             {
                 int x = Player.activeTile.LogicalPosition.X;
@@ -93,8 +235,8 @@ namespace Guus_Reise
                 }
             }
             UpdatePosition(new Vector2(0, _graphicsDevice.Viewport.Bounds.Center.Y));
-            menuHeight = graphics.Viewport.Height - Fighthandler.hoeheArena;
-            bkgPos.Y = _graphicsDevice.Viewport.Height - (_graphicsDevice.Viewport.Height - (Fighthandler.hoeheArena));
+
+            bkgPos.Y = Fighthandler.hoeheArena;
             menuWidth = _graphicsDevice.Viewport.Width;
             btnAttack.MoveButton(btnClose.GetPosBelow());
             btnChangeWeapon.MoveButton(btnAttack.GetPosBelow());
@@ -110,16 +252,242 @@ namespace Guus_Reise
             }
         }
 
+        public void SetParameterFromWindowScale()
+        {
+            if (Game1._graphics.IsFullScreen == true)
+            {
+                Fighthandler.hoeheArena = ((Fighthandler._graphicsDevice.Viewport.Height / 2) + Fighthandler._graphicsDevice.Viewport.Height / 2 / 2) - 300;
+            }
+            else
+            {
+                Fighthandler.hoeheArena = ((Fighthandler._graphicsDevice.Viewport.Height / 2) + Fighthandler._graphicsDevice.Viewport.Height / 2 / 2) - 100;
+            }
+
+            _hoehePanel = Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena;
+            menuHeight = _hoehePanel;
+            _positionPanel.Y = Fighthandler.hoeheArena;
+            if (Fighthandler.initPlayers)
+            {
+                SetPositionsCharakterboxes("NPC");
+                SetPositionsCharakterboxes("Player");
+            }
+
+        }
+
+        public void SetPositionsCharakterboxes(string type)
+        {
+            int posY = 0;
+            int posX = 0;
+            int index = 0;
+            if (type == "NPC")
+            {
+                int countBoxes = infoBoxesNPCs.Length;
+                for (int i = 0; i < countBoxes; i++)
+                {
+                    index = i;
+                    switch (countBoxes)
+                    {
+                        case 1:
+                            if (Game1._graphics.IsFullScreen == true)
+                            {
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 40;
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
+                            }
+                            else
+                            {
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 40;
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
+                            }
+                            break;
+                        case 2:
+                            if (Game1._graphics.IsFullScreen == true)
+                            {
+                                if (index == 0)
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                }
+                                else
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                }
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
+                            }
+                            else
+                            {
+                                if (index == 0)
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                }
+                                else
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                }
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
+                            }
+                            break;
+                        case 3:
+
+                        case 4:
+                            if (Game1._graphics.IsFullScreen == true)
+                            {
+                                if (index < 2)
+                                {
+                                    posY = (Fighthandler.hoeheArena) + 20;
+                                }
+                                else
+                                {
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
+                                }
+
+                                if (index == 0 || index == 2)
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                }
+                                else
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                }
+                            }
+                            else
+                            {
+                                if (index < 2)
+                                {
+                                    posY = (Fighthandler.hoeheArena) + 20;
+                                }
+                                else
+                                {
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
+                                }
+
+                                if (index == 0 || index == 2)
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                }
+                                else
+                                {
+                                    posX = Fighthandler._graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                }
+                            }
+                            break;
+
+
+                    }
+                    infoBoxesNPCs[i]._infoboxY = posY;
+                    infoBoxesNPCs[i]._infoboxX = posX;
+                    infoBoxesNPCs[i]._hasToUpdate = true;
+
+                }
+
+            }
+            else if (type == "Player")
+            {
+                int countBoxes = infoBoxesPlayer.Length;
+                for (int i = 0; i < countBoxes; i++)
+                {
+                    index = i;
+                    switch (countBoxes)
+                    {
+                        case 1:
+                            if (Game1._graphics.IsFullScreen == true)
+                            {
+                                posX = 40;
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
+                            }
+                            else
+                            {
+                                posX = 40;
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
+                            }
+                            break;
+                        case 2:
+                            if (Game1._graphics.IsFullScreen == true)
+                            {
+                                if (index == 0)
+                                {
+                                    posX = 20;
+                                }
+                                else
+                                {
+                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                }
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
+                            }
+                            else
+                            {
+                                if (index == 0)
+                                {
+                                    posX = 20;
+                                }
+                                else
+                                {
+                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                }
+                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
+                            }
+                            break;
+                        case 3:
+
+                        case 4:
+                            if (Game1._graphics.IsFullScreen == true)
+                            {
+                                if (index < 2)
+                                {
+                                    posY = (Fighthandler.hoeheArena) + 20;
+                                }
+                                else
+                                {
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
+                                }
+
+                                if (index == 0 || index == 2)
+                                {
+                                    posX = 20;
+                                }
+                                else
+                                {
+                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                }
+                            }
+                            else
+                            {
+                                if (index < 2)
+                                {
+                                    posY = (Fighthandler.hoeheArena) + 20;
+                                }
+                                else
+                                {
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
+                                }
+
+                                if (index == 0 || index == 2)
+                                {
+                                    posX = 20;
+                                }
+                                else
+                                {
+                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                }
+                            }
+                            break;
+                    }
+                    infoBoxesPlayer[i]._infoboxY = posY;
+                    infoBoxesPlayer[i]._infoboxX = posX;
+                    infoBoxesPlayer[i]._hasToUpdate = true;
+                }
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            DrawPanel(spriteBatch);
             if (Active)
             {
-                if(Fighthandler.currentMenuStatus == 0)
+                if(currentMenuStatus == 0)
                 {
                     spriteBatch.Begin();
 
-                    SetBackgroundTexturePicture(Fighthandler.texPanel);
+                    SetBackgroundTexturePicture(_currentTex);
                     Vector2 textPosition = Vector2.Zero;
                     //foreach (Hex hex in Fighthandler.playerTiles)
                     //{
@@ -180,6 +548,31 @@ namespace Guus_Reise
                 
 
 
+            }
+        }
+
+        public void DrawPanel(SpriteBatch spriteBatch)
+        {
+
+            //Zeichnen der Charakterboxen
+            if (_isInModeCharakterEdit)
+            {
+
+            }
+            else
+            {
+                if (menuStatusList[currentMenuStatus] == "CharakterUebersicht")
+                {
+                    for (int i = 0; i < infoBoxesPlayer.Length; i++)
+                    {
+                        infoBoxesPlayer[i].Draw(spriteBatch);
+                    }
+
+                    for (int i = 0; i < infoBoxesNPCs.Length; i++)
+                    {
+                        infoBoxesNPCs[i].Draw(spriteBatch);
+                    }
+                }
             }
         }
     }

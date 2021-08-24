@@ -38,18 +38,23 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
         protected Vector2 _sizelongestLine;
         protected float _lineHeight;
-        protected float _heightTitel;
 
         protected string _longestString;
 
         public bool _hasToUpdate;
+        public bool _hasEditButton;
+
+        protected Button editButton;
+
+
+
 
         public Infobox()
         {
 
         }
 
-        public Infobox(string name, string type, Texture2D textureBackground, SpriteFont fontUeberschriften, SpriteFont fontText, SpriteFont fontTitel, float scale, int positionX, int positionY)
+        public Infobox(string name, string type, Texture2D textureBackground, SpriteFont fontUeberschriften, SpriteFont fontText, SpriteFont fontTitel, float scale, int positionX, int positionY, bool hasEditButton)
         {
             _colorInhalt = _colorTitel = _colorUeberschrift = Color.Black;
             _name = name;
@@ -66,11 +71,39 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             _longestString = "Bla: 1234";
             _type = type;
             _hasToUpdate = true;
+            _hasEditButton = hasEditButton;
 
 
             if(_type == "OneLine")
             {
                 SetParameterInfoboxOneLine();
+            }
+            if (_hasEditButton)
+            {
+                editButton = new Button("", Fighthandler.textureEditbutton, Fighthandler.textureEditbuttonHover, 0.1f, 0, 0);
+                UpdateButtonInfobox();
+            }
+
+        }
+
+
+        public void UpdateButtonInfobox()
+        {
+            editButton.ButtonX = (int)_infoboxX + (int)boxSize.X/2 + (int)boxSize.X / 4  ;
+            editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16  -(int)boxSize.Y / 64;
+
+            if (Game1._graphics.IsFullScreen == true)
+            {
+                editButton.Scale = 0.07f;
+            }
+            else
+            {
+                editButton.Scale = 0.05f;
+            }
+
+            if(editButton.IsClicked())
+            {
+                Fighthandler._isInModeCharakterEdit = true;
             }
         }
 
@@ -83,9 +116,25 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 Vector2 fontSizeTitel = _fontTitel.MeasureString(_name);
                 float heightTitel = fontSizeTitel.Y + 10f;
                 _lineHeight = _sizelongestLine.Y;
+                float addY = 15f;
+                float addX = 5f;
+                if (Game1._graphics.IsFullScreen == true)
+                {
+                    addY = 25f;
+                    addX = 10f;
+                }
+
 
                 float x = _infoboxX + 10f;
-                titelPosition = new Vector2(x, _infoboxY + 10f);
+                if (Game1._graphics.IsFullScreen == true)
+                {
+                    titelPosition = new Vector2(x, _infoboxY + 25f);
+                }
+                else
+                {
+                    titelPosition = new Vector2(x, _infoboxY + 10f);
+                }
+               
 
                 float heightAllLines = _lineHeight * _titel.Count;
                 ueberschriftenPositions = new Vector2[_titel.Count];
@@ -93,30 +142,38 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
                 float sizeHeader = (titelPosition.Y + heightTitel) - _infoboxY;
 
-                while (_sizelongestLine.X + 5f <= boxSize.X)
+                while (_sizelongestLine.X + addX <= boxSize.X)
                 {
                     boxSize.X -= 0.2f;
 
                 }
 
-                while (heightAllLines + 15f <= boxSize.Y - sizeHeader)
+                while (heightAllLines + addY <= boxSize.Y - sizeHeader)
                 {
                     boxSize.Y -= 0.2f;
                 }
 
 
                 // Box vergrößern falls notwendig
-                while (_sizelongestLine.X + 5f > boxSize.X)
+                while (_sizelongestLine.X + addX > boxSize.X)
                 {
                     boxSize.X += 0.2f;
                 }
 
-                while (heightAllLines + 15f > boxSize.Y - sizeHeader)
+                while (heightAllLines + addY > boxSize.Y - sizeHeader)
                 {
                     boxSize.Y += 0.2f;
                 }
-
-                float y = titelPosition.Y + heightTitel + 10f;  //titelPosition.Y + (boxSize.Y - heightAllLines) / 2 + heightTitel + 0.5f * heightTitel;
+                float y;
+                if (Game1._graphics.IsFullScreen == true)
+                {
+                    y = titelPosition.Y + heightTitel + 25f;
+                }
+                else
+                {
+                    y = titelPosition.Y + heightTitel + 10f;
+                }
+                
 
                 for (int i = 0; i < ueberschriftenPositions.Length; i++)
                 {
@@ -146,6 +203,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             if(_type == "OneLine")
             {
                 SetParameterInfoboxOneLine();
+                UpdateButtonInfobox();
             }
         }
 
@@ -176,7 +234,14 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                     spriteBatch.DrawString(_fontText, _inhalt[i], inhaltPositions[i], _colorInhalt);
                 }
             }
+            
+            if (_hasEditButton)
+            {
+                editButton.Draw(spriteBatch, _fontText);
+            }
+
             spriteBatch.End();
+
 
         }
 

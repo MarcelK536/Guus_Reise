@@ -21,6 +21,7 @@ namespace Guus_Reise
         protected bool _isFocused = false;  // For deafault a Button is not focused
         protected bool _isOnlyClickButton = true; // For default a Button is a only-Click-Button
 
+
         protected MouseState prevMouseState;
 
 

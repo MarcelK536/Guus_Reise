@@ -10,8 +10,10 @@ namespace Guus_Reise.InGameMenu.MenuComponents
     class CharakterBox : Infobox
     {
         Charakter _charakter;
+
+
         
-        public CharakterBox(Charakter charakter, float scale, int positionX, int positionY)
+        public CharakterBox(Charakter charakter, float scale, int positionX, int positionY, bool hasEditButton)
         {
             _charakter = charakter;
             
@@ -21,8 +23,15 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
             _hasToUpdate = true;
 
+            _hasEditButton = hasEditButton;
+
+            if (_hasEditButton)
+            {
+                editButton = new Button("", Fighthandler.textureEditbutton, Fighthandler.textureEditbuttonHover, 0.05f, 0, 0);
+            }
+
             //Textur festlegen (rot oder blau)
-            if(charakter.IsNPC)
+            if (charakter.IsNPC)
             {
                 _texBackground = Fighthandler.enemyCharakterInfobox;
             }
@@ -66,17 +75,33 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             boxSize = GetInfoboxWidthHeight();
             SetParametereCharakterBox(charakter);
 
+            
+
         }
 
         public void SetParametereCharakterBox(Charakter charakter)
         {
             if(_hasToUpdate == true)
             {
-                InitializeContent(charakter);
-                SetParameterInfoboxOneLine();
-                titelPosition.X = _infoboxX + boxSize.X / 2 - _fontTitel.MeasureString(_name).X / 2;
-                titelPosition.Y += 3f;
-                _hasToUpdate = false;
+                SetContent(charakter);
+                if (_type == "OneLine")
+                {
+                    SetParameterInfoboxOneLine();
+                    if (Game1._graphics.IsFullScreen == true)
+                    {
+                        titelPosition.X = _infoboxX+ 25f;
+                    }
+                    else
+                    {
+                        titelPosition.X = _infoboxX + 10f;
+                    }
+                       
+                    titelPosition.Y += 3f;
+                    _hasToUpdate = false;
+                }
+                this.UpdateButtonInfobox();
+                
+                
             }
             
         }
@@ -86,16 +111,29 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             SetParametereCharakterBox(_charakter);
         }
 
-        public void InitializeContent(Charakter charakter)
+        public void SetContent(Charakter charakter)
         {
             string weapon;
             string wiederstandskraft;
+            string abwehr;
+            string xp;
+            string wortgewandtheit;
 
             wiederstandskraft = charakter.Widerstandskraft.ToString();
             weapon = charakter.Weapon.Name;
-
-            _titel = new List<string> { "Waffe", "Wiederstandskraft"};
-            _inhalt = new List<string> { weapon, wiederstandskraft };
+            abwehr = charakter.Abwehr.ToString();
+            wortgewandtheit = charakter.Wortgewandheit.ToString();
+            xp = charakter.XP.ToString();
+            if (Game1._graphics.IsFullScreen == true)
+            {
+                _titel = new List<string> { "Waffe", "Wiederstandskraft", "XP", "Abwehr", "Wortgewandtheit"};
+                _inhalt = new List<string> { weapon, wiederstandskraft, xp, abwehr, wortgewandtheit };
+            }
+            else
+            {
+                _titel = new List<string> { "Waffe", "Wiederstandskraft" };
+                _inhalt = new List<string> { weapon, wiederstandskraft };
+            }       
 
         }
 

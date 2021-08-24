@@ -8,6 +8,7 @@ using Guus_Reise.Menu;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
 
+
 namespace Guus_Reise
 {
     public class Game1 : Game
@@ -199,7 +200,7 @@ namespace Guus_Reise
             }
             if (_state == GameState.InFight)
             {
-                Fighthandler.SetParameterFromWindowScale();
+                Fighthandler.fightMenu.SetParameterFromWindowScale();
             }
 
 
