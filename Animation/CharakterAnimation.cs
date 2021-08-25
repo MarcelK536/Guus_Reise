@@ -178,6 +178,10 @@ namespace Guus_Reise.HexangonMap
                 }
                 else
                 {
+                    if(currentAnimation.Count == currentFrame)
+                    {
+                        currentFrame--;
+                    }
                     _curTex = currentAnimation[currentFrame];
                     UpdateAnimation(gametime);
                 }
@@ -209,9 +213,14 @@ namespace Guus_Reise.HexangonMap
                 }
                 else
                 {
-                    if(_hexagon != HexMap.soundHex)
+                    //Sound-Einstelungen
+                    if (_hexagon != HexMap.soundHex)
                     {
-                        _sounds[0].Play();
+
+                        if (CharakterAnimationManager.animationSound == true)
+                        {
+                            _sounds[0].Play();
+                        }
                         HexMap.soundHex = _hexagon;
                     }
                     if (CharakterAnimationManager.ActiveHexExists)
@@ -262,7 +271,8 @@ namespace Guus_Reise.HexangonMap
             };
             _currentIntervall = intervall;
             isPlayAnimation = true;
-            
+
+
         
         }
 

@@ -12,6 +12,7 @@ namespace Guus_Reise.Animation
 
         public Hex startHex;
         public Hex targetHex;
+        
 
         public string movementType;
 
@@ -55,6 +56,7 @@ namespace Guus_Reise.Animation
 
         public MovementAnimation(string type, Hex start, Hex target)
         {
+            
             startHex = start;
             targetHex = target;
             _camera = HexMap.Camera;
@@ -71,6 +73,7 @@ namespace Guus_Reise.Animation
 
         public MovementAnimation(string type, List<Hex> oldHex, List<Hex> newHex, List<Charakter> movednpcs)
         {
+            
             oldNpcPos = oldHex;
             newNpcPos = newHex;
             movingCharakters = movednpcs;
@@ -136,6 +139,13 @@ namespace Guus_Reise.Animation
         {
             if (currentStep >= ablauf.Count)
             {
+                ResetAnimation();
+                Game1.GState = Game1.GameState.InGame;
+                return;
+            }
+            else if(MovementAnimationManager.skip.IsClicked())
+            {
+                ResetAnimation();
                 Game1.GState = Game1.GameState.InGame;
                 return;
             }
@@ -240,11 +250,54 @@ namespace Guus_Reise.Animation
             }
 
         }
+
+        /*
+         *  Funktion setzt die Parameter der aktuellen Animation für die nächste Animation zurück zurück, sofern die Animation geskipt (frühzeitig abgebrochen wurde)
+        */
+        public void ResetAnimation()
+        {
+            timer = 0;
+            timer2 = 0;
+
+            isSlidingCameraVector = false;
+            isSlidingCharakter = false;
+            isSlidingCharakterPlural = false;
+            isWaiting = false;
+
+            xReady = false;
+            yReady = false;
+            zReady = false;
+
+            xReadyCharakter = false;
+            yReadyCharakter = false;
+            zReadyCharakter = false;
+
+            readyCounter = 0;
+            if(movementType == "NPCMovement")
+            {
+                foreach (Charakter charakter in movingCharakters)
+                {
+                    if(movingCharakter != null)
+                    {
+                        movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+                    }
+                    
+                }
+            }
+            else
+            {
+                movingCharakter.CharakterAnimation.AnimationPlanner = "stop";
+            }
+            
+               
+        }
         #endregion
 
         public void Draw()
         {
-            foreach(Charakter c in HexMap.playableCharacter)
+            MovementAnimationManager._spriteBatch.Begin();
+            MovementAnimationManager.skip.Draw(MovementAnimationManager._spriteBatch, MovementAnimationManager.mainMenuFont);
+            foreach (Charakter c in HexMap.playableCharacter)
             {
                 c.Draw(_camera);
             }
@@ -266,6 +319,7 @@ namespace Guus_Reise.Animation
             {
                 targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
             }
+            MovementAnimationManager._spriteBatch.End();
         }
 
         public void Wait(GameTime gametime, float duration)

@@ -12,9 +12,16 @@ namespace Guus_Reise
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        public static GraphicsDeviceManager _graphics;
+        public static SpriteBatch _spriteBatch;
         private static KeyboardState _prevKeyState;
+
+        public static Texture2D textureSoundButton;
+        public static Texture2D textureSoundButtonOff;
+        public static SpriteFont mainMenuFont;
+
+        public static bool defaultValueSoundOn = false;
+        
 
         public enum GameState
         {
@@ -55,7 +62,7 @@ namespace Guus_Reise
             CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
             Weapon.LoadWeapons(Content);                        //Waffen müssen vor den Charakteren initialisert werden
             Skill.LoadSkills(Content);
-            LevelDatabase.InitLevel(Content);
+            LevelHandler.InitContent(Content);
             HexMap.Init(Content, GraphicsDevice, _graphics);
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);
@@ -65,11 +72,15 @@ namespace Guus_Reise
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            textureSoundButton  = Content.Load<Texture2D>("Buttons\\ButtonSound");
+            textureSoundButtonOff = Content.Load<Texture2D>("Buttons\\soundButtonOff");
+            mainMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
             MainMenu.LoadTexture(Content);
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
+            MovementAnimationManager.LoadTextures(Content, _spriteBatch);
         }
 
         protected override void Update(GameTime gameTime)
@@ -173,6 +184,15 @@ namespace Guus_Reise
             _graphics.ApplyChanges();
             PlanetMenu.SetParametersFromWindowScale();
             MainMenu.SetParametersFromWindowScale();
+            if(_state == GameState.MovementAnimation)
+            {
+                MovementAnimationManager.SetParameterFromWindowScale();
+            }
+            if(_state == GameState.InGame)
+            {
+                HexMap.SetParameterFromWindowScale();
+            }
+            
 
 
         }
