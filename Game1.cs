@@ -22,6 +22,7 @@ namespace Guus_Reise
             LevelSelect,
             InGame,
             InFight,
+            InTalkFight,
             Exit,
             Credits,
             PlanetMenu,
@@ -98,6 +99,9 @@ namespace Guus_Reise
                 case GameState.InFight:
                     Fighthandler.Update(gameTime, GraphicsDevice);
                     break;
+                case GameState.InTalkFight:
+                    TalkFighthandler.Update(gameTime, GraphicsDevice);
+                    break;
                 case GameState.Exit:
                     Exit();
                     break;
@@ -142,6 +146,10 @@ namespace Guus_Reise
                     HexMap.DrawInGame(_spriteBatch, gameTime);
                     break;
                 case GameState.InFight:
+                    GraphicsDevice.Clear(Color.Coral);
+                    Fighthandler.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.InTalkFight:
                     GraphicsDevice.Clear(Color.Coral);
                     Fighthandler.Draw(_spriteBatch, gameTime);
                     break;

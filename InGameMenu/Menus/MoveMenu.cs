@@ -117,7 +117,21 @@ namespace Guus_Reise
                 {
                     if (btnInteract.IsClicked())
                     {
-                        //TODO INTERACT
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
+                        if (Player.activeTile != Player.moveTile)
+                        {
+                            HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter = null;
+                        }
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].LogicalPosition;
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.LogicalBoardPosition = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].LogicalPosition;
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.CanMove = false;
+
+                        Player.activeTile = Player.moveTile;
+
+                        TalkFighthandler.npcTiles = HexMap.enemyNeighbourTiles;
+                        TalkFighthandler.playerTiles = HexMap.friendNeighbourTiles;
+                        TalkFighthandler.playerTiles.Add(Player.activeTile);
+                        GState = Game1.GameState.InTalkFight;
                     }
                 }
             }
