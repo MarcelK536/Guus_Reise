@@ -23,6 +23,11 @@ namespace Guus_Reise
         public List<Button> menuButtons= new List<Button>();
         public float menuWidth;
         public float menuHeight;
+        public Rectangle tempScissorRect;
+        public RasterizerState rasterizerState;
+        public bool defaultSet;
+        public float tempWidth;
+        public float tempHeight;
         public bool needCloseBtn = true;
         
         public enum BlendDirection
@@ -31,10 +36,14 @@ namespace Guus_Reise
             LeftToRight,
             RightToLeft,
             TopToBottom,
-            BottomToTop
+            BottomToTop,
+            InsideOut,
+            OutsideIn
         }
 
         static List<SimpleMenu> allInstances = new List<SimpleMenu>();
+
+
 
         /// <summary>
         ///     Der Grundaufbau für alle Menus
@@ -184,6 +193,14 @@ namespace Guus_Reise
             {
                 DrawBlendTopToBottom(spriteBatch);
             }
+            else if(blendDirection == BlendDirection.InsideOut)
+            {
+                DrawInsideOut(spriteBatch);
+            }
+            else if(blendDirection == BlendDirection.OutsideIn)
+            {
+                DrawOutsideIn(spriteBatch);
+            }
         }
 
         public virtual void DrawBlendLeftToRight(SpriteBatch spriteBatch)
@@ -223,6 +240,88 @@ namespace Guus_Reise
                     button.ButtonY = (int)-menuHeight;
                 }
                 bkgPos.Y = (int)-menuHeight;
+            }
+        }
+        
+        public virtual void DrawInsideOut(SpriteBatch spriteBatch)
+        {
+            if (Active)
+            {
+                if (defaultSet == false)
+                {
+                    tempScissorRect = spriteBatch.GraphicsDevice.ScissorRectangle;
+                    tempWidth = 0f;
+                    tempHeight = 0f;
+                    defaultSet = true;
+                }
+
+                rasterizerState = new RasterizerState() { ScissorTestEnable = true };
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
+
+                spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)pos.X, (int)pos.Y, (int)tempWidth, (int)tempHeight);
+                
+                if(tempWidth <= menuWidth)
+                {
+                    tempWidth += menuWidth / menuHeight;
+                }
+                if(tempHeight <= menuHeight)
+                {
+                    tempHeight += menuHeight / menuWidth;
+                }
+
+                spriteBatch.Draw(bkgTexture, bkgPos, Color.White);
+                btnClose.Draw(spriteBatch, textFont);
+
+                spriteBatch.GraphicsDevice.ScissorRectangle = tempScissorRect;
+
+                spriteBatch.End();
+            }
+            else
+            {
+                spriteBatch.GraphicsDevice.ScissorRectangle = tempScissorRect;
+                defaultSet = false;
+            }
+        }
+
+        public virtual void DrawOutsideIn(SpriteBatch spriteBatch)
+        {
+            if (Active)
+            {
+                if (defaultSet == false)
+                {
+                    tempScissorRect = spriteBatch.GraphicsDevice.ScissorRectangle;
+                    tempWidth = menuWidth;
+                    tempHeight = menuHeight;
+                    defaultSet = true;
+                }
+
+                rasterizerState = new RasterizerState() { ScissorTestEnable = true };
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
+
+                spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)pos.X, (int)pos.Y, (int)tempWidth, (int)tempHeight);
+
+                if (tempWidth >= menuWidth)
+                {
+                    tempWidth -= menuWidth / menuHeight;
+                }
+                if (tempHeight >= menuHeight)
+                {
+                    tempHeight -= menuHeight / menuWidth;
+                }
+
+                spriteBatch.Draw(bkgTexture, bkgPos, Color.White);
+                btnClose.Draw(spriteBatch, textFont);
+
+                spriteBatch.GraphicsDevice.ScissorRectangle = tempScissorRect;
+
+                spriteBatch.End();
+            }
+            else
+            {
+                spriteBatch.GraphicsDevice.ScissorRectangle = tempScissorRect;
+                defaultSet = false;
             }
         }
 

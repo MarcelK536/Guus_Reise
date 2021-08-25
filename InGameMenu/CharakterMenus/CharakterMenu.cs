@@ -16,7 +16,7 @@ namespace Guus_Reise
 
         WeaponMenu weaponMenu;
         SkillMenu skillMenu;
-        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
+        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
         {
             graphics = graphicsDevice;
             menuWidth = 600;
@@ -42,7 +42,6 @@ namespace Guus_Reise
 
         public void Update(GameTime time)
         {
-            base.Update();
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) - (int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
@@ -63,6 +62,20 @@ namespace Guus_Reise
                 }
                 else
                 {
+                    if (btnClose.IsClicked())
+                    {
+                        Active = false;
+                        Player.levelUpMenu.Active = false;
+                        Player.charakterMenu.Active = false;
+                        if (weaponMenu != null)
+                        {
+                            weaponMenu.Active = false;
+                        }
+                        if (skillMenu != null)
+                        {
+                            skillMenu.Active = false;
+                        }
+                    }
                     if (btnLevelUp.IsClicked())
                     {
                         Player.levelUpMenu.Active = true;
@@ -95,6 +108,7 @@ namespace Guus_Reise
 
                 if (HexMap._board[x, y].Charakter == null)
                 {
+                    // spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
                     spriteBatch.Begin();
                     menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
                     menuHeight = btnClose.GetPosBelow().Y;
@@ -105,6 +119,7 @@ namespace Guus_Reise
                 else
                 {
                     Vector2 textPos = new Vector2(btnLevelUp.GetTextPosRightOf().X,btnClose.GetTextPosRightOf().Y);
+                    //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
                     spriteBatch.Begin();
                     menuWidth = 600;
                     menuHeight = 300;
