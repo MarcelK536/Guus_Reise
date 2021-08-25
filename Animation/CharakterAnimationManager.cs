@@ -15,7 +15,8 @@ namespace Guus_Reise.Animation
         static List<string> charakterNames;
         static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
         static CharakterAnimation[] charakterAnimations;
-        static SoundEffect[] _sounds;
+        public static SoundManager _sm;
+
 
         public static bool animationSound;
 
@@ -41,7 +42,13 @@ namespace Guus_Reise.Animation
             charakterAnimations = new CharakterAnimation[charakterNames.Count];
 
             animationSound = Game1.defaultValueSoundOn;
-            _sounds = new SoundEffect[charakterNames.Count];
+
+
+
+
+            _sm = new SoundManager();
+            _sm.Load(content);
+
 
             string curPath;
             string path;
@@ -121,9 +128,8 @@ namespace Guus_Reise.Animation
                 //moveRight
                 //...
 
-                _sounds[indexCharakter] = content.Load<SoundEffect>("Sounds\\guu_wave");
 
-                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, standardIntervall, _sounds);  
+                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, standardIntervall, _sm);  
             }
         }
 

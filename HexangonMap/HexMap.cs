@@ -15,10 +15,13 @@ namespace Guus_Reise
         public static Hex[,] _board; //Spielbrett
         public static List<Point> possibleMoves = new List<Point>();
         public static VisualisationManagerHexmap visManager;
+      
 
         public static Hex activeHex;
         public static Hex hoveredHex;
         public static Hex soundHex;
+        public static Hex prevSoundHex;
+
 
         public static Button btSoundEinstellungen;
 
@@ -49,6 +52,7 @@ namespace Guus_Reise
             visManager = new VisualisationManagerHexmap(_board.GetLength(0), _board.GetLength(1), Camera);
             //Fokus der Camera auf die Mitte der Karte setzen
             visManager.SetCameraToMiddleOfMap();
+
 
             //Sound-Button
             btSoundEinstellungen = new Button("", Game1.textureSoundButton, Game1.textureSoundButton, 0.3f, 830, 10);
@@ -157,6 +161,8 @@ namespace Guus_Reise
                 }
             }
             visManager.Update(time);
+            CharakterAnimationManager._sm.Update(time);
+
             if(activeHex != null)
             {
                 CharakterAnimationManager.ActiveHexExists = true;
