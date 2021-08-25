@@ -74,19 +74,19 @@ namespace Guus_Reise
 
                 case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald");
                     this.Type = "Wald";
-                    this.Begehbarkeit = 2;
+                    this.Begehbarkeit = 2f;
                     break;
                 case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg");
                     this.Type = "Berg";
-                    this.Begehbarkeit = 2.5f;
+                    this.Begehbarkeit = 10f;
                     break;
                 case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
                     this.Type = "Wueste";
-                    this.Begehbarkeit = 0.5f;
+                    this.Begehbarkeit = 1f;
                     break;
                 default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
                     this.Type = "Wasser";
-                    this.Begehbarkeit = 1;
+                    this.Begehbarkeit = 4f;
                     break;
             }
             this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(position));

@@ -14,7 +14,7 @@ namespace Guus_Reise
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2)-90,0);
             bkgPos = pos;
             btnClose.MoveButton(pos - Vector2.UnitX * btnClose.TextureDefault.Width);
-            menuHeight = menuFont.MeasureString("Placeholder").Y;
+            menuHeight = menuFont.MeasureString("Placeholder").Y * HexMap.lvlObjectiveText.Length;
             menuWidth = _graphicsDevice.Viewport.Width / 2;
         }
 

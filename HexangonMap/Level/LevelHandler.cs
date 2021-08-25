@@ -58,11 +58,11 @@ namespace Guus_Reise
             switch (currentWorld, currentLevel)
             {
                 case (1, 1):
-                    LevelDatabase.W1L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new Point(7, 7));
+                    LevelDatabase.W1L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(7, 7) });
                     LevelDatabase.W1L1objective[1] = LevelObjectives.EliminateAllEnemys(HexMap.npcs);
                     break;
                 case (1, 2):
-
+                    LevelDatabase.W1L2objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(3, 3), new Point(3, 4), new Point(4, 3), new Point(4, 4) });
                     break;
                 case (2, 1):
 
