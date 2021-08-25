@@ -13,13 +13,33 @@ namespace Guus_Reise
         private Vector3 _color;                 
         private Matrix _world;
         private float _begehbarkeit;            //wieviel das Tile von der Bewegungsreichweite abzieht
+        private bool _isglowing;
+
+
+
+        #region Colors
+        Vector4 greene = new Vector4(0f, 0.6f, 0f, 1);
+        Vector4 greye = new Vector4(0.5f, 0.5f, 0.5f, 1);
+        Vector4 rede = new Vector4(0.7f, 0f, 0f, 1);
+
+        Vector4 lightgreye = new Vector4(0.9f, 0.9f, 0.9f, 1);
+        Vector4 lightgreene = new Vector4(0f, 0.9f, 0f, 1);
+        #endregion
+
+
 
         public string Type
         {
             get => _type;
             set => _type = value;
         }
-        
+
+        public bool isglowing
+        {
+            get => _isglowing;
+            set => _isglowing = value;
+        }
+
         public Model Tile1
         {
             get => _tile;
@@ -48,24 +68,24 @@ namespace Guus_Reise
         public Tile(Vector3 position, int type, ContentManager contentmanager)
         {
             this.Glow = new Vector3(0.1f, 0.1f, 0.1f);
-            this.Color = new Vector3(0, 0, 0);
+
             switch (type)
             {
 
-                case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
+                case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald");
                     this.Type = "Wald";
                     this.Begehbarkeit = 2;
                     break;
-                case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
+                case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 2.5f;
                     break;
-                case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
-                    this.Type = "Straße";
+                case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
+                    this.Type = "Wueste";
                     this.Begehbarkeit = 0.5f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\TestModellObjects");
-                    this.Type = "Wiese";
+                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
+                    this.Type = "Wasser";
                     this.Begehbarkeit = 1;
                     break;
             }
@@ -87,7 +107,12 @@ namespace Guus_Reise
                     effect.World = this.World;
                     effect.View = camera.view;
                     effect.Projection = camera.projection;
-                    effect.AmbientLightColor = this.Color;
+                    effect.AmbientLightColor = new Vector3(0.1f,0.1f,0.1f);
+                    if(this.Color.X == 0 || this.Color.Y == 0 || this.Color.Z == 0)
+                    {
+                        effect.AmbientLightColor = this.Color;
+                    }
+
                 }
                 mesh.Draw();
             }

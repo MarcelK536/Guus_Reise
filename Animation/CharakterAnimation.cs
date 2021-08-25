@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise.HexangonMap
 {
@@ -18,8 +19,10 @@ namespace Guus_Reise.HexangonMap
         private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
         //static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
 
-        private List<Texture2D> idle;
-        //static List<Texture2D> moveLeft;
+        private readonly List<Texture2D> idle;
+        private readonly List<Texture2D> jump;
+        private readonly List<Texture2D> walkLeft;
+        private readonly List<Texture2D> walkRight;
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
         //static List<Texture2D> moveFront;
@@ -27,8 +30,7 @@ namespace Guus_Reise.HexangonMap
 
         Hex _hexagon;
         Charakter _charakter;
-        
-        Model _planeModel;
+        readonly Model _planeModel;
         Texture2D _texCharakter;
         Texture2D _curTex;
         private List<Texture2D> currentAnimation;
@@ -45,13 +47,20 @@ namespace Guus_Reise.HexangonMap
 
         string _animationPlanner = "";
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, float standardintervall)
+        SoundEffect[] _sounds;
+
+
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, float standardintervall, SoundEffect[] sounds)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
+            jump = animJump;
+            walkLeft = animWalkLeft;
+            walkRight = animWalkRight;
             _planeModel = planeModel;
             _texCharakter = texCharakter;
             _curTex = _texCharakter;
+            _sounds = sounds;
 
             // Set previous Keyboard State
             _prevKeyState = Keyboard.GetState();
@@ -117,10 +126,9 @@ namespace Guus_Reise.HexangonMap
             Hexagon = hexagon;
         }
 
-        public void DrawCharakter(Camera camera)
+        public void Draw(Camera camera, Vector3 position)
         {
-            this.CharakterPostion = this.Hexagon.Position + this.translation;
-            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterPostion));
+            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(position));
             foreach (var mesh in _planeModel.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -140,26 +148,15 @@ namespace Guus_Reise.HexangonMap
             }
         }
 
+        public void DrawCharakter(Camera camera)
+        {
+            this.CharakterPostion = this.Hexagon.Position + this.translation;
+            Draw(camera, _charakterPostion);
+        }
+
         public void DrawCharakterMovementPosition(Camera camera)
         {
-            Matrix world = (Matrix.CreateScale(_charakterScale) * Matrix.CreateRotationX(45) * Matrix.CreateTranslation(_charakterMovementPostion));
-            foreach (var mesh in _planeModel.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    effect.TextureEnabled = true;
-                    effect.Texture = _curTex;
-                    //effect.LightingEnabled = true;
-                    //effect.EnableDefaultLighting();
-                    //effect.PreferPerPixelLighting = true;
-                    effect.World = world;
-                    effect.View = camera.view;
-                    effect.Projection = camera.projection;
-                    //effect.DiffuseColor = this.Glow;
-                    effect.AmbientLightColor = this._color;
-                }
-                mesh.Draw();
-            }
+            Draw(camera, _charakterMovementPostion);
         }
 
         public void Update(GameTime gametime)
@@ -167,16 +164,40 @@ namespace Guus_Reise.HexangonMap
             _charakterPostion = _hexagon.Position + translation;
             if(isPlayAnimation)
             {
-                _curTex = currentAnimation[currentFrame];
-                UpdateAnimation(gametime);
+                if(Game1.GState == Game1.GameState.MovementAnimation)
+                {
+                    if (MovementAnimationManager._currentMovementAnimation.movementType == "NPCMovement")
+                    {
+                        _curTex = currentAnimation[0];
+                    }
+                    else
+                    {
+                        _curTex = currentAnimation[currentFrame];
+                        UpdateAnimation(gametime);
+                    }
+
+                }
+                else
+                {
+                    if(currentAnimation.Count == currentFrame)
+                    {
+                        currentFrame--;
+                    }
+                    _curTex = currentAnimation[currentFrame];
+                    UpdateAnimation(gametime);
+                }
             }
             if(Game1.GState == Game1.GameState.MovementAnimation)
             {
-                if (_animationPlanner == "l")
+                if (_animationPlanner == "Left")
                 {
-                    Play("Idle", _standardIntervall);
+                    Play("WalkLeft", _standardIntervall);
                 }
-                if (_animationPlanner == "stop")
+                else if(_animationPlanner == "Right")
+                {
+                    Play("WalkRight", _standardIntervall);
+                }
+                else if (_animationPlanner == "stop")
                 {
                     StopAnimation();
                     _animationPlanner = "";
@@ -204,7 +225,6 @@ namespace Guus_Reise.HexangonMap
                     {
                         Play("Idle", _standardIntervall);
                     }
-
                 }
 
             }
@@ -232,17 +252,24 @@ namespace Guus_Reise.HexangonMap
             {
                 throw new InvalidOperationException("Animation kann nicht null sein");
             }
-            switch(nameAnimation)
+            currentAnimation = nameAnimation switch
             {
-                case "Idle":
-                    currentAnimation = idle;
-                    break;
-                default:
-                    currentAnimation = idle;
-                    break;
-            }
+                "Idle" => idle,
+                "Jump" => jump,
+                "WalkLeft" => walkLeft,
+                "WalkRight" => walkRight,
+                _ => idle,
+            };
             _currentIntervall = intervall;
             isPlayAnimation = true;
+
+            //Sound-Einstelungen
+            if(CharakterAnimationManager.animationSound == true)
+            {
+                _sounds[0].Play();
+            }
+            
+        
         }
 
         // Setzen der Texture wieder auf die Standardtextur

@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Guus_Reise.Animation;
 
 namespace Guus_Reise
 {
     class KI
     {
+        
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
-            foreach(Charakter charakter in HexMap.npcs)
+
+            List<Hex> npcOldHex = new List<Hex>();
+            List<Hex> npcNewHex = new List<Hex>();
+            List<Charakter> npcs = new List<Charakter>();
+            bool makeAnimation = false;
+            foreach (Charakter charakter in HexMap.npcs)
             {
                 Point near;
                 List<Hex> neighbours = new List<Hex>();
@@ -24,6 +31,9 @@ namespace Guus_Reise
                         charakter.CanMove = false;
                         break;
                     case 2:         //rennt von anfang an auf den nächsten Spieler zu
+                        npcs.Add(charakter);
+                        makeAnimation = true;
+                        npcOldHex.Add(HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
                         near = NearestPlayerCharacter(charakter);
                         neighbours = HexMap.GetNeighbourTiles(HexMap._board[near.X, near.Y]);
                         neighbours.RemoveAll(e => e.Charakter != null);
@@ -44,12 +54,16 @@ namespace Guus_Reise
                         }
                         HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
                         HexMap._board[move.X, move.Y].Charakter = charakter;
+                        npcNewHex.Add(HexMap._board[move.X, move.Y]);
                         HexMap._board[move.X, move.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[move.X, move.Y];
                         HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
                         charakter.LogicalBoardPosition = move;
                         charakter.CanMove = false;
                         break;
                     case 3: //rennt auf Spieler zu sobald er sich in gewisser Reichweite befindet
+                        npcs.Add(charakter);
+                        makeAnimation = true;
+                        npcOldHex.Add(HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
                         near = NearestPlayerCharacter(charakter);
                         distance = DistanceToNearestPlayer(charakter, near);
                         if (distance < charakter.Bewegungsreichweite)
@@ -73,11 +87,17 @@ namespace Guus_Reise
                             }
                             HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
                             HexMap._board[move.X, move.Y].Charakter = charakter;
+                            npcNewHex.Add(HexMap._board[move.X, move.Y]);
+                            HexMap._board[move.X, move.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[move.X, move.Y];
+                            HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
                             charakter.LogicalPosition = move;
                         }
                         charakter.CanMove = false;
                         break;
                     case 4: //patroulliert bis der Spieler sich in gewisser Reichweite befindet
+                        npcs.Add(charakter);
+                        makeAnimation = true;
+                        npcOldHex.Add(HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
                         near = NearestPlayerCharacter(charakter);
                         distance = DistanceToNearestPlayer(charakter, near);
                         if (distance < charakter.Bewegungsreichweite)
@@ -101,6 +121,9 @@ namespace Guus_Reise
                             }
                             HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
                             HexMap._board[move.X, move.Y].Charakter = charakter;
+                            npcNewHex.Add(HexMap._board[move.X, move.Y]);
+                            HexMap._board[move.X, move.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[move.X, move.Y];
+                            HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
                             charakter.LogicalPosition = move;
                         }
                         else
@@ -124,13 +147,22 @@ namespace Guus_Reise
                             }
                             HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y].Charakter = null;
                             HexMap._board[move.X, move.Y].Charakter = charakter;
+                            HexMap._board[move.X, move.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[move.X, move.Y];
+                            HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
                             charakter.LogicalPosition = move;
+                            npcNewHex.Add(HexMap._board[move.X, move.Y]);
                         }
                         charakter.CanMove = false;
                             break;
                     default: charakter.CanMove = false;
                         break;
                 }
+
+            }
+            if (makeAnimation == true)
+            {
+                HexMap.NoGlow();
+                MovementAnimationManager.InitNPCMovement("NPCMovement", npcOldHex, npcNewHex, npcs);
             }
         }
         private static float DistanceToNearestPlayer(Charakter charakter, Point near)

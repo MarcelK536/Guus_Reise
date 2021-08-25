@@ -21,7 +21,6 @@ namespace Guus_Reise
         public bool fightTrue;
         public bool interactTrue;
 
-        float timer = 0;
         static public Texture2D menuTexture { get; set; }
 
         public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
@@ -90,7 +89,8 @@ namespace Guus_Reise
                     interactTrue = false;
 
                     // Movement Animation starten
-               // MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
+                    MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
+                    
                 }
                 if (fightTrue)
                 {

@@ -18,10 +18,14 @@ namespace Guus_Reise
         WeaponMenu weaponMenu;
         AttackMenu attackMenu;
 
+        Texture2D panelTexture;
+
+
         public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
         {
             graphics = graphicsDevice;
             needCloseBtn = false;
+            panelTexture = Fighthandler.texPanel;
             btnWidth = menuFont.MeasureString("Change Weapon").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice,(int) btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
@@ -41,7 +45,8 @@ namespace Guus_Reise
             menuButtons.Add(btnCancelAttack);
             SetMenuHeight();
             menuWidth = graphicsDevice.Viewport.Width;
-            SetBackgroundTexture(Color.Green);
+            menuHeight = graphicsDevice.Viewport.Height - Fighthandler.hoeheArena;
+            SetBackgroundTexturePicture(panelTexture);
         }
 
         public void Update(GameTime time)
@@ -88,8 +93,8 @@ namespace Guus_Reise
                 }
             }
             UpdatePosition(new Vector2(0, _graphicsDevice.Viewport.Bounds.Center.Y));
-            SetMenuHeight();
-            bkgPos.Y = _graphicsDevice.Viewport.Height / 2;
+            menuHeight = graphics.Viewport.Height - Fighthandler.hoeheArena;
+            bkgPos.Y = _graphicsDevice.Viewport.Height - (_graphicsDevice.Viewport.Height - (Fighthandler.hoeheArena));
             menuWidth = _graphicsDevice.Viewport.Width;
             btnAttack.MoveButton(btnClose.GetPosBelow());
             btnChangeWeapon.MoveButton(btnAttack.GetPosBelow());
@@ -110,64 +115,69 @@ namespace Guus_Reise
             base.Draw(spriteBatch);
             if (Active)
             {
-                SetBackgroundTexture(Color.Green);
-                spriteBatch.Begin();
-                Vector2 textPosition = Vector2.Zero;
-                foreach (Hex hex in Fighthandler.playerTiles)
+                if(Fighthandler.currentMenuStatus == 0)
                 {
-                    if (hex.Charakter != null)
+                    spriteBatch.Begin();
+
+                    SetBackgroundTexturePicture(Fighthandler.texPanel);
+                    Vector2 textPosition = Vector2.Zero;
+                    //foreach (Hex hex in Fighthandler.playerTiles)
+                    //{
+                    //    if (hex.Charakter != null)
+                    //    {
+                    //        if (textPosition == Vector2.Zero)
+                    //        {
+                    //            textPosition = btnAttack.GetPosRightOf();
+                    //        }
+                    //        else
+                    //        {
+                    //            textPosition = GetPositionBelow(GetPositionBelow(textPosition));
+                    //        }
+                    //        spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
+                    //        spriteBatch.DrawString(textFont, "Widerstandskraft: " + (hex.Charakter.CurrentFightStats[0]), GetPositionBelow(textPosition), Color.Yellow);
+                    //    }
+                    //}
+                    if (FightPlayer.isSelecting == false)
                     {
-                        if (textPosition == Vector2.Zero)
-                        {
-                            textPosition = btnAttack.GetPosRightOf();
-                        }
-                        else
-                        {
-                            textPosition = GetPositionBelow(GetPositionBelow(textPosition));
-                        }
-                        spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                        spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
+                        btnAttack.Draw(spriteBatch, textFont);
+                        btnChangeWeapon.Draw(spriteBatch, textFont);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(textFont, "Select Enemy to Attack", pos, Color.Yellow);
+                        btnCancelAttack.Draw(spriteBatch, textFont);
+                    }
+                    btnGiveUp.Draw(spriteBatch, textFont);
+
+                    textPosition = Vector2.Zero;
+                    //foreach (Hex hex in Fighthandler.npcTiles)
+                    //{
+                    //    if (hex.Charakter != null)
+                    //    {
+                    //        if (textPosition == Vector2.Zero)
+                    //        {
+                    //            textPosition = btnAttack.GetPosRightOf() + Vector2.UnitX * (btnAttack.GetPosRightOf().X + 200);
+                    //        }
+                    //        else
+                    //        {
+                    //            textPosition = GetPositionBelow(GetPositionBelow(textPosition));
+                    //        }
+                    //        spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
+                    //        spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
+                    //    }
+                    //}
+                    spriteBatch.End();
+
+                    if (weaponMenu != null && weaponMenu.Active)
+                    {
+                        weaponMenu.Draw(spriteBatch);
+                    }
+                    if (attackMenu != null && attackMenu.Active)
+                    {
+                        attackMenu.Draw(spriteBatch);
                     }
                 }
-                if (FightPlayer.isSelecting == false)
-                {
-                    btnAttack.Draw(spriteBatch, textFont);
-                    btnChangeWeapon.Draw(spriteBatch, textFont);
-                }
-                else
-                {
-                    spriteBatch.DrawString(textFont, "Select Enemy to Attack", pos, Color.Yellow);
-                    btnCancelAttack.Draw(spriteBatch, textFont);
-                }
-                btnGiveUp.Draw(spriteBatch, textFont);
-
-                textPosition = Vector2.Zero;
-                foreach (Hex hex in Fighthandler.npcTiles)
-                {
-                    if (hex.Charakter != null)
-                    {
-                        if (textPosition == Vector2.Zero)
-                        {
-                            textPosition = btnAttack.GetPosRightOf() + Vector2.UnitX * (btnAttack.GetPosRightOf().X + 200);
-                        }
-                        else
-                        {
-                            textPosition = GetPositionBelow(GetPositionBelow(textPosition));
-                        }
-                        spriteBatch.DrawString(textFont, "Name: " + hex.Charakter.Name, textPosition, Color.Yellow);
-                        spriteBatch.DrawString(textFont, "Widerstandskraft: " + hex.Charakter.CurrentFightStats[0], GetPositionBelow(textPosition), Color.Yellow);
-                    }
-                }
-                spriteBatch.End();
-
-                if (weaponMenu != null && weaponMenu.Active)
-                {
-                    weaponMenu.Draw(spriteBatch);
-                }
-                if (attackMenu != null && attackMenu.Active)
-                {
-                    attackMenu.Draw(spriteBatch);
-                }
+                
 
 
             }
