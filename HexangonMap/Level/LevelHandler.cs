@@ -92,10 +92,18 @@ namespace Guus_Reise
             }
         }
 
+        //Bereitet das neue Level vor und lädt es ein
         public static void InitNewLevel()
         {
             UpdateLevelCounter();
             CopyCharacters(activeLevel.CharacterList);
+            activeLevel = InitLevel();
+            HexMap.InitBoard();
+        }
+
+        //Resetet das aktuelle Level
+        public static void ReInitLevel()
+        {
             activeLevel = InitLevel();
             HexMap.InitBoard();
         }

@@ -32,6 +32,7 @@ namespace Guus_Reise
             InGame,
             InFight,
             InTalkFight,
+            GameOver,
             Exit,
             Credits,
             PlanetMenu,
@@ -70,6 +71,7 @@ namespace Guus_Reise
             HexMap.Init(Content, GraphicsDevice, _graphics);
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);
+            GameOver.Init(Content);
 
         }
 
@@ -117,6 +119,9 @@ namespace Guus_Reise
                     break;
                 case GameState.InTalkFight:
                     TalkFighthandler.Update(gameTime, GraphicsDevice);
+                    break;
+                case GameState.GameOver:
+                    GameOver.Update(gameTime, GraphicsDevice);
                     break;
                 case GameState.Exit:
                     Exit();
@@ -168,6 +173,10 @@ namespace Guus_Reise
                 case GameState.InTalkFight:
                     GraphicsDevice.Clear(Color.Coral);
                     Fighthandler.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.GameOver:
+                    GraphicsDevice.Clear(Color.DarkBlue);
+                    GameOver.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.MovementAnimation:
                     GraphicsDevice.Clear(Color.CornflowerBlue);

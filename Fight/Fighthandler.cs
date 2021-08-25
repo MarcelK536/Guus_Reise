@@ -554,7 +554,7 @@ namespace Guus_Reise
 
             if(guuDead == true)
             {
-                Game1.GState = Game1.GameState.MainMenu; //TODO GAMEOVER Screen
+                Game1.GState = Game1.GameState.GameOver;
             }
         }
 
