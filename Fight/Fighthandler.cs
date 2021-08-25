@@ -117,7 +117,7 @@ namespace Guus_Reise
                 }
             }
 
-            fightMenu.InitCharakterboxes(tiles);
+            fightMenu.InitMenuBoxes(tiles);
 
             ////Charakterboxen
             //bool isNPC = false;

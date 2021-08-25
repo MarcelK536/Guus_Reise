@@ -76,7 +76,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
             if(_type == "OneLine")
             {
-                SetParameterInfoboxOneLine();
+                SetParameterInfobox();
             }
             if (_hasEditButton)
             {
@@ -86,38 +86,107 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
         }
 
-
-        public void UpdateButtonInfobox()
+        public Infobox(Charakter charakter, string type,  string text, SpriteFont fontTitel, SpriteFont fontText, Texture2D textureBackground, float scale, int positionX, int positionY, bool hasEditButton)
         {
-            editButton.ButtonX = (int)_infoboxX + (int)boxSize.X/2 + (int)boxSize.X / 4  ;
-            editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16  -(int)boxSize.Y / 64;
+            _colorInhalt = _colorTitel = _colorUeberschrift = Color.Black;
+            _name = charakter.Name;
 
-            if (Game1._graphics.IsFullScreen == true)
+            if(_type == "Waffenbox")
             {
-                editButton.Scale = 0.07f;
-            }
-            else
-            {
-                editButton.Scale = 0.05f;
+                _name = "Waffe´von " + charakter.Name;
             }
 
-            if(editButton.IsClicked())
+            _texBackground = textureBackground;
+            _scale = scale;
+            _infoboxX = positionX;
+            _infoboxY = positionY;
+            _fontText = fontText;
+            _fontTitel = fontTitel;
+
+            _fontUeberschriften = fontText;
+            _titel = new List<string> { "Test", "test2" }; 
+            _inhalt = new List<string> { "test", "Test2" };
+            boxSize = GetInfoboxWidthHeight();
+            _longestString = "Bla: 1234";
+            _type = type;
+            _hasToUpdate = true;
+            _hasEditButton = hasEditButton;
+
+
+            if (_type == "OneLine" || _type == "Waffenbox")
             {
-                Fighthandler._isInModeCharakterEdit = true;
+                SetParameterInfobox();
+            }
+            if (_hasEditButton)
+            {
+                editButton = new Button("", Fighthandler.textureEditbutton, Fighthandler.textureEditbuttonHover, 0.1f, 0, 0);
+                UpdateButtonInfobox();
             }
         }
 
 
-        public void SetParameterInfoboxOneLine()
+        public void UpdateButtonInfobox()
+        {
+            if(_hasEditButton)
+            {
+                editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4;
+                editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64;
+
+                if (Game1._graphics.IsFullScreen == true)
+                {
+                    editButton.Scale = 0.07f;
+                }
+                else
+                {
+                    editButton.Scale = 0.05f;
+                }
+
+                if (editButton.IsClicked())
+                {
+                    Fighthandler._isInModeCharakterEdit = true;
+                }
+            }
+            
+        }
+
+
+        public void SetParameterInfobox()
         {
             if(_hasToUpdate)
             {
-                _sizelongestLine = _fontUeberschriften.MeasureString(_longestString);
+                if(_type == "OneLine")
+                {
+                    _sizelongestLine = _fontUeberschriften.MeasureString(_longestString);
+                }
+                else
+                {
+                    _sizelongestLine = _fontTitel.MeasureString(_longestString);
+                    _sizelongestLine.X += _sizelongestLine.X;
+                    if(_sizelongestLine.X < 120)
+                    {
+                        _sizelongestLine.X += 50;
+                    }
+                }
+                
+               
                 Vector2 fontSizeTitel = _fontTitel.MeasureString(_name);
                 float heightTitel = fontSizeTitel.Y + 10f;
+
+                if (_type == "Waffenbox")
+                {
+                    heightTitel = fontSizeTitel.Y + 30f;
+                }
                 _lineHeight = _sizelongestLine.Y;
+
+                
                 float addY = 15f;
                 float addX = 5f;
+
+                if (_type == "Waffenbox")
+                {
+                    addY = 25f;
+                }
+
                 if (Game1._graphics.IsFullScreen == true)
                 {
                     addY = 25f;
@@ -126,6 +195,9 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
 
                 float x = _infoboxX + 10f;
+
+                
+
                 if (Game1._graphics.IsFullScreen == true)
                 {
                     titelPosition = new Vector2(x, _infoboxY + 25f);
@@ -164,6 +236,12 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 {
                     boxSize.Y += 0.2f;
                 }
+
+                if (_type == "Waffenbox")
+                {
+                    titelPosition.X +=20f;
+                }
+
                 float y;
                 if (Game1._graphics.IsFullScreen == true)
                 {
@@ -174,24 +252,35 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                     y = titelPosition.Y + heightTitel + 10f;
                 }
                 
-
-                for (int i = 0; i < ueberschriftenPositions.Length; i++)
+                if(_type == "OneLine")
                 {
-                    int index = i;
-                    _titel[index] = _titel[index] + ": ";
-                    if (index == 0)
+                    for (int i = 0; i < ueberschriftenPositions.Length; i++)
                     {
-                        ueberschriftenPositions[index] = new Vector2(x, y);
-                        inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X), y);
+                        int index = i;
+                        if (_type == "OneLine")
+                        {
+                            _titel[index] = _titel[index] + ": ";
+                        }
+
+                        if (index == 0)
+                        {
+                            ueberschriftenPositions[index] = new Vector2(x, y);
+                            inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X), y);
+
+                        }
+                        else
+                        {
+                            ueberschriftenPositions[index] = new Vector2(x, ueberschriftenPositions[index - 1].Y + _lineHeight);
+                            inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X), ueberschriftenPositions[index - 1].Y + _lineHeight);
+                        }
 
                     }
-                    else
-                    {
-                        ueberschriftenPositions[index] = new Vector2(x, ueberschriftenPositions[index - 1].Y + _lineHeight);
-                        inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X), ueberschriftenPositions[index - 1].Y + _lineHeight);
-                    }
-
                 }
+                else if(_type == "Waffenbox")
+                {
+                    inhaltPositions[0] = new Vector2(x  + 20f, y);
+                }
+                
                 _hasToUpdate = false;
             }
             
@@ -200,11 +289,8 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
         public void UpdateInfobox()
         {
-            if(_type == "OneLine")
-            {
-                SetParameterInfoboxOneLine();
-                UpdateButtonInfobox();
-            }
+            SetParameterInfobox();
+            UpdateButtonInfobox();
         }
 
         //Returns Position Vector of the Button used for Drawing
@@ -224,15 +310,20 @@ namespace Guus_Reise.InGameMenu.MenuComponents
         {
             spriteBatch.Begin();
             spriteBatch.Draw(_texBackground, new Rectangle(_infoboxX, _infoboxY, (int)boxSize.X, (int)boxSize.Y), Color.White);
-            //spriteBatch.Draw(_texBackground, this.GetPos(), null, Color.White, 0f, Vector2.Zero, this._scale, SpriteEffects.None, 0f);
+
+            spriteBatch.DrawString(_fontTitel, _name, titelPosition, _colorTitel);
             if (_type == "OneLine")
             {
-                spriteBatch.DrawString(_fontTitel, _name, titelPosition, _colorTitel);
                 for (int i = 0; i < ueberschriftenPositions.Length; i++)
                 {
                     spriteBatch.DrawString(_fontUeberschriften, _titel[i], ueberschriftenPositions[i], _colorUeberschrift);
                     spriteBatch.DrawString(_fontText, _inhalt[i], inhaltPositions[i], _colorInhalt);
+             
                 }
+            }
+            else if(_type == "Waffenbox")
+            {
+                spriteBatch.DrawString(_fontText, _titel[0], inhaltPositions[0], _colorInhalt);
             }
             
             if (_hasEditButton)

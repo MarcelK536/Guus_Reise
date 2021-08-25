@@ -13,13 +13,13 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
 
         
-        public CharakterBox(Charakter charakter, float scale, int positionX, int positionY, bool hasEditButton)
+        public CharakterBox(Charakter charakter, string type, float scale, int positionX, int positionY, bool hasEditButton)
         {
             _charakter = charakter;
             
             _name = charakter.Name;
 
-            _type = "OneLine";
+            _type = type;
 
             _hasToUpdate = true;
 
@@ -47,7 +47,6 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             _infoboxY = positionY;
 
             //Fonts
-
             if(Game1._graphics.IsFullScreen == true)
             {
                 _fontText = InformationComponents.aika;
@@ -63,12 +62,24 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
             _longestString = "Wiederstandskraft: 1111";
 
-            //Schriftfarben
-            _colorTitel = Color.White;
-            _colorUeberschrift = Color.BlueViolet; //Coral
-            _colorInhalt = Color.Azure;
+            if(_type == "Waffenbox")
+            {
+                _longestString = _name;
+            }
 
-            
+            //Schriftfarben
+            if(_type == "Waffenbox")
+            {
+                _colorTitel = Color.White;
+                _colorUeberschrift = Color.White;
+                _colorInhalt = Color.White;
+            }
+            else
+            {
+                _colorTitel = Color.White;
+                _colorUeberschrift = Color.BlueViolet; //Coral
+                _colorInhalt = Color.Azure;
+            }
 
             List<string> titellist = new List<string> { "bla", "bla2", "bla3", "bla4" };
             List<string> inhaltlist = new List<string> { "0", "1", "23", "3637287363"};
@@ -84,21 +95,19 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             if(_hasToUpdate == true)
             {
                 SetContent(charakter);
-                if (_type == "OneLine")
+                SetParameterInfobox();
+                if (Game1._graphics.IsFullScreen == true)
                 {
-                    SetParameterInfoboxOneLine();
-                    if (Game1._graphics.IsFullScreen == true)
-                    {
-                        titelPosition.X = _infoboxX+ 25f;
-                    }
-                    else
-                    {
-                        titelPosition.X = _infoboxX + 10f;
-                    }
-                       
-                    titelPosition.Y += 3f;
-                    _hasToUpdate = false;
+                    titelPosition.X = _infoboxX+ 25f;
                 }
+                else
+                {
+                    titelPosition.X = _infoboxX + 10f;
+                }
+                       
+                titelPosition.Y += 3f;
+                _hasToUpdate = false;
+
                 this.UpdateButtonInfobox();
                 
                 
@@ -129,32 +138,42 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             level = charakter.Level.ToString();
             ignoranz = charakter.Ignoranz.ToString();
 
-            if(Fighthandler.isNormalFight)
+            if(_type == "Waffenbox")
             {
-                if (Game1._graphics.IsFullScreen == true)
-                {
-                    _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück"};
-                    _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
-                }
-                else
-                {
-                    _titel = new List<string> { "Level", "Wiederstandskraft" };
-                    _inhalt = new List<string> { level, wiederstandskraft };
-                }
+
+                    _titel = new List<string> { weapon };
+                    _inhalt = new List<string> { weapon};
             }
             else
             {
-                if (Game1._graphics.IsFullScreen == true)
+                if (Fighthandler.isNormalFight)
                 {
-                    _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück"};
-                    _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
+                    if (Game1._graphics.IsFullScreen == true)
+                    {
+                        _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück" };
+                        _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
+                    }
+                    else
+                    {
+                        _titel = new List<string> { "Level", "Wiederstandskraft" };
+                        _inhalt = new List<string> { level, wiederstandskraft };
+                    }
                 }
                 else
                 {
-                    _titel = new List<string> { "Level", "Wortgewandtheit" };
-                    _inhalt = new List<string> { level, wortgewandtheit };
+                    if (Game1._graphics.IsFullScreen == true)
+                    {
+                        _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück" };
+                        _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
+                    }
+                    else
+                    {
+                        _titel = new List<string> { "Level", "Wortgewandtheit" };
+                        _inhalt = new List<string> { level, wortgewandtheit };
+                    }
                 }
             }
+            
 
             
 
