@@ -49,7 +49,6 @@ namespace Guus_Reise.HexangonMap
 
         SoundEffect[] _sounds;
 
-
         public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, float standardintervall, SoundEffect[] sounds)
         {
             _standardIntervall = standardintervall;
@@ -208,8 +207,13 @@ namespace Guus_Reise.HexangonMap
                         StopAnimation();
                     }
                 }
-                if (_hexagon.IsHovered)
+                else
                 {
+                    if(_hexagon != HexMap.soundHex)
+                    {
+                        _sounds[0].Play();
+                        HexMap.soundHex = _hexagon;
+                    }
                     if (CharakterAnimationManager.ActiveHexExists)
                     {
                         if (_hexagon.IsActive)
@@ -258,7 +262,7 @@ namespace Guus_Reise.HexangonMap
             };
             _currentIntervall = intervall;
             isPlayAnimation = true;
-            _sounds[0].Play();
+            
         
         }
 

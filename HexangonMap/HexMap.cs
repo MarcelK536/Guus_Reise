@@ -18,6 +18,7 @@ namespace Guus_Reise
 
         public static Hex activeHex;
         public static Hex hoveredHex;
+        public static Hex soundHex;
 
         private static Camera _camera;
 
