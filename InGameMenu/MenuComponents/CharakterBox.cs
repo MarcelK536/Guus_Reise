@@ -116,24 +116,47 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             string weapon;
             string wiederstandskraft;
             string abwehr;
-            string xp;
             string wortgewandtheit;
+            string glueck;
+            string level;
+            string ignoranz;
 
             wiederstandskraft = charakter.Widerstandskraft.ToString();
             weapon = charakter.Weapon.Name;
             abwehr = charakter.Abwehr.ToString();
             wortgewandtheit = charakter.Wortgewandheit.ToString();
-            xp = charakter.XP.ToString();
-            if (Game1._graphics.IsFullScreen == true)
+            glueck = charakter.Glueck.ToString();
+            level = charakter.Level.ToString();
+            ignoranz = charakter.Ignoranz.ToString();
+
+            if(Fighthandler.isNormalFight)
             {
-                _titel = new List<string> { "Waffe", "Wiederstandskraft", "XP", "Abwehr", "Wortgewandtheit"};
-                _inhalt = new List<string> { weapon, wiederstandskraft, xp, abwehr, wortgewandtheit };
+                if (Game1._graphics.IsFullScreen == true)
+                {
+                    _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück"};
+                    _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
+                }
+                else
+                {
+                    _titel = new List<string> { "Level", "Wiederstandskraft" };
+                    _inhalt = new List<string> { level, wiederstandskraft };
+                }
             }
             else
             {
-                _titel = new List<string> { "Waffe", "Wiederstandskraft" };
-                _inhalt = new List<string> { weapon, wiederstandskraft };
-            }       
+                if (Game1._graphics.IsFullScreen == true)
+                {
+                    _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück"};
+                    _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
+                }
+                else
+                {
+                    _titel = new List<string> { "Level", "Wortgewandtheit" };
+                    _inhalt = new List<string> { level, wortgewandtheit };
+                }
+            }
+
+            
 
         }
 

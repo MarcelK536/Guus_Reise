@@ -111,6 +111,19 @@ namespace Guus_Reise
                         Fighthandler.playerTiles = HexMap.friendNeighbourTiles;
                         Fighthandler.playerTiles.Add(Player.activeTile);
                         GState = Game1.GameState.InFight;
+
+                        //Hier Unterscheidung in Art des Kampfes
+                        if(true)
+                        {
+                            //Normaler Kampf
+                            Fighthandler.isNormalFight = true;
+                        }
+                        else
+                        {
+                            //Wortgewandtheitskampf
+                            Fighthandler.isNormalFight = false;
+                        }
+                        
                     }
                 }
                 if (interactTrue)

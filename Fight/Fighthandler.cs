@@ -51,6 +51,8 @@ namespace Guus_Reise
 
         public static bool _isInModeCharakterEdit = false;
 
+        public static bool isNormalFight;
+
 
 
         public static void Init(GraphicsDevice graphicsDevice, ContentManager content)
