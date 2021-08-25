@@ -79,6 +79,7 @@ namespace Guus_Reise
             npcs = LevelHandler.activeLevel.NPCCharacters;
             lvlObjectives = LevelHandler.activeLevel.LevelObjective;
             lvlObjectiveText = LevelHandler.activeLevel.LevelObjectiveText;
+            playerTurn = true;
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
