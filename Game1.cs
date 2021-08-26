@@ -28,6 +28,7 @@ namespace Guus_Reise
         public enum GameState
         {
             MainMenu,
+            Controls,
             LevelSelect,
             InGame,
             InFight,
@@ -72,6 +73,7 @@ namespace Guus_Reise
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);
             GameOver.Init(Content);
+            Controls.Init(Content);
 
         }
 
@@ -102,6 +104,9 @@ namespace Guus_Reise
             {
                 case GameState.MainMenu:
                     MainMenu.Update(gameTime);
+                    break;
+                case GameState.Controls:
+                    Controls.Update(gameTime);
                     break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
@@ -151,6 +156,10 @@ namespace Guus_Reise
                 case GameState.MainMenu:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
                     MainMenu.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.Controls:
+                    GraphicsDevice.Clear(Color.CornflowerBlue);
+                    Controls.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.PlanetMenu:
                     GraphicsDevice.Clear(Color.Black);

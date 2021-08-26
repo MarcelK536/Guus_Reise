@@ -31,6 +31,7 @@ namespace Guus_Reise.Menu
 
         internal static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
+            //One Time ReInit of the Level
             if (doReinitBoard)
             {
                 LevelHandler.ReInitLevel();
