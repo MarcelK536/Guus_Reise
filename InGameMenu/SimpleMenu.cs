@@ -213,7 +213,7 @@ namespace Guus_Reise
             }
         }
 
-        public virtual void DrawBlendLeftToRight(SpriteBatch spriteBatch)
+        private void DrawBlendLeftToRight(SpriteBatch spriteBatch)
         {
             if (Active)
             {   
@@ -233,7 +233,7 @@ namespace Guus_Reise
             }
         }
 
-        public virtual void DrawBlendTopToBottom(SpriteBatch spriteBatch)
+        private void DrawBlendTopToBottom(SpriteBatch spriteBatch)
         {
             if (Active)
             {
@@ -253,7 +253,7 @@ namespace Guus_Reise
             }
         }
         
-        public virtual void DrawInsideOut(SpriteBatch spriteBatch)
+        private void DrawInsideOut(SpriteBatch spriteBatch)
         {
             if (Active)
             {
@@ -294,7 +294,7 @@ namespace Guus_Reise
             }
         }
 
-        public virtual void DrawOutsideIn(SpriteBatch spriteBatch)
+        private void DrawOutsideIn(SpriteBatch spriteBatch)
         {
             if (Active)
             {
