@@ -14,6 +14,8 @@ namespace Guus_Reise
         public static SpriteFont gemunuLibre;
         public static SpriteFont aika;
         public static SpriteFont aika12;
+        public static SpriteFont aika20;
+        public static SpriteFont inclitodo30;
 
 
 
@@ -25,6 +27,8 @@ namespace Guus_Reise
             gemunuLibre = content.Load<SpriteFont>("Fonts\\GemunuLibre");
             aika = content.Load<SpriteFont>("Fonts\\Aika");
             aika12 = content.Load<SpriteFont>("Fonts\\Aika12");
+            aika20 = content.Load<SpriteFont>("Fonts\\Aika20");
+            inclitodo30 = content.Load<SpriteFont>("Fonts\\Inclitodo30");
         }
     }
 }

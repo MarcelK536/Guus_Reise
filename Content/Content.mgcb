@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:Buttons/B1.png
 
+#begin Buttons/B1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/B1.png
+
 #begin Buttons/B1_hover.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -36,6 +48,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Buttons/B1_hover.png
+
+#begin Buttons/B1_hover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/B1_hover.png
+
+#begin Buttons/buttonPlanke.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/buttonPlanke.jpg
 
 #begin Buttons/buttonPlanke.jpg
 /importer:TextureImporter
@@ -61,6 +97,30 @@
 /processorParam:TextureFormat=Color
 /build:Buttons/ButtonSkip.png
 
+#begin Buttons/ButtonSkip.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/ButtonSkip.png
+
+#begin Buttons/ButtonSound.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/ButtonSound.png
+
 #begin Buttons/ButtonSound.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -85,6 +145,66 @@
 /processorParam:TextureFormat=Color
 /build:Buttons/EnemycharakterSheet.png
 
+#begin Buttons/EnemycharakterSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/EnemycharakterSheet.png
+
+#begin Buttons/pencil.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/pencil.png
+
+#begin Buttons/pencil.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/pencil.png
+
+#begin Buttons/pencilHover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/pencilHover.png
+
+#begin Buttons/pencilHover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/pencilHover.png
+
 #begin Buttons/PlayercharakterSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -96,6 +216,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Buttons/PlayercharakterSheet.png
+
+#begin Buttons/PlayercharakterSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/PlayercharakterSheet.png
+
+#begin Buttons/soundButtonOff.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/soundButtonOff.png
 
 #begin Buttons/soundButtonOff.png
 /importer:TextureImporter
@@ -543,13 +687,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika.spritefont
 
-#begin Fonts/Aika.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Aika.spritefont
-
 #begin Fonts/Aika12.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -557,19 +694,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika12.spritefont
 
-#begin Fonts/Aika12.spritefont
+#begin Fonts/Aika20.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Aika12.spritefont
-
-#begin Fonts/Fantasma.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Fantasma.spritefont
+/build:Fonts/Aika20.spritefont
 
 #begin Fonts/Fantasma.spritefont
 /importer:FontDescriptionImporter
@@ -584,20 +714,6 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/GemunuLibre.spritefont
-
-#begin Fonts/GemunuLibre.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/GemunuLibre.spritefont
-
-#begin Fonts/Inclitodo.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Inclitodo.spritefont
 
 #begin Fonts/Inclitodo.spritefont
 /importer:FontDescriptionImporter
@@ -620,19 +736,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Inclitodo15.spritefont
 
-#begin Fonts/Inclitodo15.spritefont
+#begin Fonts/Inclitodo30.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:Fonts/Inclitodo15.spritefont
-
-#begin Fonts/Jellee.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Jellee.spritefont
+/build:Fonts/Inclitodo30.spritefont
 
 #begin Fonts/Jellee.spritefont
 /importer:FontDescriptionImporter
