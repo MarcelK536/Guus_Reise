@@ -128,9 +128,9 @@ namespace Guus_Reise
 
                         Player.activeTile = Player.moveTile;
 
-                        TalkFighthandler.npcTiles = HexMap.enemyNeighbourTiles;
-                        TalkFighthandler.playerTiles = HexMap.friendNeighbourTiles;
-                        TalkFighthandler.playerTiles.Add(Player.activeTile);
+                        Fighthandler.npcTiles = HexMap.canBefriendNeighbourTiles;
+                        Fighthandler.playerTiles = HexMap.friendNeighbourTiles;
+                        Fighthandler.playerTiles.Add(Player.activeTile);
                         GState = Game1.GameState.InTalkFight;
                     }
                 }

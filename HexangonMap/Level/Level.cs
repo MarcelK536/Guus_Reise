@@ -57,22 +57,22 @@ namespace Guus_Reise
             Board = HexMap.CreateHexboard(tilemap, content);
         }
 
-        public Level(string[] charNames, int[,] charStats, int[,] charPos, int[,] tilemap, string[] objectiveText, bool[] objective, ContentManager content)  //Init Level with new Characters
+        public Level(string[] charNames, bool[] canBefriended, int[,] charStats, int[,] charPos, int[,] tilemap, string[] objectiveText, bool[] objective, ContentManager content)  //Init Level with new Characters
         {
             LevelObjective = objective;
             LevelObjectiveText = objectiveText;
             Board = HexMap.CreateHexboard(tilemap, content);
             if (CharacterList == null)
             {
-                CharacterList = CreateCharakters(Board, charNames, charStats, charPos);
+                CharacterList = CreateCharakters(Board, charNames, canBefriended, charStats, charPos);
             }
             else
             {
-                CharacterList.Union(CreateCharakters(Board, charNames, charStats, charPos));    //current Characters are Merged with new Charakters Duplicates will be removed 
+                CharacterList.Union(CreateCharakters(Board, charNames, canBefriended, charStats, charPos));    //current Characters are Merged with new Charakters Duplicates will be removed 
             }
         }
 
-        public void AddNewCharacter(Hex[,] levelBoard, string[] charNames, int[,] charStats, int[,] charPos)
+        public void AddNewCharacter(Hex[,] levelBoard, string[] charNames, bool[] canBefriended,  int[,] charStats, int[,] charPos)
         {
             List<Charakter> createdCharakters = new List<Charakter>();
             for (int i = 0; i < charNames.GetLength(0); i++)
@@ -85,18 +85,20 @@ namespace Guus_Reise
                 if (currHex.Charakter.IsNPC)
                 {
                     currHex.Charakter.CanMove = false;
+                    currHex.Charakter.CanBefriended = canBefriended[i];
                     NPCCharacters.Add(currHex.Charakter);
                 }
                 else
                 {
                     currHex.Charakter.CanMove = true;
+                    currHex.Charakter.CanBefriended = false;
                     PlayableCharacters.Add(currHex.Charakter);
                 }
             }
             CharacterList.Union(createdCharakters);
         }
 
-        public List<Charakter> CreateCharakters(Hex[,] levelBoard, string[] charNames, int[,] charStats, int[,] charPos)
+        public List<Charakter> CreateCharakters(Hex[,] levelBoard, string[] charNames, bool[] canBefriended, int[,] charStats, int[,] charPos)
         {
             List<Charakter> createdCharakters = new List<Charakter>();
             for (int i = 0; i < charNames.GetLength(0); i++)
@@ -108,11 +110,13 @@ namespace Guus_Reise
                 if (currHex.Charakter.IsNPC)
                 {
                     currHex.Charakter.CanMove = false;
+                    currHex.Charakter.CanBefriended = canBefriended[i];
                     NPCCharacters.Add(currHex.Charakter);
                 }
                 else
                 {
                     currHex.Charakter.CanMove = true;
+                    currHex.Charakter.CanBefriended = false;
                     PlayableCharacters.Add(currHex.Charakter);
                 }
 

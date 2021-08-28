@@ -123,7 +123,7 @@ namespace Guus_Reise
                     Fighthandler.Update(gameTime, GraphicsDevice);
                     break;
                 case GameState.InTalkFight:
-                    TalkFighthandler.Update(gameTime, GraphicsDevice);
+                    Fighthandler.Update(gameTime, GraphicsDevice);
                     break;
                 case GameState.GameOver:
                     GameOver.Update(gameTime, GraphicsDevice);

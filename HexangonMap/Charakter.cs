@@ -13,6 +13,7 @@ namespace Guus_Reise
     {
         private String _name;
         private bool _npc;
+        private bool _canBefriend;
         private int _ki;                //speichert welche KI verwendet werden soll
         private List<Point> _patroullienPunkte;
         private bool _canMove;
@@ -74,6 +75,12 @@ namespace Guus_Reise
         {
             get => _npc;
             set => _npc = value;
+        }
+
+        public bool CanBefriended
+        {
+            get => _canBefriend;
+            set => _canBefriend = value;
         }
         public bool IsMoving
         {
@@ -251,6 +258,7 @@ namespace Guus_Reise
         {
             Name = toClone.Name;
             IsNPC = toClone.IsNPC;
+            CanBefriended = toClone.CanBefriended;
             KI = toClone.KI;
             Patroullienpunkte = toClone.Patroullienpunkte;
             CanMove = toClone.CanMove;

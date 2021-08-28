@@ -117,6 +117,7 @@ namespace Guus_Reise
                                 moveTile = hoverTile;
                                 List<Hex> neighbours = new List<Hex>(HexMap.GetNeighbourTiles(moveTile));
                                 HexMap.enemyNeighbourCount = 0;
+                                HexMap.canBefriendNeighbourTilesCount = 0;
                                 HexMap.friendlyNeighbourCount = 0;
                                 HexMap.enemyNeighbourTiles.Clear();
                                 HexMap.friendNeighbourTiles.Clear();
@@ -134,13 +135,18 @@ namespace Guus_Reise
                                             HexMap.friendlyNeighbourCount++;
                                             HexMap.friendNeighbourTiles.Add(tile);
                                         }
+                                        if(tile.Charakter.IsNPC && tile.Charakter.CanBefriended)
+                                        {
+                                            HexMap.canBefriendNeighbourTilesCount++;
+                                            HexMap.canBefriendNeighbourTiles.Add(tile);
+                                        }
                                     }
                                 }
                                 if (HexMap.enemyNeighbourCount > 0)
                                 {
                                     actionMenu.fightTrue = true;
                                 }
-                                if (HexMap.friendlyNeighbourCount > 0)
+                                if (HexMap.canBefriendNeighbourTilesCount > 0)
                                 {
                                     actionMenu.interactTrue = true;
                                 }
@@ -161,6 +167,7 @@ namespace Guus_Reise
                         moveTile = null;
                         actionMenu.Active = false;
                         HexMap.enemyNeighbourCount = 0;
+                        HexMap.canBefriendNeighbourTilesCount = 0;
                         HexMap.friendlyNeighbourCount = 0;
                         HexMap.enemyNeighbourTiles.Clear();
                         HexMap.friendNeighbourTiles.Clear();

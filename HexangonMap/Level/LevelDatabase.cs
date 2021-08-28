@@ -23,6 +23,7 @@ namespace Guus_Reise
         public readonly static int[,] W1L1npcPatroulPoints = new int[,] { { 1, 1 }, { 4, 1 }, { 4, 4 }, { 1, 4 } };
         public readonly static string[] W1L1playerNames = new string[] { "Guu"};       //input Array für Namen
         public readonly static string[] W1L1npcNames = new string[] {"Timmae", "Paul" };
+        public readonly static bool[] W1L1canBefriended = new bool[] { false, true };
         public readonly static int[,] W1L1playerPos = new int[,] { { 0, 1 } };   //input Array für Positionen
         public readonly static int[,] W1L1npcPos = new int[,] { { 5, 4 }, { 4, 2 } };
         public readonly static string[] W1L1objectiveText = { "Gehe nach unten Links", "Besiege alle Gegner" };
@@ -43,6 +44,7 @@ namespace Guus_Reise
         public readonly static int[,] W1L2npcPatroulPoints = new int[,] { };
         public readonly static string[] W1L2playerNames = new string[] { "Guu" };       //input Array für Namen
         public readonly static string[] W1L2npcNames = new string[] {};
+        public readonly static bool[] W1L2canBefriended = new bool[] { };
         public readonly static int[,] W1L2playerPos = new int[,] { { 4, 2 } };   //input Array für Positionen
         public readonly static int[,] W1L2npcPos = new int[,] {};
         public readonly static string[] W1L2objectiveText = { "Besuche die Insel" };
@@ -59,6 +61,7 @@ namespace Guus_Reise
         public readonly static int[,] W2L1npcPatroulPoints = new int[,] { };
         public readonly static string[] W2L1playerNames = new string[] { "Guu" };       //input Array für Namen
         public readonly static string[] W2L1npcNames = new string[] { "Timmae", "Paul" };
+        public readonly static bool[] W2L1canBefriended = new bool[] { false, true };
         public readonly static int[,] W2L1playerPos = new int[,] { { 0, 1 } };   //input Array für Positionen
         public readonly static int[,] W2L1npcPos = new int[,] { { 4, 4 }, { 4, 2 } };
         public readonly static string[] W2L1objectiveText = { "Gehe nach unten Links", "Besiege alle Gegner" };

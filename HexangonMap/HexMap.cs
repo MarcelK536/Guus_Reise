@@ -27,7 +27,9 @@ namespace Guus_Reise
         public static List<Charakter> playableCharacter = new List<Charakter>();
         public static List<Hex> enemyNeighbourTiles = new List<Hex>();
         public static List<Hex> friendNeighbourTiles = new List<Hex>();
+        public static List<Hex> canBefriendNeighbourTiles = new List<Hex>();
         public static int enemyNeighbourCount;
+        public static int canBefriendNeighbourTilesCount;
         public static int friendlyNeighbourCount;
         
         private static bool playerTurn;
