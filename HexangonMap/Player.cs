@@ -121,6 +121,7 @@ namespace Guus_Reise
                                 HexMap.friendlyNeighbourCount = 0;
                                 HexMap.enemyNeighbourTiles.Clear();
                                 HexMap.friendNeighbourTiles.Clear();
+                                HexMap.canBefriendNeighbourTiles.Clear();
                                 foreach (Hex tile in neighbours)
                                 {
                                     if (tile.Charakter != null && tile != activeTile)
@@ -170,6 +171,7 @@ namespace Guus_Reise
                         HexMap.canBefriendNeighbourTilesCount = 0;
                         HexMap.friendlyNeighbourCount = 0;
                         HexMap.enemyNeighbourTiles.Clear();
+                        HexMap.canBefriendNeighbourTiles.Clear();
                         HexMap.friendNeighbourTiles.Clear();
                         actionMenu.fightTrue = false;
                         actionMenu.interactTrue = false;
