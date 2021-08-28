@@ -52,7 +52,10 @@ namespace Guus_Reise
 
             if (Active)
             {
-                if(weaponMenu != null && weaponMenu.Active)
+                int x = Player.activeTile.LogicalBoardPosition.X;
+                int y = Player.activeTile.LogicalBoardPosition.Y;
+
+                if (weaponMenu != null && weaponMenu.Active)
                 {
                     weaponMenu.Update(time);
                 }
@@ -76,20 +79,23 @@ namespace Guus_Reise
                             skillMenu.Active = false;
                         }
                     }
-                    if (btnLevelUp.IsClicked())
+                    if (HexMap._board[x,y].Charakter != null && HexMap._board[x, y].Charakter.IsNPC == false)
                     {
-                        Player.levelUpMenu.Active = true;
-                        Player.charakterMenu.Active = false;
-                    }
-                    if (btnWaffenWechsel.IsClicked())
-                    {
-                        weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                        weaponMenu.Active = true;
-                    }
-                    if (btnSkillWechsel.IsClicked())
-                    {
-                        skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                        skillMenu.Active = true;
+                        if (btnLevelUp.IsClicked())
+                        {
+                            Player.levelUpMenu.Active = true;
+                            Player.charakterMenu.Active = false;
+                        }
+                        if (btnWaffenWechsel.IsClicked())
+                        {
+                            weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                            weaponMenu.Active = true;
+                        }
+                        if (btnSkillWechsel.IsClicked())
+                        {
+                            skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                            skillMenu.Active = true;
+                        }
                     }
                 }
             }
@@ -126,9 +132,13 @@ namespace Guus_Reise
                     spriteBatch.DrawString(textFont,"Name: " + HexMap._board[x,y].Charakter.Name, textPos, Color.Yellow);
                     textPos.Y += textFont.MeasureString("Placeholder").Y*1.5f;
                     spriteBatch.DrawString(textFont,"Level: " + HexMap._board[x, y].Charakter.Level, textPos, Color.Yellow);
-                    btnLevelUp.Draw(spriteBatch, textFont);
-                    btnSkillWechsel.Draw(spriteBatch, textFont);
-                    btnWaffenWechsel.Draw(spriteBatch, textFont);
+
+                    if (HexMap._board[x, y].Charakter.IsNPC == false)
+                    {
+                        btnLevelUp.Draw(spriteBatch, textFont);
+                        btnSkillWechsel.Draw(spriteBatch, textFont);
+                        btnWaffenWechsel.Draw(spriteBatch, textFont);
+                    }
                     spriteBatch.End();
                 }
 
