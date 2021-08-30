@@ -97,7 +97,7 @@ namespace Guus_Reise
 
         public void Draw(Camera camera)
         {
-            if(Game1.GState == Game1.GameState.InFight)
+            if(Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
             {
                 Position = FightPosition;
                 LogicalPosition = LogicalFightPosition;

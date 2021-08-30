@@ -129,7 +129,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             level = charakter.Level.ToString();
             ignoranz = charakter.Ignoranz.ToString();
 
-            if(Game1.GState == Game1.GameState.InFight)
+            if(Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
             {
                 if (Game1._graphics.IsFullScreen == true)
                 {

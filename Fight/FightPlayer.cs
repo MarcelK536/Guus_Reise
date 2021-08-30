@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 
 
 namespace Guus_Reise
@@ -91,7 +92,15 @@ namespace Guus_Reise
             boi.CurrentFightStats[7] = (int)(selSkill.Geschwindigkeit - Math.Pow(0.95, (boi.Geschwindigkeit - selSkill.Geschwindigkeit)));
             if (clickedTile.Charakter.CurrentFightStats[0] <= 0)
             {
-                boi.GainXp(boi, clickedTile.Charakter);
+                int gotXP = boi.GainXp(boi, clickedTile.Charakter);
+                if (Fighthandler.fightResults.EarnedXP.ContainsKey(boi.Name))
+                {
+                    Fighthandler.fightResults.EarnedXP[boi.Name] =+ gotXP;
+                }
+                else
+                {
+                    Fighthandler.fightResults.EarnedXP.Add(boi.Name, gotXP);
+                }
             }
             isSelecting = false;
         }

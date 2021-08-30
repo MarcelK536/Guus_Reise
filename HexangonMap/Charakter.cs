@@ -323,7 +323,7 @@ namespace Guus_Reise
 
         public void Draw(Camera camera)
         {
-            if (Game1.GState == Game1.GameState.InFight)
+            if (Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
             {
                 LogicalPosition = LogicalFightPosition;
                 _charakterAnimation.UpdateHex(Fighthandler._fightBoard[this.LogicalPosition.X, this.LogicalPosition.Y]);
@@ -358,7 +358,7 @@ namespace Guus_Reise
             }
         }
 
-        public void GainXp(Charakter winner, Charakter looser)
+        public int GainXp(Charakter winner, Charakter looser)
         {
             int hilf = ((looser.Level - winner.Level) * 5) + 30;
             
@@ -379,6 +379,7 @@ namespace Guus_Reise
             {
                 winner.XP += hilf;
             }
+            return hilf;
         }
 
         public Charakter Clone()

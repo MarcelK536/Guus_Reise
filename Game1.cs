@@ -224,7 +224,7 @@ namespace Guus_Reise
             {
                 HexMap.SetParameterFromWindowScale();
             }
-            if (_state == GameState.InFight)
+            if (_state == GameState.InFight || _state == GameState.InTalkFight)
             {
                 Fighthandler.fightMenu.SetParameterFromWindowScale();
             }
