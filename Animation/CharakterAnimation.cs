@@ -14,8 +14,10 @@ namespace Guus_Reise.HexangonMap
         private static KeyboardState _prevKeyState;
         private Vector3 _charakterPostion; //Position des Charakters
         private Vector3 _charakterMovementPostion;
-        
+
         Vector3 translation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
+        readonly Vector3 defaultTranslation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
+
         private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
         //static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
 
@@ -70,10 +72,12 @@ namespace Guus_Reise.HexangonMap
 
         public void SetParametersAfterInitCharakter(Charakter charakter, Hex hexagon)
         {
+
             _charakter = charakter;
             _hexagon = hexagon;
-            _charakterPostion = hexagon.Position + translation;
-            _charakterMovementPostion = _charakterPostion;
+            Translation = Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(hexagon.TileRotation));
+            _charakterPostion = hexagon.Position + Translation;
+            _charakterMovementPostion = _charakterPostion + Translation;
             _glow = new Vector3(0.1f, 0.1f, 0.1f);
             _color = new Vector3(0, 0, 0);
         }
@@ -124,6 +128,7 @@ namespace Guus_Reise.HexangonMap
         public void UpdateHex(Hex hexagon)
         {
             Hexagon = hexagon;
+            Translation = Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(hexagon.TileRotation));
         }
 
         public void Draw(Camera camera, Vector3 position)
@@ -150,7 +155,7 @@ namespace Guus_Reise.HexangonMap
 
         public void DrawCharakter(Camera camera)
         {
-            this.CharakterPostion = this.Hexagon.Position + this.translation;
+            this.CharakterPostion = this.Hexagon.Position + Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(this.Hexagon.TileRotation));
             Draw(camera, _charakterPostion);
         }
 
@@ -161,7 +166,7 @@ namespace Guus_Reise.HexangonMap
 
         public void Update(GameTime gametime)
         {
-            _charakterPostion = _hexagon.Position + translation;
+            _charakterPostion = _hexagon.Position + Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(_hexagon.TileRotation));
             if(isPlayAnimation)
             {
                 if(Game1.GState == Game1.GameState.MovementAnimation)

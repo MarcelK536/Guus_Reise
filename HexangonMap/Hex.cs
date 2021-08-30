@@ -12,6 +12,8 @@ namespace Guus_Reise
 
         private Vector3 _fightPosition;
         private Point _logicalFightPosition;
+        private int _tileRotation = 45; //Darf nur 0,45,90,135,180 sein
+        public static readonly int[] possibleRotations = { 0, 45, 135, 180 };
 
         private Tile _tile;
         private Charakter _charakter;
@@ -73,6 +75,7 @@ namespace Guus_Reise
             get => _charakter;
             set => _charakter = value;
         }
+        public int TileRotation { get => _tileRotation; set => _tileRotation = value; }
 
         public Hex(Vector3 position, Point logicalPosition, Tile tile)
         {
@@ -81,10 +84,18 @@ namespace Guus_Reise
             this.LogicalPosition = this.LogicalBoardPosition;
             this.Tile = tile;
         }
+        public Hex(Vector3 position,int rotation, Point logicalPosition, Tile tile)
+        {
+            TileRotation = rotation;
+            BoardPosition = position;
+            LogicalBoardPosition = logicalPosition;
+            LogicalPosition = LogicalBoardPosition;
+            Tile = tile;
+        }
 
         public Hex Clone()
         {
-            Hex clone = new Hex(this.Position, this.LogicalPosition, this.Tile);
+            Hex clone = new Hex(this.Position, this.TileRotation, this.LogicalPosition, this.Tile);
             clone.Charakter = this.Charakter;
             clone.BoardPosition = this.BoardPosition;
             clone.LogicalPosition = this.LogicalPosition;
@@ -107,7 +118,7 @@ namespace Guus_Reise
                 Position = BoardPosition;
                 LogicalPosition = LogicalBoardPosition;
             }
-            this.Tile.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(Position));
+            this.Tile.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(this.TileRotation) * Matrix.CreateTranslation(Position));
             this.Tile.Draw(camera);
         }
 

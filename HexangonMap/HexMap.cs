@@ -216,19 +216,24 @@ namespace Guus_Reise
                     if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                     {
                         Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        createBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        createBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), RandomRotation(), new Point(i, k), hilf);
 
                     }
                     else
                     {
                         Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        createBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        createBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), RandomRotation(), new Point(i, k), hilf);
                     }
                 }
             }
             return createBoard;
         }
 
+        public static int RandomRotation()
+        {
+            Random rnd = new Random();
+            return Hex.possibleRotations[rnd.Next(0, 4)];
+        }
         public static float? Intersects(Vector2 mouseLocation, Model model, Matrix world, Matrix view, Matrix projection, Viewport viewport) //gibt die küruzeste distanz zum Model zurück (null falls keine Kollision)
         {
             float? minDistance = null;
