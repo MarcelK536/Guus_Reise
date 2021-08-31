@@ -189,9 +189,9 @@ namespace Guus_Reise
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             actionMenu.Draw(spriteBatch);
+            charakterMenu.Draw(spriteBatch);
             if (activeTile != null)
             {
-                charakterMenu.Draw(spriteBatch);
                 levelUpMenu.Draw(spriteBatch);
             }
             objectiveMenu.Draw(spriteBatch, HexMap.lvlObjectives, HexMap.lvlObjectiveText);

@@ -52,55 +52,65 @@ namespace Guus_Reise
 
             if (Active)
             {
-                int x = Player.activeTile.LogicalBoardPosition.X;
-                int y = Player.activeTile.LogicalBoardPosition.Y;
-
-                if (weaponMenu != null && weaponMenu.Active)
-                {
-                    weaponMenu.Update(time);
-                }
-                if(skillMenu != null && skillMenu.Active)
-                {
-                    skillMenu.Update(time);
-                }
-                else
+                if (Player.activeTile == null)
                 {
                     if (btnClose.IsClicked())
                     {
                         Active = false;
                         Player.levelUpMenu.Active = false;
                         Player.charakterMenu.Active = false;
-                        if (weaponMenu != null)
-                        {
-                            weaponMenu.Active = false;
-                        }
-                        if (skillMenu != null)
-                        {
-                            skillMenu.Active = false;
-                        }
                     }
-                    if (HexMap._board[x,y].Charakter != null && HexMap._board[x, y].Charakter.IsNPC == false)
+                }
+                else
+                {
+                    int x = Player.activeTile.LogicalBoardPosition.X;
+                    int y = Player.activeTile.LogicalBoardPosition.Y;
+
+                    if (weaponMenu != null && weaponMenu.Active)
                     {
-                        if (btnLevelUp.IsClicked())
+                        weaponMenu.Update(time);
+                    }
+                    if (skillMenu != null && skillMenu.Active)
+                    {
+                        skillMenu.Update(time);
+                    }
+                    else
+                    {
+                        if (btnClose.IsClicked())
                         {
-                            Player.levelUpMenu.Active = true;
+                            Active = false;
+                            Player.levelUpMenu.Active = false;
                             Player.charakterMenu.Active = false;
+                            if (weaponMenu != null)
+                            {
+                                weaponMenu.Active = false;
+                            }
+                            if (skillMenu != null)
+                            {
+                                skillMenu.Active = false;
+                            }
                         }
-                        if (btnWaffenWechsel.IsClicked())
+                        if (HexMap._board[x, y].Charakter != null && HexMap._board[x, y].Charakter.IsNPC == false)
                         {
-                            weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                            weaponMenu.Active = true;
-                        }
-                        if (btnSkillWechsel.IsClicked())
-                        {
-                            skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                            skillMenu.Active = true;
+                            if (btnLevelUp.IsClicked())
+                            {
+                                Player.levelUpMenu.Active = true;
+                                Player.charakterMenu.Active = false;
+                            }
+                            if (btnWaffenWechsel.IsClicked())
+                            {
+                                weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                                weaponMenu.Active = true;
+                            }
+                            if (btnSkillWechsel.IsClicked())
+                            {
+                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                                skillMenu.Active = true;
+                            }
                         }
                     }
                 }
-            }
-
-            
+            }      
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -109,50 +119,60 @@ namespace Guus_Reise
 
             if (Active)
             {
-                int x = Player.activeTile.LogicalBoardPosition.X;
-                int y = Player.activeTile.LogicalBoardPosition.Y;
-
-                if (HexMap._board[x, y].Charakter == null)
+                if (Player.activeTile == null)
                 {
-                    // spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
                     spriteBatch.Begin();
                     menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
                     menuHeight = btnClose.GetPosBelow().Y;
                     SetBackgroundTexture(bkgColor);
-                    spriteBatch.DrawString(textFont, "Kein Charakter ausgewählt", btnClose.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Klicke vorher auf ein Tile \num die CharakterInformationen \nzu sehen.", btnClose.GetPosRightOf(), Color.Yellow);
                     spriteBatch.End();
                 }
                 else
                 {
-                    Vector2 textPos = new Vector2(btnLevelUp.GetTextPosRightOf().X,btnClose.GetTextPosRightOf().Y);
-                    //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
-                    spriteBatch.Begin();
-                    menuWidth = 600;
-                    menuHeight = 300;
-                    spriteBatch.DrawString(textFont,"Name: " + HexMap._board[x,y].Charakter.Name, textPos, Color.Yellow);
-                    textPos.Y += textFont.MeasureString("Placeholder").Y*1.5f;
-                    spriteBatch.DrawString(textFont,"Level: " + HexMap._board[x, y].Charakter.Level, textPos, Color.Yellow);
+                    int x = Player.activeTile.LogicalBoardPosition.X;
+                    int y = Player.activeTile.LogicalBoardPosition.Y;
 
-                    if (HexMap._board[x, y].Charakter.IsNPC == false)
+                    if (HexMap._board[x, y].Charakter == null)
                     {
-                        btnLevelUp.Draw(spriteBatch, textFont);
-                        btnSkillWechsel.Draw(spriteBatch, textFont);
-                        btnWaffenWechsel.Draw(spriteBatch, textFont);
+                        // spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
+                        spriteBatch.Begin();
+                        menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
+                        menuHeight = btnClose.GetPosBelow().Y;
+                        SetBackgroundTexture(bkgColor);
+                        spriteBatch.DrawString(textFont, "Kein Charakter ausgewählt", btnClose.GetPosRightOf(), Color.Yellow);
+                        spriteBatch.End();
                     }
-                    spriteBatch.End();
-                }
+                    else
+                    {
+                        Vector2 textPos = new Vector2(btnLevelUp.GetTextPosRightOf().X, btnClose.GetTextPosRightOf().Y);
+                        //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
+                        spriteBatch.Begin();
+                        menuWidth = 600;
+                        menuHeight = 300;
+                        spriteBatch.DrawString(textFont, "Name: " + HexMap._board[x, y].Charakter.Name, textPos, Color.Yellow);
+                        textPos.Y += textFont.MeasureString("Placeholder").Y * 1.5f;
+                        spriteBatch.DrawString(textFont, "Level: " + HexMap._board[x, y].Charakter.Level, textPos, Color.Yellow);
 
-                if (weaponMenu != null && weaponMenu.Active)
-                {
-                    weaponMenu.Draw(spriteBatch);
-                }
-                if (skillMenu != null && skillMenu.Active)
-                {
-                    skillMenu.Draw(spriteBatch);
+                        if (HexMap._board[x, y].Charakter.IsNPC == false)
+                        {
+                            btnLevelUp.Draw(spriteBatch, textFont);
+                            btnSkillWechsel.Draw(spriteBatch, textFont);
+                            btnWaffenWechsel.Draw(spriteBatch, textFont);
+                        }
+                        spriteBatch.End();
+                    }
+
+                    if (weaponMenu != null && weaponMenu.Active)
+                    {
+                        weaponMenu.Draw(spriteBatch);
+                    }
+                    if (skillMenu != null && skillMenu.Active)
+                    {
+                        skillMenu.Draw(spriteBatch);
+                    }
                 }
             }
         }
-
-
     }
 }
