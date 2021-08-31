@@ -168,7 +168,7 @@ namespace Guus_Reise
                     MainMenu.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.Controls:
-                    GraphicsDevice.Clear(Color.CornflowerBlue);
+                    GraphicsDevice.Clear(Color.Black);
                     Controls.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.PlanetMenu:

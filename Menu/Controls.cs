@@ -48,9 +48,9 @@ namespace Guus_Reise
         internal static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(mainMenuFont, "Du spielst als Guu und möchtest von dem Planeten wegfliegen.", new Vector2(50, 100), Color.White);
-            spriteBatch.DrawString(mainMenuFont, "Tastatursteuerung: H - Charaktermenü, G - Levelziele", new Vector2(50, 150), Color.White);
-            spriteBatch.DrawString(mainMenuFont, "Maussteuerung: Bewegen und Linksklicken - Spielfeld auswählen, Rechtsklick - Spielfeld abwählen", new Vector2(50, 200), Color.White);
+            spriteBatch.DrawString(mainMenuFont, "Du spielst als Guu und möchtest von dem Planeten wegfliegen.", new Vector2(50, 150), Color.White);
+            spriteBatch.DrawString(mainMenuFont, "Tastatursteuerung: H - Charaktermenü, G - Levelziele", new Vector2(50, 200), Color.White);
+            spriteBatch.DrawString(mainMenuFont, "Maussteuerung: Bewegen und Linksklicken - Spielfeld auswählen, Rechtsklick - Spielfeld abwählen", new Vector2(50, 250), Color.White);
             btnMainMenu.Draw(spriteBatch, mainMenuFont);
             btnStartGame.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();
