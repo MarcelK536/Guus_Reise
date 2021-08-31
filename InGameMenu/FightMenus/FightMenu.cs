@@ -17,6 +17,8 @@ namespace Guus_Reise
         Button btnCancelAttack;
         GraphicsDevice graphics;
 
+        public int[] boxCount;
+
 
         WeaponMenu weaponMenu;
         AttackMenu attackMenu;
@@ -61,6 +63,7 @@ namespace Guus_Reise
             graphics = graphicsDevice;
             needCloseBtn = false;
 
+            boxCount = new int[2];
 
            
 
@@ -316,10 +319,11 @@ namespace Guus_Reise
             {
                 Fighthandler.hoeheArena = ((Fighthandler._graphicsDevice.Viewport.Height / 2) + Fighthandler._graphicsDevice.Viewport.Height / 2 / 2) - 100;
             }
-
             _hoehePanel = Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena;
             menuHeight = _hoehePanel;
+
             _positionPanel.Y = Fighthandler.hoeheArena;
+
             if (Fighthandler.initPlayers)
             {
                 SetPositionsCharakterboxes("NPC");
@@ -327,6 +331,7 @@ namespace Guus_Reise
             }
 
         }
+
 
         public void SetPositionsCharakterboxes(string type)
         {
@@ -342,18 +347,20 @@ namespace Guus_Reise
                     switch (countBoxes)
                     {
                         case 1:
+                            boxCount[1] = 1;
                             if (Game1._graphics.IsFullScreen == true)
                             {
-                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 40;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 100;
                                 posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
                             }
                             else
                             {
-                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 40;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 50;
                                 posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
                             }
                             break;
                         case 2:
+                            boxCount[1] = 2;
                             if (Game1._graphics.IsFullScreen == true)
                             {
                                 if (index == 0)
@@ -380,8 +387,9 @@ namespace Guus_Reise
                             }
                             break;
                         case 3:
-
+                            
                         case 4:
+                            boxCount[1] = 4;
                             if (Game1._graphics.IsFullScreen == true)
                             {
                                 if (index < 2)
@@ -449,18 +457,20 @@ namespace Guus_Reise
                     switch (countBoxes)
                     {
                         case 1:
+                            boxCount[0] = 1;
                             if (Game1._graphics.IsFullScreen == true)
                             {
-                                posX = 40;
+                                posX = 150;
                                 posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
                             }
                             else
                             {
-                                posX = 40;
+                                posX = 100;
                                 posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
                             }
                             break;
                         case 2:
+                            boxCount[0] = 2;
                             if (Game1._graphics.IsFullScreen == true)
                             {
                                 if (index == 0)
@@ -489,6 +499,7 @@ namespace Guus_Reise
                         case 3:
 
                         case 4:
+                            boxCount[0] = 4;
                             if (Game1._graphics.IsFullScreen == true)
                             {
                                 if (index < 2)

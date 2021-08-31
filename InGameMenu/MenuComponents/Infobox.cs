@@ -10,6 +10,8 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
         public int _infoboxX, _infoboxY;     //used for the Postion Vector
         protected string _name;               //the Printed Name of the Button
+        public string _ueberschriftBox;
+
         protected Texture2D _texBackground;          //Default Texture of the Button
         //protected Texture2D _textureHover;            //OPTIONAL Hover Texture to further show Hovering
 
@@ -46,6 +48,8 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
         protected Button editButton;
 
+        public int _sizetype;
+
 
 
 
@@ -58,6 +62,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
         {
             _colorInhalt = _colorTitel = _colorUeberschrift = Color.Black;
             _name = name;
+            _ueberschriftBox = _name;
             _texBackground = textureBackground;
             _scale = scale;
             _infoboxX = positionX;
@@ -72,6 +77,8 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             _type = type;
             _hasToUpdate = true;
             _hasEditButton = hasEditButton;
+
+            _sizetype = 1;
 
 
             if(_type == "OneLine")
@@ -129,16 +136,28 @@ namespace Guus_Reise.InGameMenu.MenuComponents
         {
             if(_hasEditButton)
             {
-                editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4;
-                editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64;
-
-                if (Game1._graphics.IsFullScreen == true)
+                switch (_sizetype)
                 {
-                    editButton.Scale = 0.07f;
-                }
-                else
-                {
-                    editButton.Scale = 0.05f;
+                    case 1:
+                        editButton.Scale = 0.05f;
+                        editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4 + 10;
+                        editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64 + 5;
+                        break;
+                    case 2:
+                        editButton.Scale = 0.07f;
+                        editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4 + 10;
+                        editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64 + 5;
+                        break;
+                    case 3:
+                        editButton.Scale = 0.1f;
+                        editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4 + 20;
+                        editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64 + 7;
+                        break;
+                    default:
+                        editButton.Scale = 0.05f;
+                        editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4 + 10;
+                        editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64 + 5;
+                        break;
                 }
 
                 if (editButton.IsClicked())
@@ -152,68 +171,71 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
         public void SetParameterInfobox()
         {
-            if(_hasToUpdate)
+
+            if (_hasToUpdate)
             {
-                if(_type == "OneLine")
+                ueberschriftenPositions = new Vector2[_titel.Count];
+                inhaltPositions = new Vector2[_inhalt.Count];
+
+                //Länge und Höhe der Überschrift messen
+                if (_hasEditButton)
                 {
-                    _sizelongestLine = _fontUeberschriften.MeasureString(_longestString);
+                    _sizelongestLine = _fontTitel.MeasureString(_longestString + "......");
+                    _sizelongestLine.X += 10;
                 }
                 else
                 {
-                    _sizelongestLine = _fontTitel.MeasureString(_longestString);
-                    _sizelongestLine.X += _sizelongestLine.X;
-                    if(_sizelongestLine.X < 120)
-                    {
-                        _sizelongestLine.X += 50;
-                    }
+                    _sizelongestLine = _fontTitel.MeasureString(_longestString + "... ");
                 }
-                
-               
-                Vector2 fontSizeTitel = _fontTitel.MeasureString(_name);
-                float heightTitel = fontSizeTitel.Y + 10f;
+                float heightTitel = _sizelongestLine.Y + 10f;
 
-                if (_type == "Waffenbox")
-                {
-                    heightTitel = fontSizeTitel.Y + 30f;
-                }
-                _lineHeight = _sizelongestLine.Y;
+                //Höhe einer einzelnen Zeile in der Box (nicht Titel)
+                _lineHeight = _fontText.MeasureString(_longestString + "...").Y;
 
                 
                 float addY = 15f;
                 float addX = 5f;
 
-                if (_type == "Waffenbox")
-                {
-                    addY = 25f;
-                }
-
-                if (Game1._graphics.IsFullScreen == true)
-                {
-                    addY = 25f;
-                    addX = 10f;
-                }
-
 
                 float x = _infoboxX + 10f;
 
-                
+                switch(_sizetype)
+                {
+                    case 1:
+                        titelPosition = new Vector2(x + 5f, _infoboxY + 10f);
+                        addY = 25f;
+                        addX = 20f;
+                        break;
+                    case 2:
+                        titelPosition = new Vector2(x + 5f, _infoboxY + 25f);
+                        addY = 25f;
+                        addX = 20f;
+                        break;
+                    case 3:
+                        titelPosition = new Vector2(x + 10f, _infoboxY + 50f);
+                        addY = 35f;
+                        addX = 20f;
+                        x += 15f;
+                        _lineHeight += 2f;
+                        break;
+                    default:
+                        titelPosition = new Vector2(x + 5f, _infoboxY + 10f);
+                        addY = 25f;
+                        addX = 20f;
+                        break;
+                }
 
-                if (Game1._graphics.IsFullScreen == true)
-                {
-                    titelPosition = new Vector2(x, _infoboxY + 25f);
-                }
-                else
-                {
-                    titelPosition = new Vector2(x, _infoboxY + 10f);
-                }
                
+                //Höhe aller Zeilen
+                float heightAllLines = (_lineHeight + 2f) * _titel.Count + 15f;
 
-                float heightAllLines = _lineHeight * _titel.Count;
-                ueberschriftenPositions = new Vector2[_titel.Count];
-                inhaltPositions = new Vector2[_inhalt.Count];
-
+                //Höhe des Headers
                 float sizeHeader = (titelPosition.Y + heightTitel) - _infoboxY;
 
+               
+
+                
+             //Größe der Box anpassen
                 while (_sizelongestLine.X + addX <= boxSize.X)
                 {
                     boxSize.X -= 0.2f;
@@ -236,20 +258,26 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 {
                     boxSize.Y += 0.2f;
                 }
+             //Ende "Größe der Box anpassen"
 
-                if (_type == "Waffenbox")
-                {
-                    titelPosition.X +=20f;
-                }
 
                 float y;
-                if (Game1._graphics.IsFullScreen == true)
+
+                //Beginn des Informationsimhalt (Höhe) versetzen
+                switch (_sizetype)
                 {
-                    y = titelPosition.Y + heightTitel + 25f;
-                }
-                else
-                {
-                    y = titelPosition.Y + heightTitel + 10f;
+                    case 1:
+                        y = titelPosition.Y + heightTitel + 15f;
+                        break;
+                    case 2:
+                        y = titelPosition.Y + heightTitel + 15f;
+                        break;
+                    case 3:
+                        y = titelPosition.Y + heightTitel + 30f;
+                        break;
+                    default:
+                        y = titelPosition.Y + heightTitel + 15f;
+                        break;
                 }
                 
                 if(_type == "OneLine")
@@ -264,23 +292,25 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
                         if (index == 0)
                         {
-                            ueberschriftenPositions[index] = new Vector2(x, y);
-                            inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X), y);
+                            ueberschriftenPositions[index] = new Vector2(x + 3f, y);
+                            inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X)+ 3f, y);
 
                         }
                         else
                         {
-                            ueberschriftenPositions[index] = new Vector2(x, ueberschriftenPositions[index - 1].Y + _lineHeight);
-                            inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X), ueberschriftenPositions[index - 1].Y + _lineHeight);
+                            ueberschriftenPositions[index] = new Vector2(x + 3f, ueberschriftenPositions[index - 1].Y + _lineHeight);
+                            inhaltPositions[index] = new Vector2((x + _fontUeberschriften.MeasureString(_titel[index]).X) + 3f, ueberschriftenPositions[index - 1].Y + _lineHeight);
                         }
 
                     }
                 }
                 else if(_type == "Waffenbox")
                 {
-                    inhaltPositions[0] = new Vector2(x  + 20f, y);
+                    inhaltPositions[0] = new Vector2(x  + 20f, y + 40f);
                 }
+
                 
+
                 _hasToUpdate = false;
             }
             
@@ -309,9 +339,14 @@ namespace Guus_Reise.InGameMenu.MenuComponents
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+
+            //Hintergrund des Panels zeichnen
             spriteBatch.Draw(_texBackground, new Rectangle(_infoboxX, _infoboxY, (int)boxSize.X, (int)boxSize.Y), Color.White);
 
-            spriteBatch.DrawString(_fontTitel, _name, titelPosition, _colorTitel);
+            //Überschfrift der Box zeichnen
+            spriteBatch.DrawString(_fontTitel, _ueberschriftBox, titelPosition, _colorTitel);
+
+            //Informationsinhalt der Box zeichnen
             if (_type == "OneLine")
             {
                 for (int i = 0; i < ueberschriftenPositions.Length; i++)
@@ -326,6 +361,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 spriteBatch.DrawString(_fontText, _titel[0], inhaltPositions[0], _colorInhalt);
             }
             
+            // Edit Button Zeichnen, sofern vorhanden
             if (_hasEditButton)
             {
                 editButton.Draw(spriteBatch, _fontText);
