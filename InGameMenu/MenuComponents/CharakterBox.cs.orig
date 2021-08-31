@@ -138,33 +138,48 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             level = charakter.Level.ToString();
             ignoranz = charakter.Ignoranz.ToString();
 
+<<<<<<< HEAD
+            if(_type == "Waffenbox")
+=======
             if(Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
+>>>>>>> Fight
             {
-                if (Game1._graphics.IsFullScreen == true)
-                {
-                    _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück" };
-                    _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
-                }
-                else
-                {
-                    _titel = new List<string> { "Level", "Wiederstandskraft" };
-                    _inhalt = new List<string> { level, wiederstandskraft };
-                }
+
+                    _titel = new List<string> { weapon };
+                    _inhalt = new List<string> { weapon};
             }
             else
             {
-                if (Game1._graphics.IsFullScreen == true)
+                if (Fighthandler.isNormalFight)
                 {
-                    _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück" };
-                    _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
+                    if (Game1._graphics.IsFullScreen == true)
+                    {
+                        _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück" };
+                        _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
+                    }
+                    else
+                    {
+                        _titel = new List<string> { "Level", "Wiederstandskraft" };
+                        _inhalt = new List<string> { level, wiederstandskraft };
+                    }
                 }
                 else
                 {
-                    _titel = new List<string> { "Level", "Wortgewandtheit" };
-                    _inhalt = new List<string> { level, wortgewandtheit };
+                    if (Game1._graphics.IsFullScreen == true)
+                    {
+                        _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück" };
+                        _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
+                    }
+                    else
+                    {
+                        _titel = new List<string> { "Level", "Wortgewandtheit" };
+                        _inhalt = new List<string> { level, wortgewandtheit };
+                    }
                 }
             }
-                 
+            
+
+            
 
         }
 
