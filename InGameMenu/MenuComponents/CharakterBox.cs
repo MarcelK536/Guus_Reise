@@ -138,11 +138,11 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             level = charakter.Level.ToString();
             ignoranz = charakter.Ignoranz.ToString();
 
-            if(Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
+            if(Game1.GState == Game1.GameState.InFight)
             {
                 if (Game1._graphics.IsFullScreen == true)
                 {
-                    _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück" };
+                    _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glueck" };
                     _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
                 }
                 else
@@ -151,11 +151,11 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                     _inhalt = new List<string> { level, wiederstandskraft };
                 }
             }
-            else
+            else if(Game1.GState == Game1.GameState.InTalkFight)
             {
                 if (Game1._graphics.IsFullScreen == true)
                 {
-                    _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück" };
+                    _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glueck" };
                     _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
                 }
                 else
