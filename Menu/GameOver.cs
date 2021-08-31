@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise.Menu
 {
@@ -18,6 +19,8 @@ namespace Guus_Reise.Menu
         static Button btnMainMenu;
         static Button btnLoadGame;
 
+        private static SoundEffect _soundOnButton;
+
         public static void Init(ContentManager content)
         {
             //Content for Button Back & Load
@@ -27,6 +30,8 @@ namespace Guus_Reise.Menu
 
             btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
             btnMainMenu = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800, 20);
+
+            _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
         }
 
         internal static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
@@ -41,6 +46,7 @@ namespace Guus_Reise.Menu
             if (btnMainMenu.IsClicked())
             {
                 Game1.GState = Game1.GameState.MainMenu;
+                _soundOnButton.Play();
             }
         }
 

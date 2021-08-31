@@ -10,6 +10,7 @@ using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise.Menu
 {
@@ -36,7 +37,7 @@ namespace Guus_Reise.Menu
 
         private static KeyboardState _prevKeyState;
 
-
+        private static SoundEffect _soundOnButton;
 
 
 
@@ -80,6 +81,8 @@ namespace Guus_Reise.Menu
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
+
+            _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
 
             // Filling of Arrays
             foreach (string planetName in listOfPlanets)
@@ -239,15 +242,18 @@ namespace Guus_Reise.Menu
                 if (planet.IsClicked() == true && planet.isFocused || Keyboard.GetState().IsKeyDown(Keys.Enter) && planet.isFocused)
                 {
                     GState = GameState.InGame;
+                    _soundOnButton.Play();
                 }
             }
             if (btnBack.IsClicked() == true)
             {
                 GState = GameState.MainMenu;
+                _soundOnButton.Play();
             }
             if(btnLoadGame.IsClicked() == true)
             {
                 //TODO LOAD GAME
+                _soundOnButton.Play();
             }
             _prevKeyState = Keyboard.GetState();
         }

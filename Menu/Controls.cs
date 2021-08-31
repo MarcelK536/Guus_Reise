@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise
 {
@@ -16,11 +17,14 @@ namespace Guus_Reise
         static Texture2D btnHoverTexture;
         static SpriteFont mainMenuFont;
 
+        private static SoundEffect _soundOnButton;
+
         internal static void Init(ContentManager content)
         {
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
+            _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
 
             btnMainMenu = new Button("Hauptmenü", btnDefaultTexture, btnHoverTexture, 0.5f, 800, 20);
             btnStartGame = new Button("Spiel Starten", btnDefaultTexture, btnHoverTexture, 0.5f, 40, 20);
@@ -31,10 +35,13 @@ namespace Guus_Reise
             if (btnMainMenu.IsClicked())
             {
                 Game1.GState = Game1.GameState.MainMenu;
+                _soundOnButton.Play();
             }
             if (btnStartGame.IsClicked())
             {
                 Game1.GState = Game1.GameState.PlanetMenu;
+                _soundOnButton.Play();
+
             }
         }
 
