@@ -27,7 +27,9 @@ namespace Guus_Reise
         public static List<Charakter> playableCharacter = new List<Charakter>();
         public static List<Hex> enemyNeighbourTiles = new List<Hex>();
         public static List<Hex> friendNeighbourTiles = new List<Hex>();
+        public static List<Hex> canBefriendNeighbourTiles = new List<Hex>();
         public static int enemyNeighbourCount;
+        public static int canBefriendNeighbourTilesCount;
         public static int friendlyNeighbourCount;
         
         private static bool playerTurn;
@@ -69,7 +71,7 @@ namespace Guus_Reise
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
-            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
         }
 
         public static void InitBoard()
@@ -79,6 +81,7 @@ namespace Guus_Reise
             npcs = LevelHandler.activeLevel.NPCCharacters;
             lvlObjectives = LevelHandler.activeLevel.LevelObjective;
             lvlObjectiveText = LevelHandler.activeLevel.LevelObjectiveText;
+            playerTurn = true;
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
@@ -213,19 +216,24 @@ namespace Guus_Reise
                     if (k % 2 == 0)                                             //unterscheidung da bei Hex Map jede zweite Reihe versetzt ist -> im else für z koordinate -0,5
                     {
                         Tile hilf = new Tile(new Vector3(i, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        createBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        createBoard[i, k] = new Hex(new Vector3(i, 0, (k * 0.8665f)), RandomRotation(), new Point(i, k), hilf);
 
                     }
                     else
                     {
                         Tile hilf = new Tile(new Vector3(i + 0.5f, 0, (k * 0.8665f)), tilemap[i, k], Content);
-                        createBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), new Point(i, k), hilf);
+                        createBoard[i, k] = new Hex(new Vector3(i + 0.5f, 0, (k * 0.8665f)), RandomRotation(), new Point(i, k), hilf);
                     }
                 }
             }
             return createBoard;
         }
 
+        public static int RandomRotation()
+        {
+            Random rnd = new Random();
+            return Hex.possibleRotations[rnd.Next(0, 4)];
+        }
         public static float? Intersects(Vector2 mouseLocation, Model model, Matrix world, Matrix view, Matrix projection, Viewport viewport) //gibt die küruzeste distanz zum Model zurück (null falls keine Kollision)
         {
             float? minDistance = null;

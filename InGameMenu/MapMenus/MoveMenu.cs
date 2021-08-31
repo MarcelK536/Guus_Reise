@@ -111,26 +111,27 @@ namespace Guus_Reise
                         Fighthandler.playerTiles = HexMap.friendNeighbourTiles;
                         Fighthandler.playerTiles.Add(Player.activeTile);
                         GState = Game1.GameState.InFight;
-
-                        //Hier Unterscheidung in Art des Kampfes
-                        if(true)
-                        {
-                            //Normaler Kampf
-                            Fighthandler.isNormalFight = true;
-                        }
-                        else
-                        {
-                            //Wortgewandtheitskampf
-                            Fighthandler.isNormalFight = false;
-                        }
-                        
                     }
                 }
                 if (interactTrue)
                 {
                     if (btnInteract.IsClicked())
                     {
-                        //TODO INTERACT
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
+                        if (Player.activeTile != Player.moveTile)
+                        {
+                            HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter = null;
+                        }
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.LogicalPosition = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].LogicalPosition;
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.LogicalBoardPosition = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].LogicalPosition;
+                        HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter.CanMove = false;
+
+                        Player.activeTile = Player.moveTile;
+
+                        Fighthandler.npcTiles = HexMap.canBefriendNeighbourTiles;
+                        Fighthandler.playerTiles = HexMap.friendNeighbourTiles;
+                        Fighthandler.playerTiles.Add(Player.activeTile);
+                        GState = Game1.GameState.InTalkFight;
                     }
                 }
             }

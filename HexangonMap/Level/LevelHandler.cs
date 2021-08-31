@@ -38,16 +38,16 @@ namespace Guus_Reise
             switch (currentWorld, currentLevel)
             {
                 case (1, 1):
-                    activeLevel = new Level(LevelDatabase.W1L1playerNames, LevelDatabase.W1L1playerStats, LevelDatabase.W1L1playerPos, LevelDatabase.W1L1tilemap, LevelDatabase.W1L1objectiveText, LevelDatabase.W1L1objective, contentLevel);
-                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W1L1npcNames, LevelDatabase.W1L1npcStats, LevelDatabase.W1L1npcPos);
+                    activeLevel = new Level(LevelDatabase.W1L1playerNames, LevelDatabase.W1L1canBefriended, LevelDatabase.W1L1playerStats, LevelDatabase.W1L1playerPos, LevelDatabase.W1L1tilemap, LevelDatabase.W1L1objectiveText, LevelDatabase.W1L1objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W1L1npcNames, LevelDatabase.W1L1canBefriended, LevelDatabase.W1L1npcStats, LevelDatabase.W1L1npcPos);
                     return activeLevel;
                 case (1, 2):
-                    activeLevel = new Level(LevelDatabase.W1L2playerNames, LevelDatabase.W1L2playerStats, LevelDatabase.W1L2playerPos, LevelDatabase.W1L2tilemap, LevelDatabase.W1L2objectiveText, LevelDatabase.W1L2objective, contentLevel);
-                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W1L2npcNames, LevelDatabase.W1L2npcStats, LevelDatabase.W1L2npcPos);
+                    activeLevel = new Level(LevelDatabase.W1L2playerNames, LevelDatabase.W1L2canBefriended, LevelDatabase.W1L2playerStats, LevelDatabase.W1L2playerPos, LevelDatabase.W1L2tilemap, LevelDatabase.W1L2objectiveText, LevelDatabase.W1L2objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W1L2npcNames, LevelDatabase.W1L2canBefriended, LevelDatabase.W1L2npcStats, LevelDatabase.W1L2npcPos);
                     return activeLevel;
                 case (2, 1):
-                    activeLevel = new Level(LevelDatabase.W2L1playerNames, LevelDatabase.W2L1playerStats, LevelDatabase.W2L1playerPos, LevelDatabase.W2L1tilemap, LevelDatabase.W2L1objectiveText, LevelDatabase.W2L1objective, contentLevel);
-                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L1npcNames, LevelDatabase.W2L1npcStats, LevelDatabase.W2L1npcPos);
+                    activeLevel = new Level(LevelDatabase.W2L1playerNames, LevelDatabase.W1L2canBefriended, LevelDatabase.W2L1playerStats, LevelDatabase.W2L1playerPos, LevelDatabase.W2L1tilemap, LevelDatabase.W2L1objectiveText, LevelDatabase.W2L1objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L1npcNames, LevelDatabase.W2L1canBefriended, LevelDatabase.W2L1npcStats, LevelDatabase.W2L1npcPos);
                     return activeLevel;
             }
             return activeLevel;
@@ -58,11 +58,11 @@ namespace Guus_Reise
             switch (currentWorld, currentLevel)
             {
                 case (1, 1):
-                    LevelDatabase.W1L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new Point(7, 7));
+                    LevelDatabase.W1L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(7, 7) });
                     LevelDatabase.W1L1objective[1] = LevelObjectives.EliminateAllEnemys(HexMap.npcs);
                     break;
                 case (1, 2):
-
+                    LevelDatabase.W1L2objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(3, 3), new Point(3, 4), new Point(4, 3), new Point(4, 4) });
                     break;
                 case (2, 1):
 
@@ -92,10 +92,18 @@ namespace Guus_Reise
             }
         }
 
+        //Bereitet das neue Level vor und lädt es ein
         public static void InitNewLevel()
         {
             UpdateLevelCounter();
             CopyCharacters(activeLevel.CharacterList);
+            activeLevel = InitLevel();
+            HexMap.InitBoard();
+        }
+
+        //Resetet das aktuelle Level
+        public static void ReInitLevel()
+        {
             activeLevel = InitLevel();
             HexMap.InitBoard();
         }

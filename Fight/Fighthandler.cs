@@ -51,7 +51,8 @@ namespace Guus_Reise
 
         public static bool _isInModeCharakterEdit = false;
 
-        public static bool isNormalFight;
+        public static bool showFightResults = false;
+        public static FightResults fightResults;
 
 
 
@@ -73,7 +74,7 @@ namespace Guus_Reise
 
             //FightPanel
             //_fightPanel = new FightPanel(hoehePanel);
-           
+            fightResults = new FightResults(mainMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
@@ -221,85 +222,92 @@ namespace Guus_Reise
             HexMap.NoGlow();
             Player.actionMenu.Active = false;
             createdBoard = false;
-            Game1.GState = Game1.GameState.InGame;
+
+            showFightResults = true;
+            
         }
 
         public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
-            if (createdBoard == false)
+            if (createdBoard == false && showFightResults == false)
             {
                 Createboard(fightMap);
                 createdBoard = true;
             }
-            
 
-            //// Test if an swipe in left or right direktion was initialized
-            //if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
-            //{
-            //    currentMenuStatus = (currentMenuStatus + 1) % menuStatusList.Count;
-            //}
-            //if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
-            //{
-            //    if(currentMenuStatus == 0)
-            //    {
-            //        currentMenuStatus = 1;
-            //    }
-            //    else
-            //    {
-            //        currentMenuStatus = (currentMenuStatus - 1) % menuStatusList.Count;
-            //    }             
-            //}
-
-            //if (initPlayers == true)
-            //{
-
-            //    if(_isInModeCharakterEdit)
-            //    {
-
-            //    }
-            //    else
-            //    {
-            //        CheckMenuStatus();
-            //    }
-
-            //}
-            
-
-            if (initPlayers == false)
+            if (showFightResults)
             {
-                InitPlayers(playerTiles,charPositionsPlayer);
-                InitPlayers(npcTiles, charPositionsEnemy);
-                turnBar = new FightTurnBar(graphicsDevice, playerTiles, npcTiles);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Q))
-            {
-                GState = Game1.GameState.InGame;
-                fightMenu.Active = false;
-                ExitFight();
-            }
-            if (turnBar.ReturnCurrentCharakter().IsNPC == false)
-            {
-                fightMenu.Active = true;
-                fightMenu.Update(gameTime);
-                turnBar.ReSort();
+                fightResults.Update();
             }
             else
             {
-                FightKI.MakeGreedyMove();
-                fightMenu.Active = false;
-                System.Threading.Thread.Sleep(500);
-                turnBar.ReSort();
+
+                //// Test if an swipe in left or right direktion was initialized
+                //if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
+                //{
+                //    currentMenuStatus = (currentMenuStatus + 1) % menuStatusList.Count;
+                //}
+                //if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
+                //{
+                //    if(currentMenuStatus == 0)
+                //    {
+                //        currentMenuStatus = 1;
+                //    }
+                //    else
+                //    {
+                //        currentMenuStatus = (currentMenuStatus - 1) % menuStatusList.Count;
+                //    }             
+                //}
+
+                //if (initPlayers == true)
+                //{
+
+                //    if(_isInModeCharakterEdit)
+                //    {
+
+                //    }
+                //    else
+                //    {
+                //        CheckMenuStatus();
+                //    }
+
+                //}
+
+
+                if (initPlayers == false && showFightResults == false)
+                {
+                    InitPlayers(playerTiles, charPositionsPlayer);
+                    InitPlayers(npcTiles, charPositionsEnemy);
+                    turnBar = new FightTurnBar(graphicsDevice, playerTiles, npcTiles);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Q))
+                {
+                    GState = Game1.GameState.InGame;
+                    fightMenu.Active = false;
+                    ExitFight();
+                }
+                if (turnBar.ReturnCurrentCharakter().IsNPC == false)
+                {
+                    fightMenu.Active = true;
+                    fightMenu.Update(gameTime);
+                    turnBar.ReSort();
+                }
+                else
+                {
+                    FightKI.MakeGreedyMove();
+                    fightMenu.Active = false;
+                    System.Threading.Thread.Sleep(500);
+                    turnBar.ReSort();
+                }
+
+                turnBar.Update(graphicsDevice);
+                visFightManager.Update(gameTime);
+                RemoveDeadCharacters(npcTiles);
+                RemoveDeadCharacters(playerTiles);
+
+                WinFight();
+                LoseFight();
             }
-            
-            turnBar.Update(graphicsDevice);
-            visFightManager.Update(gameTime);
-            RemoveDeadCharacters(npcTiles);
-            RemoveDeadCharacters(playerTiles);
-
-            WinFight();
-            LoseFight();
-
-            
         }
 
         public static void RemoveDeadCharacters(List<Hex> tiles)
@@ -313,10 +321,12 @@ namespace Guus_Reise
                         turnBar.RemoveCharakter(hexTiles.Charakter);
                         if (hexTiles.Charakter.IsNPC)
                         {
+                            fightResults.KilledEnemys.Add(hexTiles.Charakter.Name);
                             HexMap.npcs.Remove(hexTiles.Charakter);
                         }
                         if (!hexTiles.Charakter.IsNPC)
                         {
+                            fightResults.KilledFriends.Add(hexTiles.Charakter.Name);
                             HexMap.playableCharacter.Remove(hexTiles.Charakter);
                         }
                         hexTiles.Charakter = null;
@@ -579,7 +589,8 @@ namespace Guus_Reise
 
             if(guuDead == true)
             {
-                Game1.GState = Game1.GameState.MainMenu; //TODO GAMEOVER Screen
+                fightResults.gameOver = true;
+                showFightResults = true;
             }
         }
 
@@ -620,8 +631,11 @@ namespace Guus_Reise
             spriteBatch.Begin();
             spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, _graphicsDevice.Viewport.Width, hoeheArena), Color.White);
             spriteBatch.End();
-            
 
+            if (showFightResults)
+            {
+                fightResults.Draw(spriteBatch);
+            }
 
             if (initPlayers == true)
             {
@@ -645,7 +659,9 @@ namespace Guus_Reise
                 {
                     fightMenu.Draw(spriteBatch);
                 }
-                
+
+
+
 
                 //Zeichnen der Charakterboxen
                 //if(_isInModeCharakterEdit)

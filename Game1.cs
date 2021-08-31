@@ -29,9 +29,12 @@ namespace Guus_Reise
         public enum GameState
         {
             MainMenu,
+            Controls,
             LevelSelect,
             InGame,
             InFight,
+            InTalkFight,
+            GameOver,
             Exit,
             Credits,
             PlanetMenu,
@@ -70,6 +73,8 @@ namespace Guus_Reise
             HexMap.Init(Content, GraphicsDevice, _graphics);
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);
+            GameOver.Init(Content);
+            Controls.Init(Content);
 
         }
 
@@ -101,6 +106,9 @@ namespace Guus_Reise
                 case GameState.MainMenu:
                     MainMenu.Update(gameTime);
                     break;
+                case GameState.Controls:
+                    Controls.Update(gameTime);
+                    break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
                     break;
@@ -114,6 +122,12 @@ namespace Guus_Reise
                     break;
                 case GameState.InFight:
                     Fighthandler.Update(gameTime, GraphicsDevice);
+                    break;
+                case GameState.InTalkFight:
+                    Fighthandler.Update(gameTime, GraphicsDevice);
+                    break;
+                case GameState.GameOver:
+                    GameOver.Update(gameTime, GraphicsDevice);
                     break;
                 case GameState.Exit:
                     Exit();
@@ -144,6 +158,10 @@ namespace Guus_Reise
                     GraphicsDevice.Clear(Color.CornflowerBlue);
                     MainMenu.Draw(_spriteBatch, gameTime);
                     break;
+                case GameState.Controls:
+                    GraphicsDevice.Clear(Color.CornflowerBlue);
+                    Controls.Draw(_spriteBatch, gameTime);
+                    break;
                 case GameState.PlanetMenu:
                     GraphicsDevice.Clear(Color.Black);
                     PlanetMenu.Draw(_spriteBatch, gameTime);
@@ -161,6 +179,14 @@ namespace Guus_Reise
                 case GameState.InFight:
                     GraphicsDevice.Clear(Color.Black);
                     Fighthandler.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.InTalkFight:
+                    GraphicsDevice.Clear(Color.Coral);
+                    Fighthandler.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.GameOver:
+                    GraphicsDevice.Clear(Color.DarkBlue);
+                    GameOver.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.MovementAnimation:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
@@ -198,7 +224,7 @@ namespace Guus_Reise
             {
                 HexMap.SetParameterFromWindowScale();
             }
-            if (_state == GameState.InFight)
+            if (_state == GameState.InFight || _state == GameState.InTalkFight)
             {
                 Fighthandler.fightMenu.SetParameterFromWindowScale();
             }

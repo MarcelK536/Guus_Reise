@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System.Linq;
 
 
 namespace Guus_Reise
 {
-    class FightPlayer
+    class TalkFightPlayer
     {
         public static bool isSelecting = false;
         public static Skill _selSkill = null;
@@ -92,15 +91,7 @@ namespace Guus_Reise
             boi.CurrentFightStats[7] = (int)(selSkill.Geschwindigkeit - Math.Pow(0.95, (boi.Geschwindigkeit - selSkill.Geschwindigkeit)));
             if (clickedTile.Charakter.CurrentFightStats[0] <= 0)
             {
-                int gotXP = boi.GainXp(boi, clickedTile.Charakter);
-                if (Fighthandler.fightResults.EarnedXP.ContainsKey(boi.Name))
-                {
-                    Fighthandler.fightResults.EarnedXP[boi.Name] =+ gotXP;
-                }
-                else
-                {
-                    Fighthandler.fightResults.EarnedXP.Add(boi.Name, gotXP);
-                }
+                boi.GainXp(boi, clickedTile.Charakter);
             }
             isSelecting = false;
         }

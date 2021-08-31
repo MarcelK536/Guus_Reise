@@ -16,6 +16,7 @@ namespace Guus_Reise.Menu
         static SpriteFont mainMenuFont;
 
         static Button btnPlay;
+        static Button btnControls;
         static Button btnCredits;
         static Button btnExit;
 
@@ -24,9 +25,10 @@ namespace Guus_Reise.Menu
         public static void Init(GraphicsDeviceManager graphics)
         {
             _graphics = graphics;
-            btnPlay = new Button("Start Game", btnDefaultTexture, btnHoverTexture, 0.5f, 170, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight *0.2));
-            btnCredits = new Button("Credits", btnDefaultTexture, btnHoverTexture, 0.5f, 410, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight * 0.2));
-            btnExit = new Button("Exit", btnDefaultTexture, btnHoverTexture, 0.5f, 650, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight * 0.2));
+            btnPlay = new Button("Start Game", btnDefaultTexture, btnHoverTexture, 0.5f, 75, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight *0.2));
+            btnControls = new Button("Controls", btnDefaultTexture, btnHoverTexture, 0.5f, 295, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight * 0.2));
+            btnCredits = new Button("Credits", btnDefaultTexture, btnHoverTexture, 0.5f, 515, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight * 0.2));
+            btnExit = new Button("Exit", btnDefaultTexture, btnHoverTexture, 0.5f, 735, graphics.PreferredBackBufferHeight - (int)(graphics.PreferredBackBufferHeight * 0.2));
         }
         public static void LoadTexture(ContentManager content)
         {
@@ -38,6 +40,7 @@ namespace Guus_Reise.Menu
         {   
             spriteBatch.Begin();
             btnPlay.Draw(spriteBatch, mainMenuFont);
+            btnControls.Draw(spriteBatch, mainMenuFont);
             btnCredits.Draw(spriteBatch, mainMenuFont);
             btnExit.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();
@@ -48,6 +51,10 @@ namespace Guus_Reise.Menu
             if (btnPlay.IsClicked() == true)
             {
                 GState = GameState.PlanetMenu;   
+            }
+            if(btnControls.IsClicked() == true)
+            {
+                GState = GameState.Controls;
             }
             if (btnCredits.IsClicked() == true)
             {
@@ -65,9 +72,10 @@ namespace Guus_Reise.Menu
             {
                 btnPlay.ButtonY = _graphics.PreferredBackBufferHeight - (int)(_graphics.PreferredBackBufferHeight * 0.1);
                 //X
-                btnPlay.ButtonX = 550;
-                btnCredits.ButtonX = 850;
-                btnExit.ButtonX = 1150;
+                btnPlay.ButtonX = 425;
+                btnControls.ButtonX = 725;
+                btnCredits.ButtonX = 1025;
+                btnExit.ButtonX = 1325;
                 // Scale
                 btnPlay.Scale = 0.65f;
             }
@@ -75,15 +83,18 @@ namespace Guus_Reise.Menu
             {
                 btnPlay.ButtonY = _graphics.PreferredBackBufferHeight - (int)(_graphics.PreferredBackBufferHeight * 0.2);
                 //X
-                btnPlay.ButtonX = 170;
-                btnCredits.ButtonX = 410;
-                btnExit.ButtonX = 650;
+                btnPlay.ButtonX = 75;
+                btnControls.ButtonX = 295;
+                btnCredits.ButtonX = 515;
+                btnExit.ButtonX = 735;
                 //Scale
                 btnPlay.Scale = 0.5f;
                 
             }
+            btnControls.ButtonY = btnPlay.ButtonY;
             btnCredits.ButtonY = btnPlay.ButtonY;
             btnExit.ButtonY = btnPlay.ButtonY;
+            btnControls.Scale = btnPlay.Scale;
             btnCredits.Scale = btnPlay.Scale;
             btnExit.Scale = btnPlay.Scale;
         }

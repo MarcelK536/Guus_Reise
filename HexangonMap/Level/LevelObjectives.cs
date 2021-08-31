@@ -10,26 +10,32 @@ namespace Guus_Reise
         /// <summary>
         /// The Objective is for any playable Character to reach a specific Tile
         /// </summary>
-        public static bool GoToHexAny (List<Charakter> who, Point where)
+        public static bool GoToHexAny (List<Charakter> who, List<Point> where)
         {
             foreach (Charakter c in who)
             {
-                if(c.LogicalBoardPosition == where)
+                foreach (Point w in where)
                 {
-                    return true;
+                    if (c.LogicalBoardPosition == w)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
         /// <summary>
-        /// The Objective is for a specific playable Character to reach a specific Tile
+        /// The Objective is for a specific playable Character to reach a specific Tile needs to be in a list
         /// </summary>
-        public static bool GoToHexSpecific (Charakter who, Point where)
+        public static bool GoToHexSpecific (Charakter who, List<Point> where)
         {
-            if(who.LogicalBoardPosition == where)
+            foreach (Point w in where)
             {
-                return true;
+                if (who.LogicalBoardPosition == w)
+                {
+                    return true;
+                }
             }
             return false;
         }
