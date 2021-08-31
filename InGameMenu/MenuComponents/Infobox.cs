@@ -140,8 +140,8 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 {
                     case 1:
                         editButton.Scale = 0.05f;
-                        editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4 + 10;
-                        editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64 + 5;
+                        editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4 + 20;
+                        editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64 - 2;
                         break;
                     case 2:
                         editButton.Scale = 0.07f;
@@ -193,18 +193,17 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 _lineHeight = _fontText.MeasureString(_longestString + "...").Y;
 
                 
-                float addY = 15f;
-                float addX = 5f;
+                float addY = 5f;
+                float addX = 0f;
 
 
                 float x = _infoboxX + 10f;
 
+                //Höhe der Box Überschrift
                 switch(_sizetype)
                 {
                     case 1:
-                        titelPosition = new Vector2(x + 5f, _infoboxY + 10f);
-                        addY = 25f;
-                        addX = 20f;
+                        titelPosition = new Vector2(x + 10f, _infoboxY + 12f);
                         break;
                     case 2:
                         titelPosition = new Vector2(x + 5f, _infoboxY + 25f);
@@ -220,20 +219,15 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                         break;
                     default:
                         titelPosition = new Vector2(x + 5f, _infoboxY + 10f);
-                        addY = 25f;
-                        addX = 20f;
                         break;
                 }
 
                
                 //Höhe aller Zeilen
-                float heightAllLines = (_lineHeight + 2f) * _titel.Count + 15f;
+                float heightAllLines = (_lineHeight) * _titel.Count;
 
                 //Höhe des Headers
                 float sizeHeader = (titelPosition.Y + heightTitel) - _infoboxY;
-
-               
-
                 
              //Größe der Box anpassen
                 while (_sizelongestLine.X + addX <= boxSize.X)
@@ -267,7 +261,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 switch (_sizetype)
                 {
                     case 1:
-                        y = titelPosition.Y + heightTitel + 15f;
+                        y = titelPosition.Y + heightTitel;
                         break;
                     case 2:
                         y = titelPosition.Y + heightTitel + 15f;
@@ -306,7 +300,21 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 }
                 else if(_type == "Waffenbox")
                 {
-                    inhaltPositions[0] = new Vector2(x  + 20f, y + 40f);
+                    switch (_sizetype)
+                    {
+                        case 1:
+                            inhaltPositions[0] = new Vector2(x + 20f, y + 20f);
+                            break;
+                        case 2:
+                            inhaltPositions[0] = new Vector2(x + 20f, y + 40f);
+                            break;
+                        case 3:
+                            inhaltPositions[0] = new Vector2(x + 20f, y + 40f);
+                            break;
+                        default:
+                            inhaltPositions[0] = new Vector2(x + 20f, y + 40f);
+                            break;
+                    }
                 }
 
                 

@@ -365,25 +365,25 @@ namespace Guus_Reise
                             {
                                 if (index == 0)
                                 {
-                                    posX = Fighthandler._graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                    posY = (Fighthandler.hoeheArena) + 90;
                                 }
                                 else
                                 {
-                                    posX = Fighthandler._graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 110;
                                 }
-                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 100;
                             }
                             else
                             {
                                 if (index == 0)
                                 {
-                                    posX = Fighthandler._graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
+                                    posY = (Fighthandler.hoeheArena) + 20;
                                 }
                                 else
                                 {
-                                    posX = Fighthandler._graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
                                 }
-                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 50;
                             }
                             break;
                         case 3:
@@ -394,11 +394,11 @@ namespace Guus_Reise
                             {
                                 if (index < 2)
                                 {
-                                    posY = (Fighthandler.hoeheArena) + 20;
+                                    posY = (Fighthandler.hoeheArena) + 70;
                                 }
                                 else
                                 {
-                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 80;
                                 }
 
                                 if (index == 0 || index == 2)
@@ -475,25 +475,25 @@ namespace Guus_Reise
                             {
                                 if (index == 0)
                                 {
-                                    posX = 20;
+                                    posY = (Fighthandler.hoeheArena) + 90;
                                 }
                                 else
                                 {
-                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 110;
                                 }
-                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
+                                posX = 150;
                             }
                             else
                             {
                                 if (index == 0)
                                 {
-                                    posX = 20;
+                                    posY = (Fighthandler.hoeheArena) + 20;
                                 }
                                 else
                                 {
-                                    posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
                                 }
-                                posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
+                                posX = 100;
                             }
                             break;
                         case 3:
@@ -504,11 +504,11 @@ namespace Guus_Reise
                             {
                                 if (index < 2)
                                 {
-                                    posY = (Fighthandler.hoeheArena) + 20;
+                                    posY = (Fighthandler.hoeheArena) + 70;
                                 }
                                 else
                                 {
-                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
+                                    posY = (Fighthandler.hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 80;
                                 }
 
                                 if (index == 0 || index == 2)

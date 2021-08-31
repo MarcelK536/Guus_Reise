@@ -29,7 +29,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             {
                 _ueberschriftBox = _name + ": Uebersicht";
             }
-    
+
             _hasToUpdate = true;
 
             _hasEditButton = hasEditButton;
@@ -109,7 +109,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                             _sizetype = 2;
                             break;
                         case 2:
-                            _sizetype = 2;
+                            _sizetype = 1;
                             break;
                         case 4:
                             _sizetype = 1;
@@ -127,7 +127,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                             _sizetype = 2;
                             break;
                         case 2:
-                            _sizetype = 2;
+                            _sizetype = 1;
                             break;
                         case 4:
                             _sizetype = 1;
