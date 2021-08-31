@@ -24,6 +24,7 @@ namespace Guus_Reise
         public int _hoehePanel;
 
         public Texture2D texPanel1;
+        public Texture2D texPanelDouble;
 
         public Texture2D _currentTex;
 
@@ -93,6 +94,7 @@ namespace Guus_Reise
         public void InitFightMenu(ContentManager content)
         {
             texPanel1 = content.Load<Texture2D>("Fight\\FightMenuPanel2");
+            texPanelDouble = content.Load<Texture2D>("Fight\\FightMenuPanel");
             playerCharakterInfobox = content.Load<Texture2D>("Buttons\\PlayercharakterSheet");
             enemyCharakterInfobox = content.Load<Texture2D>("Buttons\\EnemycharakterSheet");
             currentMenuStatus = 0;
@@ -217,6 +219,24 @@ namespace Guus_Reise
             }
 
             _prevKeyState = Keyboard.GetState();
+
+            switch(menuStatusList[currentMenuStatus])
+            {
+                case "Attack":
+                    _currentTex = texPanel1;
+                    break;
+                case "CharakterUebersicht":
+                    _currentTex = texPanelDouble;
+                    break;
+                case "WaffenUebersicht":
+                    _currentTex = texPanelDouble;
+                    break;
+
+                default:
+                    _currentTex = texPanel1;
+                    break;
+
+            }
         }
 
         public void Update(GameTime time)

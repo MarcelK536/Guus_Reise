@@ -65,6 +65,7 @@ namespace Guus_Reise
 
             texPanel = content.Load<Texture2D>("Fight\\FightMenuPanel2");
             fightMenu = new FightMenu(InformationComponents.fantasma, graphicsDevice, SimpleMenu.BlendDirection.None);
+
             backgroundTexture = content.Load<Texture2D>("Fight\\backgroundFight");
             playerCharakterInfobox = content.Load<Texture2D>("Buttons\\PlayercharakterSheet");
             enemyCharakterInfobox = content.Load<Texture2D>("Buttons\\EnemycharakterSheet");
