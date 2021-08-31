@@ -25,30 +25,6 @@
 /processorParam:TextureFormat=Color
 /build:Buttons/B1.png
 
-#begin Buttons/B1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Buttons/B1.png
-
-#begin Buttons/B1_hover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Buttons/B1_hover.png
-
 #begin Buttons/B1_hover.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -96,30 +72,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Buttons/ButtonSkip.png
-
-#begin Buttons/ButtonSkip.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Buttons/ButtonSkip.png
-
-#begin Buttons/ButtonSound.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Buttons/ButtonSound.png
 
 #begin Buttons/ButtonSound.png
 /importer:TextureImporter
@@ -774,6 +726,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/guu_wave.mp3
+
+#begin Sounds/paul_wave.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/paul_wave.mp3
+
+#begin Sounds/timmae_wave.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/timmae_wave.mp3
 
 #begin TileModels/darkBrown.png
 /importer:TextureImporter
