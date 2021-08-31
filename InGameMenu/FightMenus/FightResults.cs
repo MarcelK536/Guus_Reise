@@ -15,6 +15,7 @@ namespace Guus_Reise
 
         public bool gameOver = false;
         public Button btnExitFight;
+        private Texture2D btnTexture;
 
         public List<string> KilledEnemys { get => _killedEnemys; set => _killedEnemys = value; }
         public List<string> KilledFriends { get => _killedFriends; set => _killedFriends = value; }
@@ -23,18 +24,16 @@ namespace Guus_Reise
 
         public FightResults(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
-            menuWidth = 600;
-            menuHeight = 300;
-            Vector2 position = new Vector2((_graphicsDevice.Viewport.Width / 2) - (int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
-            bkgPos = position;
-            Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
+            btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
+            btnExitFight = new Button("Exit", btnTexture, 1, 0, 0);
+            UpdateScreenParameters();            
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
             {
                 btnColor[i] = Color.YellowGreen * 0.8f;
             }
             SetBackgroundTexture(bkgColor);
-            btnExitFight = new Button("Exit", btnTexture, 1, (int)(position.X+menuHeight)-btnTexture.Width/2,(int) (position.Y +(menuWidth / 2))-btnTexture.Height);
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -86,6 +85,34 @@ namespace Guus_Reise
                 EarnedXP.Clear();
                 NewFriends.Clear();
             }
+        }
+
+        public void UpdateScreenParameters()
+        {
+            
+            if (Game1._graphics.IsFullScreen == true)
+            {
+                menuWidth = 1000;
+                menuHeight = 600;
+                bkgPos = new Vector2((_graphicsDevice.Viewport.Width / 2) - 200, (_graphicsDevice.Viewport.Height / 2) - 100);
+                btnExitFight.ButtonX = (int)(bkgPos.X +250);
+                btnExitFight.ButtonY = (int)(bkgPos.Y + 250);
+            }
+            else
+            {
+                menuWidth = 600;
+                menuHeight = 300;
+                bkgPos = new Vector2((_graphicsDevice.Viewport.Width / 2) - (int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
+                btnExitFight.ButtonX = (int)(bkgPos.X + menuHeight) - btnTexture.Width / 2;
+                btnExitFight.ButtonY = (int)(bkgPos.Y + (menuWidth / 2)) - btnTexture.Height;
+
+            }
+
+            
+
+
+
+
         }
     }
 }
