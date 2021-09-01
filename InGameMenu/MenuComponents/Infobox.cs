@@ -341,7 +341,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             return new Vector2(width, height);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
 
@@ -360,10 +360,6 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                     spriteBatch.DrawString(_fontText, _inhalt[i], inhaltPositions[i], _colorInhalt);
              
                 }
-            }
-            else if(_type == "Waffenbox")
-            {
-                spriteBatch.DrawString(_fontText, _titel[0], inhaltPositions[0], _colorInhalt);
             }
             
             // Edit Button Zeichnen, sofern vorhanden

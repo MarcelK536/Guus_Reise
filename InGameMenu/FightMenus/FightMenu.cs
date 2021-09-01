@@ -19,6 +19,12 @@ namespace Guus_Reise
         Button btnExit;
         Button btnSave;
 
+        Button btnRightLong;
+        Button btnRight;
+        Button btnLeftLong;
+        Button btnLeft;
+        
+
         CharakterBox editingCharakterWeaponbox;
         int oldWeapon;
 
@@ -91,12 +97,20 @@ namespace Guus_Reise
 
             btnAttack = new Button("Attack", btnTexture, 1, pos);
 
+            //Speicher und Abbruch-Buttons für die Waffen-Bearbeitung
             btnExit = new Button("", InformationComponents.texExit, 0.2f, pos);
             btnExit.isOnlyClickButton = true;
             btnSave = new Button("", InformationComponents.texSave, 0.2f, pos);
             btnSave.isOnlyClickButton = true;
 
-            
+            //Pfeile nach links und rechts
+            btnLeftLong = new Button("", InformationComponents.texArrowLeftLong, 0.2f, pos);
+            btnRightLong = new Button("", InformationComponents.texArrowRightLong, 0.2f, pos);
+            btnRight = new Button("", InformationComponents.texArrowRight, 0.2f, pos);
+            btnLeft = new Button("", InformationComponents.texArrowLeft, 0.2f, pos);
+
+
+
 
             menuButtons.Add(btnAttack);
             btnChangeWeapon = new Button("Change Weapon", btnTexture, 1, btnAttack.GetPosBelow());
@@ -125,6 +139,8 @@ namespace Guus_Reise
             currentMenuStatus = 0;
             textureEditbutton = content.Load<Texture2D>("Buttons\\pencil");
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
+
+
 
             Texture2D platzhalterFight = content.Load<Texture2D>("Fight\\Weapon\\platzhalterFight");
             Texture2D platzhalterTalk = content.Load<Texture2D>("Fight\\Weapon\\platzhalterTalk");
@@ -280,7 +296,7 @@ namespace Guus_Reise
                 //Hintergrund Textur des Panels beim Bearbieten der Waffe
                 _currentTex = texPanelBlue;
 
-                //Position des X- und Speicher-Buttons aktualisieren
+                //Positionen und Skaliserungen der Button aktualisieren
                 if (Game1._graphics.IsFullScreen == true)
                 {
                     btnSave.Scale = 0.4f;
@@ -289,15 +305,32 @@ namespace Guus_Reise
                     btnSave.ButtonY = Fighthandler.hoeheArena + 50;
                     btnExit.ButtonX = _graphicsDevice.Viewport.Width - 300;
                     btnExit.ButtonY = Fighthandler.hoeheArena + 50;
+
+                    btnRightLong.Scale = 0.3f;
+                    btnLeftLong.Scale = 0.3f;
+                    btnRightLong.ButtonX = 1290;
+                    btnRightLong.ButtonY = Fighthandler.hoeheArena + 110;
+                    btnLeftLong.ButtonX = 50;
+                    btnLeftLong.ButtonY = Fighthandler.hoeheArena + 110;
+
+
                 }
                 else
                 {
+                    btnRightLong.Scale = 0.15f;
+                    btnLeftLong.Scale = 0.15f;
+                    btnRightLong.ButtonX = 570;
+                    btnRightLong.ButtonY = Fighthandler.hoeheArena + 40;
+                    btnLeftLong.ButtonX = 50;
+                    btnLeftLong.ButtonY = Fighthandler.hoeheArena + 40;
+
                     btnSave.Scale = 0.3f;
                     btnExit.Scale = 0.3f;
                     btnSave.ButtonX = _graphicsDevice.Viewport.Width - 100;
                     btnSave.ButtonY = Fighthandler.hoeheArena + 30;
                     btnExit.ButtonX = _graphicsDevice.Viewport.Width - 200;
                     btnExit.ButtonY = Fighthandler.hoeheArena + 30;
+
                 }
 
                 List<Weapon> currentWeaponList = Fighthandler.weaponTalk;
@@ -308,7 +341,7 @@ namespace Guus_Reise
                 int endOfList = currentWeaponList.Count;
 
                 //Aktualisieren der Wafffen-Tableaus
-                if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
+                if ( (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right)) || btnRightLong.IsClicked())
                 {
                     ++editingCharakterWeaponbox.currentWeapon;
                     
@@ -317,7 +350,7 @@ namespace Guus_Reise
                         editingCharakterWeaponbox.currentWeapon = 0;
                     }
                 }
-                if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
+                if ( (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left)) || btnLeftLong.IsClicked())
                 {
                     --editingCharakterWeaponbox.currentWeapon;
                     if (editingCharakterWeaponbox.currentWeapon == -1)
@@ -348,13 +381,34 @@ namespace Guus_Reise
 
             }
 
+            //Positionen und Skaliserungen der Button aktualisieren
+            if (Game1._graphics.IsFullScreen == true)
+            {
+                btnRight.Scale = 0.2f;
+                btnLeft.Scale = 0.2f;
+                btnLeft.ButtonX = 40;
+                btnLeft.ButtonY = _graphicsDevice.Viewport.Height - 150;
+                btnRight.ButtonX = _graphicsDevice.Viewport.Width - 150;
+                btnRight.ButtonY = _graphicsDevice.Viewport.Height - 150;
+
+            }
+            else
+            {
+                btnRight.Scale = 0.1f;
+                btnLeft.Scale = 0.1f;
+                btnLeft.ButtonX = 20;
+                btnLeft.ButtonY = _graphicsDevice.Viewport.Height - 80;
+                btnRight.ButtonX = _graphicsDevice.Viewport.Width - 75;
+                btnRight.ButtonY = _graphicsDevice.Viewport.Height - 80;
+            }
+
             // Test if an swipe in left or right direktion was initialized
-            if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
+            if ( (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right)) || btnRight.IsClicked())
             {
                 currentMenuStatus = (currentMenuStatus + 1) % menuStatusList.Count;
                 SetParameterFromWindowScale();
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
+            if ( (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left)) || btnLeft.IsClicked())
             {
                 if (currentMenuStatus == 0)
                 {
@@ -494,14 +548,15 @@ namespace Guus_Reise
             }
             _hoehePanel = Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena;
             menuHeight = _hoehePanel;
-
+            
             _positionPanel.Y = Fighthandler.hoeheArena;
 
             if (Fighthandler.initPlayers)
             {
                 SetPositionsCharakterboxes("NPC");
                 SetPositionsCharakterboxes("Player");
-            }
+                Fighthandler.visFightManager.SetCameraToMiddleOfMap();
+            }           
 
         }
 
@@ -523,12 +578,12 @@ namespace Guus_Reise
                             boxCount[1] = 1;
                             if (Game1._graphics.IsFullScreen == true)
                             {
-                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 100;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 240;
                                 posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
                             }
                             else
                             {
-                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 50;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 140;
                                 posY = (Fighthandler.hoeheArena) + (Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
                             }
                             break;
@@ -544,7 +599,7 @@ namespace Guus_Reise
                                 {
                                     posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 110;
                                 }
-                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 100;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 150;
                             }
                             else
                             {
@@ -556,7 +611,7 @@ namespace Guus_Reise
                                 {
                                     posY = (Fighthandler.hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
                                 }
-                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 50;
+                                posX = Fighthandler._graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 100;
                             }
                             break;
                         case 3:
@@ -735,6 +790,9 @@ namespace Guus_Reise
                 case "WeaponEdit":
                     btnExit.Draw(spriteBatch, textFont);
                     btnSave.Draw(spriteBatch, textFont);
+                    btnLeftLong.Draw(spriteBatch, textFont);
+                    btnRightLong.Draw(spriteBatch, textFont);
+
                     List<Texture2D> currentTableauList = weaponTableaus;
                     if(Game1.GState == Game1.GameState.InTalkFight)
                     {
@@ -800,6 +858,11 @@ namespace Guus_Reise
 
         public void DrawPanel(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
+            btnRight.Draw(spriteBatch, textFont);
+            btnLeft.Draw(spriteBatch, textFont);
+            spriteBatch.End();
+            
             switch(menuStatusList[currentMenuStatus])
             {
                 case "Attack":
