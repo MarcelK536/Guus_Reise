@@ -68,6 +68,7 @@ namespace Guus_Reise.Menu
             if (btnCredits.IsClicked() == true)
             {
                 GState = GameState.Credits;
+                Credits.currentReferenzen = 0;
                 _soundOnButton.Play();
 
             }

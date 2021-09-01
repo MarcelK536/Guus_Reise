@@ -17,6 +17,8 @@ namespace Guus_Reise
         public static List<Hex> npcTiles = new List<Hex>();         //Liste der NPC
         public static List<Hex> waitList = new List<Hex>();         //Überlauf Liste falls im Kampf mehr als 4 Spieler / NPCs vorhanden
 
+
+
         static readonly int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
         public static Hex[,] _fightBoard;
         public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
@@ -49,7 +51,7 @@ namespace Guus_Reise
         public static int currentMenuStatus;
         public static List<string> menuStatusList = new List<string> { "Attack", "CharakterUebersicht" };
 
-        public static bool _isInModeCharakterEdit = false;
+        public static bool _isInModeWeaponEdit = false;
 
         public static bool showFightResults = false;
         public static FightResults fightResults;
@@ -75,6 +77,8 @@ namespace Guus_Reise
 
             fightResults = new FightResults(mainMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
+
+        
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
         {
@@ -117,6 +121,7 @@ namespace Guus_Reise
                 }
             }
 
+            //Hier werden auch die Waffenlisten der Spieler initiiert
             fightMenu.InitMenuBoxes(tiles);
 
             initPlayers = true;
@@ -194,6 +199,7 @@ namespace Guus_Reise
 
         public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
+            
             if (createdBoard == false && showFightResults == false)
             {
                 Createboard(fightMap);
@@ -241,6 +247,8 @@ namespace Guus_Reise
                 WinFight();
                 LoseFight();
             }
+
+            
         }
 
         public static void RemoveDeadCharacters(List<Hex> tiles)

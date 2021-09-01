@@ -9,7 +9,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 {
     class CharakterBox : Infobox
     {
-        Charakter _charakter;
+        public Charakter _charakter;
 
 
         
@@ -33,10 +33,9 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             _hasToUpdate = true;
 
             _hasEditButton = hasEditButton;
-
             if (_hasEditButton)
             {
-                editButton = new Button("", Fighthandler.textureEditbutton, Fighthandler.textureEditbuttonHover, 0.05f, 0, 0);
+                editButton = new Button("  ", Fighthandler.textureEditbutton, Fighthandler.textureEditbuttonHover, 0.05f, 0, 0);
             }
 
             //Textur festlegen (rot oder blau)

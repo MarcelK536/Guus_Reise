@@ -46,9 +46,11 @@ namespace Guus_Reise.InGameMenu.MenuComponents
         public bool _hasToUpdate;
         public bool _hasEditButton;
 
-        protected Button editButton;
+        public Button editButton;
 
         public int _sizetype;
+
+        public int currentWeapon;
 
 
 
@@ -158,11 +160,6 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                         editButton.ButtonX = (int)_infoboxX + (int)boxSize.X / 2 + (int)boxSize.X / 4 + 10;
                         editButton.ButtonY = (int)_infoboxY + (int)boxSize.Y - (int)boxSize.Y / 2 - (int)boxSize.Y / 4 - (int)boxSize.Y / 8 - (int)boxSize.Y / 16 - (int)boxSize.Y / 64 + 5;
                         break;
-                }
-
-                if (editButton.IsClicked())
-                {
-                    Fighthandler._isInModeCharakterEdit = true;
                 }
             }
             

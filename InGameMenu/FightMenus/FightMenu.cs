@@ -15,6 +15,15 @@ namespace Guus_Reise
         Button btnAttack;
         Button btnChangeWeapon;
         Button btnCancelAttack;
+
+        Button btnExit;
+        Button btnSave;
+
+        CharakterBox editingCharakterWeaponbox;
+        int oldWeapon;
+
+        List<Texture2D> weaponTableaus;
+
         GraphicsDevice graphics;
 
         public int[] boxCount;
@@ -25,8 +34,9 @@ namespace Guus_Reise
 
         public int _hoehePanel;
 
-        public Texture2D texPanel1;
-        public Texture2D texPanelDouble;
+        Texture2D texPanel1;
+        Texture2D texPanelDouble;
+        Texture2D texPanelBlue;
 
         public Texture2D _currentTex;
 
@@ -46,9 +56,10 @@ namespace Guus_Reise
         public Vector2 _sizePanel;
 
         public int currentMenuStatus;
+
         public List<string> menuStatusList = new List<string> { "Attack", "CharakterUebersicht", "WaffenUebersicht" };
 
-        public bool _isInModeWeaponEdit = false;
+        public bool _isInModeWeaponEdit;
 
         private KeyboardState _prevKeyState;
 
@@ -65,6 +76,7 @@ namespace Guus_Reise
 
             boxCount = new int[2];
 
+            _isInModeWeaponEdit = false;
            
 
             btnWidth = menuFont.MeasureString("Change Weapon").X + 10;
@@ -77,6 +89,14 @@ namespace Guus_Reise
             btnTexture.SetData(btnColor);
 
             btnAttack = new Button("Attack", btnTexture, 1, pos);
+
+            btnExit = new Button("", InformationComponents.texExit, 0.2f, pos);
+            btnExit.isOnlyClickButton = true;
+            btnSave = new Button("", InformationComponents.texSave, 0.2f, pos);
+            btnSave.isOnlyClickButton = true;
+
+            
+
             menuButtons.Add(btnAttack);
             btnChangeWeapon = new Button("Change Weapon", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnChangeWeapon);
@@ -98,11 +118,15 @@ namespace Guus_Reise
         {
             texPanel1 = content.Load<Texture2D>("Fight\\FightMenuPanel2");
             texPanelDouble = content.Load<Texture2D>("Fight\\FightMenuPanel");
+            texPanelBlue = content.Load<Texture2D>("Fight\\FightMenuPanelBlue");
             playerCharakterInfobox = content.Load<Texture2D>("Buttons\\PlayercharakterSheet");
             enemyCharakterInfobox = content.Load<Texture2D>("Buttons\\EnemycharakterSheet");
             currentMenuStatus = 0;
             textureEditbutton = content.Load<Texture2D>("Buttons\\pencil");
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
+
+            //Hier werden die auswählbaren Waffen als Tableaus geladen
+            weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\TableauKnife"), content.Load<Texture2D>("Fight\\Weapon\\TableauKnife") };
 
         }
 
@@ -126,8 +150,16 @@ namespace Guus_Reise
                         weaponboxesNPCs = new CharakterBox[fightTiles.Count];
                     }
                     infoBoxesNPCs[index] = new CharakterBox(playerHex.Charakter, "OneLine", 0.2f, 0, 0, false); ;
-                    weaponboxesNPCs[index] = new CharakterBox(playerHex.Charakter, "Waffenbox", 0.2f, 0, 0, true);
+                    weaponboxesNPCs[index] = new CharakterBox(playerHex.Charakter, "Waffenbox", 0.2f, 0, 0, false);
                     isNPC = true;
+
+                    foreach(Weapon weapon in  Weapon.weapons)
+                    {
+                        if(playerHex.Charakter.Weapon.Name == weapon.Name)
+                        {
+                            weaponboxesNPCs[index].currentWeapon = Weapon.weapons.IndexOf(weapon);
+                        }
+                    }                   
                 }
                 //Player
                 else
@@ -142,6 +174,14 @@ namespace Guus_Reise
                     }
                     infoBoxesPlayer[index] = new CharakterBox(playerHex.Charakter, "OneLine", 0.2f, 0, 0, false);
                     weaponboxesPlayer[index] = new CharakterBox(playerHex.Charakter, "Waffenbox", 0.2f, 0, 0, true);
+
+                    foreach (Weapon weapon in Weapon.weapons)
+                    {
+                        if (playerHex.Charakter.Weapon.Name == weapon.Name)
+                        {
+                            weaponboxesPlayer[index].currentWeapon = Weapon.weapons.IndexOf(weapon);
+                        }
+                    }
                 }
             }
             if (isNPC)
@@ -193,6 +233,71 @@ namespace Guus_Reise
         {
             SetParameterFromWindowScale();
 
+            if (Fighthandler._isInModeWeaponEdit)
+            {
+                //Hintergrund Textur des Panels beim Bearbieten der Waffe
+                _currentTex = texPanelBlue;
+
+                //Position des X- und Speicher-Buttons aktualisieren
+                if (Game1._graphics.IsFullScreen == true)
+                {
+                    btnSave.Scale = 0.4f;
+                    btnExit.Scale = 0.4f;
+                    btnSave.ButtonX = _graphicsDevice.Viewport.Width - 150;
+                    btnSave.ButtonY = Fighthandler.hoeheArena + 50;
+                    btnExit.ButtonX = _graphicsDevice.Viewport.Width - 300;
+                    btnExit.ButtonY = Fighthandler.hoeheArena + 50;
+                }
+                else
+                {
+                    btnSave.Scale = 0.3f;
+                    btnExit.Scale = 0.3f;
+                    btnSave.ButtonX = _graphicsDevice.Viewport.Width - 100;
+                    btnSave.ButtonY = Fighthandler.hoeheArena + 30;
+                    btnExit.ButtonX = _graphicsDevice.Viewport.Width - 200;
+                    btnExit.ButtonY = Fighthandler.hoeheArena + 30;
+                }
+
+                //Aktualisieren der Wafffen-Tableaus
+                if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
+                {
+                    ++editingCharakterWeaponbox.currentWeapon;
+                    if (editingCharakterWeaponbox.currentWeapon == Weapon.weapons.Count)
+                    {
+                        editingCharakterWeaponbox.currentWeapon = 0;
+                    }
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
+                {
+                    --editingCharakterWeaponbox.currentWeapon;
+                    if (editingCharakterWeaponbox.currentWeapon == -1)
+                    {
+                        editingCharakterWeaponbox.currentWeapon = Weapon.weapons.Count - 1;
+                    }
+                }
+
+                //Prüfen ob Spichern oder X geklickt wurde
+                if (btnExit.IsClicked())
+                {
+                    Fighthandler._isInModeWeaponEdit = false;
+                    _currentTex = texPanelDouble;
+                    editingCharakterWeaponbox.currentWeapon = oldWeapon;
+                }
+                else if (btnSave.IsClicked())
+                {
+                    Fighthandler._isInModeWeaponEdit = false;
+                    _currentTex = texPanelDouble;
+                    editingCharakterWeaponbox._charakter.Weapon = Weapon.weapons[editingCharakterWeaponbox.currentWeapon];
+                }
+
+                CheckMenuStatus();
+
+                _prevKeyState = Keyboard.GetState();
+
+                return;
+
+            }
+
             // Test if an swipe in left or right direktion was initialized
             if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
             {
@@ -203,7 +308,7 @@ namespace Guus_Reise
             {
                 if (currentMenuStatus == 0)
                 {
-                    currentMenuStatus = menuStatusList.Count-1;
+                    currentMenuStatus = menuStatusList.Count - 1;
                 }
                 else
                 {
@@ -212,27 +317,40 @@ namespace Guus_Reise
                 SetParameterFromWindowScale();
             }
 
-            if (_isInModeWeaponEdit)
-            {
+            CheckMenuStatus();
 
-            }
-            else
-            {
-                CheckMenuStatus();
-            }
+
 
             _prevKeyState = Keyboard.GetState();
 
-            switch(menuStatusList[currentMenuStatus])
+            switch (menuStatusList[currentMenuStatus])
             {
                 case "Attack":
                     _currentTex = texPanel1;
                     break;
+
                 case "CharakterUebersicht":
                     _currentTex = texPanelDouble;
                     break;
+
                 case "WaffenUebersicht":
+
+                    //Hintergrund Textur für die Waffen-Übersicht
                     _currentTex = texPanelDouble;
+
+
+                    //Prüfen ob eine der Waffen bearbietet werden soll
+                    foreach (CharakterBox playerWeapon in weaponboxesPlayer)
+                    {
+                        if (playerWeapon.editButton.IsClicked())
+                        {
+                            oldWeapon = playerWeapon.currentWeapon;
+                            editingCharakterWeaponbox = playerWeapon;
+                            Fighthandler._isInModeWeaponEdit = true;
+                            
+                            break;
+                        }
+                    }
                     break;
 
                 default:
@@ -240,6 +358,9 @@ namespace Guus_Reise
                     break;
 
             }
+            
+            
+            
         }
 
         public void Update(GameTime time)
@@ -307,6 +428,7 @@ namespace Guus_Reise
             {
                 attackMenu.Update(time);
             }
+
         }
 
         public void SetParameterFromWindowScale()
@@ -553,36 +675,73 @@ namespace Guus_Reise
             }
         }
 
+        public void DrawEditWindow(string type, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+            switch(type)
+            {
+                case "WeaponEdit":
+                    btnExit.Draw(spriteBatch, textFont);
+                    btnSave.Draw(spriteBatch, textFont);
+                    if (Game1._graphics.IsFullScreen == true)
+                    {
+                        spriteBatch.Draw(weaponTableaus[editingCharakterWeaponbox.currentWeapon], new Rectangle(400, 400, 350, 350), Color.White);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(weaponTableaus[editingCharakterWeaponbox.currentWeapon], new Rectangle(200, 350, 250, 250), Color.White);
+                    }                       
+                    break;
+            }
+            spriteBatch.End();
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-
-            if (_isInModeWeaponEdit)
+            switch (menuStatusList[currentMenuStatus])
             {
+                case "WaffenUebersicht":
+
+                    if (Fighthandler._isInModeWeaponEdit == true)
+                    {
+                        DrawEditWindow("WeaponEdit", spriteBatch);
+                    }
+                    else
+                    {
+                        DrawPanel(spriteBatch);
+                        if (weaponMenu != null && weaponMenu.Active)
+                        {
+                            weaponMenu.Draw(spriteBatch);
+                        }
+                        if (attackMenu != null && attackMenu.Active)
+                        {
+                            attackMenu.Draw(spriteBatch);
+                        }
+                    }
+                    break;
+
+                default:
+                    DrawPanel(spriteBatch);
+                    if (weaponMenu != null && weaponMenu.Active)
+                    {
+                        weaponMenu.Draw(spriteBatch);
+                    }
+                    if (attackMenu != null && attackMenu.Active)
+                    {
+                        attackMenu.Draw(spriteBatch);
+                    }
+                    break;
 
             }
-            else
-            {
-                DrawPanel(spriteBatch);
-            }
-
-            SetBackgroundTexturePicture(_currentTex);
-
-            if (weaponMenu != null && weaponMenu.Active)
-            {
-                weaponMenu.Draw(spriteBatch);
-            }
-            if (attackMenu != null && attackMenu.Active)
-            {
-                attackMenu.Draw(spriteBatch);
-            }
-                
+            SetBackgroundTexturePicture(_currentTex);    
                
         }
 
+
+
         public void DrawPanel(SpriteBatch spriteBatch)
         {
-            
             switch(menuStatusList[currentMenuStatus])
             {
                 case "Attack":
@@ -617,14 +776,18 @@ namespace Guus_Reise
                     break;
 
                 case "WaffenUebersicht":
-                    for(int i = 0; i < weaponboxesPlayer.Length; i++)
-                    {
-                        weaponboxesPlayer[i].Draw(spriteBatch);
-                    }
 
-                    for (int i = 0; i < weaponboxesNPCs.Length; i++)
+                    if(!_isInModeWeaponEdit)
                     {
-                        weaponboxesNPCs[i].Draw(spriteBatch);
+                        for (int i = 0; i < weaponboxesPlayer.Length; i++)
+                        {
+                            weaponboxesPlayer[i].Draw(spriteBatch);
+                        }
+
+                        for (int i = 0; i < weaponboxesNPCs.Length; i++)
+                        {
+                            weaponboxesNPCs[i].Draw(spriteBatch);
+                        }
                     }
                     break;
 

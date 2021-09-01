@@ -27,6 +27,7 @@ namespace Guus_Reise.HexangonMap
         private readonly List<Texture2D> jump;
         private readonly List<Texture2D> walkLeft;
         private readonly List<Texture2D> walkRight;
+        public readonly List<Texture2D> fightKnife;
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
         //static List<Texture2D> moveFront;
@@ -35,8 +36,10 @@ namespace Guus_Reise.HexangonMap
         Hex _hexagon;
         Charakter _charakter;
         readonly Model _planeModel;
+
         Texture2D _texCharakter;
         Texture2D _curTex;
+
         private List<Texture2D> currentAnimation;
         int currentFrame = 0;
 
@@ -52,14 +55,17 @@ namespace Guus_Reise.HexangonMap
         string _animationPlanner = "";
 
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, float standardintervall, SoundManager sm)
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, List<Texture2D> animFightKnife, float standardintervall, SoundManager sm)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
             jump = animJump;
             walkLeft = animWalkLeft;
             walkRight = animWalkRight;
+            fightKnife = animFightKnife;
+
             _planeModel = planeModel;
+
             _texCharakter = texCharakter;
             _curTex = _texCharakter;
 
@@ -126,6 +132,23 @@ namespace Guus_Reise.HexangonMap
             set => translation = value;
         }
 
+        // Wenn im Kampf: Charaktere werden mit Waffen angezeigt
+        public void SetWeaponTexCharakter()
+        {
+            switch (_charakter.Weapon.Name)
+            {
+                case "Messer":
+                    _curTex = fightKnife[0];
+                    break;
+                case "Faust":
+                    _curTex = _texCharakter;
+                    break;
+                default:
+                    _curTex = _texCharakter;
+                    break;
+            }
+        }
+
         public void UpdateHex(Hex hexagon)
         {
             Hexagon = hexagon;
@@ -156,6 +179,10 @@ namespace Guus_Reise.HexangonMap
 
         public void DrawCharakter(Camera camera)
         {
+            if (Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
+            {
+                SetWeaponTexCharakter();
+            }
             this.CharakterPostion = this.Hexagon.Position + Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(this.Hexagon.TileRotation));
             Draw(camera, _charakterPostion);
         }
@@ -168,7 +195,8 @@ namespace Guus_Reise.HexangonMap
         public void Update(GameTime gametime)
         {
             _charakterPostion = _hexagon.Position + Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(_hexagon.TileRotation));
-            if(isPlayAnimation)
+
+            if (isPlayAnimation)
             {
                 if(Game1.GState == Game1.GameState.MovementAnimation)
                 {
