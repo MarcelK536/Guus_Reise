@@ -27,7 +27,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             }
             else
             {
-                _ueberschriftBox = _name + ": Data";
+                _ueberschriftBox = _name + ": Data    ";
             }
 
             _hasToUpdate = true;
@@ -256,6 +256,19 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                         break;
                 }
             }
+
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            spriteBatch.Begin();
+            if (_type == "Waffenbox")
+            {
+                spriteBatch.DrawString(_fontText, _charakter.Weapon.Name, inhaltPositions[0], _colorInhalt);
+            }
+            spriteBatch.End();
+
 
         }
 

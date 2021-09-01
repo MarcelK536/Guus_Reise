@@ -25,11 +25,9 @@ namespace Guus_Reise.Animation
 
         public static void Init(string type, Hex start, Hex target)
         {
-            skip = new Button("", MovementAnimationManager.btnDefaultTexture, MovementAnimationManager.btnHoverTexture, 0.4f, 780, 470);
-            if(Game1._graphics.IsFullScreen == true)
-            {
-                SetParameterFromWindowScale();
-            }
+            skip = new Button("", MovementAnimationManager.btnDefaultTexture, MovementAnimationManager.btnHoverTexture, 0.2f, 780, 470);
+            SetParameterFromWindowScale();
+
             if (start != target)
             {
                 _currentMovementAnimation = new MovementAnimation(type, start, target);
@@ -58,8 +56,8 @@ namespace Guus_Reise.Animation
 
         public static void LoadTextures(ContentManager content, SpriteBatch spriteBatch)
         {
-            btnDefaultTexture = content.Load<Texture2D>("Buttons\\ButtonSkip");
-            btnHoverTexture = content.Load<Texture2D>("Buttons\\ButtonSkip");
+            btnDefaultTexture = InformationComponents.texArrowRight;
+            btnHoverTexture =InformationComponents.texArrowRight;
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             _spriteBatch = spriteBatch;
         }
@@ -70,16 +68,16 @@ namespace Guus_Reise.Animation
             {
                 
                 //Skip
-                skip.ButtonX = skip.ButtonX + 870;
-                skip.ButtonY = skip.ButtonY + 450;
-                skip.Scale = skip.Scale + 0.1f;
+                skip.ButtonX = HexMap._graphicsDevice.Viewport.Width - 210;
+                skip.ButtonY = HexMap._graphicsDevice.Viewport.Height - 250;
+                skip.Scale = 0.4f;
             }
             else
             {
                 //Skip
-                skip.ButtonX = skip.ButtonX - 870;
-                skip.ButtonY = skip.ButtonY - 450;
-                skip.Scale = skip.Scale - 0.1f;
+                skip.ButtonX = HexMap._graphicsDevice.Viewport.Width - 200;
+                skip.ButtonY = HexMap._graphicsDevice.Viewport.Height - 200;
+                skip.Scale = 0.3f;
             }
         }
     }

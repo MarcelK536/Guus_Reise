@@ -65,7 +65,7 @@ namespace Guus_Reise
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
             base.Initialize();
-            InformationComponents.Init(GraphicsDevice, Content);
+           
             MainMenu.Init(_graphics);
             Credits.Init();  
             CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
@@ -85,10 +85,11 @@ namespace Guus_Reise
 
         protected override void LoadContent()
         {
+            InformationComponents.Init(GraphicsDevice, Content);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             textureSoundButton  = Content.Load<Texture2D>("Buttons\\ButtonSound");
             textureSoundButtonOff = Content.Load<Texture2D>("Buttons\\soundButtonOff");
-            buttonPlanke = Content.Load<Texture2D>("Buttons\\buttonPlanke");
+
             mainMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
             MainMenu.LoadTexture(Content);
@@ -225,14 +226,11 @@ namespace Guus_Reise
             _graphics.ApplyChanges();
             PlanetMenu.SetParametersFromWindowScale();
             MainMenu.SetParametersFromWindowScale();
-            if(_state == GameState.MovementAnimation)
-            {
-                MovementAnimationManager.SetParameterFromWindowScale();
-            }
-            if(_state == GameState.InGame)
-            {
-                HexMap.SetParameterFromWindowScale();
-            }
+
+            MovementAnimationManager.SetParameterFromWindowScale();
+
+            HexMap.SetParameterFromWindowScale();
+
             if (_state == GameState.InFight || _state == GameState.InTalkFight)
             {
                 Fighthandler.fightResults.UpdateScreenParameters();
