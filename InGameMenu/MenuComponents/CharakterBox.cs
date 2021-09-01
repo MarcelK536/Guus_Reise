@@ -27,7 +27,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             }
             else
             {
-                _ueberschriftBox = _name + ": Uebersicht";
+                _ueberschriftBox = _name + ": Übersicht";
             }
 
             _hasToUpdate = true;
@@ -225,7 +225,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                         _inhalt = new List<string> { level, wiederstandskraft, abwehr };
                         break;
                     case 3:
-                        _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glueck" };
+                        _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück" };
                         _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
                         break;
                     default:
@@ -247,7 +247,7 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                         _inhalt = new List<string> { level, wortgewandtheit, ignoranz };
                         break;
                     case 3:
-                        _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glueck" };
+                        _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück" };
                         _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
                         break;
                     default:
