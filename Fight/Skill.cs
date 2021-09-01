@@ -38,12 +38,26 @@ namespace Guus_Reise
 
         public static void LoadSkills(ContentManager Content)
         {
-            skills.Add(new Skill("Hieb", 10, 0.7f));
-            skills.Add(new Skill("Stoss", 8, 0.6f));
-            skills.Add(new Skill("Hieb2", 10, 0.7f));
-            skills.Add(new Skill("Stoss2", 8, 0.6f));
-            skills.Add(new Skill("Hieb3", 10, 0.7f));
-            skills.Add(new Skill("Stoss3", 8, 0.6f));
+            skills.Add(new Skill("blow", 10, 0.7f));
+            skills.Add(new Skill("shout", 10, 0.7f));
+
+            skills.Add(new Skill("push", 8, 0.6f));           
+            skills.Add(new Skill("persuade", 8, 0.6f));
+
+            skills.Add(new Skill("disarm", 10, 0.7f));
+            skills.Add(new Skill("pastoral care", 10, 0.7f));
+
+            skills.Add(new Skill("focus", 8, 0.6f));
+            skills.Add(new Skill("airhead", 8, 0.6f));
+
+            skills.Add(new Skill("targeted stitch", 8, 0.6f));
+            skills.Add(new Skill("lie", 8, 0.6f));
+
+            skills.Add(new Skill("sweeping blow", 8, 0.6f));
+            skills.Add(new Skill("sing", 8, 0.6f));
+
+            skills.Add(new Skill("death blow", 15, 1.0f));
+            skills.Add(new Skill("bribe", 15, 1.0f));
         }
     }
 }
