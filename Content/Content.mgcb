@@ -961,6 +961,12 @@
 /processorParam:Quality=Best
 /build:Sounds/Hypnotic-Puzzle2.mp3
 
+#begin Sounds/mixkit-knife-fast-hit-2184.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mixkit-knife-fast-hit-2184.wav
+
 #begin Sounds/mixkit-positive-interface-click-1112.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 namespace Guus_Reise
 {
@@ -11,6 +13,7 @@ namespace Guus_Reise
     {
         Charakter currCharakter;
         Texture2D btnTexture;
+        static SoundEffect _clickSound;
         public static GraphicsDevice graphicDevice;
         public AttackMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
         {
@@ -18,7 +21,7 @@ namespace Guus_Reise
             menuHeight = 200;
             btnWidth = 25;
             Vector2 btnPosition = btnClose.GetPosBelow();
-
+            Init(Fighthandler.contentFight);
             currCharakter = Fighthandler.turnBar.ReturnCurrentCharakter(); 
 
             graphicDevice = graphicsDevice;
@@ -44,6 +47,10 @@ namespace Guus_Reise
                 btnPosition.Y += btnTexture.Height + 10;
             }
         }
+        internal static void Init(ContentManager content)
+        {
+            _clickSound = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
+        }
 
         public void Update(GameTime time) 
         {
@@ -66,11 +73,13 @@ namespace Guus_Reise
                         Active = false;
                         FightPlayer.SaveMove(selSkill);
                         Fighthandler.turnBar.ReSort();
+                        _clickSound.Play();
                     }
                 }
                 if (btnClose.IsClicked())
                 {
                     Active = false;
+                    _clickSound.Play();
                 }
             }
         }
