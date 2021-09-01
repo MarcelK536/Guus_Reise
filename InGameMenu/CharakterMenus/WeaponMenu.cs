@@ -107,11 +107,11 @@ namespace Guus_Reise
             {
                 Active = false;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
             {
                 UpdateButtons(btnTexture.Height);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && menuButtons.Last().GetPosBelow().Y + btnTexture.Height > menuHeight + pos.Y)
             {
                 UpdateButtons(-btnTexture.Height);
             }

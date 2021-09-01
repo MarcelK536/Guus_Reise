@@ -9,25 +9,33 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 {
     class CharakterBox : Infobox
     {
-        Charakter _charakter;
+        public Charakter _charakter;
 
 
         
-        public CharakterBox(Charakter charakter, float scale, int positionX, int positionY, bool hasEditButton)
+        public CharakterBox(Charakter charakter, string type, float scale, int positionX, int positionY, bool hasEditButton)
         {
             _charakter = charakter;
             
             _name = charakter.Name;
+            _type = type;
 
-            _type = "OneLine";
+
+            if (_type == "Waffenbox")
+            {
+                _ueberschriftBox = _name + ": Waffe";
+            }
+            else
+            {
+                _ueberschriftBox = _name + ": Übersicht";
+            }
 
             _hasToUpdate = true;
 
             _hasEditButton = hasEditButton;
-
             if (_hasEditButton)
             {
-                editButton = new Button("", Fighthandler.textureEditbutton, Fighthandler.textureEditbuttonHover, 0.05f, 0, 0);
+                editButton = new Button("  ", Fighthandler.textureEditbutton, Fighthandler.textureEditbuttonHover, 0.05f, 0, 0);
             }
 
             //Textur festlegen (rot oder blau)
@@ -47,11 +55,10 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             _infoboxY = positionY;
 
             //Fonts
-
-            if(Game1._graphics.IsFullScreen == true)
+            if (Game1._graphics.IsFullScreen == true)
             {
-                _fontText = InformationComponents.aika;
-                _fontUeberschriften = InformationComponents.aika;
+                _fontText = InformationComponents.aika20;
+                _fontUeberschriften = InformationComponents.aika20;
                 _fontTitel = InformationComponents.inclitodo;
             }
             else
@@ -61,14 +68,23 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 _fontTitel = InformationComponents.inclitodo15;
             }
 
-            _longestString = "Wiederstandskraft: 1111";
+
+            _longestString = _ueberschriftBox;
+
 
             //Schriftfarben
-            _colorTitel = Color.White;
-            _colorUeberschrift = Color.BlueViolet; //Coral
-            _colorInhalt = Color.Azure;
-
-            
+            if (_type == "Waffenbox")
+            {
+                _colorTitel = Color.White;
+                _colorUeberschrift = Color.White;
+                _colorInhalt = Color.White;
+            }
+            else
+            {
+                _colorTitel = Color.White;
+                _colorUeberschrift = Color.White; //Coral
+                _colorInhalt = Color.White;
+            }
 
             List<string> titellist = new List<string> { "bla", "bla2", "bla3", "bla4" };
             List<string> inhaltlist = new List<string> { "0", "1", "23", "3637287363"};
@@ -83,23 +99,87 @@ namespace Guus_Reise.InGameMenu.MenuComponents
         {
             if(_hasToUpdate == true)
             {
-                SetContent(charakter);
-                if (_type == "OneLine")
+                //Size-Type setzen (legt später fest wie groß die Schrift ist und wie viele Infromationen die Box beinhaltet
+                if (charakter.IsNPC)
                 {
-                    SetParameterInfoboxOneLine();
-                    if (Game1._graphics.IsFullScreen == true)
+                    switch (Fighthandler.fightMenu.boxCount[1])
                     {
-                        titelPosition.X = _infoboxX+ 25f;
+                        case 1:
+                            _sizetype = 2;
+                            break;
+                        case 2:
+                            _sizetype = 1;
+                            break;
+                        case 4:
+                            _sizetype = 1;
+                            break;
+                        default:
+                            _sizetype = 1;
+                            break;
                     }
-                    else
-                    {
-                        titelPosition.X = _infoboxX + 10f;
-                    }
-                       
-                    titelPosition.Y += 3f;
-                    _hasToUpdate = false;
                 }
+                else
+                {
+                    switch (Fighthandler.fightMenu.boxCount[0])
+                    {
+                        case 1:
+                            _sizetype = 2;
+                            break;
+                        case 2:
+                            _sizetype = 1;
+                            break;
+                        case 4:
+                            _sizetype = 1;
+                            break;
+                        default:
+                            _sizetype = 1;
+                            break;
+                    }
+                }
+                if(Game1._graphics.IsFullScreen == true) // Wenn das Spiel im Vollbildmodus ist, so wird die Box größer
+                {
+                    _sizetype += 1;
+                }
+
+                //Fonts
+                switch (_sizetype)
+                {
+                    case 1:
+                        _fontText = InformationComponents.aika12;
+                        _fontUeberschriften = InformationComponents.aika12;
+                        _fontTitel = InformationComponents.inclitodo15;
+                        break;
+                    case 2:
+                        _fontText = InformationComponents.aika;
+                        _fontUeberschriften = InformationComponents.aika;
+                        _fontTitel = InformationComponents.inclitodo;
+                        break;
+                    case 3:
+                        _fontText = InformationComponents.aika20;
+                        _fontUeberschriften = InformationComponents.aika20;
+                        _fontTitel = InformationComponents.inclitodo30;
+                        break;
+                    default:
+                        _fontText = InformationComponents.aika12;
+                        _fontUeberschriften = InformationComponents.aika12;
+                        _fontTitel = InformationComponents.inclitodo15;
+                        break;
+
+                }         
+
+                //Content setzen (Welche Infomrationen werden dargestellt)
+                SetContent(charakter);
+
+                //Infobox Parameter setzen (Positionen des Inhaltes, Größe der Box)
+                SetParameterInfobox();
+
+                //Buttons der Boxen Updaten
                 this.UpdateButtonInfobox();
+
+                _hasToUpdate = false;
+
+
+                
                 
                 
             }
@@ -113,6 +193,8 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
         public void SetContent(Charakter charakter)
         {
+            
+            //Infomrations Variablen setzen
             string weapon;
             string wiederstandskraft;
             string abwehr;
@@ -129,34 +211,51 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             level = charakter.Level.ToString();
             ignoranz = charakter.Ignoranz.ToString();
 
-            if(Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
+            // Arrays zuordnen: Welche Größe hat die Box? | Welche Kampfart? --> Was wird angezeigt?
+            if(Game1.GState == Game1.GameState.InFight)
             {
-                if (Game1._graphics.IsFullScreen == true)
+                switch (_sizetype)
                 {
-                    _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück"};
-                    _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
-                }
-                else
-                {
-                    _titel = new List<string> { "Level", "Wiederstandskraft" };
-                    _inhalt = new List<string> { level, wiederstandskraft };
+                    case 1:
+                        _titel = new List<string> { "Level", "Wiederstandskraft" };
+                        _inhalt = new List<string> { level, wiederstandskraft };
+                        break;
+                    case 2:
+                        _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr" };
+                        _inhalt = new List<string> { level, wiederstandskraft, abwehr };
+                        break;
+                    case 3:
+                        _titel = new List<string> { "Level", "Wiederstandskraft", "Abwehr", "Glück" };
+                        _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
+                        break;
+                    default:
+                        _titel = new List<string> { "Level", "Wiederstandskraft" };
+                        _inhalt = new List<string> { level, wiederstandskraft };
+                        break;
                 }
             }
-            else
+            else if(Game1.GState == Game1.GameState.InTalkFight)
             {
-                if (Game1._graphics.IsFullScreen == true)
+                switch (_sizetype)
                 {
-                    _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück"};
-                    _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
-                }
-                else
-                {
-                    _titel = new List<string> { "Level", "Wortgewandtheit" };
-                    _inhalt = new List<string> { level, wortgewandtheit };
+                    case 1:
+                        _titel = new List<string> { "Level", "Wortgewandtheit" };
+                        _inhalt = new List<string> { level, wortgewandtheit };
+                        break;
+                    case 2:
+                        _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz" };
+                        _inhalt = new List<string> { level, wortgewandtheit, ignoranz };
+                        break;
+                    case 3:
+                        _titel = new List<string> { "Level", "Wortgewandtheit", "Ignoranz", "Glück" };
+                        _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
+                        break;
+                    default:
+                        _titel = new List<string> { "Level", "Wortgewandtheit" };
+                        _inhalt = new List<string> { level, wortgewandtheit };
+                        break;
                 }
             }
-
-            
 
         }
 

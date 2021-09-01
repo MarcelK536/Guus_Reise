@@ -82,7 +82,10 @@ namespace Guus_Reise.HexangonMap
                 this.SetCameraToMiddleOfMap();
             }
             _prevKeyState = Keyboard.GetState();
+
         }
+
+
 
         public Vector3 GetVectorBewtweenTwoHex(Hex startHex, Hex targetHex)
         {

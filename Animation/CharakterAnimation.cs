@@ -15,6 +15,8 @@ namespace Guus_Reise.HexangonMap
         private Vector3 _charakterPostion; //Position des Charakters
         private Vector3 _charakterMovementPostion;
 
+        private SoundManager _sm;
+
         Vector3 translation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
         readonly Vector3 defaultTranslation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
 
@@ -25,6 +27,7 @@ namespace Guus_Reise.HexangonMap
         private readonly List<Texture2D> jump;
         private readonly List<Texture2D> walkLeft;
         private readonly List<Texture2D> walkRight;
+        public readonly List<Texture2D> fightKnife;
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
         //static List<Texture2D> moveFront;
@@ -33,8 +36,10 @@ namespace Guus_Reise.HexangonMap
         Hex _hexagon;
         Charakter _charakter;
         readonly Model _planeModel;
+
         Texture2D _texCharakter;
         Texture2D _curTex;
+
         private List<Texture2D> currentAnimation;
         int currentFrame = 0;
 
@@ -49,20 +54,22 @@ namespace Guus_Reise.HexangonMap
 
         string _animationPlanner = "";
 
-        SoundEffect[] _sounds;
 
-
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, float standardintervall, SoundEffect[] sounds)
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, List<Texture2D> animFightKnife, float standardintervall, SoundManager sm)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
             jump = animJump;
             walkLeft = animWalkLeft;
             walkRight = animWalkRight;
+            fightKnife = animFightKnife;
+
             _planeModel = planeModel;
+
             _texCharakter = texCharakter;
             _curTex = _texCharakter;
-            _sounds = sounds;
+
+            _sm = sm;
 
             // Set previous Keyboard State
             _prevKeyState = Keyboard.GetState();
@@ -125,6 +132,23 @@ namespace Guus_Reise.HexangonMap
             set => translation = value;
         }
 
+        // Wenn im Kampf: Charaktere werden mit Waffen angezeigt
+        public void SetWeaponTexCharakter()
+        {
+            switch (_charakter.Weapon.Name)
+            {
+                case "Messer":
+                    _curTex = fightKnife[0];
+                    break;
+                case "Faust":
+                    _curTex = _texCharakter;
+                    break;
+                default:
+                    _curTex = _texCharakter;
+                    break;
+            }
+        }
+
         public void UpdateHex(Hex hexagon)
         {
             Hexagon = hexagon;
@@ -155,6 +179,10 @@ namespace Guus_Reise.HexangonMap
 
         public void DrawCharakter(Camera camera)
         {
+            if (Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
+            {
+                SetWeaponTexCharakter();
+            }
             this.CharakterPostion = this.Hexagon.Position + Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(this.Hexagon.TileRotation));
             Draw(camera, _charakterPostion);
         }
@@ -167,7 +195,8 @@ namespace Guus_Reise.HexangonMap
         public void Update(GameTime gametime)
         {
             _charakterPostion = _hexagon.Position + Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(_hexagon.TileRotation));
-            if(isPlayAnimation)
+
+            if (isPlayAnimation)
             {
                 if(Game1.GState == Game1.GameState.MovementAnimation)
                 {
@@ -196,11 +225,29 @@ namespace Guus_Reise.HexangonMap
             {
                 if (_animationPlanner == "Left")
                 {
+                    if (CharakterAnimationManager.animationSound == true)
+                    {
+                        if (_charakter.Name == "Guu")
+                        {
+                            _sm.PlaySound(3);
+                        }
+                    }
+
                     Play("WalkLeft", _standardIntervall);
+                   
+                    
                 }
                 else if(_animationPlanner == "Right")
                 {
+                    if (CharakterAnimationManager.animationSound == true)
+                    {
+                        if (_charakter.Name == "Guu")
+                        {
+                            _sm.PlaySound(3);
+                        }
+                    }
                     Play("WalkRight", _standardIntervall);
+               
                 }
                 else if (_animationPlanner == "stop")
                 {
@@ -215,10 +262,43 @@ namespace Guus_Reise.HexangonMap
                     if (!_hexagon.IsActive)
                     {
                         StopAnimation();
+                     
                     }
                 }
-                if (_hexagon.IsHovered)
+                else
                 {
+                    //Sound-Einstelungen
+                if(_hexagon != HexMap.soundHex)
+                {
+
+                        if (CharakterAnimationManager.animationSound == true )
+                        {
+                            if(_charakter.Name == "Guu")
+                            {
+                                _sm.PlaySound(0);
+                            }
+                            if (_charakter.Name == "Paul")
+                            {
+                                _sm.PlaySound(1);
+                            }
+                            if (_charakter.Name == "Timmae")
+                            {
+                                _sm.PlaySound(2);
+                            }
+                            
+
+                            
+
+                        }
+                        HexMap.soundHex = _hexagon;
+             
+
+                    }
+                    
+             
+
+
+
                     if (CharakterAnimationManager.ActiveHexExists)
                     {
                         if (_hexagon.IsActive)
@@ -267,13 +347,9 @@ namespace Guus_Reise.HexangonMap
             };
             _currentIntervall = intervall;
             isPlayAnimation = true;
+          
 
-            //Sound-Einstelungen
-            if(CharakterAnimationManager.animationSound == true)
-            {
-                _sounds[0].Play();
-            }
-            
+
         
         }
 
@@ -282,6 +358,7 @@ namespace Guus_Reise.HexangonMap
         {
             _curTex = _texCharakter;
             isPlayAnimation = false;
+            _sm.RestPlayTimes();
         }
 
 

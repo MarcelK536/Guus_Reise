@@ -17,6 +17,8 @@ namespace Guus_Reise
         public static List<Hex> npcTiles = new List<Hex>();         //Liste der NPC
         public static List<Hex> waitList = new List<Hex>();         //Überlauf Liste falls im Kampf mehr als 4 Spieler / NPCs vorhanden
 
+
+
         static readonly int[,] fightMap = new int[,] { { 0, 1, 0 }, { 1, 0, 1 }, { 0, 1, 0 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 }, { 1, 1, 1 }}; //input Array der die Art der Tiles für die map generierung angibt
         public static Hex[,] _fightBoard;
         public static int[,] charPositionsPlayer = new int[,] { { 1, 0 }, { 0, 1 }, { 1, 2 }, { 2, 1 } };  //Positionen für Spieler Der Initierende Spieler befindet sich an der Letzten Position
@@ -49,7 +51,7 @@ namespace Guus_Reise
         public static int currentMenuStatus;
         public static List<string> menuStatusList = new List<string> { "Attack", "CharakterUebersicht" };
 
-        public static bool _isInModeCharakterEdit = false;
+        public static bool _isInModeWeaponEdit = false;
 
         public static bool showFightResults = false;
         public static FightResults fightResults;
@@ -62,9 +64,10 @@ namespace Guus_Reise
             hoeheArena = ((_graphicsDevice.Viewport.Height / 2) + _graphicsDevice.Viewport.Height / 2 / 2);
             hoehePanel = _graphicsDevice.Viewport.Height - hoeheArena;
             contentFight = content;
-            //SetParameterFromWindowScale();
+
             texPanel = content.Load<Texture2D>("Fight\\FightMenuPanel2");
             fightMenu = new FightMenu(InformationComponents.fantasma, graphicsDevice, SimpleMenu.BlendDirection.None);
+
             backgroundTexture = content.Load<Texture2D>("Fight\\backgroundFight");
             playerCharakterInfobox = content.Load<Texture2D>("Buttons\\PlayercharakterSheet");
             enemyCharakterInfobox = content.Load<Texture2D>("Buttons\\EnemycharakterSheet");
@@ -72,10 +75,10 @@ namespace Guus_Reise
             textureEditbutton = content.Load<Texture2D>("Buttons\\pencil");
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
 
-            //FightPanel
-            //_fightPanel = new FightPanel(hoehePanel);
             fightResults = new FightResults(mainMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
+
+        
 
         public static void InitPlayers(List<Hex> tiles, int[,] places)
         {
@@ -118,41 +121,8 @@ namespace Guus_Reise
                 }
             }
 
-            fightMenu.InitCharakterboxes(tiles);
-
-            ////Charakterboxen
-            //bool isNPC = false;
-            //foreach (Hex playerHex in tiles)
-            //{
-            //    int index = tiles.IndexOf(playerHex);
-            //    //NPCs
-            //    if (playerHex.Charakter.IsNPC)
-            //    {
-            //        if (infoBoxesNPCs == null)
-            //        {
-            //            infoBoxesNPCs = new CharakterBox[tiles.Count];
-            //        }
-            //        infoBoxesNPCs[index] = new CharakterBox(playerHex.Charakter, 0.2f, 0, 0, true);
-            //        isNPC = true;
-            //    }
-            //    //Player
-            //    else
-            //    {
-            //        if (infoBoxesPlayer == null)
-            //        {
-            //            infoBoxesPlayer = new CharakterBox[tiles.Count];
-            //        }                    
-            //        infoBoxesPlayer[index] = new CharakterBox(playerHex.Charakter, 0.2f, 0, 0, true);
-            //    }                  
-            //}
-            //if(isNPC)
-            //{
-            //    SetPositionsCharakterboxes("NPC");
-            //}
-            //else
-            //{
-            //    SetPositionsCharakterboxes("Player");
-            //}
+            //Hier werden auch die Waffenlisten der Spieler initiiert
+            fightMenu.InitMenuBoxes(tiles);
 
             initPlayers = true;
         }
@@ -229,6 +199,7 @@ namespace Guus_Reise
 
         public static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
         {
+            
             if (createdBoard == false && showFightResults == false)
             {
                 Createboard(fightMap);
@@ -241,38 +212,6 @@ namespace Guus_Reise
             }
             else
             {
-
-                //// Test if an swipe in left or right direktion was initialized
-                //if (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right))
-                //{
-                //    currentMenuStatus = (currentMenuStatus + 1) % menuStatusList.Count;
-                //}
-                //if (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left))
-                //{
-                //    if(currentMenuStatus == 0)
-                //    {
-                //        currentMenuStatus = 1;
-                //    }
-                //    else
-                //    {
-                //        currentMenuStatus = (currentMenuStatus - 1) % menuStatusList.Count;
-                //    }             
-                //}
-
-                //if (initPlayers == true)
-                //{
-
-                //    if(_isInModeCharakterEdit)
-                //    {
-
-                //    }
-                //    else
-                //    {
-                //        CheckMenuStatus();
-                //    }
-
-                //}
-
 
                 if (initPlayers == false && showFightResults == false)
                 {
@@ -308,6 +247,8 @@ namespace Guus_Reise
                 WinFight();
                 LoseFight();
             }
+
+            
         }
 
         public static void RemoveDeadCharacters(List<Hex> tiles)
@@ -351,230 +292,6 @@ namespace Guus_Reise
                 ExitFight();
             }
         }
-
-        //public static void CheckMenuStatus()
-        //{
-        //    if (menuStatusList[currentMenuStatus] == "CharakterUebersicht")
-        //    {
-        //        //Charakterboxen
-        //        foreach (CharakterBox info in infoBoxesNPCs)
-        //        {
-        //            info.UpdateCharakterboxParameters();
-        //        }
-
-        //        foreach (CharakterBox info in infoBoxesPlayer)
-        //        {
-        //            info.UpdateCharakterboxParameters();
-        //        }
-        //    }
-        //}
-
-
-        /*
-         *  Funktion setzt die Positionen der Charakterboxen anhand der Anzahl der Spieler im Kampf
-        */
-        //public static void SetPositionsCharakterboxes(string type)
-        //{
-        //    int posY = 0;
-        //    int posX = 0;
-        //    int index = 0;
-        //    if(type == "NPC")
-        //    {
-        //        int countBoxes = infoBoxesNPCs.Length;
-        //        for(int i = 0; i < countBoxes; i++)
-        //        {
-        //            index = i;
-        //            switch (countBoxes)
-        //            {
-        //                case 1:
-        //                    if (Game1._graphics.IsFullScreen == true)
-        //                    {
-        //                        posX = _graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X - 40;
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
-        //                    }
-        //                    else
-        //                    {
-        //                        posX = _graphicsDevice.Viewport.Width - (int)infoBoxesNPCs[i].boxSize.X -40;
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
-        //                    }
-        //                    break;
-        //                case 2:
-        //                    if (Game1._graphics.IsFullScreen == true)
-        //                    {
-        //                        if (index == 0)
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
-        //                        }
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesNPCs[i].boxSize.Y / 2;
-        //                    }
-        //                    else
-        //                    {
-        //                        if (index == 0)
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
-        //                        }
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height-hoeheArena)/2 - (int)infoBoxesNPCs[i].boxSize.Y/2;
-        //                    }
-        //                    break;
-        //                case 3:
-                            
-        //                case 4:
-        //                    if (Game1._graphics.IsFullScreen == true)
-        //                    {
-        //                        if (index < 2)
-        //                        {
-        //                            posY = (hoeheArena) + 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posY = (hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
-        //                        }
-
-        //                        if (index == 0 || index == 2)
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (index < 2)
-        //                        {
-        //                            posY = (hoeheArena) + 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posY = (hoeheArena) + (int)infoBoxesNPCs[i].boxSize.Y + 30;
-        //                        }
-
-        //                        if (index == 0 || index == 2)
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - 2 * ((int)infoBoxesNPCs[i].boxSize.X) - 2 * 5 - 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = _graphicsDevice.Viewport.Width - ((int)infoBoxesNPCs[i].boxSize.X) - 20;
-        //                        }
-        //                    }
-        //                    break;
-
-
-        //            }
-        //            infoBoxesNPCs[i]._infoboxY = posY; 
-        //            infoBoxesNPCs[i]._infoboxX = posX;
-        //            infoBoxesNPCs[i]._hasToUpdate = true;
-
-        //        }
-                
-        //    }
-        //    else if(type == "Player")
-        //    {
-        //        int countBoxes = infoBoxesPlayer.Length;
-        //        for(int i = 0; i < countBoxes; i++)
-        //        {
-        //            index = i;
-        //            switch(countBoxes)
-        //            {
-        //                case 1:
-        //                    if (Game1._graphics.IsFullScreen == true)
-        //                    {
-        //                        posX = 40;
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
-        //                    }
-        //                    else
-        //                    {
-        //                        posX = 40;
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
-        //                    }
-        //                    break;
-        //                case 2:
-        //                    if (Game1._graphics.IsFullScreen == true)
-        //                    {
-        //                        if (index == 0)
-        //                        {
-        //                            posX = 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
-        //                        }
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
-        //                    }
-        //                    else
-        //                    {
-        //                        if (index == 0)
-        //                        {
-        //                            posX = 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
-        //                        }
-        //                        posY = (hoeheArena) + (_graphicsDevice.Viewport.Height - hoeheArena) / 2 - (int)infoBoxesPlayer[i].boxSize.Y / 2;
-        //                    }
-        //                    break;
-        //                case 3:
-
-        //                case 4:
-        //                    if(Game1._graphics.IsFullScreen == true)
-        //                    {
-        //                        if (index < 2)
-        //                        {
-        //                            posY = (hoeheArena) + 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posY = (hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
-        //                        }
-
-        //                        if (index == 0 || index == 2)
-        //                        {
-        //                            posX = 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (index < 2)
-        //                        {
-        //                            posY = (hoeheArena) + 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posY = (hoeheArena) + (int)infoBoxesPlayer[i].boxSize.Y + 30;
-        //                        }
-
-        //                        if (index == 0 || index == 2)
-        //                        {
-        //                            posX = 20;
-        //                        }
-        //                        else
-        //                        {
-        //                            posX = 20 + 2 * (int)infoBoxesPlayer[i].boxSize.Y - 2;
-        //                        }
-        //                    }                          
-        //                    break;
-        //            }
-        //            infoBoxesPlayer[i]._infoboxY = posY;
-        //            infoBoxesPlayer[i]._infoboxX = posX;
-        //            infoBoxesPlayer[i]._hasToUpdate = true;
-        //        }
-        //    }            
-        //}
 
         public static void LoseFight()
         {
@@ -626,7 +343,7 @@ namespace Guus_Reise
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            
+
             //Arena zeichnen
             spriteBatch.Begin();
             spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, _graphicsDevice.Viewport.Width, hoeheArena), Color.White);
@@ -634,7 +351,15 @@ namespace Guus_Reise
 
             if (showFightResults)
             {
+
+                //Arena zeichnen
+                spriteBatch.Begin();
+                spriteBatch.Draw(backgroundTexture, new Rectangle(0, 0, _graphicsDevice.Viewport.Width, _graphicsDevice.Viewport.Height), Color.White);
+                spriteBatch.End();
+
                 fightResults.Draw(spriteBatch);
+
+                return;
             }
 
             if (initPlayers == true)
@@ -653,7 +378,7 @@ namespace Guus_Reise
                         }
                     }
                 }
-                
+
 
                 if (turnBar.ReturnCurrentCharakter().IsNPC == false)
                 {
@@ -661,34 +386,8 @@ namespace Guus_Reise
                 }
 
 
-
-
-                //Zeichnen der Charakterboxen
-                //if(_isInModeCharakterEdit)
-                //{
-
-                //}
-                //else
-                //{
-                //    if (menuStatusList[currentMenuStatus] == "CharakterUebersicht")
-                //    {
-                //        for (int i = 0; i < infoBoxesPlayer.Length; i++)
-                //        {
-                //            infoBoxesPlayer[i].Draw(spriteBatch);
-                //        }
-
-                //        for (int i = 0; i < infoBoxesNPCs.Length; i++)
-                //        {
-                //            infoBoxesNPCs[i].Draw(spriteBatch);
-                //        }
-                //    }
-                //    turnBar.Draw(spriteBatch, gameTime);
-                //}
-                
-                
-
-                
             }
+            
         }
 
         public static float GetBaseDmg(Charakter charakter, Weapon weapon)
@@ -700,31 +399,5 @@ namespace Guus_Reise
             erg += charakter.CurrentFightStats[5] * Weapon.IntToScale(weapon.ScalingLS);
             return erg;
         }
-
-        /* public static void CalculateMoves(List<Moves> player, List<Moves> npc)
-         {
-
-         }
-        */
-
-        //public static void SetParameterFromWindowScale()
-        //{
-        //    if (Game1._graphics.IsFullScreen == true)
-        //    {
-        //        hoeheArena = ((_graphicsDevice.Viewport.Height / 2) + _graphicsDevice.Viewport.Height / 2 / 2) -300;
-
-
-        //    }
-        //    else
-        //    {
-        //        hoeheArena =  ((_graphicsDevice.Viewport.Height / 2) + _graphicsDevice.Viewport.Height / 2 / 2)-100;
-        //    }
-        //    if(initPlayers)
-        //    {
-        //        SetPositionsCharakterboxes("NPC");
-        //        SetPositionsCharakterboxes("Player");
-        //    }
-            
-        //}
     }
 }

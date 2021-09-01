@@ -7,6 +7,7 @@ using System.Linq;
 using Guus_Reise.Menu;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Media;
 
 
 namespace Guus_Reise
@@ -16,6 +17,7 @@ namespace Guus_Reise
         public static GraphicsDeviceManager _graphics;
         public static SpriteBatch _spriteBatch;
         private static KeyboardState _prevKeyState;
+        private static Song _mainMenuSong;
 
         public static Texture2D textureSoundButton;
         public static Texture2D textureSoundButtonOff;
@@ -75,7 +77,10 @@ namespace Guus_Reise
             Fighthandler.Init(GraphicsDevice, Content);
             GameOver.Init(Content);
             Controls.Init(Content);
-
+            _mainMenuSong = Content.Load<Song>("Sounds\\Hypnotic-Puzzle2");
+            MediaPlayer.Play(_mainMenuSong);
+            MediaPlayer.IsRepeating = true;
+            
         }
 
         protected override void LoadContent()
@@ -101,6 +106,8 @@ namespace Guus_Reise
 
             base.Update(gameTime);
 
+            
+
             switch (_state)
             {
                 case GameState.MainMenu:
@@ -108,6 +115,7 @@ namespace Guus_Reise
                     break;
                 case GameState.Controls:
                     Controls.Update(gameTime);
+          
                     break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
@@ -119,6 +127,7 @@ namespace Guus_Reise
                     break;
                 case GameState.InGame:
                     HexMap.Update(gameTime, GraphicsDevice);
+                    MediaPlayer.Stop();
                     break;
                 case GameState.InFight:
                     Fighthandler.Update(gameTime, GraphicsDevice);
@@ -159,7 +168,7 @@ namespace Guus_Reise
                     MainMenu.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.Controls:
-                    GraphicsDevice.Clear(Color.CornflowerBlue);
+                    GraphicsDevice.Clear(Color.Black);
                     Controls.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.PlanetMenu:
@@ -226,7 +235,10 @@ namespace Guus_Reise
             }
             if (_state == GameState.InFight || _state == GameState.InTalkFight)
             {
+                Fighthandler.fightResults.UpdateScreenParameters();
                 Fighthandler.fightMenu.SetParameterFromWindowScale();
+                Fighthandler.fightMenu.CheckMenuStatus();
+                
             }
 
 

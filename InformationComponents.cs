@@ -16,6 +16,8 @@ namespace Guus_Reise
         public static SpriteFont aika12;
         public static SpriteFont aika20;
         public static SpriteFont inclitodo30;
+        public static Texture2D texExit;
+        public static Texture2D texSave;
 
 
 
@@ -29,6 +31,8 @@ namespace Guus_Reise
             aika12 = content.Load<SpriteFont>("Fonts\\Aika12");
             aika20 = content.Load<SpriteFont>("Fonts\\Aika20");
             inclitodo30 = content.Load<SpriteFont>("Fonts\\Inclitodo30");
+            texExit = content.Load<Texture2D>("Buttons\\xButton");
+            texSave = content.Load<Texture2D>("Buttons\\YesButton");
         }
     }
 }

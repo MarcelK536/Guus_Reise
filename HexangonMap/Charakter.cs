@@ -34,8 +34,10 @@ namespace Guus_Reise
         private Point _logicalPosition;         //Position an welcher der Charakter gezeichnet wird
         private Point _logicalFightPosition;    //Platzhalter für Position im Kampf
         private Point _logicalBoardPosition;    //Platzhalter für Position auf Karte
+
         private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
+
         private Weapon _currWeapon = Weapon.weapons[0];         //Ausgewählte Waffe Standard Faust
         private List<Skill> _currSkills = new List<Skill>() { Guus_Reise.Skill.skills[0], Guus_Reise.Skill.skills[1] }; //Ausgewählte Skills
         public List<Weapon> _inventar;          //Liste aller für den Spieler verfügbaren Waffen

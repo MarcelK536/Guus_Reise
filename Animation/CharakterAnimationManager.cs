@@ -15,7 +15,8 @@ namespace Guus_Reise.Animation
         static List<string> charakterNames;
         static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
         static CharakterAnimation[] charakterAnimations;
-        static SoundEffect[] _sounds;
+        public static SoundManager _sm;
+
 
         public static bool animationSound;
 
@@ -41,7 +42,13 @@ namespace Guus_Reise.Animation
             charakterAnimations = new CharakterAnimation[charakterNames.Count];
 
             animationSound = Game1.defaultValueSoundOn;
-            _sounds = new SoundEffect[charakterNames.Count];
+
+
+
+
+            _sm = new SoundManager();
+            _sm.Load(content);
+
 
             string curPath;
             string path;
@@ -59,6 +66,7 @@ namespace Guus_Reise.Animation
                 List<Texture2D> jump = new List<Texture2D>();
                 List<Texture2D> walkLeft = new List<Texture2D>();
                 List<Texture2D> walkRight = new List<Texture2D>();
+                List<Texture2D> fightKnife = new List<Texture2D>();
                 //...
 
                 int indexCharakter = charakterNames.IndexOf(name);
@@ -117,11 +125,29 @@ namespace Guus_Reise.Animation
                     standardIntervall = 250f;
                 }
 
+                //FightKnife
+                curPath = path + "\\FightKnife";
+                di = new DirectoryInfo(curPath);
+                numberOfFrames = di.GetFiles().Length;
+
+                for (int i = 0; i < numberOfFrames; i++)
+                {
+                    string number = (i + 1).ToString();
+                    Texture2D curr = content.Load<Texture2D>("Charakter\\" + name + "\\FightKnife\\" + name + "FightKnife" + number);
+                    fightKnife.Add(curr);
+                }
+
+                if (name == "Paul")
+                {
+                    standardIntervall = 250f;
+                }
+
                 //moveLeft
                 //moveRight
                 //...
-                _sounds[indexCharakter] = content.Load<SoundEffect>("Sounds\\guu_wave");
-                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, standardIntervall, _sounds);  
+
+
+                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, fightKnife, standardIntervall, _sm);  
             }
         }
 
