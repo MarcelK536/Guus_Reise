@@ -136,6 +136,7 @@ namespace Guus_Reise
         {
             weapons.Add(new Weapon("Faust", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
             weapons.Add(new Weapon("Messer", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("Aliestole", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
         }
 
         private bool IntToAttribute(int zahl)

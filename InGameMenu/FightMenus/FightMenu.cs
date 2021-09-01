@@ -126,7 +126,7 @@ namespace Guus_Reise
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
 
             //Hier werden die auswählbaren Waffen als Tableaus geladen
-            weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\TableauKnife"), content.Load<Texture2D>("Fight\\Weapon\\TableauKnife") };
+            weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauFaust"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauMesser"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauAliestole") };
 
         }
 
@@ -685,11 +685,11 @@ namespace Guus_Reise
                     btnSave.Draw(spriteBatch, textFont);
                     if (Game1._graphics.IsFullScreen == true)
                     {
-                        spriteBatch.Draw(weaponTableaus[editingCharakterWeaponbox.currentWeapon], new Rectangle(400, 400, 350, 350), Color.White);
+                        spriteBatch.Draw(weaponTableaus[editingCharakterWeaponbox.currentWeapon], new Rectangle(250, 540, 1000, 500), Color.White);
                     }
                     else
                     {
-                        spriteBatch.Draw(weaponTableaus[editingCharakterWeaponbox.currentWeapon], new Rectangle(200, 350, 250, 250), Color.White);
+                        spriteBatch.Draw(weaponTableaus[editingCharakterWeaponbox.currentWeapon], new Rectangle(150, 370, 400, 200), Color.White);
                     }                       
                     break;
             }
