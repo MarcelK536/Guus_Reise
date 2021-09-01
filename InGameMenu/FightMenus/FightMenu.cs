@@ -149,7 +149,7 @@ namespace Guus_Reise
                     {
                         weaponboxesNPCs = new CharakterBox[fightTiles.Count];
                     }
-                    infoBoxesNPCs[index] = new CharakterBox(playerHex.Charakter, "OneLine", 0.2f, 0, 0, false); ;
+                    infoBoxesNPCs[index] = new CharakterBox(playerHex.Charakter, "OneLine", 0.2f, 0, 0, false);
                     weaponboxesNPCs[index] = new CharakterBox(playerHex.Charakter, "Waffenbox", 0.2f, 0, 0, false);
                     isNPC = true;
 
