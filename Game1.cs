@@ -40,7 +40,8 @@ namespace Guus_Reise
             Exit,
             Credits,
             PlanetMenu,
-            MovementAnimation
+            MovementAnimation,
+            YouWon
         }
 
         private static GameState _state;
@@ -67,6 +68,7 @@ namespace Guus_Reise
             base.Initialize();
            
             MainMenu.Init(_graphics);
+            YouWon.Init();
             Credits.Init();  
             CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
             Weapon.LoadWeapons(Content);                        //Waffen müssen vor den Charakteren initialisert werden
@@ -93,6 +95,7 @@ namespace Guus_Reise
             mainMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
             MainMenu.LoadTexture(Content);
+            YouWon.LoadTexture(Content);
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
@@ -111,7 +114,6 @@ namespace Guus_Reise
                     break;
                 case GameState.Controls:
                     Controls.Update(gameTime);
-          
                     break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
@@ -133,6 +135,9 @@ namespace Guus_Reise
                     break;
                 case GameState.GameOver:
                     GameOver.Update(gameTime, GraphicsDevice);
+                    break;
+                case GameState.YouWon:
+                    YouWon.Update(gameTime);
                     break;
                 case GameState.Exit:
                     Exit();
@@ -192,6 +197,10 @@ namespace Guus_Reise
                 case GameState.GameOver:
                     GraphicsDevice.Clear(Color.DarkBlue);
                     GameOver.Draw(_spriteBatch, gameTime);
+                    break;
+                case GameState.YouWon:
+                    GraphicsDevice.Clear(Color.Blue);
+                    YouWon.Draw(_spriteBatch, gameTime);
                     break;
                 case GameState.MovementAnimation:
                     GraphicsDevice.Clear(Color.CornflowerBlue);

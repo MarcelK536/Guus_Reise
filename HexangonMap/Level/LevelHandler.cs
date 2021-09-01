@@ -17,10 +17,9 @@ namespace Guus_Reise
         public static int currentLevel = 1;
 
         readonly static int maxWorld = 3;
-        readonly static int maxLevel = 3;
+        readonly static int maxLevel = 2;
 
         public static Level activeLevel;
-
 
         public static void InitContent(ContentManager content)
         {
@@ -34,7 +33,6 @@ namespace Guus_Reise
 
         public static Level InitLevel()
         {
-            
             switch (currentWorld, currentLevel)
             {
                 case (1, 1):
@@ -49,7 +47,12 @@ namespace Guus_Reise
                     activeLevel = new Level(LevelDatabase.W2L1playerNames, LevelDatabase.W1L2canBefriended, LevelDatabase.W2L1playerStats, LevelDatabase.W2L1playerPos, LevelDatabase.W2L1tilemap, LevelDatabase.W2L1objectiveText, LevelDatabase.W2L1objective, contentLevel);
                     activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L1npcNames, LevelDatabase.W2L1canBefriended, LevelDatabase.W2L1npcStats, LevelDatabase.W2L1npcPos);
                     return activeLevel;
+                case (2, 2):
+                    activeLevel = new Level(LevelDatabase.W2L2playerNames, LevelDatabase.W2L2canBefriended, LevelDatabase.W2L2playerStats, LevelDatabase.W2L2playerPos, LevelDatabase.W2L2tilemap, LevelDatabase.W2L2objectiveText, LevelDatabase.W2L2objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L2npcNames, LevelDatabase.W2L2canBefriended, LevelDatabase.W2L2npcStats, LevelDatabase.W2L2npcPos);
+                    return activeLevel;
             }
+
             return activeLevel;
         }
 
@@ -86,8 +89,9 @@ namespace Guus_Reise
                 }
             }
 
-            if(conditionsMet == true)
+            if(conditionsMet == true && Game1.GState != Game1.GameState.MovementAnimation)
             {
+                _currentPlayableCharacters = activeLevel.PlayableCharacters;
                 InitNewLevel();
             }
         }
@@ -119,7 +123,7 @@ namespace Guus_Reise
                 }
                 else
                 {
-                    //End of the Game
+                    Game1.GState = Game1.GameState.YouWon;
                 }
             }
             else
