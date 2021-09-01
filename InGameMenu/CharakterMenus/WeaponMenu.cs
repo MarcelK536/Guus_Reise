@@ -111,10 +111,12 @@ namespace Guus_Reise
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.Up) || Mouse.GetState().ScrollWheelValue > lastWheel)&& menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
             {
+                lastWheel = Mouse.GetState().ScrollWheelValue;
                 UpdateButtons(btnTexture.Height);
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.Down) || Mouse.GetState().ScrollWheelValue < lastWheel) && menuButtons.Last().GetPosBelow().Y + btnTexture.Height > menuHeight + pos.Y)
             {
+                lastWheel = Mouse.GetState().ScrollWheelValue;
                 UpdateButtons(-btnTexture.Height);
             }
         }
