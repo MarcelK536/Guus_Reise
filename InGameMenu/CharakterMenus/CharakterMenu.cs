@@ -24,7 +24,7 @@ namespace Guus_Reise
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
-            btnWidth = menuFont.MeasureString("Faehigkeitenpunkte ").X;
+            btnWidth = menuFont.MeasureString("Skill Points ").X;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -32,11 +32,11 @@ namespace Guus_Reise
                 btnColor[i] = Color.YellowGreen * 0.8f;
             }
             btnTexture.SetData(btnColor);
-            btnLevelUp = new Button("Fähigkeitenpunkte", btnTexture, 1, btnClose.GetPosBelow());
+            btnLevelUp = new Button("Skill Points", btnTexture, 1, btnClose.GetPosBelow());
             menuButtons.Add(btnLevelUp);
-            btnWaffenWechsel = new Button("Waffenwechsel", btnTexture, 1, btnLevelUp.GetPosBelow());
+            btnWaffenWechsel = new Button("Change Weapons", btnTexture, 1, btnLevelUp.GetPosBelow());
             menuButtons.Add(btnWaffenWechsel);
-            btnSkillWechsel = new Button("Skills tauschen", btnTexture, 1, btnWaffenWechsel.GetPosBelow());
+            btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnWaffenWechsel.GetPosBelow());
             menuButtons.Add(btnSkillWechsel);
         }
 
@@ -125,7 +125,7 @@ namespace Guus_Reise
                     menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
                     menuHeight = btnClose.GetPosBelow().Y;
                     SetBackgroundTexture(bkgColor);
-                    spriteBatch.DrawString(textFont, "Klicke vorher auf ein Tile \num die CharakterInformationen \nzu sehen.", btnClose.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Please select a Tile \nto see the charakter informations", btnClose.GetPosRightOf(), Color.Yellow);
                     spriteBatch.End();
                 }
                 else
@@ -137,10 +137,10 @@ namespace Guus_Reise
                     {
                         // spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, null, null, rasterizerState);
                         spriteBatch.Begin();
-                        menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
+                        menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("No character selected").X;
                         menuHeight = btnClose.GetPosBelow().Y;
                         SetBackgroundTexture(bkgColor);
-                        spriteBatch.DrawString(textFont, "Kein Charakter ausgewählt", btnClose.GetPosRightOf(), Color.Yellow);
+                        spriteBatch.DrawString(textFont, "No charakter selected", btnClose.GetPosRightOf(), Color.Yellow);
                         spriteBatch.End();
                     }
                     else
