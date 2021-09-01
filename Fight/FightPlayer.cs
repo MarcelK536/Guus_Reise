@@ -95,8 +95,8 @@ namespace Guus_Reise
             {
                 basedmg = basedmg * 1.5f;
             }
-
-            Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[0] -= (int)(basedmg * selSkill.MoveValue) *(20/(20+ Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[3]));
+            double armor = (20.0 / (20 + Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[3]));
+            Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[0] -= (int)((basedmg * selSkill.MoveValue) * armor);
             boi.CurrentFightStats[7] = (int)(selSkill.Geschwindigkeit - Math.Pow(0.95, (boi.Geschwindigkeit - selSkill.Geschwindigkeit)));
             if (clickedTile.Charakter.CurrentFightStats[0] <= 0)
             {

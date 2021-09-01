@@ -18,9 +18,9 @@ namespace Guus_Reise
             {
                 for(int i=0; i < Fighthandler.playerTiles.Count; i++)
                 {
-                    if(bestdmg < (basedmg * s.MoveValue)*(20/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3])))
+                    if(bestdmg < (basedmg * s.MoveValue)*(20.0/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3])))
                     {
-                        bestdmg = (basedmg * s.MoveValue) * (20/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3]));
+                        bestdmg = (basedmg * s.MoveValue) * (20.0/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3]));
                         player = i;
                         name = s;
                     }
