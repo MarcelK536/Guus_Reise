@@ -15,19 +15,21 @@ namespace Guus_Reise.HexangonMap
         private Vector3 _charakterPostion; //Position des Charakters
         private Vector3 _charakterMovementPostion;
 
+
         private SoundManager _sm;
 
         Vector3 translation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
         readonly Vector3 defaultTranslation = new Vector3(-0.3f, 0.1f, 0f); // Verschiebung des Charakters Ausgehend vom Hex
 
-        private Vector3 _charakterScale = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
+        private Vector3 _charakterScale; // = new Vector3(0.002f, 0.002f, 0.002f); //Skaliserung des Charakters;
         //static List<string> animations = new List<string> { "Idle", "moveLeft", "moveRight", "moveFront", "moveBack", "readyToFight" };
 
         private readonly List<Texture2D> idle;
         private readonly List<Texture2D> jump;
         private readonly List<Texture2D> walkLeft;
         private readonly List<Texture2D> walkRight;
-        public readonly List<Texture2D> fightKnife;
+        private readonly List<Texture2D> fightWeapons;
+
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
         //static List<Texture2D> moveFront;
@@ -55,14 +57,14 @@ namespace Guus_Reise.HexangonMap
         string _animationPlanner = "";
 
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, List<Texture2D> animFightKnife, float standardintervall, SoundManager sm)
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, List<Texture2D> animFightWeapons,  float standardintervall, SoundManager sm)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
             jump = animJump;
             walkLeft = animWalkLeft;
             walkRight = animWalkRight;
-            fightKnife = animFightKnife;
+            fightWeapons = animFightWeapons;
 
             _planeModel = planeModel;
 
@@ -137,11 +139,13 @@ namespace Guus_Reise.HexangonMap
         {
             switch (_charakter.Weapon.Name)
             {
-                case "Messer":
-                    _curTex = fightKnife[0];
+                case "knife":
+                    _curTex = fightWeapons[1];
                     break;
-                case "Faust":
-                    _curTex = _texCharakter;
+                case "fist":
+                    _curTex = fightWeapons[0];
+                    break;
+                case "stick":
                     break;
                 default:
                     _curTex = _texCharakter;
@@ -182,6 +186,12 @@ namespace Guus_Reise.HexangonMap
             if (Game1.GState == Game1.GameState.InFight || Game1.GState == Game1.GameState.InTalkFight)
             {
                 SetWeaponTexCharakter();
+                _charakterScale = new Vector3(0.003f, 0.003f, 0.003f);
+            }
+            else
+            {
+                _charakterScale = new Vector3(0.002f, 0.002f, 0.002f);
+                
             }
             this.CharakterPostion = this.Hexagon.Position + Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(this.Hexagon.TileRotation));
             Draw(camera, _charakterPostion);

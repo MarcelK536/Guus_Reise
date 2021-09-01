@@ -66,7 +66,8 @@ namespace Guus_Reise.Animation
                 List<Texture2D> jump = new List<Texture2D>();
                 List<Texture2D> walkLeft = new List<Texture2D>();
                 List<Texture2D> walkRight = new List<Texture2D>();
-                List<Texture2D> fightKnife = new List<Texture2D>();
+                List<Texture2D> fightWeapons = new List<Texture2D>();
+
                 //...
 
                 int indexCharakter = charakterNames.IndexOf(name);
@@ -125,17 +126,18 @@ namespace Guus_Reise.Animation
                     standardIntervall = 250f;
                 }
 
-                //FightKnife
-                curPath = path + "\\FightKnife";
+                //FightWeapons
+                curPath = path + "\\FightWeapon";
                 di = new DirectoryInfo(curPath);
                 numberOfFrames = di.GetFiles().Length;
 
                 for (int i = 0; i < numberOfFrames; i++)
                 {
                     string number = (i + 1).ToString();
-                    Texture2D curr = content.Load<Texture2D>("Charakter\\" + name + "\\FightKnife\\" + name + "FightKnife" + number);
-                    fightKnife.Add(curr);
+                    Texture2D curr = content.Load<Texture2D>("Charakter\\" + name + "\\FightWeapon\\" + name + "FightWeapon" + number);
+                    fightWeapons.Add(curr);
                 }
+
 
                 if (name == "Paul")
                 {
@@ -147,7 +149,7 @@ namespace Guus_Reise.Animation
                 //...
 
 
-                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, fightKnife, standardIntervall, _sm);  
+                charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, fightWeapons, standardIntervall, _sm);  
             }
         }
 

@@ -69,6 +69,7 @@ namespace Guus_Reise
                 }
                 if (btnConfirm.IsClicked())
                 {
+                    HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp = false;
                     HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y];
                     HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                     if (Player.moveTile != Player.activeTile)
@@ -94,7 +95,7 @@ namespace Guus_Reise
                 }
                 if (fightTrue)
                 {
-                    if (btnAttack.IsClicked())
+                    if (btnAttack.IsClicked() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == false)
                     {
                         HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                         if (Player.activeTile != Player.moveTile)
@@ -115,7 +116,7 @@ namespace Guus_Reise
                 }
                 if (interactTrue)
                 {
-                    if (btnInteract.IsClicked())
+                    if (btnInteract.IsClicked() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == false)
                     {
                         HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                         if (Player.activeTile != Player.moveTile)
@@ -157,11 +158,19 @@ namespace Guus_Reise
                     if (fightTrue)
                     {
                         btnAttack.Draw(spriteBatch, textFont);
+                        if(btnAttack.IsHovered() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == true)
+                        {
+                            spriteBatch.DrawString(textFont, "You cannot attack, because you gave up last fight. \nWait 1 Turn",btnAttack.GetTextPosRightOf(), Color.Yellow);
+                        }
                         btnSaveGame.MoveButton(btnAttack.GetPosBelow());
                         btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
                         if (interactTrue)
                         {
                             btnInteract.Draw(spriteBatch, textFont);
+                            if (btnInteract.IsHovered() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == true)
+                            {
+                                spriteBatch.DrawString(textFont, "You cannot interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
+                            }
                             btnSaveGame.MoveButton(btnInteract.GetPosBelow());
                             btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
                         }
@@ -172,6 +181,10 @@ namespace Guus_Reise
                         {
                             btnInteract.MoveButton(btnConfirm.GetPosBelow());
                             btnInteract.Draw(spriteBatch, textFont);
+                            if (btnAttack.IsHovered() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == true)
+                            {
+                                spriteBatch.DrawString(textFont, "You cannot Interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
+                            }
                             btnSaveGame.MoveButton(btnInteract.GetPosBelow());
                             btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
                         }
