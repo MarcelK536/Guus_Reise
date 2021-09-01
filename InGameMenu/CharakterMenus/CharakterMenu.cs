@@ -24,7 +24,7 @@ namespace Guus_Reise
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
-            btnWidth = menuFont.MeasureString("Skill Points ").X;
+            btnWidth = menuFont.MeasureString("Change Weapon ").X;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -34,7 +34,7 @@ namespace Guus_Reise
             btnTexture.SetData(btnColor);
             btnLevelUp = new Button("Skill Points", btnTexture, 1, btnClose.GetPosBelow());
             menuButtons.Add(btnLevelUp);
-            btnWaffenWechsel = new Button("Change Weapons", btnTexture, 1, btnLevelUp.GetPosBelow());
+            btnWaffenWechsel = new Button("Change Weapon", btnTexture, 1, btnLevelUp.GetPosBelow());
             menuButtons.Add(btnWaffenWechsel);
             btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnWaffenWechsel.GetPosBelow());
             menuButtons.Add(btnSkillWechsel);
