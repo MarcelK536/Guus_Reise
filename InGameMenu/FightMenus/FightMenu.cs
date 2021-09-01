@@ -817,6 +817,10 @@ namespace Guus_Reise
                     }
 
                     btnGiveUp.Draw(spriteBatch, textFont);
+                    if (btnGiveUp.IsHovered())
+                    {
+                        spriteBatch.DrawString(textFont, "If you give up, you will get a penalty", btnGiveUp.GetTextPosRightOf(), Color.Yellow);
+                    }
 
                     spriteBatch.End();
                     break;

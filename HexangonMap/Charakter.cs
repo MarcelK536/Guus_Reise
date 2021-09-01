@@ -42,6 +42,7 @@ namespace Guus_Reise
         private List<Skill> _currSkills = new List<Skill>() { Guus_Reise.Skill.skills[0], Guus_Reise.Skill.skills[1] }; //Ausgewählte Skills
         public List<Weapon> _inventar;          //Liste aller für den Spieler verfügbaren Waffen
         public List<Skill> _skills;             //Liste aller für den Spieler verfügbaren Skills
+        private bool gaveUp = false;
 
         public String Name
         {
@@ -194,7 +195,11 @@ namespace Guus_Reise
             get => _logicalBoardPosition; 
             set => _logicalBoardPosition = value; 
         }
-
+        public bool GaveUp 
+        { 
+            get => gaveUp; 
+            set => gaveUp = value; 
+        }
 
         public Charakter (String name, int level, int xp, int leben, int angriff1, int angriff2, int abwehr, int wortgewand1, int wortgewand2, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite, int fpunkte, Hex hex, CharakterAnimation charakterAnimation)
         {

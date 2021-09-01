@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Guus_Reise
@@ -90,6 +91,10 @@ namespace Guus_Reise
                 {
                     gaveUp = false;
                     Fighthandler.showFightResults = false;
+                    if (Fighthandler.playerTiles.Last().Charakter != null)
+                    {
+                        Fighthandler.playerTiles.Last().Charakter.GaveUp = true;
+                    }
                 }
                 Player.actionMenu.Active = false;
                 KilledEnemys.Clear();
