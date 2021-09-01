@@ -13,6 +13,7 @@ namespace Guus_Reise
         Texture2D btnTexture;
         Texture2D btnTextureSelected;
         bool SkillsToolTip = false;
+        int lastWheel = 0;
         public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
         {
             menuWidth = 200;
@@ -123,12 +124,14 @@ namespace Guus_Reise
             {
                 Active = false;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
+            if ((Keyboard.GetState().IsKeyDown(Keys.Up)|| Mouse.GetState().ScrollWheelValue > lastWheel) && menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
             {
+                lastWheel = Mouse.GetState().ScrollWheelValue;
                 UpdateButtons(btnTexture.Height);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && menuButtons.Last().ButtonY + btnTexture.Height > menuHeight + pos.Y)
+            if ((Keyboard.GetState().IsKeyDown(Keys.Down) || Mouse.GetState().ScrollWheelValue < lastWheel) && menuButtons.Last().ButtonY + btnTexture.Height > menuHeight + pos.Y)
             {
+                lastWheel = Mouse.GetState().ScrollWheelValue;
                 UpdateButtons(-btnTexture.Height);
             }
         }

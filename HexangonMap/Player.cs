@@ -52,7 +52,7 @@ namespace Guus_Reise
 
             HexMap.NoGlow();
 
-            if (SimpleMenu.CheckIfAnyMenuOpen() == false)
+            if (SimpleMenu.CheckIfAnyMenuOpen(null) == false)
             {
 
                 for (int i = 0; i < HexMap._board.GetLength(0); i++) //berechnet ob die Maus über einem Tile steht, sowie dieses Tile

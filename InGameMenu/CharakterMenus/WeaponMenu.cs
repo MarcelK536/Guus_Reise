@@ -12,6 +12,7 @@ namespace Guus_Reise
     {
         Texture2D btnTexture;
         Texture2D btnTextureSelected;
+        int lastWheel = 0;
         public WeaponMenu(List<Weapon> weapons, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
         {
             menuWidth = 200;
@@ -26,6 +27,7 @@ namespace Guus_Reise
                     btnWidth = textFont.MeasureString(item.Name).X;
                 }
             }
+            menuWidth = btnWidth;
             btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -107,11 +109,11 @@ namespace Guus_Reise
             {
                 Active = false;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
+            if ((Keyboard.GetState().IsKeyDown(Keys.Up) || Mouse.GetState().ScrollWheelValue > lastWheel)&& menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
             {
                 UpdateButtons(btnTexture.Height);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && menuButtons.Last().GetPosBelow().Y + btnTexture.Height > menuHeight + pos.Y)
+            if ((Keyboard.GetState().IsKeyDown(Keys.Down) || Mouse.GetState().ScrollWheelValue < lastWheel) && menuButtons.Last().GetPosBelow().Y + btnTexture.Height > menuHeight + pos.Y)
             {
                 UpdateButtons(-btnTexture.Height);
             }
