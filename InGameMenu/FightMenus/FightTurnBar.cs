@@ -102,13 +102,17 @@ namespace Guus_Reise
             }
             for(int i=0; i < newList.Count; i++)
             {
-                    if (!Enumerable.SequenceEqual(newList[i].CurrentFightStats, NextTurn[i].CurrentFightStats))
+                if(newList[i].Name != NextTurn[i].Name)
+                {
+                    return false;
+                }
+                if (!Enumerable.SequenceEqual(newList[i].CurrentFightStats, NextTurn[i].CurrentFightStats))
+                {
+                    if (newList[i].Name == NextTurn[i].Name)
                     {
-                        if (newList[i].Name == NextTurn[i].Name)
-                        {
-                            return false;
-                        }
+                        return false;
                     }
+                }
             }
             return true;
         }
