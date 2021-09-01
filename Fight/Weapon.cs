@@ -124,30 +124,30 @@ namespace Guus_Reise
             }
             return hilf;
         }
-        public static float IntToScale(int zahl)
+        public static float StringToScale(char zahl)
         {
             float hilf;
             switch (zahl)
             {
-                case 0:
+                case 'O':
                     hilf = 0.0f;
                     break;
-                case 1:
+                case 'E':
                     hilf = 0.1f;
                     break;
-                case 2:
+                case 'D':
                     hilf = 0.25f;
                     break;
-                case 3:
+                case 'C':
                     hilf = 0.5f;
                     break;
-                case 4:
+                case 'B':
                     hilf = 0.75f;
                     break;
-                case 5:
+                case 'A':
                     hilf = 1.0f;
                     break;
-                case 6:
+                case 'S':
                     hilf = 1.5f;
                     break;
                 default:

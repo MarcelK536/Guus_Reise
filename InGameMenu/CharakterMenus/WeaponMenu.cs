@@ -98,8 +98,8 @@ namespace Guus_Reise
                 }
                 if (btn.IsClicked())
                 {
-                    int weaponIndex = Weapon.weapons.IndexOf(Weapon.weapons.Where(p => p.Name == btn.Name).First());
-                    HexMap._board[x, y].Charakter.Weapon = Weapon.weapons[weaponIndex];
+                    int weaponIndex = HexMap._board[x, y].Charakter.WeaponInv.IndexOf(HexMap._board[x, y].Charakter.WeaponInv.Where(p => p.Name == btn.Name).First());
+                    HexMap._board[x, y].Charakter.Weapon = HexMap._board[x, y].Charakter.WeaponInv[weaponIndex];
                 }
             }
 

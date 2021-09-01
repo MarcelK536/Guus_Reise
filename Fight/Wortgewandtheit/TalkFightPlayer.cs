@@ -100,6 +100,12 @@ namespace Guus_Reise
             if (clickedTile.Charakter.CurrentFightStats[0] <= 0)
             {
                 boi.GainXp(boi, clickedTile.Charakter);
+                Random rand = new Random();
+                int zahl = rand.Next(100);
+                if (zahl < boi.CurrentFightStats[8] + 15)
+                {
+                    boi.WeaponInv.Add(clickedTile.Charakter.Weapon);
+                }
             }
             isSelecting = false;
         }

@@ -101,6 +101,13 @@ namespace Guus_Reise
             if (clickedTile.Charakter.CurrentFightStats[0] <= 0)
             {
                 int gotXP = boi.GainXp(boi, clickedTile.Charakter);
+                Random rand = new Random();
+                int zahl = rand.Next(100);
+                if (zahl < boi.CurrentFightStats[8] + 15)
+                {
+                    boi.WeaponInv.Add(clickedTile.Charakter.Weapon);
+                }
+
                 if (Fighthandler.fightResults.EarnedXP.ContainsKey(boi.Name))
                 {
                     Fighthandler.fightResults.EarnedXP[boi.Name] =+ gotXP;

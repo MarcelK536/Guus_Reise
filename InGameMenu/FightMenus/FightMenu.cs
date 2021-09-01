@@ -390,7 +390,7 @@ namespace Guus_Reise
                 }
                 if (btnChangeWeapon.IsClicked())
                 {
-                    weaponMenu = new WeaponMenu(Weapon.weapons, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                    weaponMenu = new WeaponMenu(Player.activeTile.Charakter.WeaponInv, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                     weaponMenu.Active = true;
                     if (attackMenu != null)
                     {
