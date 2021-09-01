@@ -134,9 +134,18 @@ namespace Guus_Reise
 
         public static void LoadWeapons(ContentManager Content)
         {
-            weapons.Add(new Weapon("Faust", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("Messer", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("Aliestole", new int[] { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("fist", new int[] { 0, 0, 0, 0, 5, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("knife", new int[] { 0, 0, 0, 0, 10, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("stick", new int[] { 0, 0, 0, 0, 10, 0, 0, 2, 4, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("boxing gloves", new int[] { 0, 0, 0, 0, 15, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("hammer", new int[] { 0, 0, 0, 0, 20, 0, 0, 5, 1, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("axe", new int[] { 0, 0, 0, 0, 20, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("katana", new int[] { 0, 0, 0, 0, 20, 0, 25, 0, 6, 0, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("voice", new int[] { 0, 0, 0, 0, 5, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("megafone", new int[] { 0, 0, 0, 0, 10, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("smart book", new int[] { 0, 0, 0, 0, 10, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("universal translator", new int[] { 0, 0, 0, 0, 15, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0 }));
+            weapons.Add(new Weapon("costume", new int[] { 0, 0, 0, 0, 15, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0 }));
         }
 
         private bool IntToAttribute(int zahl)
