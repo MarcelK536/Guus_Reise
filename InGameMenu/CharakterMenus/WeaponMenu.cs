@@ -111,7 +111,7 @@ namespace Guus_Reise
             {
                 UpdateButtons(btnTexture.Height);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && menuButtons.Last().ButtonY + btnTexture.Height > menuHeight + pos.Y)
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && menuButtons.Last().GetPosBelow().Y + btnTexture.Height > menuHeight + pos.Y)
             {
                 UpdateButtons(-btnTexture.Height);
             }
