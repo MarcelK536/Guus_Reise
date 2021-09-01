@@ -76,8 +76,8 @@ namespace Guus_Reise.HexangonMap
                 _camera.MoveCamera("runter");
             }
 
-            // Mit G setzen der Kamera wieder in die Start Position (Mitte der Map, Map komplett zu sehen)
-            if (Keyboard.GetState().IsKeyDown(Keys.G) && _prevKeyState.IsKeyUp(Keys.G))
+            // Mit R setzen der Kamera wieder in die Start Position (Mitte der Map, Map komplett zu sehen)
+            if (Keyboard.GetState().IsKeyDown(Keys.R) && _prevKeyState.IsKeyUp(Keys.R))
             {
                 this.SetCameraToMiddleOfMap();
             }

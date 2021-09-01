@@ -77,6 +77,7 @@ namespace Guus_Reise
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
             Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
+            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
 
         public static void InitBoard()
