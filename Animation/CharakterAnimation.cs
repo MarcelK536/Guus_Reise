@@ -28,8 +28,7 @@ namespace Guus_Reise.HexangonMap
         private readonly List<Texture2D> jump;
         private readonly List<Texture2D> walkLeft;
         private readonly List<Texture2D> walkRight;
-        private readonly List<Texture2D> fightKnife;
-        private readonly List<Texture2D> fightFaust;
+        private readonly List<Texture2D> fightWeapons;
 
         //static List<Texture2D> moveBack;
         //static List<Texture2D> moveRight;
@@ -58,15 +57,14 @@ namespace Guus_Reise.HexangonMap
         string _animationPlanner = "";
 
 
-        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, List<Texture2D> animFightKnife, List<Texture2D> animFightFaust, float standardintervall, SoundManager sm)
+        public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, List<Texture2D> animFightWeapons,  float standardintervall, SoundManager sm)
         {
             _standardIntervall = standardintervall;
             idle = animIdle;
             jump = animJump;
             walkLeft = animWalkLeft;
             walkRight = animWalkRight;
-            fightKnife = animFightKnife;
-            fightFaust = animFightFaust;
+            fightWeapons = animFightWeapons;
 
             _planeModel = planeModel;
 
@@ -141,11 +139,13 @@ namespace Guus_Reise.HexangonMap
         {
             switch (_charakter.Weapon.Name)
             {
-                case "Messer":
-                    _curTex = fightKnife[0];
+                case "knife":
+                    _curTex = fightWeapons[1];
                     break;
-                case "Faust":
-                    _curTex = fightFaust[0];
+                case "fist":
+                    _curTex = fightWeapons[0];
+                    break;
+                case "stick":
                     break;
                 default:
                     _curTex = _texCharakter;

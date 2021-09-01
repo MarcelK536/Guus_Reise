@@ -43,7 +43,10 @@ namespace Guus_Reise
         public static Texture2D textureEditbuttonHover;
 
         public static Texture2D playerCharakterInfobox;
-        public static Texture2D enemyCharakterInfobox;        
+        public static Texture2D enemyCharakterInfobox;
+
+        public static List<Weapon> weaponNormal = new List<Weapon> { Weapon.weapons[0], Weapon.weapons[1], Weapon.weapons[2], Weapon.weapons[3], Weapon.weapons[4], Weapon.weapons[5], Weapon.weapons[6] };
+        public static List<Weapon> weaponTalk = new List<Weapon> { Weapon.weapons[7], Weapon.weapons[8], Weapon.weapons[9], Weapon.weapons[10], Weapon.weapons[11] };
 
 
         public static GraphicsDevice _graphicsDevice;
