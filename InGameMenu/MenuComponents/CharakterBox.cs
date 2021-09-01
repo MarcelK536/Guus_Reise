@@ -263,10 +263,12 @@ namespace Guus_Reise.InGameMenu.MenuComponents
         {
             base.Draw(spriteBatch);
             spriteBatch.Begin();
+
             if (_type == "Waffenbox")
             {
                 spriteBatch.DrawString(_fontText, _charakter.Weapon.Name, inhaltPositions[0], _colorInhalt);
             }
+
             spriteBatch.End();
 
 

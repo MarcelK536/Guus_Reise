@@ -227,7 +227,10 @@ namespace Guus_Reise
             PlanetMenu.SetParametersFromWindowScale();
             MainMenu.SetParametersFromWindowScale();
 
-            MovementAnimationManager.SetParameterFromWindowScale();
+            if (_state == GameState.MovementAnimation)
+            {
+                MovementAnimationManager.SetParameterFromWindowScale();
+            }
 
             HexMap.SetParameterFromWindowScale();
 

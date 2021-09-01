@@ -109,9 +109,11 @@ namespace Guus_Reise.HexangonMap
         // Setzt den Fokues der Camera auf die Mitte der Map, sodass die komplette Map zu sehen ist
         public void SetCameraToMiddleOfMap()
         {
-            //Set Moving-Values
             float valueZoom;
             float laengsteSeite;
+            float valueX;
+            float valueY;
+
             if (lengthHexMap >= widthHexMap)
             {
                 laengsteSeite = lengthHexMap;
@@ -120,19 +122,43 @@ namespace Guus_Reise.HexangonMap
             {
                 laengsteSeite = widthHexMap;
             }
-            if(laengsteSeite % 2 ==0)
+
+            //Set Moving-Values
+            if (Game1.GState == Game1.GameState.InTalkFight || Game1.GState == Game1.GameState.InFight)
             {
-                valueZoom = laengsteSeite / 2;
+                valueZoom = -laengsteSeite + 4.0f;
+
+                valueZoom = valueZoom - _camera.CurrentTranslation.Z;
+                valueX = lengthHexMap / 2 + 0.05f;
+                valueX = valueX - _camera.CurrentTranslation.X;
+                valueY = widthHexMap/ 2 - 0.2f;
+
+                if(Game1._graphics.IsFullScreen == true)
+                {
+                    valueY = widthHexMap / 2 + 0.05f;
+                }
+
+                valueY = valueY - _camera.CurrentTranslation.Y;
             }
             else
             {
-                valueZoom = (laengsteSeite - 1) / 2;
+                
+                if (laengsteSeite % 2 == 0)
+                {
+                    valueZoom = laengsteSeite / 2;
+                }
+                else
+                {
+                    valueZoom = (laengsteSeite - 1) / 2;
+                }
+                valueZoom = valueZoom - _camera.CurrentTranslation.Z;
+                valueX = lengthHexMap / 2 - 0.5f;
+                valueX = valueX - _camera.CurrentTranslation.X;
+                valueY = widthHexMap / 4 - 0.5f;
+                valueY = valueY - _camera.CurrentTranslation.Y;
             }
-            valueZoom = valueZoom - _camera.CurrentTranslation.Z;
-            float valueX = lengthHexMap / 2 - 0.5f;
-            valueX = valueX - _camera.CurrentTranslation.X;
-            float valueY = widthHexMap / 4 - 0.5f;
-            valueY = valueY - _camera.CurrentTranslation.Y;
+            
+            
 
             _camera.MoveCameraValue("Y", valueY);
             _camera.MoveCameraValue("X", valueX);

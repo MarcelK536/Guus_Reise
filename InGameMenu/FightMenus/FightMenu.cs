@@ -548,14 +548,15 @@ namespace Guus_Reise
             }
             _hoehePanel = Fighthandler._graphicsDevice.Viewport.Height - Fighthandler.hoeheArena;
             menuHeight = _hoehePanel;
-
+            
             _positionPanel.Y = Fighthandler.hoeheArena;
 
             if (Fighthandler.initPlayers)
             {
                 SetPositionsCharakterboxes("NPC");
                 SetPositionsCharakterboxes("Player");
-            }
+                Fighthandler.visFightManager.SetCameraToMiddleOfMap();
+            }           
 
         }
 

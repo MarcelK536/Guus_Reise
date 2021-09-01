@@ -64,6 +64,8 @@ namespace Guus_Reise.Animation
 
         public static void SetParameterFromWindowScale()
         {
+            
+            
             if (Game1._graphics.IsFullScreen == true)
             {
                 
