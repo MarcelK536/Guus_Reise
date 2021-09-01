@@ -23,11 +23,11 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
             if (_type == "Waffenbox")
             {
-                _ueberschriftBox = _name + ": Waffe";
+                _ueberschriftBox = _name + ": Weapon";
             }
             else
             {
-                _ueberschriftBox = _name + ": Übersicht";
+                _ueberschriftBox = _name + ": Data";
             }
 
             _hasToUpdate = true;
