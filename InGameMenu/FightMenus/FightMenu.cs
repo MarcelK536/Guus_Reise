@@ -680,6 +680,7 @@ namespace Guus_Reise
             spriteBatch.Begin();
             switch(type)
             {
+                //Zeichnen des Editorfensters um die Waffen zu ändern
                 case "WeaponEdit":
                     btnExit.Draw(spriteBatch, textFont);
                     btnSave.Draw(spriteBatch, textFont);
