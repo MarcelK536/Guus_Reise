@@ -163,7 +163,10 @@ namespace Guus_Reise
                     }
                 }
             }
-            visManager.Update(time);
+            if (SimpleMenu.CheckIfAnyMenuOpen(Player.objectiveMenu) == false)
+            {
+                visManager.Update(time);
+            }
             CharakterAnimationManager._sm.Update(time);
 
             if(activeHex != null)

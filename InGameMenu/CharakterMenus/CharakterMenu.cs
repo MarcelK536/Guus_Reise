@@ -101,11 +101,19 @@ namespace Guus_Reise
                             {
                                 weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                                 weaponMenu.Active = true;
+                                if(skillMenu != null)
+                                {
+                                    skillMenu.Active = false;
+                                }
                             }
                             if (btnSkillWechsel.IsClicked())
                             {
                                 skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                                 skillMenu.Active = true;
+                                if(weaponMenu != null)
+                                {
+                                    weaponMenu.Active = false;
+                                }
                             }
                         }
                     }
