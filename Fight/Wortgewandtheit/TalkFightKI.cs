@@ -18,13 +18,20 @@ namespace Guus_Reise
             {
                 for(int i=0; i < Fighthandler.playerTiles.Count; i++)
                 {
-                    if(bestdmg < (basedmg * s.MoveValue)*(20/20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3]))
+                    if(bestdmg < (basedmg * s.MoveValue)*(20/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[6])))
                     {
-                        bestdmg = (basedmg * s.MoveValue) * (20/20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3]);
+                        bestdmg = (basedmg * s.MoveValue) * (20/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[6]));
                         player = i;
                         name = s;
                     }
                 }
+            }
+
+            Random rnd = new Random();
+            int krit = rnd.Next(100);
+            if (krit < boi.CurrentFightStats[8] + boi.Weapon.BaseKrit)
+            {
+                bestdmg = bestdmg * 1.5f;
             }
 
             Fighthandler.playerTiles[player].Charakter.CurrentFightStats[0] -= (int)bestdmg;
