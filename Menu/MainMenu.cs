@@ -23,6 +23,9 @@ namespace Guus_Reise.Menu
 
         private static SoundEffect _soundOnButton;
 
+        static Texture2D _backroundMain;
+        static Texture2D _guuBackroundMain;
+
         static GraphicsDeviceManager _graphics;
 
         public static void Init(GraphicsDeviceManager graphics)
@@ -39,12 +42,18 @@ namespace Guus_Reise.Menu
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
-
+            _backroundMain = content.Load<Texture2D>("MainMenu\\backround");
+            _guuBackroundMain = content.Load<Texture2D>("MainMenu\\Guu_Main");
 
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {   
             spriteBatch.Begin();
+            spriteBatch.Draw(_backroundMain, new Rectangle(0, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_backroundMain, new Rectangle(0, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_guuBackroundMain, new Rectangle(350, 100, 300, 300), Color.White);
             btnPlay.Draw(spriteBatch, mainMenuFont);
             btnControls.Draw(spriteBatch, mainMenuFont);
             btnCredits.Draw(spriteBatch, mainMenuFont);
