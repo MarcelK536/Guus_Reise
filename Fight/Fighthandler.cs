@@ -224,7 +224,8 @@ namespace Guus_Reise
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.Q))
                 {
-                    GState = Game1.GameState.InGame;
+                    Fighthandler.fightResults.gaveUp = true;
+                    Fighthandler.showFightResults = true;
                     fightMenu.Active = false;
                     ExitFight();
                 }

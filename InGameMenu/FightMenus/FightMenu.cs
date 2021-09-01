@@ -457,9 +457,10 @@ namespace Guus_Reise
             }
             if (btnGiveUp.IsClicked())
             {
-                Game1.GState = Game1.GameState.InGame;
-                Active = false;
+                Fighthandler.fightResults.gaveUp = true;
                 Fighthandler.ExitFight();
+                Active = false;
+                Fighthandler.showFightResults = true;
             }
 
             UpdatePosition(new Vector2(0, _graphicsDevice.Viewport.Bounds.Center.Y));

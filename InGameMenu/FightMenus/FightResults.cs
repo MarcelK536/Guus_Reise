@@ -14,6 +14,7 @@ namespace Guus_Reise
         private Dictionary<string, int> _earnedXP = new Dictionary<string,int>();
 
         public bool gameOver = false;
+        public bool gaveUp = false;
         public Button btnExitFight;
         private Texture2D btnTexture;
 
@@ -64,6 +65,10 @@ namespace Guus_Reise
                 pPos++;
                 textPos.Y += textFont.MeasureString("Placeholder").Y;
             }
+            if(gaveUp == true)
+            {
+                spriteBatch.DrawString(textFont, "Du hast aufgegeben", textPos, Color.White);
+            }
             spriteBatch.End();
         }
 
@@ -79,7 +84,14 @@ namespace Guus_Reise
                 else
                 {
                     Game1.GState = Game1.GameState.GameOver;
+                    Fighthandler.showFightResults = false;
                 }
+                if(gaveUp == true)
+                {
+                    gaveUp = false;
+                    Fighthandler.showFightResults = false;
+                }
+                Player.actionMenu.Active = false;
                 KilledEnemys.Clear();
                 KilledFriends.Clear();
                 EarnedXP.Clear();
