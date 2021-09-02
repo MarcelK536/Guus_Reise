@@ -108,7 +108,7 @@ namespace Guus_Reise
                 if (Player.activeTile == null)
                 {
                     spriteBatch.Begin();
-                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
+                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("No Character Selected").X;
                     menuHeight = btnClose.GetPosBelow().Y;
                     SetBackgroundTexture(bkgColor);
                     spriteBatch.DrawString(textFont, "Please select a Tile \nto see the charakter informations", btnClose.GetPosRightOf(), Color.Yellow);
