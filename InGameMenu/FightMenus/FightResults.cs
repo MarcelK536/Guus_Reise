@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+
 
 namespace Guus_Reise
 {
@@ -19,6 +22,7 @@ namespace Guus_Reise
         public bool gaveUp = false;
         public Button btnExitFight;
         private Texture2D btnTexture;
+        static SoundEffect _clickSound;
 
         public List<string> KilledEnemys { get => _killedEnemys; set => _killedEnemys = value; }
         public List<string> KilledFriends { get => _killedFriends; set => _killedFriends = value; }
@@ -28,6 +32,7 @@ namespace Guus_Reise
 
         public FightResults(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
+            Init(Fighthandler.contentFight);
             btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             btnExitFight = new Button("Exit", btnTexture, 1, 0, 0);
             UpdateScreenParameters();            
@@ -40,6 +45,10 @@ namespace Guus_Reise
             
         }
 
+        internal static void Init(ContentManager content)
+        {
+            _clickSound = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
+        }
         public override void Draw(SpriteBatch spriteBatch)
         {
             Vector2 textPos = bkgPos + new Vector2(25, 25);
@@ -84,10 +93,12 @@ namespace Guus_Reise
         {
             if (btnClose.IsClicked() || btnExitFight.IsClicked())
             {
+                _clickSound.Play();
                 if (!gameOver)
                 {
                     Game1.GState = Game1.GameState.InGame;
                     Fighthandler.showFightResults = false;
+
                 }
                 else
                 {

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise
 {
@@ -27,6 +28,7 @@ namespace Guus_Reise
 
         CharakterBox editingCharakterWeaponbox;
         int oldWeapon;
+        static SoundEffect _clickSound;
 
         List<Texture2D> weaponTableaus;
         List<Texture2D> weaponTableausTalk;
@@ -69,13 +71,17 @@ namespace Guus_Reise
         public bool _isInModeWeaponEdit;
 
         private KeyboardState _prevKeyState;
-
+        private bool[] preClickState;
 
         public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
         {
             InitFightMenu(Fighthandler.contentFight);
 
             SetParameterFromWindowScale();
+
+            preClickState = new bool[3];
+
+
 
             //Allgemeines
             graphics = graphicsDevice;
@@ -139,6 +145,7 @@ namespace Guus_Reise
             currentMenuStatus = 0;
             textureEditbutton = content.Load<Texture2D>("Buttons\\pencil");
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
+            _clickSound = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
 
 
 
@@ -146,8 +153,8 @@ namespace Guus_Reise
             Texture2D platzhalterTalk = content.Load<Texture2D>("Fight\\Weapon\\platzhalterTalk");
 
             //Hier werden die auswählbaren Waffen als Tableaus geladen
-            weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauFaust"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauMesser"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauAliestole") };
-            weaponTableausTalk = new List<Texture2D> { platzhalterTalk };
+            weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauFistText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauKnifeText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauStickText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauBoxingGlovesText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauHammerText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauAxeText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauKatanaText") };
+            weaponTableausTalk = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauVoiceText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauMegaphoneText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauSmartbookText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauUniversalTranslatorText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauCostumeText") };
 
             for(int i = 0; i <4; i++)
             {
@@ -365,12 +372,17 @@ namespace Guus_Reise
                     Fighthandler._isInModeWeaponEdit = false;
                     _currentTex = texPanelDouble;
                     editingCharakterWeaponbox.currentWeapon = oldWeapon;
+                    
+                    
+                    _clickSound.Play();
                 }
                 else if (btnSave.IsClicked())
                 {
                     Fighthandler._isInModeWeaponEdit = false;
                     _currentTex = texPanelDouble;
                     editingCharakterWeaponbox._charakter.Weapon = currentWeaponList[editingCharakterWeaponbox.currentWeapon];
+                    _clickSound.Play();
+
                 }
 
                 CheckMenuStatus();
@@ -451,7 +463,8 @@ namespace Guus_Reise
                             oldWeapon = playerWeapon.currentWeapon;
                             editingCharakterWeaponbox = playerWeapon;
                             Fighthandler._isInModeWeaponEdit = true;
-                            
+
+
                             break;
                         }
                     }
@@ -487,19 +500,41 @@ namespace Guus_Reise
                 {
                     attackMenu = new AttackMenu(btnAttack.GetPosRightOf(), textFont, graphics, BlendDirection.None);
                     attackMenu.Active = true;
+
+                    if(!preClickState[0])
+                    {
+                        _clickSound.Play();
+                        preClickState[0] = true;
+                    }
+
+
                     if (weaponMenu != null)
                     {
                         weaponMenu.Active = false;
+                       
                     }
+                }
+                else
+                {
+                    preClickState[0] = false;
                 }
                 if (btnChangeWeapon.IsClicked())
                 {
                     weaponMenu = new WeaponMenu(Player.activeTile.Charakter.WeaponInv, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                     weaponMenu.Active = true;
+                    if (!preClickState[1])
+                    {
+                        _clickSound.Play();
+                        preClickState[1] = true;
+                    }
                     if (attackMenu != null)
                     {
                         attackMenu.Active = false;
                     }
+                }
+                else
+                {
+                    preClickState[1] = false;
                 }
             }
             else
@@ -507,6 +542,7 @@ namespace Guus_Reise
                 if (btnCancelAttack.IsClicked())
                 {
                     FightPlayer.CancelAttack();
+                    _clickSound.Play();
                 }
             }
             if (btnGiveUp.IsClicked())
@@ -515,6 +551,8 @@ namespace Guus_Reise
                 Fighthandler.ExitFight();
                 Active = false;
                 Fighthandler.showFightResults = true;
+                _clickSound.Play();
+
             }
 
             UpdatePosition(new Vector2(0, _graphicsDevice.Viewport.Bounds.Center.Y));

@@ -25,7 +25,7 @@ namespace Guus_Reise
         public static Hex soundHex;
         public static Hex prevSoundHex;
 
-
+        static Texture2D _backroundMain;
         public static Button btSoundEinstellungen;
 
         private static Camera _camera;
@@ -78,6 +78,8 @@ namespace Guus_Reise
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
             Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
             Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+
+            _backroundMain = Content.Load<Texture2D>("MainMenu\\backround");
         }
 
         public static void InitBoard()
@@ -183,11 +185,17 @@ namespace Guus_Reise
 
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
         {
-            for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
+            spriteBatch.Begin();
+            spriteBatch.Draw(_backroundMain, new Rectangle(0, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_backroundMain, new Rectangle(0, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.End();
+            for (int i = 0; i < _board.GetLength(1); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
             {
-                for (int k = 0; k < _board.GetLength(1); k++)
+                for (int k = 0; k < _board.GetLength(0); k++)
                 {
-                    _board[i, k].Draw(Camera);
+                    _board[k, i].Draw(Camera);
                 }
             }
 

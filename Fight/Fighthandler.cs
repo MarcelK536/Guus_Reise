@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using static Guus_Reise.Game1;
+using Microsoft.Xna.Framework.Audio;
 namespace Guus_Reise
 {
     class Fighthandler
@@ -61,7 +62,7 @@ namespace Guus_Reise
         public static bool showFightResults = false;
         public static FightResults fightResults;
 
-
+        static SoundEffect _fightSound;
 
         public static void Init(GraphicsDevice graphicsDevice, ContentManager content)
         {
@@ -79,6 +80,7 @@ namespace Guus_Reise
             currentMenuStatus = 0;
             textureEditbutton = content.Load<Texture2D>("Buttons\\pencil");
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
+            _fightSound = content.Load<SoundEffect>("Sounds\\mixkit-knife-fast-hit-2184");
 
             fightResults = new FightResults(mainMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
@@ -262,8 +264,11 @@ namespace Guus_Reise
                 RemoveDeadCharacters(npcTiles);
                 RemoveDeadCharacters(playerTiles);
 
+                
+
                 WinFight();
                 LoseFight();
+                
             }
 
             
@@ -319,6 +324,7 @@ namespace Guus_Reise
 
             if(noEnemysLeft == true)
             {
+                _fightSound.Play();
                 ExitFight();
             }
         }
