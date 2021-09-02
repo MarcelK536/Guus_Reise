@@ -300,7 +300,10 @@ namespace Guus_Reise.Animation
         public void Draw()
         {
             MovementAnimationManager._spriteBatch.Begin();
-            MovementAnimationManager.skip.Draw(MovementAnimationManager._spriteBatch, MovementAnimationManager.mainMenuFont);
+            if (movingCharakter != null)
+            {
+                MovementAnimationManager.skip.Draw(MovementAnimationManager._spriteBatch, MovementAnimationManager.mainMenuFont);
+            }
             foreach (Charakter c in HexMap.playableCharacter)
             {
                 c.Draw(_camera);
