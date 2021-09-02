@@ -225,6 +225,12 @@ namespace Guus_Reise
             this.WeaponInv.Add(Weapon.weapons[7]);
             this.Weapon = this.WeaponInv[0];
 
+            for(int i=0; i< this.Level/5; i += 2)
+            {
+                this.SkillInv.Add(Guus_Reise.Skill.skills[i]);
+                this.SkillInv.Add(Guus_Reise.Skill.skills[i+1]);
+            }
+
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);
         }
@@ -264,6 +270,12 @@ namespace Guus_Reise
             this.WeaponInv.Add(Weapon.weapons[0]);
             this.WeaponInv.Add(Weapon.weapons[7]);
             this.Weapon = this.WeaponInv[0];
+
+            for (int i = 0; i < this.Level / 5; i += 2)
+            {
+                this.SkillInv.Add(Guus_Reise.Skill.skills[i]);
+                this.SkillInv.Add(Guus_Reise.Skill.skills[i + 1]);
+            }
 
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);
@@ -393,6 +405,19 @@ namespace Guus_Reise
             {
                 winner.XP += hilf;
             }
+
+            for (int i = 0; i < winner.Level / 5; i += 2)
+            {
+                if (!winner.SkillInv.Contains(Guus_Reise.Skill.skills[i]))
+                {
+                    winner.SkillInv.Add(Guus_Reise.Skill.skills[i]);
+                }
+                if (!winner.SkillInv.Contains(Guus_Reise.Skill.skills[i+1]))
+                {
+                    winner.SkillInv.Add(Guus_Reise.Skill.skills[i + 1]);
+                }             
+            }
+
             return hilf;
         }
 
