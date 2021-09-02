@@ -16,7 +16,7 @@ namespace Guus_Reise
         Button btnConfirm;
         Button btnAttack;
         Button btnInteract;
-        Button btnSaveGame;
+       // Button btnSaveGame;
         Button btnQuitGame;
         public bool fightTrue;
         public bool interactTrue;
@@ -39,8 +39,8 @@ namespace Guus_Reise
             menuButtons.Add(btnAttack);
             btnInteract = new Button("Iteract", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnInteract);
-            btnSaveGame = new Button("Save", btnTexture, 1, btnAttack.GetPosBelow());
-            menuButtons.Add(btnSaveGame);
+           // btnSaveGame = new Button("Save", btnTexture, 1, btnAttack.GetPosBelow());
+           // menuButtons.Add(btnSaveGame);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
             menuButtons.Add(btnQuitGame);
 
@@ -63,10 +63,10 @@ namespace Guus_Reise
                 {
                     Game1.GState = Game1.GameState.MainMenu;
                 }
-                if (btnSaveGame.IsClicked())
-                {
-                    //TODO SAVE GAME
-                }
+                //if (btnSaveGame.IsClicked())
+                //{
+               //     //TODO SAVE GAME
+               // }
                 if (btnConfirm.IsClicked())
                 {
                     HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp = false;
@@ -148,10 +148,10 @@ namespace Guus_Reise
                 btnConfirm.Draw(spriteBatch,textFont);
                 btnInteract.MoveButton(btnAttack.GetPosBelow());
 
-                if (!fightTrue && !interactTrue)
-                {
-                    btnSaveGame.MoveButton(btnConfirm.GetPosBelow());
-                    btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+               if (!fightTrue && !interactTrue)
+               {
+                //    btnSaveGame.MoveButton(btnConfirm.GetPosBelow());
+                    btnQuitGame.MoveButton(btnConfirm.GetPosBelow());
                 }
                 else
                 {
@@ -162,8 +162,8 @@ namespace Guus_Reise
                         {
                             spriteBatch.DrawString(textFont, "You cannot attack, because you gave up last fight. \nWait 1 Turn",btnAttack.GetTextPosRightOf(), Color.Yellow);
                         }
-                        btnSaveGame.MoveButton(btnAttack.GetPosBelow());
-                        btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+                       // btnSaveGame.MoveButton(btnAttack.GetPosBelow());
+                        btnQuitGame.MoveButton(btnAttack.GetPosBelow());
                         if (interactTrue)
                         {
                             btnInteract.Draw(spriteBatch, textFont);
@@ -171,8 +171,8 @@ namespace Guus_Reise
                             {
                                 spriteBatch.DrawString(textFont, "You cannot interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
                             }
-                            btnSaveGame.MoveButton(btnInteract.GetPosBelow());
-                            btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+                          //  btnSaveGame.MoveButton(btnInteract.GetPosBelow());
+                                btnQuitGame.MoveButton(btnInteract.GetPosBelow());
                         }
                     }
                     else
@@ -185,12 +185,12 @@ namespace Guus_Reise
                             {
                                 spriteBatch.DrawString(textFont, "You cannot Interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
                             }
-                            btnSaveGame.MoveButton(btnInteract.GetPosBelow());
-                            btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+                           // btnSaveGame.MoveButton(btnInteract.GetPosBelow());
+                            btnQuitGame.MoveButton(btnInteract.GetPosBelow());
                         }
                     }
                 }
-                btnSaveGame.Draw(spriteBatch, textFont);
+                //btnSaveGame.Draw(spriteBatch, textFont);
                 btnQuitGame.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }
