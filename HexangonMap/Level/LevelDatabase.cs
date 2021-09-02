@@ -10,7 +10,7 @@ namespace Guus_Reise
     {
         #region Welt1
         #region Level1Data
-        public readonly static int[,] W1L1tilemap = new int[,] { { 4, 1, 4, 4, 3, 1, 1, 1 }, 
+        public readonly static int[,] W1L1tilemap = new int[,] { { 6, 1, 5, 4, 3, 1, 1, 1 }, 
                                                                   { 1, 4, 4, 3, 1, 4, 1, 1 }, 
                                                                  { 4, 3, 3, 1, 2, 1, 4, 1 }, 
                                                                   { 1, 3, 1, 2, 2, 1, 1, 1 }, 

@@ -76,6 +76,7 @@ namespace Guus_Reise
                     this.Type = "Wald";
                     this.Begehbarkeit = 2f;
                     break;
+                
                 case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 10f;
@@ -83,6 +84,21 @@ namespace Guus_Reise
                 case 3: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste");
                     this.Type = "Wueste";
                     this.Begehbarkeit = 1f;
+                    break;
+                case 4:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
+                    this.Type = "Wueste";
+                    this.Begehbarkeit = 1f;
+                    break;
+                case 5:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser2");
+                    this.Type = "Wueste";
+                    this.Begehbarkeit = 1f;
+                    break;
+                case 6:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald2");
+                    this.Type = "Wald";
+                    this.Begehbarkeit = 2f;
                     break;
                 default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
                     this.Type = "Wasser";
