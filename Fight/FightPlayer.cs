@@ -110,6 +110,14 @@ namespace Guus_Reise
                 if (zahl < boi.CurrentFightStats[8] + 15)
                 {
                     boi.WeaponInv.Add(clickedTile.Charakter.Weapon);
+                    if (Fighthandler.fightResults.EarnedWeapons.ContainsKey(boi.Name))
+                    {
+                        Fighthandler.fightResults.EarnedWeapons[boi.Name].Add(clickedTile.Charakter.Weapon.Name);
+                    }
+                    else
+                    {
+                        Fighthandler.fightResults.EarnedWeapons.Add(boi.Name, new List<string> { clickedTile.Charakter.Weapon.Name });
+                    }
                 }
 
                 if (Fighthandler.fightResults.EarnedXP.ContainsKey(boi.Name))
