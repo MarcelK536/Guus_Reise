@@ -156,17 +156,6 @@ namespace Guus_Reise
             weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauFistText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauKnifeText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauStickText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauBoxingGlovesText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauHammerText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauAxeText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauKatanaText") };
             weaponTableausTalk = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauVoiceText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauMegaphoneText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauSmartbookText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauUniversalTranslatorText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauCostumeText") };
 
-            for(int i = 0; i <4; i++)
-            {
-                weaponTableaus.Add(platzhalterFight);
-            }
-
-            for (int i = 0; i < 4; i++)
-            {
-                weaponTableausTalk.Add(platzhalterTalk);
-            }
-
-
         }
 
         public void InitMenuBoxes(List<Hex> fightTiles)
@@ -194,21 +183,23 @@ namespace Guus_Reise
 
                     if (Game1.GState == Game1.GameState.InFight)
                     {
-                        foreach (Weapon weapon in Fighthandler.weaponNormal)
+                        
+                        foreach (Weapon weapon in playerHex.Charakter.WeaponInv)
                         {
                             if (playerHex.Charakter.Weapon.Name == weapon.Name)
                             {
-                                weaponboxesNPCs[index].currentWeapon = Weapon.weapons.IndexOf(weapon);
+                                weaponboxesNPCs[index].currentWeapon = playerHex.Charakter.WeaponInv.IndexOf(weapon);
                             }
                         }
+
                     }
                     else if (Game1.GState == Game1.GameState.InTalkFight)
                     {
-                        foreach (Weapon weapon in Fighthandler.weaponTalk)
+                        foreach (Weapon weapon in playerHex.Charakter.WeaponInvTalk)
                         {
-                            if (playerHex.Charakter.Weapon.Name == weapon.Name)
+                            if (playerHex.Charakter.WeaponTalkFight.Name == weapon.Name)
                             {
-                                weaponboxesNPCs[index].currentWeapon = Weapon.weapons.IndexOf(weapon);
+                                weaponboxesNPCs[index].currentWeapon = playerHex.Charakter.WeaponInv.IndexOf(weapon);
                             }
                         }
                     }                   
@@ -229,21 +220,21 @@ namespace Guus_Reise
 
                     if (Game1.GState == Game1.GameState.InFight)
                     {
-                        foreach (Weapon weapon in Fighthandler.weaponNormal)
+                        foreach (Weapon weapon in playerHex.Charakter.WeaponInv)
                         {
                             if (playerHex.Charakter.Weapon.Name == weapon.Name)
                             {
-                                weaponboxesPlayer[index].currentWeapon = Weapon.weapons.IndexOf(weapon);
+                                weaponboxesPlayer[index].currentWeapon = playerHex.Charakter.WeaponInv.IndexOf(weapon);
                             }
                         }
                     }
                     else if (Game1.GState == Game1.GameState.InTalkFight)
                     {
-                        foreach (Weapon weapon in Fighthandler.weaponTalk)
+                        foreach (Weapon weapon in playerHex.Charakter.WeaponInvTalk)
                         {
-                            if (playerHex.Charakter.Weapon.Name == weapon.Name)
+                            if (playerHex.Charakter.WeaponTalkFight.Name == weapon.Name)
                             {
-                                weaponboxesPlayer[index].currentWeapon = Weapon.weapons.IndexOf(weapon);
+                                weaponboxesPlayer[index].currentWeapon = playerHex.Charakter.WeaponInvTalk.IndexOf(weapon);
                             }
                         }
                     }
@@ -340,10 +331,10 @@ namespace Guus_Reise
 
                 }
 
-                List<Weapon> currentWeaponList = Fighthandler.weaponTalk;
+                List<Weapon> currentWeaponList = editingCharakterWeaponbox._charakter.WeaponInvTalk;
                 if (Game1.GState == Game1.GameState.InFight)
                 {
-                    currentWeaponList = Fighthandler.weaponNormal;
+                    currentWeaponList = editingCharakterWeaponbox._charakter.WeaponInv;
                 }
                 int endOfList = currentWeaponList.Count;
 
@@ -380,7 +371,17 @@ namespace Guus_Reise
                 {
                     Fighthandler._isInModeWeaponEdit = false;
                     _currentTex = texPanelDouble;
-                    editingCharakterWeaponbox._charakter.Weapon = currentWeaponList[editingCharakterWeaponbox.currentWeapon];
+
+                    if (Game1.GState == Game1.GameState.InTalkFight)
+                    {
+                        editingCharakterWeaponbox._charakter.WeaponTalkFight = currentWeaponList[editingCharakterWeaponbox.currentWeapon];
+
+                    }
+                    else
+                    {
+                        editingCharakterWeaponbox._charakter.Weapon = currentWeaponList[editingCharakterWeaponbox.currentWeapon];
+                    }
+                    
                     _clickSound.Play();
 
                 }

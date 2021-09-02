@@ -24,7 +24,7 @@ namespace Guus_Reise.Menu
         static AnimatedSprite[] planetButtonAnimations;
         static AnimatedButton[] planetButtons;
         static Button btnBack;
-        static Button btnLoadGame;
+        //static Button btnLoadGame;
         static List<string> listOfPlanets;
         static int indexOfSelectedPlanet;
 
@@ -58,7 +58,7 @@ namespace Guus_Reise.Menu
             planetButtons[indexOfSelectedPlanet].isFocused = true;
             bool test = planetButtons[indexOfSelectedPlanet].isFocused;
             // Set Button Back
-            btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
+           // btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
             btnBack = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800,20);
 
             // Set previous Keyboard State
@@ -195,7 +195,7 @@ namespace Guus_Reise.Menu
             // Draw Back-Button
             btnBack.Draw(spriteBatch, mainMenuFont);
 
-            btnLoadGame.Draw(spriteBatch, mainMenuFont);
+            //btnLoadGame.Draw(spriteBatch, mainMenuFont);
 
             // Draw Planet-Buttons
             foreach(AnimatedButton planet in planetButtons)
@@ -250,11 +250,11 @@ namespace Guus_Reise.Menu
                 GState = GameState.MainMenu;
                 _soundOnButton.Play();
             }
-            if(btnLoadGame.IsClicked() == true)
-            {
+           // if(btnLoadGame.IsClicked() == true)
+           // {
                 //TODO LOAD GAME
-                _soundOnButton.Play();
-            }
+               // _soundOnButton.Play();
+            //}
             _prevKeyState = Keyboard.GetState();
         }
 

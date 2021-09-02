@@ -26,13 +26,27 @@ namespace Guus_Reise
 
             graphicDevice = graphicsDevice;
 
-            foreach (Skill s in currCharakter.Skill)
+            List<Skill> currentSkillList;
+
+            if (Game1.GState == Game1.GameState.InTalkFight)
+            {
+                currentSkillList = currCharakter.SkillTalk;
+
+            }
+            else
+            {
+                currentSkillList = currCharakter.Skill;
+            }
+
+            foreach (Skill s in currentSkillList)
             {
                 if (btnWidth < textFont.MeasureString(s.Name).X)
                 {
                     btnWidth = textFont.MeasureString(s.Name).X;
                 }
             }
+
+
             btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -41,7 +55,7 @@ namespace Guus_Reise
             }
             btnTexture.SetData(btnColor);
 
-            foreach (Skill s in currCharakter.Skill)
+            foreach (Skill s in currentSkillList)
             {
                 menuButtons.Add(new Button(s.Name, btnTexture, 1, btnPosition));
                 btnPosition.Y += btnTexture.Height + 10;

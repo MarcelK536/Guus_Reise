@@ -137,20 +137,73 @@ namespace Guus_Reise.HexangonMap
         // Wenn im Kampf: Charaktere werden mit Waffen angezeigt
         public void SetWeaponTexCharakter()
         {
-            switch (_charakter.Weapon.Name)
+            if(_charakter.Name != "Guu")
             {
-                case "knife":
-                    _curTex = fightWeapons[1];
-                    break;
-                case "fist":
-                    _curTex = fightWeapons[0];
-                    break;
-                case "stick":
-                    break;
-                default:
-                    _curTex = _texCharakter;
-                    break;
+                return;
             }
+
+            if(Game1.GState == Game1.GameState.InFight)
+            {
+                switch (_charakter.Weapon.Name)
+                {
+                    case "knife":
+                        _curTex = fightWeapons[1];
+                        break;
+                    case "fist":
+                        _curTex = fightWeapons[0];
+                        break;
+                    case "katana":
+                        _curTex = fightWeapons[5];
+                        break;
+                    case "axe":
+                        _curTex = fightWeapons[8];
+                        break;
+                    case "hammer":
+                        _curTex = fightWeapons[9];
+                        break;
+                    case "stick":
+                        _curTex = fightWeapons[10];
+                        break;
+                    case "boxing gloves":
+                        _curTex = fightWeapons[11];
+                        break;
+                    default:
+                        _curTex = _texCharakter;
+                        break;
+                }
+            }
+            else if(Game1.GState == Game1.GameState.InTalkFight)
+            {
+                switch (_charakter.WeaponTalkFight.Name)
+                {
+                    case "voice":
+                        _curTex = fightWeapons[2];
+                        break;
+                    case "costume":
+                        _curTex = fightWeapons[3];
+                        break;
+                    case "megafone":
+                        _curTex = fightWeapons[4];
+                        break;
+                    case "universal translator":
+                        _curTex = fightWeapons[6];
+                        break;
+                    case "smart book":
+                        _curTex = fightWeapons[7];
+                        break;
+                    default:
+                        _curTex = _texCharakter;
+                        break;
+                }
+            }
+            else
+            {
+                _curTex = _texCharakter;
+            }
+            
+                
+            
+   
         }
 
         public void UpdateHex(Hex hexagon)

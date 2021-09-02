@@ -86,11 +86,11 @@ namespace Guus_Reise
             {
                 Fighthandler.turnBar.NextTurn[i].Geschwindigkeit -= boi.Geschwindigkeit;
             }
-            double basedmg = Fighthandler.GetBaseDmg(boi, boi.Weapon);
+            double basedmg = Fighthandler.GetBaseDmg(boi, boi.WeaponTalkFight);
 
             Random rnd = new Random();
             int krit = rnd.Next(100);
-            if (krit < boi.CurrentFightStats[8] + boi.Weapon.BaseKrit)
+            if (krit < boi.CurrentFightStats[8] + boi.WeaponTalkFight.BaseKrit)
             {
                 basedmg = basedmg * 1.5f;
             }
@@ -104,7 +104,7 @@ namespace Guus_Reise
                 int zahl = rand.Next(100);
                 if (zahl < boi.CurrentFightStats[8] + 15)
                 {
-                    boi.WeaponInv.Add(clickedTile.Charakter.Weapon);
+                    boi.WeaponInvTalk.Add(clickedTile.Charakter.WeaponTalkFight);
                 }
             }
             isSelecting = false;
