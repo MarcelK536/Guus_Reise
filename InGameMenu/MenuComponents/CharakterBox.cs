@@ -228,19 +228,19 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 switch (_sizetype)
                 {
                     case 1:
-                        _titel = new List<string> { "Level", "Resisting power" };
+                        _titel = new List<string> { "Level", "Life Points" };
                         _inhalt = new List<string> { level, wiederstandskraft };
                         break;
                     case 2:
-                        _titel = new List<string> { "Level", "Resisting power", "Defense" };
+                        _titel = new List<string> { "Level", "Life Points", "Defense" };
                         _inhalt = new List<string> { level, wiederstandskraft, abwehr };
                         break;
                     case 3:
-                        _titel = new List<string> { "Level", "Resisting power", "Defense", "Chance" };
+                        _titel = new List<string> { "Level", "Life Points", "Defense", "Chance" };
                         _inhalt = new List<string> { level, wiederstandskraft, abwehr, glueck };
                         break;
                     default:
-                        _titel = new List<string> { "Level", "Resisting power" };
+                        _titel = new List<string> { "Level", "Life Points" };
                         _inhalt = new List<string> { level, wiederstandskraft };
                         break;
                 }
@@ -250,19 +250,19 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                 switch (_sizetype)
                 {
                     case 1:
-                        _titel = new List<string> { "Level", "Articulation" };
+                        _titel = new List<string> { "Level", "Interaction" };
                         _inhalt = new List<string> { level, wortgewandtheit };
                         break;
                     case 2:
-                        _titel = new List<string> { "Level", "Articulation", "Ignorance" };
+                        _titel = new List<string> { "Level", "Interaction", "Ignorance" };
                         _inhalt = new List<string> { level, wortgewandtheit, ignoranz };
                         break;
                     case 3:
-                        _titel = new List<string> { "Level", "Articulation", "Ignorance", "Chance" };
+                        _titel = new List<string> { "Level", "Interaction", "Ignorance", "Chance" };
                         _inhalt = new List<string> { level, wortgewandtheit, ignoranz, glueck };
                         break;
                     default:
-                        _titel = new List<string> { "Level", "Articulation" };
+                        _titel = new List<string> { "Level", "Interaction" };
                         _inhalt = new List<string> { level, wortgewandtheit };
                         break;
                 }
