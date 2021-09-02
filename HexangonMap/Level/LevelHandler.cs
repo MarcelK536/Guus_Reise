@@ -28,6 +28,12 @@ namespace Guus_Reise
             activeLevel = InitLevel();
         }
 
+        public static void FirstTimeCreation()
+        {
+            activeLevel = InitLevel();
+            HexMap.InitBoard();
+        }
+
         /// <summary>
         /// Initizialized the Level. Needs to be done before Loading new Levels.
         /// </summary>

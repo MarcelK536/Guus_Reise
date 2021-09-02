@@ -46,7 +46,7 @@ namespace Guus_Reise.Menu
             _graphics = graphics;
             // here to insert Names of Planets
             List<string> planetNames = new List<string>{ "Planet 1", "Planet 2", "Planet 3"};
-            indexOfSelectedPlanet = (planetNames.Count) / 2;
+            indexOfSelectedPlanet = 0; //(planetNames.Count) / 2;
 
             // set Planet-Buttons
             planetButtons = new AnimatedButton[planetNames.Count];
@@ -241,6 +241,19 @@ namespace Guus_Reise.Menu
             {
                 if (planet.IsClicked() == true && planet.isFocused || Keyboard.GetState().IsKeyDown(Keys.Enter) && planet.isFocused)
                 {
+                    switch (planet.Name)
+                    {
+                        case ("Planet 1"):
+                            LevelHandler.currentWorld = 1;
+                            break;
+                        case ("Planet 2"):
+                            LevelHandler.currentWorld = 2;
+                            break;
+                        case ("Planet 3"):
+                            LevelHandler.currentWorld = 3;
+                            break;
+                    }
+                    LevelHandler.FirstTimeCreation();
                     GState = GameState.InGame;
                     _soundOnButton.Play();
                 }
