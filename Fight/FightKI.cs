@@ -14,18 +14,21 @@ namespace Guus_Reise
             double bestdmg = 0;
             int player = 0;
             Skill name = boi.Skill[0];
-            foreach(Skill s in boi.Skill)
+
+            foreach (Skill s in boi.Skill)
             {
-                for(int i=0; i < Fighthandler.playerTiles.Count; i++)
+                for (int i = 0; i < Fighthandler.playerTiles.Count; i++)
                 {
-                    if(bestdmg < (basedmg * s.MoveValue)*(20.0/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3])))
+                    if (bestdmg < (basedmg * s.MoveValue) * (20.0 / (20 + Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3])))
                     {
-                        bestdmg = (basedmg * s.MoveValue) * (20.0/(20+Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3]));
+                        bestdmg = (basedmg * s.MoveValue) * (20.0 / (20 + Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3]));
                         player = i;
                         name = s;
                     }
                 }
             }
+
+            
 
             Random rnd = new Random();
             int krit = rnd.Next(100);

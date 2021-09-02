@@ -204,7 +204,18 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             string ignoranz;
 
             wiederstandskraft = charakter.CurrentFightStats[0].ToString();
-            weapon = charakter.Weapon.Name;
+
+            //Waffe abhängig von der Kampfart setzen
+            if (Game1.GState == Game1.GameState.InTalkFight)
+            {
+                weapon = charakter.WeaponTalkFight.Name;
+
+            }
+            else
+            {
+                weapon = charakter.Weapon.Name;
+            }
+            
             abwehr = charakter.CurrentFightStats[3].ToString();
             wortgewandtheit = charakter.CurrentFightStats[4].ToString();
             glueck = charakter.CurrentFightStats[8].ToString();
@@ -266,7 +277,15 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
             if (_type == "Waffenbox")
             {
-                spriteBatch.DrawString(_fontText, _charakter.Weapon.Name, inhaltPositions[0], _colorInhalt);
+                if (Game1.GState == Game1.GameState.InTalkFight)
+                {
+                    spriteBatch.DrawString(_fontText, _charakter.WeaponTalkFight.Name, inhaltPositions[0], _colorInhalt);
+                }
+                else
+                {
+                    spriteBatch.DrawString(_fontText, _charakter.Weapon.Name, inhaltPositions[0], _colorInhalt);
+                }
+                
             }
 
             spriteBatch.End();

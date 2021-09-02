@@ -39,9 +39,13 @@ namespace Guus_Reise
         CharakterAnimation _charakterAnimation;
 
         private Weapon _currWeapon;         //Ausgewählte Waffe Standard Faust
-        private List<Skill> _currSkills = new List<Skill>() { Guus_Reise.Skill.skills[0], Guus_Reise.Skill.skills[1] }; //Ausgewählte Skills
+        private Weapon _currWeaponTalkFight; //Ausgewählte Waffe für den TalkFight
+        private List<Skill> _currSkills = new List<Skill>() { Guus_Reise.Skill.skills[0] }; //Ausgewählte Skills
+        private List<Skill> _currSkillsTalk = new List<Skill>() { Guus_Reise.Skill.skills[1] }; //Ausgewählte Skills
         public List<Weapon> _inventar = new List<Weapon>();          //Liste aller für den Spieler verfügbaren Waffen
+        public List<Weapon> _inventarTalkFight = new List<Weapon>(); //Liste aller für den Spieler verfügbaren Waffen im Talkfight
         public List<Skill> _skills = new List<Skill>();             //Liste aller für den Spieler verfügbaren Skills
+        public List<Skill> _skillsTalk = new List<Skill>();
         private bool gaveUp = false;
 
         public String Name
@@ -56,10 +60,22 @@ namespace Guus_Reise
             set => _currWeapon = value;
         }
 
+        public Weapon WeaponTalkFight
+        {
+            get => _currWeaponTalkFight;
+            set => _currWeaponTalkFight = value;
+        }
+
         public List<Weapon> WeaponInv
         {
             get => _inventar;
             set => _inventar = value;
+        }
+
+        public List<Weapon> WeaponInvTalk
+        {
+            get => _inventarTalkFight;
+            set => _inventarTalkFight = value;
         }
 
         public List<Skill> Skill
@@ -68,10 +84,22 @@ namespace Guus_Reise
             set => _currSkills = value;
         }
 
+        public List<Skill> SkillTalk
+        {
+            get => _currSkillsTalk;
+            set => _currSkillsTalk = value;
+        }
+
         public List<Skill> SkillInv
         {
             get => _skills;
             set => _skills = value;
+        }
+
+        public List<Skill> SkillInvTalk
+        {
+            get => _skillsTalk;
+            set => _skillsTalk = value;
         }
 
         public bool IsNPC
@@ -222,13 +250,14 @@ namespace Guus_Reise
             _charakterAnimation = charakterAnimation;
 
             this.WeaponInv.Add(Weapon.weapons[0]);
-            this.WeaponInv.Add(Weapon.weapons[7]);
+            this.WeaponInvTalk.Add(Weapon.weapons[7]);
             this.Weapon = this.WeaponInv[0];
+            this.WeaponTalkFight = this.WeaponInvTalk[0];
 
             for(int i=0; i< this.Level/5; i += 2)
             {
                 this.SkillInv.Add(Guus_Reise.Skill.skills[i]);
-                this.SkillInv.Add(Guus_Reise.Skill.skills[i+1]);
+                this.SkillInvTalk.Add(Guus_Reise.Skill.skills[i+1]);
             }
 
             //Fehlende Parameter für die CharakterAnimation setzen
@@ -268,13 +297,14 @@ namespace Guus_Reise
                 }
             }
             this.WeaponInv.Add(Weapon.weapons[0]);
-            this.WeaponInv.Add(Weapon.weapons[7]);
+            this.WeaponInvTalk.Add(Weapon.weapons[7]);
             this.Weapon = this.WeaponInv[0];
+            this.WeaponTalkFight = this.WeaponInvTalk[0];
 
             for (int i = 0; i < this.Level / 5; i += 2)
             {
                 this.SkillInv.Add(Guus_Reise.Skill.skills[i]);
-                this.SkillInv.Add(Guus_Reise.Skill.skills[i + 1]);
+                this.SkillInvTalk.Add(Guus_Reise.Skill.skills[i + 1]);
             }
 
             //Fehlende Parameter für die CharakterAnimation setzen
@@ -308,9 +338,13 @@ namespace Guus_Reise
             IsMoving = toClone.IsMoving;
             CharakterAnimation = toClone.CharakterAnimation;
             Weapon = toClone.Weapon;
+            WeaponTalkFight = toClone.WeaponTalkFight;
             Skill = toClone.Skill;
+            SkillTalk = toClone.SkillTalk;
             WeaponInv = toClone.WeaponInv;
+            WeaponInvTalk = toClone.WeaponInvTalk;
             SkillInv = toClone.SkillInv;
+            SkillInvTalk = toClone.SkillInvTalk;
         }
         public void SetCharakter(String name, int[] werte)
         {
@@ -412,9 +446,9 @@ namespace Guus_Reise
                 {
                     winner.SkillInv.Add(Guus_Reise.Skill.skills[i]);
                 }
-                if (!winner.SkillInv.Contains(Guus_Reise.Skill.skills[i+1]))
+                if (!winner.SkillInvTalk.Contains(Guus_Reise.Skill.skills[i+1]))
                 {
-                    winner.SkillInv.Add(Guus_Reise.Skill.skills[i + 1]);
+                    winner.SkillInvTalk.Add(Guus_Reise.Skill.skills[i + 1]);
                 }             
             }
 
