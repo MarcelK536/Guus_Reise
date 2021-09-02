@@ -208,10 +208,7 @@ namespace Guus_Reise
         public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime, GraphicsDeviceManager _graphics)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(_backroundMain, new Rectangle(0, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
-            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
-            spriteBatch.Draw(_backroundMain, new Rectangle(0, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
-            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
+            spriteBatch.Draw(_backroundMain, new Rectangle(0, 0, _graphicsDevice.Viewport.Width, _graphicsDevice.Viewport.Height), Color.White);     
             spriteBatch.End();
 
 

@@ -421,6 +421,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/texGuu.png
 
+#begin Charakter/Guu/texGuuStartScreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/texGuuStartScreen.png
+
 #begin Charakter/Guu/WalkLeft/GuuWalkLeft1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1083,12 +1095,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika.spritefont
 
+#begin Fonts/Aika.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Aika.spritefont
+
 #begin Fonts/Aika12.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika12.spritefont
+
+#begin Fonts/Aika12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Aika12.spritefont
+
+#begin Fonts/Aika20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Aika20.spritefont
 
 #begin Fonts/Aika20.spritefont
 /importer:FontDescriptionImporter
@@ -1104,12 +1137,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Fantasma.spritefont
 
+#begin Fonts/Fantasma.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Fantasma.spritefont
+
 #begin Fonts/GemunuLibre.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/GemunuLibre.spritefont
+
+#begin Fonts/GemunuLibre.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/GemunuLibre.spritefont
+
+#begin Fonts/Inclitodo.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo.spritefont
 
 #begin Fonts/Inclitodo.spritefont
 /importer:FontDescriptionImporter
@@ -1125,12 +1179,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Inclitodo12.spritefont
 
+#begin Fonts/Inclitodo12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo12.spritefont
+
 #begin Fonts/Inclitodo15.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Inclitodo15.spritefont
+
+#begin Fonts/Inclitodo15.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo15.spritefont
+
+#begin Fonts/Inclitodo30.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo30.spritefont
 
 #begin Fonts/Inclitodo30.spritefont
 /importer:FontDescriptionImporter
@@ -1146,12 +1221,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Jellee20.spritefont
 
+#begin Fonts/Jellee20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Jellee20.spritefont
+
 #begin Fonts/Jellee30.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Jellee30.spritefont
+
+#begin Fonts/Jellee30.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Jellee30.spritefont
+
+#begin Fonts/Jellee50.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Jellee50.spritefont
 
 #begin LightShader.fx
 /importer:EffectImporter
@@ -1244,18 +1340,6 @@
 /processorParam:TextureFormat=Color
 /build:TileModels/darkBrown.png
 
-#begin TileModels/darkBrown.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/darkBrown.png
-
 #begin TileModels/darkGreen.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1267,37 +1351,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileModels/darkGreen.png
-
-#begin TileModels/darkGreen.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/darkGreen.png
-
-#begin TileModels/hexagonBerg.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:TileModels/hexagonBerg.fbx
 
 #begin TileModels/hexagonBerg.fbx
 /importer:FbxImporter
@@ -1356,44 +1409,6 @@
 /processorParam:TextureFormat=Compressed
 /build:TileModels/hexagonWald.fbx
 
-#begin TileModels/hexagonWald.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:TileModels/hexagonWald.fbx
-
-#begin TileModels/hexagonWald2.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:TileModels/hexagonWald2.fbx
-
 #begin TileModels/hexagonWald2.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -1432,25 +1447,6 @@
 /processorParam:TextureFormat=Compressed
 /build:TileModels/hexagonWasser.fbx
 
-#begin TileModels/hexagonWasser.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:TileModels/hexagonWasser.fbx
-
 #begin TileModels/hexagonWasser2.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -1469,44 +1465,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:TileModels/hexagonWasser2.fbx
-
-#begin TileModels/hexagonWasser2.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:TileModels/hexagonWasser2.fbx
-
-#begin TileModels/hexagonWueste.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:TileModels/hexagonWueste.fbx
 
 #begin TileModels/hexagonWueste.fbx
 /importer:FbxImporter
@@ -1558,18 +1516,6 @@
 /processorParam:TextureFormat=Color
 /build:TileModels/inselGelb.png
 
-#begin TileModels/inselGelb.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/inselGelb.png
-
 #begin TileModels/kiesBoden.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1581,30 +1527,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileModels/kiesBoden.jpg
-
-#begin TileModels/kiesBoden.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/kiesBoden.jpg
-
-#begin TileModels/sandBoden.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/sandBoden.jpg
 
 #begin TileModels/sandBoden.jpg
 /importer:TextureImporter
@@ -1630,18 +1552,6 @@
 /processorParam:TextureFormat=Color
 /build:TileModels/texBark.jpg
 
-#begin TileModels/texBark.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/texBark.jpg
-
 #begin TileModels/texBark2.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1653,30 +1563,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileModels/texBark2.jpg
-
-#begin TileModels/texBark2.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/texBark2.jpg
-
-#begin TileModels/TexturesCom_RockBlocky0072_2_seamless_S.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/TexturesCom_RockBlocky0072_2_seamless_S.jpg
 
 #begin TileModels/TexturesCom_RockBlocky0072_2_seamless_S.jpg
 /importer:TextureImporter
@@ -1702,30 +1588,6 @@
 /processorParam:TextureFormat=Color
 /build:TileModels/trockengruen.png
 
-#begin TileModels/trockengruen.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/trockengruen.png
-
-#begin TileModels/waldBoden.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/waldBoden.png
-
 #begin TileModels/waldBoden.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1749,30 +1611,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileModels/water.jpg
-
-#begin TileModels/water.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/water.jpg
-
-#begin TileModels/yellowDarkGreen.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:TileModels/yellowDarkGreen.png
 
 #begin TileModels/yellowDarkGreen.png
 /importer:TextureImporter
