@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 namespace Guus_Reise
 {
@@ -14,7 +16,8 @@ namespace Guus_Reise
         Texture2D btnTextureSelected;
         bool SkillsToolTip = false;
         int lastWheel = 0;
-        public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
+        SoundEffect _clickSound;
+        public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(position, menuFont, graphicsDevice, direction)
         {
             menuWidth = 200;
             menuHeight = 200;
@@ -48,7 +51,7 @@ namespace Guus_Reise
                 menuButtons.Add(new Button(item.Name, btnTexture, 1, btnPosition));
                 btnPosition.Y += btnTexture.Height + 10;
             }
-            
+            _clickSound = clickSound;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -105,6 +108,7 @@ namespace Guus_Reise
                 }
                 if (btn.IsClicked())
                 {
+                    _clickSound.Play();
                     if(HexMap._board[x, y].Charakter.Skill.Where(p => p.Name == btn.Name).Any())
                     {
                         HexMap._board[x, y].Charakter.Skill.Remove(Skill.skills.Where(p => p.Name == btn.Name).First());
@@ -122,6 +126,7 @@ namespace Guus_Reise
 
             if (btnClose.IsClicked())
             {
+                _clickSound.Play();
                 Active = false;
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.Up)|| Mouse.GetState().ScrollWheelValue > lastWheel) && menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)

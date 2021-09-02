@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 namespace Guus_Reise
 {
@@ -14,13 +16,17 @@ namespace Guus_Reise
 
         GraphicsDevice graphics;
 
+        static SoundEffect _clickSound;
+        bool preClickState;
+
         WeaponMenu weaponMenu;
         SkillMenu skillMenu;
-        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
+        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
         {
             graphics = graphicsDevice;
             menuWidth = 600;
             menuHeight = 300;
+            preClickState = false;
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
@@ -38,8 +44,11 @@ namespace Guus_Reise
             menuButtons.Add(btnWaffenWechsel);
             btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnWaffenWechsel.GetPosBelow());
             menuButtons.Add(btnSkillWechsel);
+            _clickSound = clickSound;
+
         }
 
+ 
         public void Update(GameTime time)
         {
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) - (int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
@@ -56,6 +65,7 @@ namespace Guus_Reise
                 {
                     if (btnClose.IsClicked())
                     {
+                        _clickSound.Play();
                         Active = false;
                         Player.levelUpMenu.Active = false;
                         Player.charakterMenu.Active = false;
@@ -78,6 +88,7 @@ namespace Guus_Reise
                     {
                         if (btnClose.IsClicked())
                         {
+                            _clickSound.Play();
                             Active = false;
                             Player.levelUpMenu.Active = false;
                             Player.charakterMenu.Active = false;
@@ -94,11 +105,18 @@ namespace Guus_Reise
                         {
                             if (btnLevelUp.IsClicked())
                             {
+                                _clickSound.Play();
                                 Player.levelUpMenu.Active = true;
                                 Player.charakterMenu.Active = false;
                             }
                             if (btnWaffenWechsel.IsClicked())
                             {
+                                if (!preClickState)
+                                {
+                                    _clickSound.Play();
+                                    preClickState = true;
+
+                                }
                                 weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                                 weaponMenu.Active = true;
                                 if(skillMenu != null)
@@ -106,9 +124,14 @@ namespace Guus_Reise
                                     skillMenu.Active = false;
                                 }
                             }
+                            else
+                            {
+                                preClickState = false;
+                            }
                             if (btnSkillWechsel.IsClicked())
                             {
-                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+                                _clickSound.Play();
+                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None, _clickSound);
                                 skillMenu.Active = true;
                                 if(weaponMenu != null)
                                 {

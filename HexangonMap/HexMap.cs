@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace Guus_Reise
 {
@@ -76,7 +78,7 @@ namespace Guus_Reise
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
-            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
+            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, Content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112"));
             Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
 
             _backroundMain = Content.Load<Texture2D>("MainMenu\\backround");
@@ -183,7 +185,7 @@ namespace Guus_Reise
             LevelHandler.UpdateLevel();
         }
 
-        public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
+        public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime, GraphicsDeviceManager _graphics)
         {
             spriteBatch.Begin();
             spriteBatch.Draw(_backroundMain, new Rectangle(0, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
@@ -191,6 +193,9 @@ namespace Guus_Reise
             spriteBatch.Draw(_backroundMain, new Rectangle(0, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
             spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
             spriteBatch.End();
+
+            _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;     //Fixt Zeichenreihnfolge
+
             for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
