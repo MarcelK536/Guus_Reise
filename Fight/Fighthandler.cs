@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 using static Guus_Reise.Game1;
 namespace Guus_Reise
 {
@@ -15,6 +16,7 @@ namespace Guus_Reise
         //Original Tiles
         public static List<Hex> playerTiles = new List<Hex>();      //Der Initierende Spieler steht am Ende der Liste
         public static List<Hex> npcTiles = new List<Hex>();         //Liste der NPC
+        public static List<Hex> newTeamMember = new List<Hex>();        //Liste von neuen Gruppenmitgliedern (Wortgewandtheit)
         public static List<Hex> waitList = new List<Hex>();         //Überlauf Liste falls im Kampf mehr als 4 Spieler / NPCs vorhanden
 
 
@@ -147,6 +149,7 @@ namespace Guus_Reise
         {
             DeInitPlayers(playerTiles);
             DeInitPlayers(npcTiles);
+            DeInitPlayers(newTeamMember);
 
             initPlayers = false;
             fightMenu.Active = false;
@@ -185,9 +188,20 @@ namespace Guus_Reise
             {
                 HexMap._board[playerTiles[i].LogicalBoardPosition.X, playerTiles[i].LogicalBoardPosition.Y] = playerTiles[i];
             }
+            for(int i = newTeamMember.Count-1; i >= 0; i--)
+            {
+                newTeamMember[i].LogicalBoardPosition = newTeamMember[i].Charakter.LogicalBoardPosition;
+                HexMap._board[newTeamMember[i].LogicalBoardPosition.X, newTeamMember[i].LogicalBoardPosition.Y] = newTeamMember[i];
+                playerTiles.Add(newTeamMember[i]);
+                HexMap.playableCharacter.Add(newTeamMember[i].Charakter);
+            }
             for(int i = npcTiles.Count-1; i >= 0; i--)
             {
-                HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
+                Hex isNewFriend = newTeamMember.Find(e => e.LogicalPosition == npcTiles[i].LogicalPosition);
+                if (isNewFriend != null)
+                {
+                    HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
+                }
             }
             Player.activeTile.IsActive = false;
             Player.activeTile = null;
@@ -254,7 +268,7 @@ namespace Guus_Reise
 
             
         }
-
+        //Wenn Gamestate = Fight > remove. falls GameState = TalkFight > zur gruppe hinzufügen.
         public static void RemoveDeadCharacters(List<Hex> tiles)
         {
             foreach (Hex hexTiles in tiles)
@@ -264,16 +278,28 @@ namespace Guus_Reise
                     if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
                     {
                         turnBar.RemoveCharakter(hexTiles.Charakter);
-                        if (hexTiles.Charakter.IsNPC)
-                        {
-                            fightResults.KilledEnemys.Add(hexTiles.Charakter.Name);
-                            HexMap.npcs.Remove(hexTiles.Charakter);
-                        }
                         if (!hexTiles.Charakter.IsNPC)
                         {
                             fightResults.KilledFriends.Add(hexTiles.Charakter.Name);
                             HexMap.playableCharacter.Remove(hexTiles.Charakter);
                         }
+                        if (hexTiles.Charakter.IsNPC)
+                        {
+                            if (Game1.GState == GameState.InFight)
+                            {
+                                fightResults.KilledEnemys.Add(hexTiles.Charakter.Name);
+                                HexMap.npcs.Remove(hexTiles.Charakter);
+                            }
+                            if(Game1.GState == GameState.InTalkFight)
+                            {
+                                fightResults.NewFriends.Add(hexTiles.Charakter.Name);
+                                hexTiles.Charakter.IsNPC = false;
+                                hexTiles.Charakter.CanBefriended = false;
+                                newTeamMember.Add(hexTiles.Clone());
+                                HexMap.npcs.Remove(hexTiles.Charakter);
+                            }
+                        }
+
                         hexTiles.Charakter = null;
                     }
                 }
