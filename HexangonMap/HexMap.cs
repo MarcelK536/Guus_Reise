@@ -82,8 +82,8 @@ namespace Guus_Reise
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight, _clickSound);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
-            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
-            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, _clickSound);
+            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
 
             _backroundMain = Content.Load<Texture2D>("MainMenu\\backround");
         }
