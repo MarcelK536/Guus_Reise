@@ -18,7 +18,7 @@ namespace Guus_Reise
                                                                  { 1, 1, 2, 1, 1, 1, 1, 1 }, 
                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 }, 
                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-        public readonly static int[,] W1L1playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3} };
+        public readonly static int[,] W1L1playerStats = new int[,] { { 20, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3} };
         public readonly static int[,] W1L1npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
         public readonly static int[,] W1L1npcPatroulPoints = new int[,] { { 1, 1 }, { 4, 1 }, { 4, 4 }, { 1, 4 } };
         public readonly static string[] W1L1playerNames = new string[] { "Guu"};       //input Array für Namen
