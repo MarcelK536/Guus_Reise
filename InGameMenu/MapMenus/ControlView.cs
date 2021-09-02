@@ -14,7 +14,8 @@ namespace Guus_Reise
         public ControlView(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction, _clickSound)
         {
             Vector2 menuWH = menuFont.MeasureString("Mouse Controls: \n   -Left Click = Select Tile / Action \n   -Right Click = DeSelect Tile \n\n " +
-                    "Keyboard Controls: \n   -G = Show Level Goal\n   -H = Show Character Info\n -R = Center Map\n   -ESC - Quit Menu");
+                    "Keyboard Controls: \n   -G = Show Level Goal\n   -H = Show Character Info\n -R = Center Map\n   -ESC - Quit Menu \n\n" +
+                    "Map Controls: \n   -W,A,S,D = Move Map\n   -Mouse Wheel = Zoom In / Out");
             menuWidth = menuWH.X;
             menuHeight = menuWH.Y;
         }
@@ -38,7 +39,8 @@ namespace Guus_Reise
                 spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)pos.X, (int)pos.Y, (int)menuWidth, (int)menuHeight);
 
                 spriteBatch.DrawString(textFont, "Mouse Controls: \n   -Left Click = Select Tile / Action \n   -Right Click = DeSelect Tile \n\n " +
-                    "Keyboard Controls: \n   -G = Show Level Goal\n   -H = Show Character Info\n -R = Center Map\n   -ESC - Quit Menu", btnClose.GetPosBelow(), Color.Black);
+                    "Keyboard Controls: \n   -G = Show Level Goal\n   -H = Show Character Info\n -R = Center Map\n   -ESC - Quit Menu \n\n" +
+                    "Map Controls: \n   -W,A,S,D = Move Map\n   -Mouse Wheel = Zoom In / Out", btnClose.GetPosBelow(), Color.Black);
 
                 spriteBatch.GraphicsDevice.ScissorRectangle = tempScissorRect;
                 spriteBatch.End();

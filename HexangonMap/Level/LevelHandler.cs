@@ -52,6 +52,14 @@ namespace Guus_Reise
                     activeLevel = new Level(LevelDatabase.W2L2playerNames, LevelDatabase.W2L2canBefriended, LevelDatabase.W2L2playerStats, LevelDatabase.W2L2playerPos, LevelDatabase.W2L2tilemap, LevelDatabase.W2L2objectiveText, LevelDatabase.W2L2objective, contentLevel);
                     activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L2npcNames, LevelDatabase.W2L2canBefriended, LevelDatabase.W2L2npcStats, LevelDatabase.W2L2npcPos);
                     return activeLevel;
+                case (3, 1):
+                    activeLevel = new Level(LevelDatabase.W3L1playerNames, LevelDatabase.W3L2canBefriended, LevelDatabase.W3L1playerStats, LevelDatabase.W3L1playerPos, LevelDatabase.W3L1tilemap, LevelDatabase.W3L1objectiveText, LevelDatabase.W3L1objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L1npcNames, LevelDatabase.W2L1canBefriended, LevelDatabase.W2L1npcStats, LevelDatabase.W2L1npcPos);
+                    return activeLevel;
+                case (3, 2):
+                    activeLevel = new Level(LevelDatabase.W3L2playerNames, LevelDatabase.W3L2canBefriended, LevelDatabase.W3L2playerStats, LevelDatabase.W3L2playerPos, LevelDatabase.W3L2tilemap, LevelDatabase.W3L2objectiveText, LevelDatabase.W3L2objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L2npcNames, LevelDatabase.W2L2canBefriended, LevelDatabase.W2L2npcStats, LevelDatabase.W2L2npcPos);
+                    return activeLevel;
             }
 
             return activeLevel;

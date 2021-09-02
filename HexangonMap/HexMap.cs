@@ -217,9 +217,9 @@ namespace Guus_Reise
             for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
 
             {
-                for (int k = 0; k < _board.GetLength(0); k++)
+                for (int k = 0; k < _board.GetLength(1); k++)
                 {
-                    _board[k, i].Draw(Camera);
+                    _board[i, k].Draw(Camera);
                 }
             }
 
