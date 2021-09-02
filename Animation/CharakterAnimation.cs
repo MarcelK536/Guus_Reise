@@ -145,7 +145,35 @@ namespace Guus_Reise.HexangonMap
                 case "fist":
                     _curTex = fightWeapons[0];
                     break;
+                case "voice":
+                    _curTex = fightWeapons[2];
+                    break;
+                case "costume":
+                    _curTex = fightWeapons[3];
+                    break;
+                case "megafone":
+                    _curTex = fightWeapons[4];
+                    break;
+                case "katana":
+                    _curTex = fightWeapons[5];
+                    break;
+                case "universal translator":
+                    _curTex = fightWeapons[6];
+                    break;
+                case "smart book":
+                    _curTex = fightWeapons[7];
+                    break;
+                case "axe":
+                    _curTex = fightWeapons[8];
+                    break;
+                case "hammer":
+                    _curTex = fightWeapons[9];
+                    break;
                 case "stick":
+                    _curTex = fightWeapons[10];
+                    break;
+                case "boxing gloves":
+                    _curTex = fightWeapons[11];
                     break;
                 default:
                     _curTex = _texCharakter;
