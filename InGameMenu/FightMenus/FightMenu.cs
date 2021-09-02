@@ -153,8 +153,8 @@ namespace Guus_Reise
             Texture2D platzhalterTalk = content.Load<Texture2D>("Fight\\Weapon\\platzhalterTalk");
 
             //Hier werden die auswählbaren Waffen als Tableaus geladen
-            weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauFaust"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauMesser"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauAliestole") };
-            weaponTableausTalk = new List<Texture2D> { platzhalterTalk };
+            weaponTableaus = new List<Texture2D> { content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauFistText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauKnifeText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauStickText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauBoxingGlovesText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauHammerText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauAxeText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauKatanaText") };
+            weaponTableausTalk = new List<Texture2D> { platzhalterTalk, content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauMegaphoneText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauSmartbookText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauUniversalTranslatorText"), content.Load<Texture2D>("Fight\\Weapon\\WeaponTabelauCostumeText") };
 
             for(int i = 0; i <4; i++)
             {
