@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Input;
 using System.Timers;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise
 {
@@ -30,6 +31,8 @@ namespace Guus_Reise
         public float tempHeight;
         public bool needCloseBtn = true;
 
+        SoundEffect _clickSound;
+        
 
         
         public enum BlendDirection
@@ -54,7 +57,7 @@ namespace Guus_Reise
         /// <param name="menuFont">Die verwendetete Schriftart</param>
         /// <param name="graphicsDevice">Zum Berechnen der Hintergründe</param>
         /// <param name="direction">Richtung für die Animation zum Öffnen des Menus</param>
-        public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction)
+        public SimpleMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound)
         {
             _graphicsDevice = graphicsDevice;
             pos = position;
@@ -85,6 +88,7 @@ namespace Guus_Reise
                 bkgPos = btnClose.GetPosBelow();
             }
             allInstances.Add(this);
+            _clickSound = clickSound;
         }
 
         public bool Active
@@ -95,13 +99,13 @@ namespace Guus_Reise
 
         public virtual void Update()
         {
-            if (Active)
+            /*if (Active)
             {
                 if (btnClose.IsClicked() && needCloseBtn == true || ClickedOutside()) 
                 {
                     Active = false;
                 }
-            }
+            } */
         }
 
         public virtual bool ClickedOutside()

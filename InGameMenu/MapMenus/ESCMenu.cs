@@ -16,9 +16,9 @@ namespace Guus_Reise
 
         ControlView controlView;
 
-        SoundEffect _clickSound;
+        static SoundEffect _clickSound;
 
-        public ESCMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, direction)
+        public ESCMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, direction, _clickSound)
         {
             btnWidth = menuFont.MeasureString("Quit Game ").X;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);

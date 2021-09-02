@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise.Animation
 {
@@ -12,7 +13,8 @@ namespace Guus_Reise.Animation
 
         public Hex startHex;
         public Hex targetHex;
-        
+
+        static SoundEffect _clickSound;
 
         public string movementType;
 
@@ -54,7 +56,7 @@ namespace Guus_Reise.Animation
 
         public List<string> ablauf;
 
-        public MovementAnimation(string type, Hex start, Hex target)
+        public MovementAnimation(string type, Hex start, Hex target, SoundEffect clickSound)
         {
             
             startHex = start;
@@ -69,6 +71,7 @@ namespace Guus_Reise.Animation
             currentStep = 0;
             targetHex.Charakter.IsMoving = true;
             targetHex.Charakter.CharakterAnimation.CharakterMovementPostion = targetHex.Charakter.CharakterAnimation.Translation + startHex.Position;
+            _clickSound = clickSound;
         }
 
         public MovementAnimation(string type, List<Hex> oldHex, List<Hex> newHex, List<Charakter> movednpcs)
@@ -145,6 +148,7 @@ namespace Guus_Reise.Animation
             }
             else if(MovementAnimationManager.skip.IsClicked())
             {
+                _clickSound.Play();
                 ResetAnimation();
                 Game1.GState = Game1.GameState.InGame;
                 return;

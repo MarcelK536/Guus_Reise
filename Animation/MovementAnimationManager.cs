@@ -9,6 +9,8 @@ using MonoGame.Extended.Sprites;
 using MonoGame.Extended.Serialization;
 using MonoGame.Extended.Content;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+
 
 
 namespace Guus_Reise.Animation
@@ -21,7 +23,7 @@ namespace Guus_Reise.Animation
         public static SpriteFont mainMenuFont;
         public static SpriteBatch _spriteBatch;
         public static Button skip;
-
+        static SoundEffect _clickSound;
 
         public static void Init(string type, Hex start, Hex target)
         {
@@ -30,7 +32,7 @@ namespace Guus_Reise.Animation
 
             if (start != target)
             {
-                _currentMovementAnimation = new MovementAnimation(type, start, target);
+                _currentMovementAnimation = new MovementAnimation(type, start, target, _clickSound);
                 Game1.GState = Game1.GameState.MovementAnimation;
             }
         }
@@ -60,6 +62,7 @@ namespace Guus_Reise.Animation
             btnHoverTexture =InformationComponents.texArrowRight;
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             _spriteBatch = spriteBatch;
+            _clickSound = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
         }
 
         public static void SetParameterFromWindowScale()

@@ -18,7 +18,7 @@ namespace Guus_Reise
         static SoundEffect _clickSound;
         private bool[] preClickState;
 
-        public WeaponMenu(List<Weapon> weapons, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
+        public WeaponMenu(List<Weapon> weapons, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction, _clickSound)
         {
             menuWidth = 200;
             menuHeight = 200;

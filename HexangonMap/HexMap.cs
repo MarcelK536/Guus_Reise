@@ -81,9 +81,10 @@ namespace Guus_Reise
             Player.actionMenuFont = Content.Load<SpriteFont>("Fonts\\Jellee20");
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight, _clickSound);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
-            Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
+            Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom, _clickSound);
             Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, _clickSound);
             Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
+            Player.infoIcon = new InformationIcon();
 
             _backroundMain = Content.Load<Texture2D>("MainMenu\\backround");
         }
@@ -111,6 +112,7 @@ namespace Guus_Reise
                 CharakterAnimationManager.animationSound = !CharakterAnimationManager.animationSound;
                 if(CharakterAnimationManager.animationSound)
                 {
+                    _clickSound.Play();
                     btSoundEinstellungen.TextureDefault = Game1.textureSoundButton;
                     btSoundEinstellungen.TextureHover = Game1.textureSoundButton;
                 }

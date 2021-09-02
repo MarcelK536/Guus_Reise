@@ -73,7 +73,7 @@ namespace Guus_Reise
         private KeyboardState _prevKeyState;
         private bool[] preClickState;
 
-        public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction)
+        public FightMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(0,graphicsDevice.Viewport.Bounds.Center.Y), menuFont, graphicsDevice, direction, _clickSound)
         {
             InitFightMenu(Fighthandler.contentFight);
 
@@ -338,9 +338,10 @@ namespace Guus_Reise
                 }
                 int endOfList = currentWeaponList.Count;
 
-                //Aktualisieren der Wafffen-Tableaus
+                //Aktualisieren der Waffen-Tableaus
                 if ( (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right)) || btnRightLong.IsClicked())
                 {
+                    _clickSound.Play();
                     ++editingCharakterWeaponbox.currentWeapon;
                     
                     if (editingCharakterWeaponbox.currentWeapon == endOfList)
@@ -350,6 +351,7 @@ namespace Guus_Reise
                 }
                 if ( (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left)) || btnLeftLong.IsClicked())
                 {
+                    _clickSound.Play();
                     --editingCharakterWeaponbox.currentWeapon;
                     if (editingCharakterWeaponbox.currentWeapon == -1)
                     {
@@ -418,11 +420,13 @@ namespace Guus_Reise
             // Test if an swipe in left or right direktion was initialized
             if ( (Keyboard.GetState().IsKeyDown(Keys.Right) && _prevKeyState.IsKeyUp(Keys.Right)) || btnRight.IsClicked())
             {
+                _clickSound.Play();
                 currentMenuStatus = (currentMenuStatus + 1) % menuStatusList.Count;
                 SetParameterFromWindowScale();
             }
             if ( (Keyboard.GetState().IsKeyDown(Keys.Left) && _prevKeyState.IsKeyUp(Keys.Left)) || btnLeft.IsClicked())
             {
+                _clickSound.Play();
                 if (currentMenuStatus == 0)
                 {
                     currentMenuStatus = menuStatusList.Count - 1;
@@ -461,6 +465,7 @@ namespace Guus_Reise
                     {
                         if (playerWeapon.editButton.IsClicked())
                         {
+                            _clickSound.Play();
                             oldWeapon = playerWeapon.currentWeapon;
                             editingCharakterWeaponbox = playerWeapon;
                             Fighthandler._isInModeWeaponEdit = true;

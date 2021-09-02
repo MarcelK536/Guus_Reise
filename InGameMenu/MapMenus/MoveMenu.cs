@@ -21,11 +21,11 @@ namespace Guus_Reise
         Button btnQuitGame;
         public bool fightTrue;
         public bool interactTrue;
-        SoundEffect _clickSound;
+        static SoundEffect _clickSound;
 
         static public Texture2D menuTexture { get; set; }
 
-        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend, SoundEffect clickSound) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
+        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend, SoundEffect clickSound) : base(new Vector2(), moveMenuFont,graphicsDevice, blend, _clickSound)
         {
             btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
@@ -62,15 +62,20 @@ namespace Guus_Reise
                 HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
                 Hex targetHex = Player.moveTile;
                 Hex startHex = Player.activeTile;
+                if (btnClose.IsClicked() && needCloseBtn == true || ClickedOutside())
+                {
+                    _clickSound.Play();
+                    Active = false;
+                }
                 if (btnQuitGame.IsClicked())
                 {
                     _clickSound.Play();
                     Game1.GState = Game1.GameState.MainMenu;
                 }
-                if (btnSaveGame.IsClicked())
+          /*      if (btnSaveGame.IsClicked())
                 {
                     //TODO SAVE GAME
-                }
+                }*/
                 if (btnConfirm.IsClicked())
                 {
                     _clickSound.Play();

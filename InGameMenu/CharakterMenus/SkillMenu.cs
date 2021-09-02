@@ -15,8 +15,8 @@ namespace Guus_Reise
         Texture2D btnTextureSelected;
         bool SkillsToolTip = false;
         int lastWheel = 0;
-        SoundEffect _clickSound;
-        public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(position, menuFont, graphicsDevice, direction)
+        static SoundEffect _clickSound;
+        public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(position, menuFont, graphicsDevice, direction, _clickSound)
         {
             menuWidth = 200;
             menuHeight = 200;

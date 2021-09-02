@@ -3,13 +3,15 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using Microsoft.Xna.Framework.Audio;
 namespace Guus_Reise
 {
+
     class ControlView : SimpleMenu
 
     {
-        public ControlView(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
+        static SoundEffect _clickSound;
+        public ControlView(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction, _clickSound)
         {
             Vector2 menuWH = menuFont.MeasureString("Mouse Controls: \n   -Left Click = Select Tile / Action \n   -Right Click = DeSelect Tile \n\n " +
                     "Keyboard Controls: \n   -G = Show Level Goal\n   -H = Show Character Info\n -R = Center Map\n   -ESC - Quit Menu");

@@ -20,10 +20,10 @@ namespace Guus_Reise
         Button btnPlusGlueck;
         //Button btnPlusBewegung;
 
-        SoundEffect _clickSound;
+        static SoundEffect _clickSound;
 
 
-        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend, SoundEffect clickSound) : base(new Vector2(), moveMenuFont,  graphicsDevice, blend) 
+        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend, SoundEffect clickSound) : base(new Vector2(), moveMenuFont,  graphicsDevice, blend, _clickSound) 
         {
             Texture2D btnTexture = new Texture2D(graphicsDevice, 25, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
@@ -155,7 +155,7 @@ namespace Guus_Reise
                     btnPlusKoerperkraft.Draw(spriteBatch, textFont);
                     spriteBatch.DrawString(textFont, "Strength: " + HexMap._board[x, y].Charakter.Koerperkraft, btnPlusKoerperkraft.GetPosRightOf(), Color.Yellow);
                     btnPlusBeweglichkeit.Draw(spriteBatch, textFont);
-                    spriteBatch.DrawString(textFont, "Agilty: " + HexMap._board[x, y].Charakter.Beweglichkeit, btnPlusBeweglichkeit.GetPosRightOf(), Color.Yellow);
+                    spriteBatch.DrawString(textFont, "Agility: " + HexMap._board[x, y].Charakter.Beweglichkeit, btnPlusBeweglichkeit.GetPosRightOf(), Color.Yellow);
                     btnPlusAbwehr.Draw(spriteBatch, textFont);
                     spriteBatch.DrawString(textFont, "Defense: " + HexMap._board[x, y].Charakter.Abwehr, btnPlusAbwehr.GetPosRightOf(), Color.Yellow);
                     btnPlusWortgewandtheit.Draw(spriteBatch, textFont);

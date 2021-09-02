@@ -19,7 +19,7 @@ namespace Guus_Reise
         bool preClickState;
 
         SkillMenu skillMenu;
-        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
+        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound)
         {
             graphics = graphicsDevice;
             menuWidth = 600;
