@@ -33,6 +33,7 @@ namespace Guus_Reise
         public void Update(GraphicsDevice _graphicsDevice)
         {
             btnInfo.MoveButton(new Vector2(_graphicsDevice.Viewport.Width - infoIcon.Width*btnInfo.Scale, _graphicsDevice.Viewport.Height - infoIcon.Height*btnInfo.Scale));
+            Clear();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -48,7 +49,7 @@ namespace Guus_Reise
                     spriteBatch.DrawString(infoFont, s + " can Move", textPos, Color.Yellow);
                     textPos.Y -= infoFont.MeasureString("Placeholder").Y * 2 + 10;
                 }
-                if (hasSkillPoints.Count >= 0)
+                if (hasSkillPoints.Count > 0)
                 {
                     spriteBatch.DrawString(infoFont, "Press H on a Character\nto use them.", textPos, Color.Yellow);
                     textPos.Y -= infoFont.MeasureString("Placeholder").Y * 2 + 10;

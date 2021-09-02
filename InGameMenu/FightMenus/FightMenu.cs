@@ -14,7 +14,6 @@ namespace Guus_Reise
     {
         Button btnGiveUp;
         Button btnAttack;
-        Button btnChangeWeapon;
         Button btnCancelAttack;
 
         Button btnExit;
@@ -37,8 +36,6 @@ namespace Guus_Reise
 
         public int[] boxCount;
 
-
-        WeaponMenu weaponMenu;
         AttackMenu attackMenu;
 
         public int _hoehePanel;
@@ -119,11 +116,9 @@ namespace Guus_Reise
 
 
             menuButtons.Add(btnAttack);
-            btnChangeWeapon = new Button("Change Weapon", btnTexture, 1, btnAttack.GetPosBelow());
-            menuButtons.Add(btnChangeWeapon);
-            btnGiveUp = new Button("Give Up", btnTexture, 1, btnChangeWeapon.GetPosBelow());
+            btnGiveUp = new Button("Give Up", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnGiveUp);
-            btnCancelAttack = new Button("Cancel Attack", btnTexture, 1, btnChangeWeapon.GetPos());
+            btnCancelAttack = new Button("Cancel Attack", btnTexture, 1, btnAttack.GetPos());
             menuButtons.Add(btnCancelAttack);
 
             //Eigenschaften vom Menu-Panel
@@ -512,35 +507,10 @@ namespace Guus_Reise
                         _clickSound.Play();
                         preClickState[0] = true;
                     }
-
-
-                    if (weaponMenu != null)
-                    {
-                        weaponMenu.Active = false;
-                       
-                    }
                 }
                 else
                 {
                     preClickState[0] = false;
-                }
-                if (btnChangeWeapon.IsClicked())
-                {
-                    weaponMenu = new WeaponMenu(Player.activeTile.Charakter.WeaponInv, btnChangeWeapon.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                    weaponMenu.Active = true;
-                    if (!preClickState[1])
-                    {
-                        _clickSound.Play();
-                        preClickState[1] = true;
-                    }
-                    if (attackMenu != null)
-                    {
-                        attackMenu.Active = false;
-                    }
-                }
-                else
-                {
-                    preClickState[1] = false;
                 }
             }
             else
@@ -566,13 +536,8 @@ namespace Guus_Reise
             bkgPos.Y = Fighthandler.hoeheArena;
             menuWidth = _graphicsDevice.Viewport.Width;
             btnAttack.MoveButton(btnClose.GetPosBelow());
-            btnChangeWeapon.MoveButton(btnAttack.GetPosBelow());
-            btnGiveUp.MoveButton(btnChangeWeapon.GetPosBelow());
+            btnGiveUp.MoveButton(btnAttack.GetPosBelow());
 
-            if (weaponMenu != null && weaponMenu.Active)
-            {
-                weaponMenu.Update(time);
-            }
             if ((attackMenu != null && attackMenu.Active)|| FightPlayer.isSelecting == true)
             {
                 attackMenu.Update(time);
@@ -870,10 +835,6 @@ namespace Guus_Reise
                     else
                     {
                         DrawPanel(spriteBatch);
-                        if (weaponMenu != null && weaponMenu.Active)
-                        {
-                            weaponMenu.Draw(spriteBatch);
-                        }
                         if (attackMenu != null && attackMenu.Active)
                         {
                             attackMenu.Draw(spriteBatch);
@@ -883,10 +844,6 @@ namespace Guus_Reise
 
                 default:
                     DrawPanel(spriteBatch);
-                    if (weaponMenu != null && weaponMenu.Active)
-                    {
-                        weaponMenu.Draw(spriteBatch);
-                    }
                     if (attackMenu != null && attackMenu.Active)
                     {
                         attackMenu.Draw(spriteBatch);
@@ -915,7 +872,6 @@ namespace Guus_Reise
                     if (FightPlayer.isSelecting == false)
                     {
                         btnAttack.Draw(spriteBatch, textFont);
-                        btnChangeWeapon.Draw(spriteBatch, textFont);
                     }
                     else
                     {
