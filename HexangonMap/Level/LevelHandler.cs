@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -103,6 +104,31 @@ namespace Guus_Reise
             CopyCharacters(activeLevel.CharacterList);
             activeLevel = InitLevel();
             HexMap.InitBoard();
+            for(int i = 0; i < _currentPlayableCharacters.Count; i++)
+            {
+                if (activeLevel.CharacterList.Exists(e=>e.Name == _currentPlayableCharacters[i].Name))
+                { 
+                    int hilf = activeLevel.CharacterList.FindIndex(e=>e.Name == _currentPlayableCharacters[i].Name);
+                    activeLevel.CharacterList[hilf].Level = _currentPlayableCharacters[i].Level;
+                    activeLevel.CharacterList[hilf].XP = _currentPlayableCharacters[i].XP;
+                    activeLevel.CharacterList[hilf].Widerstandskraft = _currentPlayableCharacters[i].Widerstandskraft;
+                    activeLevel.CharacterList[hilf].Koerperkraft = _currentPlayableCharacters[i].Koerperkraft;
+                    activeLevel.CharacterList[hilf].Beweglichkeit = _currentPlayableCharacters[i].Beweglichkeit;
+                    activeLevel.CharacterList[hilf].Abwehr = _currentPlayableCharacters[i].Abwehr;
+                    activeLevel.CharacterList[hilf].Wortgewandheit = _currentPlayableCharacters[i].Wortgewandheit;
+                    activeLevel.CharacterList[hilf].Lautstaerke = _currentPlayableCharacters[i].Lautstaerke;
+                    activeLevel.CharacterList[hilf].Ignoranz = _currentPlayableCharacters[i].Ignoranz;
+                    activeLevel.CharacterList[hilf].Geschwindigkeit = _currentPlayableCharacters[i].Geschwindigkeit;
+                    activeLevel.CharacterList[hilf].Glueck = _currentPlayableCharacters[i].Glueck;
+                    activeLevel.CharacterList[hilf].Bewegungsreichweite = _currentPlayableCharacters[i].Bewegungsreichweite;
+                    activeLevel.CharacterList[hilf].Fähigkeitspunkte = _currentPlayableCharacters[i].Fähigkeitspunkte;
+                    activeLevel.CharacterList[hilf].Weapon = _currentPlayableCharacters[i].Weapon;
+                    activeLevel.CharacterList[hilf].WeaponInv = _currentPlayableCharacters[i].WeaponInv;
+                    activeLevel.CharacterList[hilf].Skill = _currentPlayableCharacters[i].Skill;
+                    activeLevel.CharacterList[hilf].SkillInv = _currentPlayableCharacters[i].SkillInv;
+
+                }
+            }
         }
 
         //Resetet das aktuelle Level
