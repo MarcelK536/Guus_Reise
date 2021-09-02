@@ -191,11 +191,11 @@ namespace Guus_Reise
             spriteBatch.Draw(_backroundMain, new Rectangle(0, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
             spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
             spriteBatch.End();
-            for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
+            for (int i = 0; i < _board.GetLength(1); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
             {
-                for (int k = 0; k < _board.GetLength(1); k++)
+                for (int k = 0; k < _board.GetLength(0); k++)
                 {
-                    _board[i, k].Draw(Camera);
+                    _board[k, i].Draw(Camera);
                 }
             }
 
