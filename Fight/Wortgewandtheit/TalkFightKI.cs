@@ -10,11 +10,11 @@ namespace Guus_Reise
         public static void MakeGreedyMove()
         {
             Charakter boi = Fighthandler.turnBar.ReturnCurrentCharakter();
-            double basedmg = Fighthandler.GetBaseDmg(boi, boi.Weapon);
+            double basedmg = Fighthandler.GetBaseDmg(boi, boi.WeaponTalkFight);
             double bestdmg = 0;
             int player = 0;
-            Skill name = boi.Skill[0];
-            foreach(Skill s in boi.Skill)
+            Skill name = boi.SkillTalk[0];
+            foreach(Skill s in boi.SkillTalk)
             {
                 for(int i=0; i < Fighthandler.playerTiles.Count; i++)
                 {
@@ -29,7 +29,7 @@ namespace Guus_Reise
 
             Random rnd = new Random();
             int krit = rnd.Next(100);
-            if (krit < boi.CurrentFightStats[8] + boi.Weapon.BaseKrit)
+            if (krit < boi.CurrentFightStats[8] + boi.WeaponTalkFight.BaseKrit)
             {
                 bestdmg = bestdmg * 1.5f;
             }

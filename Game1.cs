@@ -77,6 +77,7 @@ namespace Guus_Reise
             Skill.LoadSkills(Content);
             LevelHandler.InitContent(Content);
             HexMap.Init(Content, GraphicsDevice, _graphics);
+            InformationIcon.Init(GraphicsDevice);
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);
             GameOver.Init(Content);
@@ -101,6 +102,7 @@ namespace Guus_Reise
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
+            InformationIcon.LoadTexture(Content);
             MovementAnimationManager.LoadTextures(Content, _spriteBatch);
             FightPlayer._soundEffect = Content.Load<SoundEffect>("Sounds\\mixkit-knife-fast-hit-2184");
             

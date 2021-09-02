@@ -82,8 +82,8 @@ namespace Guus_Reise
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight, _clickSound);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
-            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, _clickSound);
-            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
+            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
+            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
 
             _backroundMain = Content.Load<Texture2D>("MainMenu\\backround");
         }
@@ -140,6 +140,20 @@ namespace Guus_Reise
                     if (!charakter.CanMove)
                     {
                         movecounter--;
+                    }
+                    else
+                    {
+                        if (!Player.infoIcon.CanMoveList.Contains(charakter.Name))
+                        {
+                            Player.infoIcon.CanMoveList.Add(charakter.Name);
+                        }
+                    }
+                    if(charakter.Fähigkeitspunkte > 0)
+                    {
+                        if (!Player.infoIcon.HasSkillPoints.ContainsKey(charakter.Name))
+                        {
+                            Player.infoIcon.HasSkillPoints.Add(charakter.Name, charakter.Fähigkeitspunkte);
+                        }
                     }
                 }
                 if (movecounter <= 0)

@@ -12,7 +12,7 @@ namespace Guus_Reise
     {
         Button btnControls;
         Button btnQuitGame;
-        Button btnSaveGame;
+        //Button btnSaveGame;
 
         ControlView controlView;
 
@@ -30,9 +30,9 @@ namespace Guus_Reise
             btnTexture.SetData(btnColor);
             btnControls = new Button("Controls", btnTexture, 1, btnClose.GetPosBelow());
             menuButtons.Add(btnControls);
-            btnSaveGame = new Button("Save", btnTexture, 1, btnControls.GetPosBelow());
-            menuButtons.Add(btnSaveGame);
-            btnQuitGame = new Button("Quit Game", btnTexture, 1, btnSaveGame.GetPosBelow());
+            //btnSaveGame = new Button("Save", btnTexture, 1, btnControls.GetPosBelow());
+            //menuButtons.Add(btnSaveGame);
+            btnQuitGame = new Button("Quit Game", btnTexture, 1, btnControls.GetPosBelow());
             menuButtons.Add(btnQuitGame);
 
             controlView = new ControlView(btnControls.GetPosRightOf(),menuFont,graphicsDevice,BlendDirection.None);
@@ -61,11 +61,10 @@ namespace Guus_Reise
                     _clickSound.Play();
                     Game1.GState = Game1.GameState.MainMenu;
                 }
-                if (btnSaveGame.IsClicked())
-                {
-                    _clickSound.Play();
+                //if (btnSaveGame.IsClicked())
+               // {
                     //TODO SAVE GAME
-                }
+               // }
                 if (btnControls.IsClicked())
                 {
                     _clickSound.Play();
@@ -82,7 +81,7 @@ namespace Guus_Reise
             {
                 spriteBatch.Begin();
                 btnControls.Draw(spriteBatch, textFont);
-                btnSaveGame.Draw(spriteBatch, textFont);
+               // btnSaveGame.Draw(spriteBatch, textFont);
                 btnQuitGame.Draw(spriteBatch, textFont);
                 spriteBatch.End();
 
