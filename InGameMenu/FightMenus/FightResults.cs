@@ -30,7 +30,7 @@ namespace Guus_Reise
         public Dictionary<string, int> EarnedXP { get => _earnedXP; set => _earnedXP = value; }
         public Dictionary<string, List<string>> EarnedWeapons { get => _earnedWeapons; set => _earnedWeapons = value; }
 
-        public FightResults(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
+        public FightResults(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction, _clickSound)
         {
             Init(Fighthandler.contentFight);
             btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);

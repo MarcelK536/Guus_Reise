@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 namespace Guus_Reise
 {
@@ -13,12 +15,16 @@ namespace Guus_Reise
 
         GraphicsDevice graphics;
 
+        static SoundEffect _clickSound;
+        bool preClickState;
+
         SkillMenu skillMenu;
-        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
+        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound)
         {
             graphics = graphicsDevice;
             menuWidth = 600;
             menuHeight = 300;
+            preClickState = false;
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
@@ -34,8 +40,11 @@ namespace Guus_Reise
             menuButtons.Add(btnLevelUp);
             btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnLevelUp.GetPosBelow());
             menuButtons.Add(btnSkillWechsel);
+            _clickSound = clickSound;
+
         }
 
+ 
         public void Update(GameTime time)
         {
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) - (int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
@@ -51,6 +60,7 @@ namespace Guus_Reise
                 {
                     if (btnClose.IsClicked())
                     {
+                        _clickSound.Play();
                         Active = false;
                         Player.levelUpMenu.Active = false;
                         Player.charakterMenu.Active = false;
@@ -69,6 +79,7 @@ namespace Guus_Reise
                     {
                         if (btnClose.IsClicked())
                         {
+                            _clickSound.Play();
                             Active = false;
                             Player.levelUpMenu.Active = false;
                             Player.charakterMenu.Active = false;
@@ -81,17 +92,24 @@ namespace Guus_Reise
                         {
                             if (btnLevelUp.IsClicked())
                             {
+                                _clickSound.Play();
                                 Player.levelUpMenu.Active = true;
                                 Player.charakterMenu.Active = false;
+
+                            }
+  
                                 if (skillMenu != null)
                                 {
                                     skillMenu.Active = false;
                                 }
-                            }
+                         
                             if (btnSkillWechsel.IsClicked())
                             {
-                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
+
+                                _clickSound.Play();
+                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None, _clickSound);
                                 skillMenu.Active = !skillMenu.Active;
+
                             }
                         }
                     }

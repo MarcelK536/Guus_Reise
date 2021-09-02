@@ -15,7 +15,7 @@ namespace Guus_Reise
         Texture2D btnTexture;
         static SoundEffect _clickSound;
         public static GraphicsDevice graphicDevice;
-        public AttackMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
+        public AttackMenu(Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction, _clickSound)
         {
             menuWidth = 200;
             menuHeight = 200;

@@ -189,7 +189,7 @@ namespace Guus_Reise
                     break;
                 case GameState.InGame:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    HexMap.DrawInGame(_spriteBatch, gameTime);
+                    HexMap.DrawInGame(_spriteBatch, gameTime, _graphics);
                     break;
                 case GameState.InFight:
                     GraphicsDevice.Clear(Color.Black);
@@ -209,7 +209,7 @@ namespace Guus_Reise
                     break;
                 case GameState.MovementAnimation:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    HexMap.DrawInGame(_spriteBatch, gameTime);
+                    HexMap.DrawInGame(_spriteBatch, gameTime, _graphics);
                     MovementAnimationManager.DrawMovementAnimation();
                     break;
                 default:
