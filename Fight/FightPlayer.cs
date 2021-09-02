@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace Guus_Reise
@@ -14,6 +15,8 @@ namespace Guus_Reise
         public static Skill _selSkill = null;
         public static Hex clickedTile = null;
         public static MouseState _prevMouseState;
+        public static SoundEffect _soundEffect;
+
 
         public static void PrepareMove()
         {
@@ -25,6 +28,7 @@ namespace Guus_Reise
             {
                 isSelecting = false;
                 MakeMove(_selSkill, clickedTile);
+                _soundEffect.Play();
                 clickedTile.Tile.Glow = new Vector3(0f, 0f, 0f);
                 clickedTile = null;
             }
@@ -118,6 +122,7 @@ namespace Guus_Reise
                 }
             }
             isSelecting = false;
+
         }
     }
 }

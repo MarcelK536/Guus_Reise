@@ -511,6 +511,7 @@ namespace Guus_Reise
                     if (weaponMenu != null)
                     {
                         weaponMenu.Active = false;
+                       
                     }
                 }
                 else

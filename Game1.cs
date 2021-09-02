@@ -7,6 +7,7 @@ using System.Linq;
 using Guus_Reise.Menu;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
 
@@ -24,6 +25,7 @@ namespace Guus_Reise
         public static Texture2D buttonPlanke;
 
         public static SpriteFont mainMenuFont;
+
 
         public static bool defaultValueSoundOn = false;
         
@@ -100,6 +102,7 @@ namespace Guus_Reise
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
             MovementAnimationManager.LoadTextures(Content, _spriteBatch);
+            FightPlayer._soundEffect = Content.Load<SoundEffect>("Sounds\\mixkit-knife-fast-hit-2184");
             
         }
 

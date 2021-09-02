@@ -114,6 +114,11 @@ namespace Guus_Reise
                 }
                 if (btn.IsClicked())
                 {
+                    if (!preClickState[j])
+                    {
+                        _clickSound.Play();
+                        preClickState[j] = true;
+                    }
                     int weaponIndex = Weapon.weapons.IndexOf(Weapon.weapons.Where(p => p.Name == btn.Name).First());
                     HexMap._board[x, y].Charakter.Weapon = Weapon.weapons[weaponIndex];
                 }
