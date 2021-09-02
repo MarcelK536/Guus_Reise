@@ -340,11 +340,11 @@ namespace Guus_Reise
             return new Vector2(vector.X, vector.Y + textFont.MeasureString("T").Y + 5); 
         }
 
-        public static void DeactivateAllOtherMenus(SimpleMenu activeMenu)
+        public static void DeactivateAllOtherMenus(SimpleMenu? exceptMenu)
         {
             foreach (SimpleMenu menu in allInstances)
             {
-                if(menu == activeMenu)
+                if(exceptMenu != null && menu == exceptMenu)
                 {
                     continue;
                 }
@@ -352,11 +352,15 @@ namespace Guus_Reise
             }
         }
 
-        public static bool CheckIfAnyMenuOpen() 
+        public static bool CheckIfAnyMenuOpen(SimpleMenu? exceptMenu) 
         {
             foreach (SimpleMenu menu in allInstances)
             {
-                if(menu.Active == true)
+                if (exceptMenu != null && menu == exceptMenu)
+                {
+                    continue;
+                }
+                if (menu.Active == true)
                 {
                     return true;
                 }

@@ -15,7 +15,10 @@ namespace Guus_Reise
         public static Hex[,] _board; //Spielbrett
         public static List<Point> possibleMoves = new List<Point>();
         public static VisualisationManagerHexmap visManager;
-      
+
+        public static GraphicsDevice _graphicsDevice;
+
+
 
         public static Hex activeHex;
         public static Hex hoveredHex;
@@ -50,33 +53,31 @@ namespace Guus_Reise
         public static void Init(ContentManager Content, GraphicsDevice graphicsDevice, GraphicsDeviceManager graphics)
         {
             InitBoard();
-
+            _graphicsDevice = graphicsDevice;
             visManager = new VisualisationManagerHexmap(_board.GetLength(0), _board.GetLength(1), Camera);
             //Fokus der Camera auf die Mitte der Karte setzen
             visManager.SetCameraToMiddleOfMap();
 
 
             //Sound-Button
-            btSoundEinstellungen = new Button("", Game1.textureSoundButton, Game1.textureSoundButton, 0.3f, 830, 10);
+            btSoundEinstellungen = new Button("", Game1.textureSoundButton, Game1.textureSoundButton, 0.1f, _graphicsDevice.Viewport.Width - 80, 20);
+            SetParameterFromWindowScale();
             if (Game1.defaultValueSoundOn == false)
             {
                 btSoundEinstellungen.TextureHover = Game1.textureSoundButtonOff;
                 btSoundEinstellungen.TextureDefault = Game1.textureSoundButtonOff;
             }
             
-            if(Game1._graphics.IsFullScreen == true)
-            {
-                SetParameterFromWindowScale();
-            }
             Player._prevMouseState = Mouse.GetState();
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
 
-            Player.actionMenuFont = Content.Load<SpriteFont>("Fonts\\Jellee");
+            Player.actionMenuFont = Content.Load<SpriteFont>("Fonts\\Jellee20");
             Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
             Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
             Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
             Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
+            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
 
         public static void InitBoard()
@@ -163,7 +164,10 @@ namespace Guus_Reise
                     }
                 }
             }
-            visManager.Update(time);
+            if (SimpleMenu.CheckIfAnyMenuOpen(Player.objectiveMenu) == false)
+            {
+                visManager.Update(time);
+            }
             CharakterAnimationManager._sm.Update(time);
 
             if(activeHex != null)
@@ -460,16 +464,16 @@ namespace Guus_Reise
             {
 
                 //Sound Einstellungen
-                btSoundEinstellungen.ButtonX = btSoundEinstellungen.ButtonX + 870;
-                btSoundEinstellungen.ButtonY = btSoundEinstellungen.ButtonY + 10;
-                btSoundEinstellungen.Scale = btSoundEinstellungen.Scale + 0.1f;
+                btSoundEinstellungen.ButtonX = _graphicsDevice.Viewport.Width + 20;
+                btSoundEinstellungen.ButtonY = 30;
+                btSoundEinstellungen.Scale = 0.2f;
             }
             else
             {
                 //Sound Einstellungen
-                btSoundEinstellungen.ButtonX = btSoundEinstellungen.ButtonX - 870;
-                btSoundEinstellungen.ButtonY = btSoundEinstellungen.ButtonY - 10;
-                btSoundEinstellungen.Scale = btSoundEinstellungen.Scale - 0.1f;
+                btSoundEinstellungen.ButtonX = _graphicsDevice.Viewport.Width - 80;
+                btSoundEinstellungen.ButtonY = 20;
+                btSoundEinstellungen.Scale = 0.1f;
             }
         }
     }

@@ -40,7 +40,8 @@ namespace Guus_Reise
             Exit,
             Credits,
             PlanetMenu,
-            MovementAnimation
+            MovementAnimation,
+            YouWon
         }
 
         private static GameState _state;
@@ -65,8 +66,9 @@ namespace Guus_Reise
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
             base.Initialize();
-            InformationComponents.Init(GraphicsDevice, Content);
+           
             MainMenu.Init(_graphics);
+            YouWon.Init();
             Credits.Init();  
             CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
             Weapon.LoadWeapons(Content);                        //Waffen müssen vor den Charakteren initialisert werden
@@ -85,13 +87,15 @@ namespace Guus_Reise
 
         protected override void LoadContent()
         {
+            InformationComponents.Init(GraphicsDevice, Content);
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             textureSoundButton  = Content.Load<Texture2D>("Buttons\\ButtonSound");
             textureSoundButtonOff = Content.Load<Texture2D>("Buttons\\soundButtonOff");
-            buttonPlanke = Content.Load<Texture2D>("Buttons\\buttonPlanke");
+
             mainMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
             MainMenu.LoadTexture(Content);
+            YouWon.LoadTexture(Content);
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
@@ -101,12 +105,7 @@ namespace Guus_Reise
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
             base.Update(gameTime);
-
-            
 
             switch (_state)
             {
@@ -115,7 +114,6 @@ namespace Guus_Reise
                     break;
                 case GameState.Controls:
                     Controls.Update(gameTime);
-          
                     break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
@@ -137,6 +135,9 @@ namespace Guus_Reise
                     break;
                 case GameState.GameOver:
                     GameOver.Update(gameTime, GraphicsDevice);
+                    break;
+                case GameState.YouWon:
+                    YouWon.Update(gameTime);
                     break;
                 case GameState.Exit:
                     Exit();
@@ -197,6 +198,10 @@ namespace Guus_Reise
                     GraphicsDevice.Clear(Color.DarkBlue);
                     GameOver.Draw(_spriteBatch, gameTime);
                     break;
+                case GameState.YouWon:
+                    GraphicsDevice.Clear(Color.Blue);
+                    YouWon.Draw(_spriteBatch, gameTime);
+                    break;
                 case GameState.MovementAnimation:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
                     HexMap.DrawInGame(_spriteBatch, gameTime);
@@ -225,14 +230,14 @@ namespace Guus_Reise
             _graphics.ApplyChanges();
             PlanetMenu.SetParametersFromWindowScale();
             MainMenu.SetParametersFromWindowScale();
-            if(_state == GameState.MovementAnimation)
+
+            if (_state == GameState.MovementAnimation)
             {
                 MovementAnimationManager.SetParameterFromWindowScale();
             }
-            if(_state == GameState.InGame)
-            {
-                HexMap.SetParameterFromWindowScale();
-            }
+
+            HexMap.SetParameterFromWindowScale();
+
             if (_state == GameState.InFight || _state == GameState.InTalkFight)
             {
                 Fighthandler.fightResults.UpdateScreenParameters();

@@ -14,6 +14,7 @@ namespace Guus_Reise
     {
         Texture2D btnTexture;
         Texture2D btnTextureSelected;
+        int lastWheel = 0;
         static SoundEffect _clickSound;
         private bool[] preClickState;
 
@@ -34,6 +35,7 @@ namespace Guus_Reise
                     btnWidth = textFont.MeasureString(item.Name).X;
                 }
             }
+            menuWidth = btnWidth;
             btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -112,11 +114,6 @@ namespace Guus_Reise
                 }
                 if (btn.IsClicked())
                 {
-                    if (!preClickState[j])
-                    {
-                        _clickSound.Play();
-                        preClickState[j] = true;
-                    }
                     int weaponIndex = Weapon.weapons.IndexOf(Weapon.weapons.Where(p => p.Name == btn.Name).First());
                     HexMap._board[x, y].Charakter.Weapon = Weapon.weapons[weaponIndex];
                 }
@@ -132,12 +129,14 @@ namespace Guus_Reise
                 _clickSound.Play();
                 Active = false;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
+            if ((Keyboard.GetState().IsKeyDown(Keys.Up) || Mouse.GetState().ScrollWheelValue > lastWheel)&& menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)
             {
+                lastWheel = Mouse.GetState().ScrollWheelValue;
                 UpdateButtons(btnTexture.Height);
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && menuButtons.Last().GetPosBelow().Y + btnTexture.Height > menuHeight + pos.Y)
+            if ((Keyboard.GetState().IsKeyDown(Keys.Down) || Mouse.GetState().ScrollWheelValue < lastWheel) && menuButtons.Last().GetPosBelow().Y + btnTexture.Height > menuHeight + pos.Y)
             {
+                lastWheel = Mouse.GetState().ScrollWheelValue;
                 UpdateButtons(-btnTexture.Height);
             }
         }

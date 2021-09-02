@@ -15,6 +15,7 @@ namespace Guus_Reise.Menu
         static Texture2D btnDefaultTexture;
         static Texture2D btnHoverTexture;
         static SpriteFont mainMenuFont;
+        static SpriteFont titleFont;
 
         static Button btnPlay;
         static Button btnControls;
@@ -41,6 +42,8 @@ namespace Guus_Reise.Menu
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
+            titleFont = content.Load<SpriteFont>("Fonts\\Jellee30");
+
             _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
             _backroundMain = content.Load<Texture2D>("MainMenu\\backround");
             _guuBackroundMain = content.Load<Texture2D>("MainMenu\\Guu_Main");
@@ -54,6 +57,7 @@ namespace Guus_Reise.Menu
             spriteBatch.Draw(_backroundMain, new Rectangle(0, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
             spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
             spriteBatch.Draw(_guuBackroundMain, new Rectangle(350, 100, 300, 300), Color.White);
+            spriteBatch.DrawString(titleFont, "Guus Reise", new Vector2(_backroundMain.Width - titleFont.MeasureString("Guus Reise").X/2, 25), Color.SkyBlue);
             btnPlay.Draw(spriteBatch, mainMenuFont);
             btnControls.Draw(spriteBatch, mainMenuFont);
             btnCredits.Draw(spriteBatch, mainMenuFont);

@@ -23,11 +23,11 @@ namespace Guus_Reise.InGameMenu.MenuComponents
 
             if (_type == "Waffenbox")
             {
-                _ueberschriftBox = _name + ": Waffe";
+                _ueberschriftBox = _name + ": Weapon";
             }
             else
             {
-                _ueberschriftBox = _name + ": Übersicht";
+                _ueberschriftBox = _name + ": Data    ";
             }
 
             _hasToUpdate = true;
@@ -203,13 +203,13 @@ namespace Guus_Reise.InGameMenu.MenuComponents
             string level;
             string ignoranz;
 
-            wiederstandskraft = charakter.Widerstandskraft.ToString();
+            wiederstandskraft = charakter.CurrentFightStats[0].ToString();
             weapon = charakter.Weapon.Name;
-            abwehr = charakter.Abwehr.ToString();
-            wortgewandtheit = charakter.Wortgewandheit.ToString();
-            glueck = charakter.Glueck.ToString();
+            abwehr = charakter.CurrentFightStats[3].ToString();
+            wortgewandtheit = charakter.CurrentFightStats[4].ToString();
+            glueck = charakter.CurrentFightStats[8].ToString();
             level = charakter.Level.ToString();
-            ignoranz = charakter.Ignoranz.ToString();
+            ignoranz = charakter.CurrentFightStats[6].ToString();
 
             // Arrays zuordnen: Welche Größe hat die Box? | Welche Kampfart? --> Was wird angezeigt?
             if(Game1.GState == Game1.GameState.InFight)
@@ -256,6 +256,21 @@ namespace Guus_Reise.InGameMenu.MenuComponents
                         break;
                 }
             }
+
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            spriteBatch.Begin();
+
+            if (_type == "Waffenbox")
+            {
+                spriteBatch.DrawString(_fontText, _charakter.Weapon.Name, inhaltPositions[0], _colorInhalt);
+            }
+
+            spriteBatch.End();
+
 
         }
 

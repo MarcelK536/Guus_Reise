@@ -397,10 +397,10 @@ namespace Guus_Reise
         public static float GetBaseDmg(Charakter charakter, Weapon weapon)
         {
             float erg = weapon.BaseSchaden;
-            erg += charakter.CurrentFightStats[1] * Weapon.IntToScale(weapon.ScalingKK);
-            erg += charakter.CurrentFightStats[2] * Weapon.IntToScale(weapon.ScalingBW);
-            erg += charakter.CurrentFightStats[4] * Weapon.IntToScale(weapon.ScalingWG);
-            erg += charakter.CurrentFightStats[5] * Weapon.IntToScale(weapon.ScalingLS);
+            erg += charakter.CurrentFightStats[1] * Weapon.StringToScale(weapon.ScalingKK);
+            erg += charakter.CurrentFightStats[2] * Weapon.StringToScale(weapon.ScalingBW);
+            erg += charakter.CurrentFightStats[4] * Weapon.StringToScale(weapon.ScalingWG);
+            erg += charakter.CurrentFightStats[5] * Weapon.StringToScale(weapon.ScalingLS);
             return erg;
         }
     }

@@ -11,13 +11,13 @@ namespace Guus_Reise
         #region Welt1
         #region Level1Data
         public readonly static int[,] W1L1tilemap = new int[,] { { 4, 1, 4, 4, 3, 1, 1, 1 }, 
-                                                                 { 1, 4, 4, 3, 1, 4, 1, 1 }, 
+                                                                  { 1, 4, 4, 3, 1, 4, 1, 1 }, 
                                                                  { 4, 3, 3, 1, 2, 1, 4, 1 }, 
-                                                                 { 1, 3, 1, 2, 2, 2, 1, 1 }, 
-                                                                 { 3, 3, 3, 3, 2, 1, 1, 1 }, 
-                                                                 { 1, 1, 2, 1, 1, 1, 1, 1 }, 
+                                                                  { 1, 3, 1, 2, 2, 1, 1, 1 }, 
+                                                                 { 3, 3, 3, 3, 2, 2, 1, 2 }, 
+                                                                  { 1, 1, 2, 1, 1, 1, 1, 2 }, 
                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 }, 
-                                                                 { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
+                                                                  { 1, 1, 1, 1, 2, 2, 2, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
         public readonly static int[,] W1L1playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3} };
         public readonly static int[,] W1L1npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
         public readonly static int[,] W1L1npcPatroulPoints = new int[,] { { 1, 1 }, { 4, 1 }, { 4, 4 }, { 1, 4 } };
@@ -31,14 +31,14 @@ namespace Guus_Reise
         #endregion
         
         #region Level2Data
-        public readonly static int[,] W1L2tilemap = new int[,] { { 2, 2, 2, 2, 2, 2, 2, 2 }, 
-                                                                 { 2, 2, 2, 1, 1, 2, 2, 2 }, 
-                                                                 { 2, 2, 1, 1, 1, 1, 2, 2 }, 
-                                                                 { 2, 1, 1, 4, 4, 1, 2, 2 }, 
+        public readonly static int[,] W1L2tilemap = new int[,] { { 1, 2, 2, 2, 2, 2, 2, 2 }, 
+                                                                  { 1, 1, 2, 1, 1, 2, 2, 2 }, 
+                                                                 { 1, 1, 1, 1, 1, 1, 2, 2 }, 
+                                                                  { 2, 1, 1, 4, 4, 1, 2, 2 }, 
                                                                  { 2, 1, 1, 4, 4, 1, 1, 2 }, 
-                                                                 { 2, 2, 1, 1, 1, 1, 2, 2 }, 
+                                                                  { 2, 2, 1, 1, 1, 1, 2, 2 }, 
                                                                  { 2, 2, 1, 1, 2, 2, 2, 2 }, 
-                                                                 { 2, 2, 2, 2, 2, 2, 2, 2 } }; //input Array der die Art der Tiles für die map generierung angibt
+                                                                  { 2, 2, 2, 2, 2, 2, 2, 2 } }; //input Array der die Art der Tiles für die map generierung angibt
         public readonly static int[,] W1L2playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
         public readonly static int[,] W1L2npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
         public readonly static int[,] W1L2npcPatroulPoints = new int[,] { };
@@ -50,12 +50,19 @@ namespace Guus_Reise
         public readonly static string[] W1L2objectiveText = { "Besuche die Insel" };
         public static bool[] W1L2objective = { LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(3, 3), new Point(3, 4), new Point(4, 3), new Point(4, 4) })};
         #endregion
-        
+
         #endregion
 
         #region Welt2
         #region Level1Data
-        public readonly static int[,] W2L1tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
+        public readonly static int[,] W2L1tilemap = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1 }, 
+                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 }, 
+                                                                 { 1, 1, 1, 1, 1, 1, 1, 1 }, 
+                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 }, 
+                                                                 { 1, 1, 1, 1, 1, 1, 1, 1 }, 
+                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 }, 
+                                                                 { 1, 1, 1, 1, 1, 1, 1, 1 }, 
+                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
         public readonly static int[,] W2L1playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
         public readonly static int[,] W2L1npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
         public readonly static int[,] W2L1npcPatroulPoints = new int[,] { };
@@ -67,9 +74,30 @@ namespace Guus_Reise
         public readonly static string[] W2L1objectiveText = { "Gehe nach unten Links", "Besiege alle Gegner" };
         public static bool[] W2L1objective = { LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(7, 7) }), LevelObjectives.EliminateAllEnemys(HexMap.npcs) };
         #endregion
-        
+
+        #region Level2Data
+        public readonly static int[,] W2L2tilemap = new int[,] { { 4, 4, 4, 1, 1, 1, 4, 4 },
+                                                                  { 4, 4, 4, 1, 1, 4, 4, 4 },
+                                                                 { 4, 3, 3, 1, 2, 1, 1, 4 },
+                                                                  { 4, 3, 3, 3, 2, 1, 1, 1 },
+                                                                 { 4, 1, 3, 3, 3, 2, 2, 2 },
+                                                                  { 4, 2, 1, 1, 1, 3, 3, 2 },
+                                                                 { 4, 4, 1, 1, 2, 2, 2, 2 },
+                                                                  { 4, 4, 4, 2, 2, 2, 2, 2 } }; //input Array der die Art der Tiles für die map generierung angibt
+        public readonly static int[,] W2L2playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
+        public readonly static int[,] W2L2npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
+        public readonly static int[,] W2L2npcPatroulPoints = new int[,] { };
+        public readonly static string[] W2L2playerNames = new string[] { "Guu" };       //input Array für Namen
+        public readonly static string[] W2L2npcNames = new string[] { };
+        public readonly static bool[] W2L2canBefriended = new bool[] { };
+        public readonly static int[,] W2L2playerPos = new int[,] { { 2, 2 } };   //input Array für Positionen
+        public readonly static int[,] W2L2npcPos = new int[,] { };
+        public readonly static string[] W2L2objectiveText = { "Besuche die Insel" };
+        public static bool[] W2L2objective = { LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(3, 3), new Point(3, 4), new Point(4, 3), new Point(4, 4) }) };
         #endregion
 
-        
+        #endregion
+
+
     }
 }

@@ -24,6 +24,7 @@ namespace Guus_Reise
         public static SkillUpMenu levelUpMenu;
         public static LevelObjectiveMenu objectiveMenu;
         public static CharakterMenu charakterMenu;
+        public static ESCMenu escMenu;
 
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
@@ -37,7 +38,10 @@ namespace Guus_Reise
             hoverTile = null;
             HexMap.possibleMoves.Clear();
 
-            
+            if(Keyboard.GetState().IsKeyDown(Keys.Escape) && _prevKeyState.IsKeyUp(Keys.Escape))
+            {
+                escMenu.Active = !escMenu.Active;
+            }
          
             if (Keyboard.GetState().IsKeyDown(Keys.H) && _prevKeyState.IsKeyUp(Keys.H))
             {
@@ -52,7 +56,7 @@ namespace Guus_Reise
 
             HexMap.NoGlow();
 
-            if (SimpleMenu.CheckIfAnyMenuOpen() == false)
+            if (SimpleMenu.CheckIfAnyMenuOpen(null) == false)
             {
 
                 for (int i = 0; i < HexMap._board.GetLength(0); i++) //berechnet ob die Maus über einem Tile steht, sowie dieses Tile
@@ -182,6 +186,7 @@ namespace Guus_Reise
             objectiveMenu.Update(time);
             charakterMenu.Update(time);
             levelUpMenu.Update();
+            escMenu.Update(time);
             _prevMouseState = mouseState;
             _prevKeyState = keystate;
         }
@@ -195,6 +200,7 @@ namespace Guus_Reise
                 levelUpMenu.Draw(spriteBatch);
             }
             objectiveMenu.Draw(spriteBatch, HexMap.lvlObjectives, HexMap.lvlObjectiveText);
+            escMenu.Draw(spriteBatch);
         }
     }
 }

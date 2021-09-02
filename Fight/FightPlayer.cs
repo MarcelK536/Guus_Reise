@@ -88,11 +88,26 @@ namespace Guus_Reise
                 Fighthandler.turnBar.NextTurn[i].Geschwindigkeit -= boi.Geschwindigkeit;
             }
             double basedmg = Fighthandler.GetBaseDmg(boi, boi.Weapon);
-            Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[0] -= (int)(basedmg * selSkill.MoveValue) *(20/20+ Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[3]);
+
+            Random rnd = new Random();
+            int krit = rnd.Next(100);
+            if (krit < boi.CurrentFightStats[8] + boi.Weapon.BaseKrit)
+            {
+                basedmg = basedmg * 1.5f;
+            }
+            double armor = (20.0 / (20 + Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[3]));
+            Fighthandler._fightBoard[clickedTile.LogicalFightPosition.X, clickedTile.LogicalFightPosition.Y].Charakter.CurrentFightStats[0] -= (int)((basedmg * selSkill.MoveValue) * armor);
             boi.CurrentFightStats[7] = (int)(selSkill.Geschwindigkeit - Math.Pow(0.95, (boi.Geschwindigkeit - selSkill.Geschwindigkeit)));
             if (clickedTile.Charakter.CurrentFightStats[0] <= 0)
             {
                 int gotXP = boi.GainXp(boi, clickedTile.Charakter);
+                Random rand = new Random();
+                int zahl = rand.Next(100);
+                if (zahl < boi.CurrentFightStats[8] + 15)
+                {
+                    boi.WeaponInv.Add(clickedTile.Charakter.Weapon);
+                }
+
                 if (Fighthandler.fightResults.EarnedXP.ContainsKey(boi.Name))
                 {
                     Fighthandler.fightResults.EarnedXP[boi.Name] =+ gotXP;

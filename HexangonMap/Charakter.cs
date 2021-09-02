@@ -38,10 +38,11 @@ namespace Guus_Reise
         private bool _isMoving; //für die Drwaing Methode, movender Charakter wird über die MovementAnimation gezeichnet
         CharakterAnimation _charakterAnimation;
 
-        private Weapon _currWeapon = Weapon.weapons[0];         //Ausgewählte Waffe Standard Faust
+        private Weapon _currWeapon;         //Ausgewählte Waffe Standard Faust
         private List<Skill> _currSkills = new List<Skill>() { Guus_Reise.Skill.skills[0], Guus_Reise.Skill.skills[1] }; //Ausgewählte Skills
-        public List<Weapon> _inventar;          //Liste aller für den Spieler verfügbaren Waffen
-        public List<Skill> _skills;             //Liste aller für den Spieler verfügbaren Skills
+        public List<Weapon> _inventar = new List<Weapon>();          //Liste aller für den Spieler verfügbaren Waffen
+        public List<Skill> _skills = new List<Skill>();             //Liste aller für den Spieler verfügbaren Skills
+        private bool gaveUp = false;
 
         public String Name
         {
@@ -194,7 +195,11 @@ namespace Guus_Reise
             get => _logicalBoardPosition; 
             set => _logicalBoardPosition = value; 
         }
-
+        public bool GaveUp 
+        { 
+            get => gaveUp; 
+            set => gaveUp = value; 
+        }
 
         public Charakter (String name, int level, int xp, int leben, int angriff1, int angriff2, int abwehr, int wortgewand1, int wortgewand2, int ignoranz, int geschwindigkeit, int glück, int bewegungsreichweite, int fpunkte, Hex hex, CharakterAnimation charakterAnimation)
         {
@@ -215,6 +220,10 @@ namespace Guus_Reise
             IsMoving = false;
 
             _charakterAnimation = charakterAnimation;
+
+            this.WeaponInv.Add(Weapon.weapons[0]);
+            this.WeaponInv.Add(Weapon.weapons[7]);
+            this.Weapon = this.WeaponInv[0];
 
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);
@@ -252,6 +261,9 @@ namespace Guus_Reise
                         break;
                 }
             }
+            this.WeaponInv.Add(Weapon.weapons[0]);
+            this.WeaponInv.Add(Weapon.weapons[7]);
+            this.Weapon = this.WeaponInv[0];
 
             //Fehlende Parameter für die CharakterAnimation setzen
             charakterAnimation.SetParametersAfterInitCharakter(this, hex);

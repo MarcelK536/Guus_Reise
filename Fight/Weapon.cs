@@ -11,11 +11,7 @@ namespace Guus_Reise
     {
         public static List<Weapon> weapons = new List<Weapon>();
 
-        private String _name;
-        private bool _isHiebwaffe;
-        private bool _isStoßwaffe;
-        private bool _isKlingenwaffe;
-        private bool _isStumpf;
+        private String _name;    
 
         private int _baseSchaden;
         private int _baseGeschwindigkeit;
@@ -26,36 +22,12 @@ namespace Guus_Reise
         private char _scalingWG;
         private char _scalingLS;
 
-        private int _minKK;
-        private int _minBW;
-        private int _minWG;
-        private int _minLS;
-
         public String Name
         {
             get => _name;
             set => _name = value;
         }
-        public bool IsHiebwaffe
-        {
-            get => _isHiebwaffe;
-            set => _isHiebwaffe = value;
-        }
-        public bool IsStoßwaffe
-        {
-            get => _isStoßwaffe;
-            set => _isStoßwaffe = value;
-        }
-        public bool IsKligenwaffe
-        {
-            get => _isKlingenwaffe;
-            set => _isKlingenwaffe = value;
-        }
-        public bool IsStumpf
-        {
-            get => _isStumpf;
-            set => _isStumpf = value;
-        }
+       
         public int BaseSchaden
         {
             get => _baseSchaden;
@@ -91,75 +63,34 @@ namespace Guus_Reise
             get => _scalingLS;
             set => _scalingLS = value;
         }
-        public int MinKK
-        {
-            get => _minKK;
-            set => _minKK = value;
-        }
-        public int MinBW
-        {
-            get => _minBW;
-            set => _minBW = value;
-        }
-        public int MinWG
-        {
-            get => _minWG;
-            set => _minWG = value;
-        }
-        public int MinLS
-        {
-            get => _minLS;
-            set => _minLS = value;
-        }
 
         public Weapon(String name, int[] stats)
         {
             this.Name = name;
-            this.IsHiebwaffe = IntToAttribute(stats[0]);
-            this.IsStoßwaffe = IntToAttribute(stats[1]);
-            this.IsKligenwaffe = IntToAttribute(stats[2]);
-            this.IsStumpf = IntToAttribute(stats[3]);
-            this.BaseSchaden = stats[4];
-            this.BaseGeschwindigkeit = stats[5];
-            this.BaseKrit = stats[6];
-            this.ScalingKK = IntToScaling(stats[7]);
-            this.ScalingBW = IntToScaling(stats[8]);
-            this.ScalingWG = IntToScaling(stats[9]);
-            this.ScalingLS = IntToScaling(stats[10]);
-            this.MinKK = stats[11];
-            this.MinBW = stats[12];
-            this.MinWG = stats[13];
-            this.MinLS = stats[14];
+            this.BaseSchaden = stats[0];
+            this.BaseGeschwindigkeit = stats[1];
+            this.BaseKrit = stats[2];
+            this.ScalingKK = IntToScaling(stats[3]);
+            this.ScalingBW = IntToScaling(stats[4]);
+            this.ScalingWG = IntToScaling(stats[5]);
+            this.ScalingLS = IntToScaling(stats[6]);
         }
 
         public static void LoadWeapons(ContentManager Content)
         {
-            weapons.Add(new Weapon("fist", new int[] { 0, 0, 0, 0, 5, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("knife", new int[] { 0, 0, 0, 0, 10, 0, 0, 3, 3, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("stick", new int[] { 0, 0, 0, 0, 10, 0, 0, 2, 4, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("boxing gloves", new int[] { 0, 0, 0, 0, 15, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("hammer", new int[] { 0, 0, 0, 0, 20, 0, 0, 5, 1, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("axe", new int[] { 0, 0, 0, 0, 20, 0, 0, 4, 2, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("katana", new int[] { 0, 0, 0, 0, 20, 0, 25, 0, 6, 0, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("voice", new int[] { 0, 0, 0, 0, 5, 0, 0, 0, 0, 3, 2, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("megafone", new int[] { 0, 0, 0, 0, 10, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("smart book", new int[] { 0, 0, 0, 0, 10, 0, 0, 0, 0, 4, 2, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("universal translator", new int[] { 0, 0, 0, 0, 15, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0 }));
-            weapons.Add(new Weapon("costume", new int[] { 0, 0, 0, 0, 15, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0 }));
-        }
+            weapons.Add(new Weapon("fist", new int[] { 5, 0, 0, 3, 1, 0, 0}));
+            weapons.Add(new Weapon("knife", new int[] { 10, 0, 0, 3, 3, 0, 0}));
+            weapons.Add(new Weapon("stick", new int[] { 10, 0, 0, 2, 4, 0, 0}));
+            weapons.Add(new Weapon("boxing gloves", new int[] { 15, 0, 0, 6, 0, 0, 0}));
+            weapons.Add(new Weapon("hammer", new int[] { 20, 0, 0, 5, 1, 0, 0}));
+            weapons.Add(new Weapon("axe", new int[] { 20, 0, 0, 4, 2, 0, 0}));
+            weapons.Add(new Weapon("katana", new int[] { 20, 0, 25, 0, 6, 0, 0}));
 
-        private bool IntToAttribute(int zahl)
-        {
-            bool hilf;
-            if(zahl == 0)
-            {
-                hilf = false;
-            }
-            else
-            {
-                hilf = true;
-            }
-            return hilf;
+            weapons.Add(new Weapon("voice", new int[] { 5, 0, 0, 0, 0, 3, 2}));
+            weapons.Add(new Weapon("megafone", new int[] { 10, 0, 0, 0, 0, 1, 5}));
+            weapons.Add(new Weapon("smart book", new int[] { 10, 0, 0, 0, 0, 4, 2}));
+            weapons.Add(new Weapon("universal translator", new int[] { 15, 0, 0, 0, 0, 6, 0}));
+            weapons.Add(new Weapon("costume", new int[] { 15, 0, 0, 0, 0, 3, 3}));
         }
 
         private char IntToScaling(int zahl)
@@ -193,30 +124,30 @@ namespace Guus_Reise
             }
             return hilf;
         }
-        public static float IntToScale(int zahl)
+        public static float StringToScale(char zahl)
         {
             float hilf;
             switch (zahl)
             {
-                case 0:
+                case 'O':
                     hilf = 0.0f;
                     break;
-                case 1:
+                case 'E':
                     hilf = 0.1f;
                     break;
-                case 2:
+                case 'D':
                     hilf = 0.25f;
                     break;
-                case 3:
+                case 'C':
                     hilf = 0.5f;
                     break;
-                case 4:
+                case 'B':
                     hilf = 0.75f;
                     break;
-                case 5:
+                case 'A':
                     hilf = 1.0f;
                     break;
-                case 6:
+                case 'S':
                     hilf = 1.5f;
                     break;
                 default:
