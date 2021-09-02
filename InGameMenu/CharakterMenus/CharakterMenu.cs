@@ -18,7 +18,6 @@ namespace Guus_Reise
         static SoundEffect _clickSound;
         bool preClickState;
 
-        WeaponMenu weaponMenu;
         SkillMenu skillMenu;
         public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
         {
@@ -96,22 +95,21 @@ namespace Guus_Reise
                                 _clickSound.Play();
                                 Player.levelUpMenu.Active = true;
                                 Player.charakterMenu.Active = false;
+
+                            }
+  
                                 if (skillMenu != null)
                                 {
                                     skillMenu.Active = false;
                                 }
-                            }
+                         
                             if (btnSkillWechsel.IsClicked())
                             {
+
                                 _clickSound.Play();
                                 skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None, _clickSound);
-                                skillMenu.Active = true;
-                                if(weaponMenu != null)
-                                {
-                                    weaponMenu.Active = false;
-                                }
-                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
                                 skillMenu.Active = !skillMenu.Active;
+
                             }
                         }
                     }

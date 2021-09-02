@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using static Guus_Reise.Game1;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise
 {
@@ -20,10 +21,11 @@ namespace Guus_Reise
         Button btnQuitGame;
         public bool fightTrue;
         public bool interactTrue;
+        SoundEffect _clickSound;
 
         static public Texture2D menuTexture { get; set; }
 
-        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
+        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend, SoundEffect clickSound) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
         {
             btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
@@ -47,6 +49,7 @@ namespace Guus_Reise
             SetMenuHeight();
             SetMenuWidth();
             SetBackgroundTexture(Color.GhostWhite);
+            _clickSound = clickSound;
         }
 
         public void Update(GameTime gametime)
@@ -61,14 +64,17 @@ namespace Guus_Reise
                 Hex startHex = Player.activeTile;
                 if (btnQuitGame.IsClicked())
                 {
+                    _clickSound.Play();
                     Game1.GState = Game1.GameState.MainMenu;
                 }
                 if (btnSaveGame.IsClicked())
                 {
+                    _clickSound.Play();
                     //TODO SAVE GAME
                 }
                 if (btnConfirm.IsClicked())
                 {
+                    _clickSound.Play();
                     HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp = false;
                     HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y];
                     HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
@@ -97,6 +103,7 @@ namespace Guus_Reise
                 {
                     if (btnAttack.IsClicked() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == false)
                     {
+                        _clickSound.Play();
                         HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                         if (Player.activeTile != Player.moveTile)
                         {
@@ -118,6 +125,7 @@ namespace Guus_Reise
                 {
                     if (btnInteract.IsClicked() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == false)
                     {
+                        _clickSound.Play();
                         HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                         if (Player.activeTile != Player.moveTile)
                         {

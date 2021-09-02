@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace Guus_Reise
 {
@@ -14,7 +16,9 @@ namespace Guus_Reise
 
         ControlView controlView;
 
-        public ESCMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
+        SoundEffect _clickSound;
+
+        public ESCMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, direction)
         {
             btnWidth = menuFont.MeasureString("Quit Game ").X;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
@@ -36,6 +40,7 @@ namespace Guus_Reise
             SetMenuHeight();
             SetMenuWidth();
             SetBackgroundTexture(Color.GhostWhite);
+            _clickSound = clickSound;
         }
         public void Update(GameTime gameTime)
         {
@@ -43,6 +48,7 @@ namespace Guus_Reise
             {
                 if (btnClose.IsClicked())
                 {
+                    _clickSound.Play();
                     Active = false;
                     if (controlView != null)
                     {
@@ -52,14 +58,17 @@ namespace Guus_Reise
 
                 if (btnQuitGame.IsClicked())
                 {
+                    _clickSound.Play();
                     Game1.GState = Game1.GameState.MainMenu;
                 }
                 if (btnSaveGame.IsClicked())
                 {
+                    _clickSound.Play();
                     //TODO SAVE GAME
                 }
                 if (btnControls.IsClicked())
                 {
+                    _clickSound.Play();
                     controlView.Active = !controlView.Active;
                 }
                 controlView.Update();

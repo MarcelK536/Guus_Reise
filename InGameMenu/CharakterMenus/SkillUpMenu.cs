@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise
 {
@@ -19,8 +20,10 @@ namespace Guus_Reise
         Button btnPlusGlueck;
         //Button btnPlusBewegung;
 
+        SoundEffect _clickSound;
 
-        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,  graphicsDevice, blend) 
+
+        public SkillUpMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend, SoundEffect clickSound) : base(new Vector2(), moveMenuFont,  graphicsDevice, blend) 
         {
             Texture2D btnTexture = new Texture2D(graphicsDevice, 25, 25);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
@@ -44,6 +47,8 @@ namespace Guus_Reise
             SetMenuHeight();
             menuWidth = btnClose.TextureDefault.Width + moveMenuFont.MeasureString("Name: ").X;
             SetBackgroundTexture(bkgColor);
+
+            _clickSound = clickSound;
         }
 
         public override void Update()
@@ -52,6 +57,7 @@ namespace Guus_Reise
             {
                 if (btnClose.IsClicked())
                 {
+                    _clickSound.Play();
                     Player.levelUpMenu.Active = false;
                     Player.charakterMenu.Active = true;
                 }
@@ -60,46 +66,55 @@ namespace Guus_Reise
                 int y = Player.activeTile.LogicalPosition.Y;
                 if (btnPlusWiderstandskraft.IsClicked() && HexMap._board[x,y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Widerstandskraft++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusKoerperkraft.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Koerperkraft++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusBeweglichkeit.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Beweglichkeit++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusAbwehr.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Abwehr++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusWortgewandtheit.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Wortgewandheit++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusLautstaerke.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Lautstaerke++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusIgnoranz.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Ignoranz++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusGeschwindigkeit.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Geschwindigkeit++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
                 if (btnPlusGlueck.IsClicked() && HexMap._board[x, y].Charakter.Fähigkeitspunkte > 0)
                 {
+                    _clickSound.Play();
                     HexMap._board[x, y].Charakter.Glueck++;
                     HexMap._board[x, y].Charakter.Fähigkeitspunkte--;
                 }
