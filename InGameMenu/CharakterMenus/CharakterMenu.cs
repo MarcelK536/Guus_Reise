@@ -9,12 +9,10 @@ namespace Guus_Reise
     class CharakterMenu : SimpleMenu
     {
         Button btnLevelUp;
-        Button btnWaffenWechsel;
         Button btnSkillWechsel;
 
         GraphicsDevice graphics;
 
-        WeaponMenu weaponMenu;
         SkillMenu skillMenu;
         public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
         {
@@ -34,9 +32,7 @@ namespace Guus_Reise
             btnTexture.SetData(btnColor);
             btnLevelUp = new Button("Skill Points", btnTexture, 1, btnClose.GetPosBelow());
             menuButtons.Add(btnLevelUp);
-            btnWaffenWechsel = new Button("Change Weapon", btnTexture, 1, btnLevelUp.GetPosBelow());
-            menuButtons.Add(btnWaffenWechsel);
-            btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnWaffenWechsel.GetPosBelow());
+            btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnLevelUp.GetPosBelow());
             menuButtons.Add(btnSkillWechsel);
         }
 
@@ -46,8 +42,7 @@ namespace Guus_Reise
             bkgPos = pos;
             btnClose.MoveButton(pos);
             btnLevelUp.MoveButton(btnClose.GetPosBelow());
-            btnWaffenWechsel.MoveButton(btnLevelUp.GetPosBelow());
-            btnSkillWechsel.MoveButton(btnWaffenWechsel.GetPosBelow());
+            btnSkillWechsel.MoveButton(btnLevelUp.GetPosBelow());
             SetBackgroundTexture(bkgColor);
 
             if (Active)
@@ -66,10 +61,6 @@ namespace Guus_Reise
                     int x = Player.activeTile.LogicalBoardPosition.X;
                     int y = Player.activeTile.LogicalBoardPosition.Y;
 
-                    if (weaponMenu != null && weaponMenu.Active)
-                    {
-                        weaponMenu.Update(time);
-                    }
                     if (skillMenu != null && skillMenu.Active)
                     {
                         skillMenu.Update(time);
@@ -81,10 +72,6 @@ namespace Guus_Reise
                             Active = false;
                             Player.levelUpMenu.Active = false;
                             Player.charakterMenu.Active = false;
-                            if (weaponMenu != null)
-                            {
-                                weaponMenu.Active = false;
-                            }
                             if (skillMenu != null)
                             {
                                 skillMenu.Active = false;
@@ -96,12 +83,7 @@ namespace Guus_Reise
                             {
                                 Player.levelUpMenu.Active = true;
                                 Player.charakterMenu.Active = false;
-                            }
-                            if (btnWaffenWechsel.IsClicked())
-                            {
-                                weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                                weaponMenu.Active = true;
-                                if(skillMenu != null)
+                                if (skillMenu != null)
                                 {
                                     skillMenu.Active = false;
                                 }
@@ -109,11 +91,7 @@ namespace Guus_Reise
                             if (btnSkillWechsel.IsClicked())
                             {
                                 skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                                skillMenu.Active = true;
-                                if(weaponMenu != null)
-                                {
-                                    weaponMenu.Active = false;
-                                }
+                                skillMenu.Active = !skillMenu.Active;
                             }
                         }
                     }
@@ -166,15 +144,10 @@ namespace Guus_Reise
                         {
                             btnLevelUp.Draw(spriteBatch, textFont);
                             btnSkillWechsel.Draw(spriteBatch, textFont);
-                            btnWaffenWechsel.Draw(spriteBatch, textFont);
                         }
                         spriteBatch.End();
                     }
 
-                    if (weaponMenu != null && weaponMenu.Active)
-                    {
-                        weaponMenu.Draw(spriteBatch);
-                    }
                     if (skillMenu != null && skillMenu.Active)
                     {
                         skillMenu.Draw(spriteBatch);
