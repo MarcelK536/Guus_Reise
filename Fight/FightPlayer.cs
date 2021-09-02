@@ -117,7 +117,7 @@ namespace Guus_Reise
                     else
                     {
                         Fighthandler.fightResults.EarnedWeapons.Add(boi.Name, new List<string> { clickedTile.Charakter.Weapon.Name });
-                    }
+                    }   
                 }
 
                 if (Fighthandler.fightResults.EarnedXP.ContainsKey(boi.Name))

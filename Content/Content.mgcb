@@ -229,6 +229,54 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/FightWeapon/GuuFightWeapon1.png
 
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon1.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon10.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon10.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon11.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon11.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon12.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon12.png
+
 #begin Charakter/Guu/FightWeapon/GuuFightWeapon2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -240,6 +288,114 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/FightWeapon/GuuFightWeapon2.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon2.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon3.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon4.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon5.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon6.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon7.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon8.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon9.png
+
+#begin Charakter/Guu/Idle/GuuIdle1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/Idle/GuuIdle1.png
 
 #begin Charakter/Guu/Idle/GuuIdle1.png
 /importer:TextureImporter
@@ -265,6 +421,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/Idle/GuuIdle2.png
 
+#begin Charakter/Guu/Idle/GuuIdle2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/Idle/GuuIdle2.png
+
 #begin Charakter/Guu/Jump/GuuJump1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -276,6 +444,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/Jump/GuuJump1.png
+
+#begin Charakter/Guu/Jump/GuuJump1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/Jump/GuuJump1.png
+
+#begin Charakter/Guu/Jump/GuuJump2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/Jump/GuuJump2.png
 
 #begin Charakter/Guu/Jump/GuuJump2.png
 /importer:TextureImporter
@@ -301,6 +493,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/texGuu.png
 
+#begin Charakter/Guu/texGuu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/texGuu.png
+
 #begin Charakter/Guu/WalkLeft/GuuWalkLeft1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -312,6 +516,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/WalkLeft/GuuWalkLeft1.png
+
+#begin Charakter/Guu/WalkLeft/GuuWalkLeft1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/WalkLeft/GuuWalkLeft1.png
+
+#begin Charakter/Guu/WalkLeft/GuuWalkLeft2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/WalkLeft/GuuWalkLeft2.png
 
 #begin Charakter/Guu/WalkLeft/GuuWalkLeft2.png
 /importer:TextureImporter
@@ -337,6 +565,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/WalkRight/GuuWalkRight1.png
 
+#begin Charakter/Guu/WalkRight/GuuWalkRight1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/WalkRight/GuuWalkRight1.png
+
 #begin Charakter/Guu/WalkRight/GuuWalkRight2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -348,6 +588,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/WalkRight/GuuWalkRight2.png
+
+#begin Charakter/Guu/WalkRight/GuuWalkRight2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/WalkRight/GuuWalkRight2.png
+
+#begin Charakter/Paul/FightWeapon/PaulFightWeapon1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/FightWeapon/PaulFightWeapon1.png
 
 #begin Charakter/Paul/FightWeapon/PaulFightWeapon1.png
 /importer:TextureImporter
@@ -373,6 +637,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/FightWeapon/PaulFightWeapon2.png
 
+#begin Charakter/Paul/FightWeapon/PaulFightWeapon2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/FightWeapon/PaulFightWeapon2.png
+
 #begin Charakter/Paul/Idle/PaulIdle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -384,6 +660,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/Idle/PaulIdle1.png
+
+#begin Charakter/Paul/Idle/PaulIdle1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/Idle/PaulIdle1.png
+
+#begin Charakter/Paul/Idle/PaulIdle2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/Idle/PaulIdle2.png
 
 #begin Charakter/Paul/Idle/PaulIdle2.png
 /importer:TextureImporter
@@ -409,6 +709,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/Idle/PaulIdle3.png
 
+#begin Charakter/Paul/Idle/PaulIdle3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/Idle/PaulIdle3.png
+
 #begin Charakter/Paul/Jump/PaulJump1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -420,6 +732,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/Jump/PaulJump1.png
+
+#begin Charakter/Paul/Jump/PaulJump1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/Jump/PaulJump1.png
+
+#begin Charakter/Paul/texPaul.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/texPaul.png
 
 #begin Charakter/Paul/texPaul.png
 /importer:TextureImporter
@@ -445,6 +781,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/WalkLeft/PaulWalkLeft1.png
 
+#begin Charakter/Paul/WalkLeft/PaulWalkLeft1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/WalkLeft/PaulWalkLeft1.png
+
 #begin Charakter/Paul/WalkLeft/PaulWalkLeft2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -456,6 +804,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/WalkLeft/PaulWalkLeft2.png
+
+#begin Charakter/Paul/WalkLeft/PaulWalkLeft2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/WalkLeft/PaulWalkLeft2.png
+
+#begin Charakter/Paul/WalkRight/PaulWalkRight1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/WalkRight/PaulWalkRight1.png
 
 #begin Charakter/Paul/WalkRight/PaulWalkRight1.png
 /importer:TextureImporter
@@ -481,6 +853,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Paul/WalkRight/PaulWalkRight2.png
 
+#begin Charakter/Paul/WalkRight/PaulWalkRight2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Paul/WalkRight/PaulWalkRight2.png
+
 #begin Charakter/Peter/FightWeapon/PeterFightWeapon1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -492,6 +876,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Peter/FightWeapon/PeterFightWeapon1.png
+
+#begin Charakter/Peter/FightWeapon/PeterFightWeapon1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/FightWeapon/PeterFightWeapon1.png
+
+#begin Charakter/Peter/FightWeapon/PeterFightWeapon2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/FightWeapon/PeterFightWeapon2.png
 
 #begin Charakter/Peter/FightWeapon/PeterFightWeapon2.png
 /importer:TextureImporter
@@ -517,6 +925,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Peter/Idle/PeterIdle1.png
 
+#begin Charakter/Peter/Idle/PeterIdle1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/Idle/PeterIdle1.png
+
 #begin Charakter/Peter/Idle/PeterIdle2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -528,6 +948,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Peter/Idle/PeterIdle2.png
+
+#begin Charakter/Peter/Idle/PeterIdle2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/Idle/PeterIdle2.png
+
+#begin Charakter/Peter/Jump/PeterJump1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/Jump/PeterJump1.png
 
 #begin Charakter/Peter/Jump/PeterJump1.png
 /importer:TextureImporter
@@ -553,6 +997,30 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Peter/texPeter.png
 
+#begin Charakter/Peter/texPeter.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/texPeter.png
+
+#begin Charakter/Peter/WalkLeft/PeterWalkLeft1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/WalkLeft/PeterWalkLeft1.png
+
 #begin Charakter/Peter/WalkLeft/PeterWalkLeft1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -576,6 +1044,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Peter/WalkLeft/PeterWalkLeft2.png
+
+#begin Charakter/Peter/WalkLeft/PeterWalkLeft2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/WalkLeft/PeterWalkLeft2.png
+
+#begin Charakter/Peter/WalkRight/PeterWalkRight1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Peter/WalkRight/PeterWalkRight1.png
 
 #begin Charakter/Peter/WalkRight/PeterWalkRight1.png
 /importer:TextureImporter
@@ -608,6 +1100,25 @@
 /processorParam:TextureFormat=Compressed
 /build:Charakter/plane.fbx
 
+#begin Charakter/plane.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Charakter/plane.fbx
+
 #begin Charakter/texClean.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -619,6 +1130,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/texClean.png
+
+#begin Charakter/texClean.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/texClean.png
+
+#begin Charakter/Timmae/FightWeapon/TimmaeFightWeapon1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/FightWeapon/TimmaeFightWeapon1.png
 
 #begin Charakter/Timmae/FightWeapon/TimmaeFightWeapon1.png
 /importer:TextureImporter
@@ -644,6 +1179,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/FightWeapon/TimmaeFightWeapon2.png
 
+#begin Charakter/Timmae/FightWeapon/TimmaeFightWeapon2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/FightWeapon/TimmaeFightWeapon2.png
+
 #begin Charakter/Timmae/Idle/TimmaeIdle1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -655,6 +1202,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/Idle/TimmaeIdle1.png
+
+#begin Charakter/Timmae/Idle/TimmaeIdle1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/Idle/TimmaeIdle1.png
+
+#begin Charakter/Timmae/Idle/TimmaeIdle2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/Idle/TimmaeIdle2.png
 
 #begin Charakter/Timmae/Idle/TimmaeIdle2.png
 /importer:TextureImporter
@@ -680,6 +1251,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/Jump/TimmaeJump1.png
 
+#begin Charakter/Timmae/Jump/TimmaeJump1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/Jump/TimmaeJump1.png
+
 #begin Charakter/Timmae/texTimmae.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -691,6 +1274,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/texTimmae.png
+
+#begin Charakter/Timmae/texTimmae.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/texTimmae.png
+
+#begin Charakter/Timmae/WalkLeft/TimmaeWalkLeft1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/WalkLeft/TimmaeWalkLeft1.png
 
 #begin Charakter/Timmae/WalkLeft/TimmaeWalkLeft1.png
 /importer:TextureImporter
@@ -716,6 +1323,18 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/WalkLeft/TimmaeWalkLeft2.png
 
+#begin Charakter/Timmae/WalkLeft/TimmaeWalkLeft2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/WalkLeft/TimmaeWalkLeft2.png
+
 #begin Charakter/Timmae/WalkRight/TimmaeWalkRight1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -727,6 +1346,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Timmae/WalkRight/TimmaeWalkRight1.png
+
+#begin Charakter/Timmae/WalkRight/TimmaeWalkRight1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/WalkRight/TimmaeWalkRight1.png
+
+#begin Charakter/Timmae/WalkRight/TimmaeWalkRight2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Timmae/WalkRight/TimmaeWalkRight2.png
 
 #begin Charakter/Timmae/WalkRight/TimmaeWalkRight2.png
 /importer:TextureImporter
