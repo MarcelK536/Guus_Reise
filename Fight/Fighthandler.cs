@@ -339,7 +339,7 @@ namespace Guus_Reise
         public static void LoseFight()
         {
             bool guuDead = true;
-            if (playerTiles.Find(c => c.Charakter.Name == "Guu") != null)
+            if (playerTiles.Exists(c => c.Charakter.Name == "Guu"))
             {
                 foreach (Hex h in playerTiles)
                 {

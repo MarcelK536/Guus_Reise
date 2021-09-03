@@ -456,7 +456,7 @@ namespace Guus_Reise
                     stats[10] = fpoints;
                     stats[11] = level;
                     break;
-                case "old man":
+                case "old_man":
                     stats[0] = (int)(fpoints * 0.13f);
                     stats[1] = (int)(fpoints * 0.03f);
                     stats[2] = (int)(fpoints * 0.03f);

@@ -17,8 +17,8 @@ namespace Guus_Reise
                                                                  { 3, 3, 3, 3, 2, 2, 1, 2 }, 
                                                                   { 1, 1, 2, 1, 1, 1, 1, 2 }, 
                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 }, 
-                                                                 { 1, 1, 1, 1, 1, 1, 1, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-        public readonly static int[,] W1L1playerStats = new int[,] { { 20, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3} };
+                                                                 { 1, 1, 1, 1, 2, 2, 2, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
+        public readonly static int[,] W1L1playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3} };
         public readonly static int[] W1L1npcStats = new int[] { 2 , 2 };
         public readonly static int[,] W1L1npcPatroulPoints = new int[,] { { 1, 1 }, { 4, 1 }, { 4, 4 }, { 1, 4 } };
         public readonly static string[] W1L1playerNames = new string[] { "Guu"};       //input Array für Namen
@@ -72,7 +72,7 @@ namespace Guus_Reise
         public readonly static int[] W2L1npcStats = new int[] { 2, 2 };
         public readonly static int[,] W2L1npcPatroulPoints = new int[,] { };
         public readonly static string[] W2L1playerNames = new string[] { "Guu" };       //input Array für Namen
-        public readonly static string[] W2L1npcNames = new string[] { "Timmae", "Paul" };
+        public readonly static string[] W2L1npcNames = new string[] { "Bully", "Bully" };
         public readonly static bool[] W2L1canBefriended = new bool[] { false, true };
         public readonly static int[,] W2L1playerPos = new int[,] { { 9, 2 } };   //input Array für Positionen
         public readonly static int[,] W2L1npcPos = new int[,] { { 3, 6 }, { 5, 4 } };
@@ -90,7 +90,7 @@ namespace Guus_Reise
                                                                  { 3, 3, 8, 8, 3, 3, 4, 7, 8, 8, 6, 2 },
                                                                   { 3, 3, 7, 8, 8, 7, 3, 3, 3, 2, 6, 6 } }; //input Array der die Art der Tiles für die map generierung angibt
         public readonly static int[,] W2L2playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
-        public readonly static int[,] W2L2npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
+        public readonly static int[] W2L2npcStats = new int[] { 2 , 2 };
         public readonly static int[,] W2L2npcPatroulPoints = new int[,] { };
         public readonly static string[] W2L2playerNames = new string[] { "Guu" };       //input Array für Namen
         public readonly static string[] W2L2npcNames = new string[] { };
@@ -118,10 +118,10 @@ namespace Guus_Reise
                                                                  { 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 8 },
                                                                   { 2, 2, 2, 2, 2, 6, 6, 6, 6, 8, 8 }}; //input Array der die Art der Tiles für die map generierung angibt
         public readonly static int[,] W3L1playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
-        public readonly static int[,] W3L1npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
+        public readonly static int[] W3L1npcStats = new int[] { 2 , 2 };
         public readonly static int[,] W3L1npcPatroulPoints = new int[,] { };
         public readonly static string[] W3L1playerNames = new string[] { "Guu" };       //input Array für Namen
-        public readonly static string[] W3L1npcNames = new string[] { "Timmae", "Paul" };
+        public readonly static string[] W3L1npcNames = new string[] { "Bully", "Bully" };
         public readonly static bool[] W3L1canBefriended = new bool[] { false, true };
         public readonly static int[,] W3L1playerPos = new int[,] { { 5, 0 } };   //input Array für Positionen
         public readonly static int[,] W3L1npcPos = new int[,] { { 3, 6 }, { 5, 4 } };
@@ -139,7 +139,7 @@ namespace Guus_Reise
                                                                  { 6, 8, 8, 8, 6, 6, 6, 6, 6, 6, 6, 6 },
                                                                   { 2, 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 6 } }; //input Array der die Art der Tiles für die map generierung angibt
         public readonly static int[,] W3L2playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
-        public readonly static int[,] W3L2npcStats = new int[,] { { 4, 2 }, { 4, 2 } };
+        public readonly static int[] W3L2npcStats = new int[] { 2 , 2 };
         public readonly static int[,] W3L2npcPatroulPoints = new int[,] { };
         public readonly static string[] W3L2playerNames = new string[] { "Guu" };       //input Array für Namen
         public readonly static string[] W3L2npcNames = new string[] { };
