@@ -238,7 +238,7 @@ namespace Guus_Reise
 
         public Charakter(String name, int level, int ki, Hex hex, CharakterAnimation charakterAnimation)
         {
-            int[] stats = LevelToStats(level);
+            int[] stats = LevelToStats(name, level);
             SetCharakter(name, stats);
             this.KI = ki;
             _charakterAnimation = charakterAnimation;
@@ -326,25 +326,132 @@ namespace Guus_Reise
             this.Glueck = werte[8];
             this.Bewegungsreichweite = werte[9];
             this.IsNPC = true;            
-            this.Fähigkeitspunkte = werte[12];
-            this.Level = werte[13];
-            _isMoving = false;
+            this.Fähigkeitspunkte = werte[10];
+            this.Level = werte[11];
+            _isMoving = false;     
         }
 
-        public int[] LevelToStats(int level)
+        public int[] LevelToStats(String name, int level)
         {
             int[] stats = new int[14];
             int fpoints = level * 3 + 37;
-            
-            for(int i=0; i<=8; i++)
+
+            switch (name)
             {
-                stats[i] = fpoints / 9;
+                case "Bully":
+                    stats[0] = (int)(fpoints * 0.3f);
+                    stats[1] = (int)(fpoints * 0.33f);
+                    stats[2] = (int)(fpoints * 0.03f);
+                    stats[3] = (int)(fpoints * 0.1f);
+                    stats[4] = (int)(fpoints * 0.03f);
+                    stats[5] = (int)(fpoints * 0.03f);
+                    stats[6] = (int)(fpoints * 0.03f);
+                    stats[7] = (int)(fpoints * 0.1f);
+                    stats[8] = (int)(fpoints * 0.05f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
+                case "Heavyweight":
+                    stats[0] = (int)(fpoints * 0.13f);
+                    stats[1] = (int)(fpoints * 0.2f);
+                    stats[2] = (int)(fpoints * 0.03f);
+                    stats[3] = (int)(fpoints * 0.4f);
+                    stats[4] = (int)(fpoints * 0.03f);
+                    stats[5] = (int)(fpoints * 0.03f);
+                    stats[6] = (int)(fpoints * 0.03f);
+                    stats[7] = (int)(fpoints * 0.1f);
+                    stats[8] = (int)(fpoints * 0.05f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
+                case "Preacher":
+                    stats[0] = (int)(fpoints * 0.13f);
+                    stats[1] = (int)(fpoints * 0.03f);
+                    stats[2] = (int)(fpoints * 0.03f);
+                    stats[3] = (int)(fpoints * 0.03f);
+                    stats[4] = (int)(fpoints * 0.08f);
+                    stats[5] = (int)(fpoints * 0.35f);
+                    stats[6] = (int)(fpoints * 0.2f);
+                    stats[7] = (int)(fpoints * 0.1f);
+                    stats[8] = (int)(fpoints * 0.05f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
+                case "Politician":
+                    stats[0] = (int)(fpoints * 0.13f);
+                    stats[1] = (int)(fpoints * 0.03f);
+                    stats[2] = (int)(fpoints * 0.03f);
+                    stats[3] = (int)(fpoints * 0.03f);
+                    stats[4] = (int)(fpoints * 0.35f);
+                    stats[5] = (int)(fpoints * 0.08f);
+                    stats[6] = (int)(fpoints * 0.2f);
+                    stats[7] = (int)(fpoints * 0.1f);
+                    stats[8] = (int)(fpoints * 0.05f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
+                case "Assassin":
+                    stats[0] = (int)(fpoints * 0.13f);
+                    stats[1] = (int)(fpoints * 0.03f);
+                    stats[2] = (int)(fpoints * 0.3f);
+                    stats[3] = (int)(fpoints * 0.1f);
+                    stats[4] = (int)(fpoints * 0.03f);
+                    stats[5] = (int)(fpoints * 0.03f);
+                    stats[6] = (int)(fpoints * 0.03f);
+                    stats[7] = (int)(fpoints * 0.3f);
+                    stats[8] = (int)(fpoints * 0.05f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
+                case "Daydreamer":
+                    stats[0] = (int)(fpoints * 0.2f);
+                    stats[1] = (int)(fpoints * 0.03f);
+                    stats[2] = (int)(fpoints * 0.03f);
+                    stats[3] = (int)(fpoints * 0.03f);
+                    stats[4] = (int)(fpoints * 0.03f);
+                    stats[5] = (int)(fpoints * 0.03f);
+                    stats[6] = (int)(fpoints * 0.1f);
+                    stats[7] = (int)(fpoints * 0.05f);
+                    stats[8] = (int)(fpoints * 0.5f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
+                case "old man":
+                    stats[0] = (int)(fpoints * 0.13f);
+                    stats[1] = (int)(fpoints * 0.03f);
+                    stats[2] = (int)(fpoints * 0.03f);
+                    stats[3] = (int)(fpoints * 0.03f);
+                    stats[4] = (int)(fpoints * 0.03f);
+                    stats[5] = (int)(fpoints * 0.2f);
+                    stats[6] = (int)(fpoints * 0.4f);
+                    stats[7] = (int)(fpoints * 0.1f);
+                    stats[8] = (int)(fpoints * 0.05f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
+                default:
+                    stats[0] = (int)(fpoints * 0.12f);
+                    stats[1] = (int)(fpoints * 0.11f);
+                    stats[2] = (int)(fpoints * 0.11f);
+                    stats[3] = (int)(fpoints * 0.11f);
+                    stats[4] = (int)(fpoints * 0.11f);
+                    stats[5] = (int)(fpoints * 0.11f);
+                    stats[6] = (int)(fpoints * 0.11f);
+                    stats[7] = (int)(fpoints * 0.11f);
+                    stats[8] = (int)(fpoints * 0.11f);
+                    stats[9] = 5;
+                    stats[10] = fpoints;
+                    stats[11] = level;
+                    break;
             }
-            stats[9] = 5;
-            stats[11] = 2;
-            stats[12] = 0;
-            stats[13] = level;
-            return stats;
+                    return stats;
         }
 
         public void Draw(Camera camera)

@@ -38,7 +38,7 @@ namespace Guus_Reise.Animation
 
         public static void Init(ContentManager content)
         {
-            charakterNames = new List<string> {"Guu", "Timmae", "Peter", "Paul" };
+            charakterNames = new List<string> {"Guu", "Bully", "Heavyweight", "Preacher", "Politician", "Assassin", "Daydreamer", "old man", "average joe" };
             charakterAnimations = new CharakterAnimation[charakterNames.Count];
 
             animationSound = Game1.defaultValueSoundOn;
