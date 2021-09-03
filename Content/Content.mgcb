@@ -61,6 +61,18 @@
 /processorParam:TextureFormat=Color
 /build:Buttons/arrowRightLong.png
 
+#begin Buttons/ausrufezeichen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Buttons/ausrufezeichen.png
+
 #begin Buttons/B1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -217,6 +229,42 @@
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/FightWeapon/GuuFightWeapon1.png
 
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon10.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon10.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon11.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon11.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon12.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon12.png
+
 #begin Charakter/Guu/FightWeapon/GuuFightWeapon2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -228,6 +276,90 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/FightWeapon/GuuFightWeapon2.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon3.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon4.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon5.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon6.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon7.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon8.png
+
+#begin Charakter/Guu/FightWeapon/GuuFightWeapon9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/FightWeapon/GuuFightWeapon9.png
 
 #begin Charakter/Guu/Idle/GuuIdle1.png
 /importer:TextureImporter
@@ -288,6 +420,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Charakter/Guu/texGuu.png
+
+#begin Charakter/Guu/texGuuStartScreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Charakter/Guu/texGuuStartScreen.png
 
 #begin Charakter/Guu/WalkLeft/GuuWalkLeft1.png
 /importer:TextureImporter
@@ -776,30 +920,6 @@
 /processorParam:TextureFormat=Color
 /build:Fight/FightMenuPanelBlue.png
 
-#begin Fight/Weapon/faust.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Fight/Weapon/faust.png
-
-#begin Fight/Weapon/Knife.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Fight/Weapon/Knife.png
-
 #begin Fight/Weapon/platzhalterFight.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -824,7 +944,7 @@
 /processorParam:TextureFormat=Color
 /build:Fight/Weapon/platzhalterTalk.png
 
-#begin Fight/Weapon/WeaponTabelauAliestole.png
+#begin Fight/Weapon/WeaponTabelauAxeText.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -834,9 +954,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Fight/Weapon/WeaponTabelauAliestole.png
+/build:Fight/Weapon/WeaponTabelauAxeText.png
 
-#begin Fight/Weapon/WeaponTabelauFaust.png
+#begin Fight/Weapon/WeaponTabelauBoxingGlovesText.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -846,9 +966,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Fight/Weapon/WeaponTabelauFaust.png
+/build:Fight/Weapon/WeaponTabelauBoxingGlovesText.png
 
-#begin Fight/Weapon/WeaponTabelauMesser.png
+#begin Fight/Weapon/WeaponTabelauCostumeText.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -858,7 +978,122 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Fight/Weapon/WeaponTabelauMesser.png
+/build:Fight/Weapon/WeaponTabelauCostumeText.png
+
+#begin Fight/Weapon/WeaponTabelauFistText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauFistText.png
+
+#begin Fight/Weapon/WeaponTabelauHammerText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauHammerText.png
+
+#begin Fight/Weapon/WeaponTabelauKatanaText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauKatanaText.png
+
+#begin Fight/Weapon/WeaponTabelauKnifeText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauKnifeText.png
+
+#begin Fight/Weapon/WeaponTabelauMegaphoneText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauMegaphoneText.png
+
+#begin Fight/Weapon/WeaponTabelauSmartbookText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauSmartbookText.png
+
+#begin Fight/Weapon/WeaponTabelauStickText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauStickText.png
+
+#begin Fight/Weapon/WeaponTabelauUniversalTranslatorText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauUniversalTranslatorText.png
+
+#begin Fight/Weapon/WeaponTabelauVoiceText.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Fight/Weapon/WeaponTabelauVoiceText.png
+
+#begin Fonts/Aika.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Aika.spritefont
 
 #begin Fonts/Aika.spritefont
 /importer:FontDescriptionImporter
@@ -874,12 +1109,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika12.spritefont
 
+#begin Fonts/Aika12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Aika12.spritefont
+
 #begin Fonts/Aika20.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika20.spritefont
+
+#begin Fonts/Aika20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Aika20.spritefont
+
+#begin Fonts/Fantasma.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Fantasma.spritefont
 
 #begin Fonts/Fantasma.spritefont
 /importer:FontDescriptionImporter
@@ -895,12 +1151,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/GemunuLibre.spritefont
 
+#begin Fonts/GemunuLibre.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/GemunuLibre.spritefont
+
 #begin Fonts/Inclitodo.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Inclitodo.spritefont
+
+#begin Fonts/Inclitodo.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo.spritefont
+
+#begin Fonts/Inclitodo12.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo12.spritefont
 
 #begin Fonts/Inclitodo12.spritefont
 /importer:FontDescriptionImporter
@@ -916,6 +1193,20 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Inclitodo15.spritefont
 
+#begin Fonts/Inclitodo15.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo15.spritefont
+
+#begin Fonts/Inclitodo30.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Inclitodo30.spritefont
+
 #begin Fonts/Inclitodo30.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -930,12 +1221,33 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Jellee20.spritefont
 
+#begin Fonts/Jellee20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Jellee20.spritefont
+
 #begin Fonts/Jellee30.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Jellee30.spritefont
+
+#begin Fonts/Jellee30.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Jellee30.spritefont
+
+#begin Fonts/Jellee50.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Jellee50.spritefont
 
 #begin LightShader.fx
 /importer:EffectImporter
@@ -991,6 +1303,12 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Sounds/Hypnotic-Puzzle2.mp3
+
+#begin Sounds/mixkit-knife-fast-hit-2184.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mixkit-knife-fast-hit-2184.wav
 
 #begin Sounds/mixkit-positive-interface-click-1112.wav
 /importer:WavImporter
@@ -1053,6 +1371,25 @@
 /processorParam:TextureFormat=Compressed
 /build:TileModels/hexagonBerg.fbx
 
+#begin TileModels/hexagonBerg2.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:TileModels/hexagonBerg2.fbx
+
 #begin TileModels/hexagonWald.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -1071,6 +1408,25 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:TileModels/hexagonWald.fbx
+
+#begin TileModels/hexagonWald2.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:TileModels/hexagonWald2.fbx
 
 #begin TileModels/hexagonWasser.fbx
 /importer:FbxImporter
@@ -1091,6 +1447,25 @@
 /processorParam:TextureFormat=Compressed
 /build:TileModels/hexagonWasser.fbx
 
+#begin TileModels/hexagonWasser2.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:TileModels/hexagonWasser2.fbx
+
 #begin TileModels/hexagonWueste.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -1109,6 +1484,25 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:TileModels/hexagonWueste.fbx
+
+#begin TileModels/hexagonWueste2.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:TileModels/hexagonWueste2.fbx
 
 #begin TileModels/inselGelb.png
 /importer:TextureImporter

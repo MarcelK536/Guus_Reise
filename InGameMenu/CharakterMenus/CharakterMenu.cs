@@ -3,24 +3,28 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 
 namespace Guus_Reise
 {
     class CharakterMenu : SimpleMenu
     {
         Button btnLevelUp;
-        Button btnWaffenWechsel;
         Button btnSkillWechsel;
 
         GraphicsDevice graphics;
 
-        WeaponMenu weaponMenu;
+        static SoundEffect _clickSound;
+        bool preClickState;
+
         SkillMenu skillMenu;
-        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None)
+        public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound)
         {
             graphics = graphicsDevice;
             menuWidth = 600;
             menuHeight = 300;
+            preClickState = false;
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
@@ -34,20 +38,20 @@ namespace Guus_Reise
             btnTexture.SetData(btnColor);
             btnLevelUp = new Button("Skill Points", btnTexture, 1, btnClose.GetPosBelow());
             menuButtons.Add(btnLevelUp);
-            btnWaffenWechsel = new Button("Change Weapon", btnTexture, 1, btnLevelUp.GetPosBelow());
-            menuButtons.Add(btnWaffenWechsel);
-            btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnWaffenWechsel.GetPosBelow());
+            btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnLevelUp.GetPosBelow());
             menuButtons.Add(btnSkillWechsel);
+            _clickSound = clickSound;
+
         }
 
+ 
         public void Update(GameTime time)
         {
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) - (int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
             btnLevelUp.MoveButton(btnClose.GetPosBelow());
-            btnWaffenWechsel.MoveButton(btnLevelUp.GetPosBelow());
-            btnSkillWechsel.MoveButton(btnWaffenWechsel.GetPosBelow());
+            btnSkillWechsel.MoveButton(btnLevelUp.GetPosBelow());
             SetBackgroundTexture(bkgColor);
 
             if (Active)
@@ -56,6 +60,7 @@ namespace Guus_Reise
                 {
                     if (btnClose.IsClicked())
                     {
+                        _clickSound.Play();
                         Active = false;
                         Player.levelUpMenu.Active = false;
                         Player.charakterMenu.Active = false;
@@ -66,10 +71,6 @@ namespace Guus_Reise
                     int x = Player.activeTile.LogicalBoardPosition.X;
                     int y = Player.activeTile.LogicalBoardPosition.Y;
 
-                    if (weaponMenu != null && weaponMenu.Active)
-                    {
-                        weaponMenu.Update(time);
-                    }
                     if (skillMenu != null && skillMenu.Active)
                     {
                         skillMenu.Update(time);
@@ -78,13 +79,10 @@ namespace Guus_Reise
                     {
                         if (btnClose.IsClicked())
                         {
+                            _clickSound.Play();
                             Active = false;
                             Player.levelUpMenu.Active = false;
                             Player.charakterMenu.Active = false;
-                            if (weaponMenu != null)
-                            {
-                                weaponMenu.Active = false;
-                            }
                             if (skillMenu != null)
                             {
                                 skillMenu.Active = false;
@@ -94,26 +92,24 @@ namespace Guus_Reise
                         {
                             if (btnLevelUp.IsClicked())
                             {
+                                _clickSound.Play();
                                 Player.levelUpMenu.Active = true;
                                 Player.charakterMenu.Active = false;
+
                             }
-                            if (btnWaffenWechsel.IsClicked())
-                            {
-                                weaponMenu = new WeaponMenu(Weapon.weapons, btnWaffenWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                                weaponMenu.Active = true;
-                                if(skillMenu != null)
+  
+                                if (skillMenu != null)
                                 {
                                     skillMenu.Active = false;
                                 }
-                            }
+                         
                             if (btnSkillWechsel.IsClicked())
                             {
-                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None);
-                                skillMenu.Active = true;
-                                if(weaponMenu != null)
-                                {
-                                    weaponMenu.Active = false;
-                                }
+
+                                _clickSound.Play();
+                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None, _clickSound);
+                                skillMenu.Active = !skillMenu.Active;
+
                             }
                         }
                     }
@@ -130,7 +126,7 @@ namespace Guus_Reise
                 if (Player.activeTile == null)
                 {
                     spriteBatch.Begin();
-                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("Kein Charakter ausgewählt").X;
+                    menuWidth = btnClose.GetPosRightOf().X + textFont.MeasureString("No Character Selected").X;
                     menuHeight = btnClose.GetPosBelow().Y;
                     SetBackgroundTexture(bkgColor);
                     spriteBatch.DrawString(textFont, "Please select a Tile \nto see the charakter informations", btnClose.GetPosRightOf(), Color.Yellow);
@@ -166,15 +162,10 @@ namespace Guus_Reise
                         {
                             btnLevelUp.Draw(spriteBatch, textFont);
                             btnSkillWechsel.Draw(spriteBatch, textFont);
-                            btnWaffenWechsel.Draw(spriteBatch, textFont);
                         }
                         spriteBatch.End();
                     }
 
-                    if (weaponMenu != null && weaponMenu.Active)
-                    {
-                        weaponMenu.Draw(spriteBatch);
-                    }
                     if (skillMenu != null && skillMenu.Active)
                     {
                         skillMenu.Draw(spriteBatch);

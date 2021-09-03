@@ -3,12 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+using Microsoft.Xna.Framework.Audio;
 namespace Guus_Reise
 {
     class LevelObjectiveMenu : SimpleMenu
     {
-        public LevelObjectiveMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction)
+        static SoundEffect _clickSound;
+        public LevelObjectiveMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, direction, _clickSound)
         {
             
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2)-90,0);
@@ -20,8 +21,10 @@ namespace Guus_Reise
 
         public void Update(GameTime time)
         {
-            base.Update();
-
+            if (btnClose.IsClicked())
+            {
+                Active = false;
+            }
             menuWidth = _graphicsDevice.Viewport.Width / 2 + 60;
             pos.X = _graphicsDevice.Viewport.Width / 2 - 90;
             btnClose.MoveButton(pos - Vector2.UnitX * btnClose.TextureDefault.Width);

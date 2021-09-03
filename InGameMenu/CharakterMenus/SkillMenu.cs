@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise
 {
@@ -14,7 +15,8 @@ namespace Guus_Reise
         Texture2D btnTextureSelected;
         bool SkillsToolTip = false;
         int lastWheel = 0;
-        public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(position, menuFont, graphicsDevice, direction)
+        static SoundEffect _clickSound;
+        public SkillMenu(List<Skill> skills, Vector2 position, SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(position, menuFont, graphicsDevice, direction, _clickSound)
         {
             menuWidth = 200;
             menuHeight = 200;
@@ -48,7 +50,7 @@ namespace Guus_Reise
                 menuButtons.Add(new Button(item.Name, btnTexture, 1, btnPosition));
                 btnPosition.Y += btnTexture.Height + 10;
             }
-            
+            _clickSound = clickSound;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -103,8 +105,20 @@ namespace Guus_Reise
                     btn.TextureDefault = btnTexture;
                     btn.TextureHover = btnTexture;
                 }
+                //TalkFight
+                if (HexMap._board[x, y].Charakter.SkillTalk.Where(p => p.Name == btn.Name).Any())
+                {
+                    btn.TextureDefault = btnTextureSelected;
+                    btn.TextureHover = btnTextureSelected;
+                }
+                else
+                {
+                    btn.TextureDefault = btnTexture;
+                    btn.TextureHover = btnTexture;
+                }
                 if (btn.IsClicked())
                 {
+                    _clickSound.Play();
                     if(HexMap._board[x, y].Charakter.Skill.Where(p => p.Name == btn.Name).Any())
                     {
                         HexMap._board[x, y].Charakter.Skill.Remove(Skill.skills.Where(p => p.Name == btn.Name).First());
@@ -117,11 +131,25 @@ namespace Guus_Reise
                     {
                         SkillsToolTip = true;
                     }
+                    //TalkFight
+                    if (HexMap._board[x, y].Charakter.SkillTalk.Where(p => p.Name == btn.Name).Any())
+                    {
+                        HexMap._board[x, y].Charakter.SkillTalk.Remove(Skill.skills.Where(p => p.Name == btn.Name).First());
+                    }
+                    else if (HexMap._board[x, y].Charakter.SkillTalk.Count < 4)
+                    {
+                        HexMap._board[x, y].Charakter.SkillTalk.Add(Skill.skills.Where(p => p.Name == btn.Name).First());
+                    }
+                    else if (HexMap._board[x, y].Charakter.SkillTalk.Count >= 4)
+                    {
+                        SkillsToolTip = true;
+                    }
                 }
             }
 
             if (btnClose.IsClicked())
             {
+                _clickSound.Play();
                 Active = false;
             }
             if ((Keyboard.GetState().IsKeyDown(Keys.Up)|| Mouse.GetState().ScrollWheelValue > lastWheel) && menuButtons[0].ButtonY + menuButtons[0].TextureDefault.Height > menuButtons[1].ButtonY)

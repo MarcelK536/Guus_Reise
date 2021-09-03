@@ -75,7 +75,7 @@ namespace Guus_Reise
                 case 1: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald");
                     this.Type = "Wald";
                     this.Begehbarkeit = 2f;
-                    break;
+                    break;              
                 case 2: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg");
                     this.Type = "Berg";
                     this.Begehbarkeit = 10f;
@@ -84,9 +84,34 @@ namespace Guus_Reise
                     this.Type = "Wueste";
                     this.Begehbarkeit = 1f;
                     break;
-                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
+                case 4:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser");
+                    this.Type = "Insel";
+                    this.Begehbarkeit = 1f;
+                    break;
+                case 5:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWald2");
+                    this.Type = "Wiese";
+                    this.Begehbarkeit = 1f;
+                    break;
+                case 6:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonBerg2");
+                    this.Type = "Stein";
+                    this.Begehbarkeit = 2f;
+                    break;
+                case 7:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWueste2");
+                    this.Type = "Sand";
+                    this.Begehbarkeit = 1f;
+                    break;
+                case 8:
+                    this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser2");
                     this.Type = "Wasser";
-                    this.Begehbarkeit = 4f;
+                    this.Begehbarkeit = 10f;
+                    break;
+                default: this.Tile1 = contentmanager.Load<Model>("TileModels\\hexagonWasser2");
+                    this.Type = "Wasser";
+                    this.Begehbarkeit = 10f;
                     break;
             }
             this.World = (Matrix.CreateScale(0.001f, 0.001f, 0.001f) * Matrix.CreateRotationY(45) * Matrix.CreateTranslation(position));

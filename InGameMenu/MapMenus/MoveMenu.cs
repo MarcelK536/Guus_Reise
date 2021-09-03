@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using static Guus_Reise.Game1;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise
 {
@@ -16,14 +17,15 @@ namespace Guus_Reise
         Button btnConfirm;
         Button btnAttack;
         Button btnInteract;
-        Button btnSaveGame;
+       // Button btnSaveGame;
         Button btnQuitGame;
         public bool fightTrue;
         public bool interactTrue;
+        static SoundEffect _clickSound;
 
         static public Texture2D menuTexture { get; set; }
 
-        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend) : base(new Vector2(), moveMenuFont,graphicsDevice,blend)
+        public MoveMenu(SpriteFont moveMenuFont, GraphicsDevice graphicsDevice, BlendDirection blend, SoundEffect clickSound) : base(new Vector2(), moveMenuFont,graphicsDevice, blend, _clickSound)
         {
             btnWidth = moveMenuFont.MeasureString("Confirm Move").X + 10;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
@@ -39,14 +41,15 @@ namespace Guus_Reise
             menuButtons.Add(btnAttack);
             btnInteract = new Button("Iteract", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnInteract);
-            btnSaveGame = new Button("Save", btnTexture, 1, btnAttack.GetPosBelow());
-            menuButtons.Add(btnSaveGame);
+           // btnSaveGame = new Button("Save", btnTexture, 1, btnAttack.GetPosBelow());
+           // menuButtons.Add(btnSaveGame);
             btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
             menuButtons.Add(btnQuitGame);
 
             SetMenuHeight();
             SetMenuWidth();
             SetBackgroundTexture(Color.GhostWhite);
+            _clickSound = clickSound;
         }
 
         public void Update(GameTime gametime)
@@ -59,16 +62,23 @@ namespace Guus_Reise
                 HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Tile.Glow = new Vector3(0.5f, 0.5f, 0.5f);
                 Hex targetHex = Player.moveTile;
                 Hex startHex = Player.activeTile;
+                if (btnClose.IsClicked() && needCloseBtn == true || ClickedOutside())
+                {
+                    _clickSound.Play();
+                    Active = false;
+                }
                 if (btnQuitGame.IsClicked())
                 {
+                    _clickSound.Play();
                     Game1.GState = Game1.GameState.MainMenu;
                 }
-                if (btnSaveGame.IsClicked())
+          /*      if (btnSaveGame.IsClicked())
                 {
                     //TODO SAVE GAME
-                }
+                }*/
                 if (btnConfirm.IsClicked())
                 {
+                    _clickSound.Play();
                     HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp = false;
                     HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.CharakterAnimation.Hexagon = HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y];
                     HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
@@ -97,6 +107,7 @@ namespace Guus_Reise
                 {
                     if (btnAttack.IsClicked() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == false)
                     {
+                        _clickSound.Play();
                         HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                         if (Player.activeTile != Player.moveTile)
                         {
@@ -118,6 +129,7 @@ namespace Guus_Reise
                 {
                     if (btnInteract.IsClicked() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == false)
                     {
+                        _clickSound.Play();
                         HexMap._board[Player.moveTile.LogicalPosition.X, Player.moveTile.LogicalPosition.Y].Charakter = HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter;
                         if (Player.activeTile != Player.moveTile)
                         {
@@ -148,10 +160,10 @@ namespace Guus_Reise
                 btnConfirm.Draw(spriteBatch,textFont);
                 btnInteract.MoveButton(btnAttack.GetPosBelow());
 
-                if (!fightTrue && !interactTrue)
-                {
-                    btnSaveGame.MoveButton(btnConfirm.GetPosBelow());
-                    btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+               if (!fightTrue && !interactTrue)
+               {
+                //    btnSaveGame.MoveButton(btnConfirm.GetPosBelow());
+                    btnQuitGame.MoveButton(btnConfirm.GetPosBelow());
                 }
                 else
                 {
@@ -162,8 +174,8 @@ namespace Guus_Reise
                         {
                             spriteBatch.DrawString(textFont, "You cannot attack, because you gave up last fight. \nWait 1 Turn",btnAttack.GetTextPosRightOf(), Color.Yellow);
                         }
-                        btnSaveGame.MoveButton(btnAttack.GetPosBelow());
-                        btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+                       // btnSaveGame.MoveButton(btnAttack.GetPosBelow());
+                        btnQuitGame.MoveButton(btnAttack.GetPosBelow());
                         if (interactTrue)
                         {
                             btnInteract.Draw(spriteBatch, textFont);
@@ -171,8 +183,8 @@ namespace Guus_Reise
                             {
                                 spriteBatch.DrawString(textFont, "You cannot interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
                             }
-                            btnSaveGame.MoveButton(btnInteract.GetPosBelow());
-                            btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+                          //  btnSaveGame.MoveButton(btnInteract.GetPosBelow());
+                                btnQuitGame.MoveButton(btnInteract.GetPosBelow());
                         }
                     }
                     else
@@ -185,12 +197,12 @@ namespace Guus_Reise
                             {
                                 spriteBatch.DrawString(textFont, "You cannot Interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
                             }
-                            btnSaveGame.MoveButton(btnInteract.GetPosBelow());
-                            btnQuitGame.MoveButton(btnSaveGame.GetPosBelow());
+                           // btnSaveGame.MoveButton(btnInteract.GetPosBelow());
+                            btnQuitGame.MoveButton(btnInteract.GetPosBelow());
                         }
                     }
                 }
-                btnSaveGame.Draw(spriteBatch, textFont);
+                //btnSaveGame.Draw(spriteBatch, textFont);
                 btnQuitGame.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }

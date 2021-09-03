@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Guus_Reise.Animation
 {
@@ -12,7 +13,8 @@ namespace Guus_Reise.Animation
 
         public Hex startHex;
         public Hex targetHex;
-        
+
+        static SoundEffect _clickSound;
 
         public string movementType;
 
@@ -54,7 +56,7 @@ namespace Guus_Reise.Animation
 
         public List<string> ablauf;
 
-        public MovementAnimation(string type, Hex start, Hex target)
+        public MovementAnimation(string type, Hex start, Hex target, SoundEffect clickSound)
         {
             
             startHex = start;
@@ -69,6 +71,7 @@ namespace Guus_Reise.Animation
             currentStep = 0;
             targetHex.Charakter.IsMoving = true;
             targetHex.Charakter.CharakterAnimation.CharakterMovementPostion = targetHex.Charakter.CharakterAnimation.Translation + startHex.Position;
+            _clickSound = clickSound;
         }
 
         public MovementAnimation(string type, List<Hex> oldHex, List<Hex> newHex, List<Charakter> movednpcs)
@@ -92,6 +95,14 @@ namespace Guus_Reise.Animation
             {
                 var index = movingCharakters.IndexOf(charakter);
                 charakter.IsMoving = true;
+
+                //#Bug-Fix
+                if(newNpcPos[index].Charakter == null)
+                {
+                    Game1.GState = Game1.GameState.InGame;
+                    return;
+                }
+
                 charakter.CharakterAnimation.CharakterMovementPostion = newNpcPos[index].Charakter.CharakterAnimation.Translation + oldNpcPos[index].Position;
                 readyMatrix[index, 0] = false;
                 readyMatrix[index,1] = false;
@@ -109,6 +120,11 @@ namespace Guus_Reise.Animation
             {
                 foreach(Hex targetHex in newNpcPos)
                 {
+                    //#Bug-Fix
+                    if(targetHex.Charakter == null)
+                    {
+                        continue;
+                    }
                     targetHex.Charakter.CharakterAnimation.Update(gametime);
                 }
             }
@@ -143,8 +159,13 @@ namespace Guus_Reise.Animation
                 Game1.GState = Game1.GameState.InGame;
                 return;
             }
-            else if(MovementAnimationManager.skip.IsClicked())
+            else if(MovementAnimationManager.skip != null && MovementAnimationManager.skip.IsClicked())
             {
+                // #BugFix
+                if (_clickSound != null)
+                {
+                    _clickSound.Play();
+                }
                 ResetAnimation();
                 Game1.GState = Game1.GameState.InGame;
                 return;
@@ -296,7 +317,10 @@ namespace Guus_Reise.Animation
         public void Draw()
         {
             MovementAnimationManager._spriteBatch.Begin();
-            MovementAnimationManager.skip.Draw(MovementAnimationManager._spriteBatch, MovementAnimationManager.mainMenuFont);
+            if (movingCharakter != null && MovementAnimationManager.skip != null)
+            {
+                MovementAnimationManager.skip.Draw(MovementAnimationManager._spriteBatch, MovementAnimationManager.mainMenuFont);
+            }
             foreach (Charakter c in HexMap.playableCharacter)
             {
                 c.Draw(_camera);
@@ -309,6 +333,12 @@ namespace Guus_Reise.Animation
             {
                 foreach (Hex targetHex in newNpcPos)
                 {
+                    //#Bug-Fix
+                    if(targetHex.Charakter == null)
+                    {
+                        continue;
+                    }
+
                     if(targetHex.Charakter.IsMoving == true)
                     {
                         targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);
@@ -384,6 +414,14 @@ namespace Guus_Reise.Animation
                     Y = targetHex.Position.Y - oldNpcPos[index].Position.Y,
                     Z = targetHex.Position.Z - oldNpcPos[index].Position.Z
                 };
+                if (directionMovement == new Vector3(0, 0, 0))
+                {
+                    if(newNpcPos.Count == 1)
+                    {
+                        return;
+                    }
+                    continue;
+                }
                 Vector3 moveVector = NormOnLength(directionMovement, 0.01f);
                 currDirectionMovementList[index] = moveVector;
                 movingCharakter = targetHex.Charakter;

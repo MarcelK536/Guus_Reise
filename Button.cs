@@ -164,6 +164,10 @@ namespace Guus_Reise
 
         }
 
+        public Vector2 GetTextPosAbove(SpriteFont font)
+        {
+            return new Vector2(ButtonX - font.MeasureString("Placeholder").X, ButtonY);
+        }
         public Vector2 GetTextureCenter()
         {
             float centerX = (this.TextureDefault.Width * this.Scale) / 2;

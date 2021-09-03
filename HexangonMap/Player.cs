@@ -25,6 +25,7 @@ namespace Guus_Reise
         public static LevelObjectiveMenu objectiveMenu;
         public static CharakterMenu charakterMenu;
         public static ESCMenu escMenu;
+        public static InformationIcon infoIcon;
 
         public static void Update(GameTime time, GraphicsDevice graphicsDevice)
         {
@@ -182,6 +183,7 @@ namespace Guus_Reise
                     }
                 }
             }
+            infoIcon.Update(graphicsDevice);
             actionMenu.Update(time);
             objectiveMenu.Update(time);
             charakterMenu.Update(time);
@@ -193,8 +195,10 @@ namespace Guus_Reise
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            infoIcon.Draw(spriteBatch);
             actionMenu.Draw(spriteBatch);
             charakterMenu.Draw(spriteBatch);
+
             if (activeTile != null)
             {
                 levelUpMenu.Draw(spriteBatch);

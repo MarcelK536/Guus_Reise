@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
+
 
 namespace Guus_Reise
 {
@@ -25,7 +27,7 @@ namespace Guus_Reise
         public static Hex soundHex;
         public static Hex prevSoundHex;
 
-
+        static Texture2D _backroundMain;
         public static Button btSoundEinstellungen;
 
         private static Camera _camera;
@@ -45,6 +47,8 @@ namespace Guus_Reise
 
         public static int firsttimeCounter = 0;
         public static bool firsttime = true;
+
+        static SoundEffect _clickSound;
 
         internal static Camera Camera { get => _camera; set => _camera = value; }
 
@@ -72,12 +76,17 @@ namespace Guus_Reise
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
 
+            _clickSound = Content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
+
             Player.actionMenuFont = Content.Load<SpriteFont>("Fonts\\Jellee20");
-            Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight);
-            Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
-            Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom);
-            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice);
-            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
+            Player.actionMenu = new MoveMenu(Player.actionMenuFont,graphicsDevice, SimpleMenu.BlendDirection.LeftToRight, _clickSound);
+            Player.levelUpMenu = new SkillUpMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
+            Player.objectiveMenu = new LevelObjectiveMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.TopToBottom, _clickSound);
+            Player.charakterMenu = new CharakterMenu(Player.actionMenuFont, graphicsDevice, _clickSound);
+            Player.escMenu = new ESCMenu(Player.actionMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound);
+            Player.infoIcon = new InformationIcon();
+
+            _backroundMain = Content.Load<Texture2D>("MainMenu\\backround");
         }
 
         public static void InitBoard()
@@ -103,6 +112,7 @@ namespace Guus_Reise
                 CharakterAnimationManager.animationSound = !CharakterAnimationManager.animationSound;
                 if(CharakterAnimationManager.animationSound)
                 {
+                    _clickSound.Play();
                     btSoundEinstellungen.TextureDefault = Game1.textureSoundButton;
                     btSoundEinstellungen.TextureHover = Game1.textureSoundButton;
                 }
@@ -132,6 +142,20 @@ namespace Guus_Reise
                     if (!charakter.CanMove)
                     {
                         movecounter--;
+                    }
+                    else
+                    {
+                        if (!Player.infoIcon.CanMoveList.Contains(charakter.Name))
+                        {
+                            Player.infoIcon.CanMoveList.Add(charakter.Name);
+                        }
+                    }
+                    if(charakter.Fähigkeitspunkte > 0)
+                    {
+                        if (!Player.infoIcon.HasSkillPoints.ContainsKey(charakter.Name))
+                        {
+                            Player.infoIcon.HasSkillPoints.Add(charakter.Name, charakter.Fähigkeitspunkte);
+                        }
                     }
                 }
                 if (movecounter <= 0)
@@ -181,9 +205,17 @@ namespace Guus_Reise
             LevelHandler.UpdateLevel();
         }
 
-        public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime)
+        public static void DrawInGame(SpriteBatch spriteBatch,GameTime gameTime, GraphicsDeviceManager _graphics)
         {
+            spriteBatch.Begin();
+            spriteBatch.Draw(_backroundMain, new Rectangle(0, 0, _graphicsDevice.Viewport.Width, _graphicsDevice.Viewport.Height), Color.White);     
+            spriteBatch.End();
+
+
+            _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;     //Fixt Zeichenreihnfolge
+
             for (int i = 0; i < _board.GetLength(0); i++)           //sorgt dafür das jedes einzelne Tile in _board auf der Kamera abgebildet wird
+
             {
                 for (int k = 0; k < _board.GetLength(1); k++)
                 {
@@ -324,15 +356,17 @@ namespace Guus_Reise
 
                 if (_board[x, y].Charakter != null && activeTile.LogicalPosition != new Point(x,y)) //erkennt andere charaktere
                 {
-                    if(_board[x, y].Charakter.IsNPC != activeTile.Charakter.IsNPC)
+                    if(activeTile.Charakter != null)
                     {
-                        _board[x, y].Tile.Color = new Vector3(4, 0, 0);
+                        if (_board[x, y].Charakter.IsNPC != activeTile.Charakter.IsNPC)
+                        {
+                            _board[x, y].Tile.Color = new Vector3(4, 0, 0);
+                        }
+                        else
+                        {
+                            _board[x, y].Tile.Color = new Vector3(0, 3, 0);
+                        }
                     }
-                    else
-                    {
-                        _board[x, y].Tile.Color = new Vector3(0, 3, 0);
-                    }
-                    
                     possibleMoves.Remove(new Point(x, y));
                 }
                 else

@@ -7,7 +7,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Linq;
 using static Guus_Reise.Game1;
+using Microsoft.Xna.Framework.Audio;
 namespace Guus_Reise
 {
     class Fighthandler
@@ -15,6 +17,7 @@ namespace Guus_Reise
         //Original Tiles
         public static List<Hex> playerTiles = new List<Hex>();      //Der Initierende Spieler steht am Ende der Liste
         public static List<Hex> npcTiles = new List<Hex>();         //Liste der NPC
+        public static List<Hex> newTeamMember = new List<Hex>();        //Liste von neuen Gruppenmitgliedern (Wortgewandtheit)
         public static List<Hex> waitList = new List<Hex>();         //Überlauf Liste falls im Kampf mehr als 4 Spieler / NPCs vorhanden
 
 
@@ -59,7 +62,7 @@ namespace Guus_Reise
         public static bool showFightResults = false;
         public static FightResults fightResults;
 
-
+        static SoundEffect _fightSound;
 
         public static void Init(GraphicsDevice graphicsDevice, ContentManager content)
         {
@@ -77,6 +80,7 @@ namespace Guus_Reise
             currentMenuStatus = 0;
             textureEditbutton = content.Load<Texture2D>("Buttons\\pencil");
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
+            _fightSound = content.Load<SoundEffect>("Sounds\\mixkit-knife-fast-hit-2184");
 
             fightResults = new FightResults(mainMenuFont, graphicsDevice, SimpleMenu.BlendDirection.None);
         }
@@ -147,6 +151,7 @@ namespace Guus_Reise
         {
             DeInitPlayers(playerTiles);
             DeInitPlayers(npcTiles);
+            DeInitPlayers(newTeamMember);
 
             initPlayers = false;
             fightMenu.Active = false;
@@ -185,10 +190,29 @@ namespace Guus_Reise
             {
                 HexMap._board[playerTiles[i].LogicalBoardPosition.X, playerTiles[i].LogicalBoardPosition.Y] = playerTiles[i];
             }
+            for(int i = newTeamMember.Count-1; i >= 0; i--)
+            {
+                newTeamMember[i].LogicalBoardPosition = newTeamMember[i].Charakter.LogicalBoardPosition;
+                HexMap._board[newTeamMember[i].LogicalBoardPosition.X, newTeamMember[i].LogicalBoardPosition.Y] = newTeamMember[i];
+                playerTiles.Add(newTeamMember[i]);
+                HexMap.playableCharacter.Add(newTeamMember[i].Charakter);
+            }
             for(int i = npcTiles.Count-1; i >= 0; i--)
             {
-                HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
+                if (newTeamMember.Count > 0)
+                {
+                    Hex isNewFriend = newTeamMember.Find(e => e.LogicalPosition == npcTiles[i].LogicalPosition);
+                    if (isNewFriend != null)
+                    {
+                        HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
+                    }
+                }
+                else
+                {
+                    HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
+                }
             }
+            newTeamMember.Clear();
             Player.activeTile.IsActive = false;
             Player.activeTile = null;
             HexMap.activeHex = null;
@@ -225,7 +249,6 @@ namespace Guus_Reise
                 if (Keyboard.GetState().IsKeyDown(Keys.Q))
                 {
                     Fighthandler.fightResults.gaveUp = true;
-                    Fighthandler.showFightResults = true;
                     fightMenu.Active = false;
                     ExitFight();
                 }
@@ -248,13 +271,16 @@ namespace Guus_Reise
                 RemoveDeadCharacters(npcTiles);
                 RemoveDeadCharacters(playerTiles);
 
+                
+
                 WinFight();
                 LoseFight();
+                
             }
 
             
         }
-
+        //Wenn Gamestate = Fight > remove. falls GameState = TalkFight > zur gruppe hinzufügen.
         public static void RemoveDeadCharacters(List<Hex> tiles)
         {
             foreach (Hex hexTiles in tiles)
@@ -264,16 +290,28 @@ namespace Guus_Reise
                     if (hexTiles.Charakter.CurrentFightStats[0] <= 0)
                     {
                         turnBar.RemoveCharakter(hexTiles.Charakter);
-                        if (hexTiles.Charakter.IsNPC)
-                        {
-                            fightResults.KilledEnemys.Add(hexTiles.Charakter.Name);
-                            HexMap.npcs.Remove(hexTiles.Charakter);
-                        }
                         if (!hexTiles.Charakter.IsNPC)
                         {
                             fightResults.KilledFriends.Add(hexTiles.Charakter.Name);
                             HexMap.playableCharacter.Remove(hexTiles.Charakter);
                         }
+                        if (hexTiles.Charakter.IsNPC)
+                        {
+                            if (Game1.GState == GameState.InFight)
+                            {
+                                fightResults.KilledEnemys.Add(hexTiles.Charakter.Name);
+                                HexMap.npcs.Remove(hexTiles.Charakter);
+                            }
+                            if(Game1.GState == GameState.InTalkFight)
+                            {
+                                fightResults.NewFriends.Add(hexTiles.Charakter.Name);
+                                hexTiles.Charakter.IsNPC = false;
+                                hexTiles.Charakter.CanBefriended = false;
+                                newTeamMember.Add(hexTiles.Clone());
+                                HexMap.npcs.Remove(hexTiles.Charakter);
+                            }
+                        }
+
                         hexTiles.Charakter = null;
                     }
                 }
@@ -293,6 +331,7 @@ namespace Guus_Reise
 
             if(noEnemysLeft == true)
             {
+                _fightSound.Play();
                 ExitFight();
             }
         }
@@ -300,18 +339,28 @@ namespace Guus_Reise
         public static void LoseFight()
         {
             bool guuDead = true;
-            foreach (Hex h in playerTiles)
+            if (playerTiles.Find(c => c.Charakter.Name == "Guu") != null)
             {
-                if(h.Charakter != null && h.Charakter.Name == "Guu")
+                foreach (Hex h in playerTiles)
                 {
-                    guuDead = false;
+                    if (h.Charakter != null && h.Charakter.Name == "Guu")
+                    {
+                        guuDead = false;
+                    }
+                }
+
+                if (guuDead == true)
+                {
+                    fightResults.gameOver = true;
+                    showFightResults = true;
                 }
             }
-
-            if(guuDead == true)
+            else
             {
-                fightResults.gameOver = true;
-                showFightResults = true;
+                if(playerTiles.Count == 0)
+                {
+                    showFightResults = true;
+                }
             }
         }
 
@@ -387,6 +436,7 @@ namespace Guus_Reise
                 if (turnBar.ReturnCurrentCharakter().IsNPC == false)
                 {
                     fightMenu.Draw(spriteBatch);
+                   
                 }
 
 

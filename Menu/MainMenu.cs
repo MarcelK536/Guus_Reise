@@ -7,6 +7,8 @@ using System.Text;
 using static Guus_Reise.Game1;
 using System.Diagnostics;
 using Microsoft.Xna.Framework.Audio;
+using Guus_Reise.HexangonMap;
+using Guus_Reise.Animation;
 
 namespace Guus_Reise.Menu
 {
@@ -16,6 +18,7 @@ namespace Guus_Reise.Menu
         static Texture2D btnHoverTexture;
         static SpriteFont mainMenuFont;
         static SpriteFont titleFont;
+        static SpriteFont titleFontBig;
 
         static Button btnPlay;
         static Button btnControls;
@@ -28,6 +31,8 @@ namespace Guus_Reise.Menu
         static Texture2D _guuBackroundMain;
 
         static GraphicsDeviceManager _graphics;
+
+        static Texture2D _guu;
 
         public static void Init(GraphicsDeviceManager graphics)
         {
@@ -43,21 +48,32 @@ namespace Guus_Reise.Menu
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             titleFont = content.Load<SpriteFont>("Fonts\\Jellee30");
+            titleFontBig = content.Load<SpriteFont>("Fonts\\Jellee50");
 
             _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
             _backroundMain = content.Load<Texture2D>("MainMenu\\backround");
             _guuBackroundMain = content.Load<Texture2D>("MainMenu\\Guu_Main");
+            _guu = content.Load<Texture2D>("Charakter\\Guu\\texGuuStartScreen");
 
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {   
             spriteBatch.Begin();
-            spriteBatch.Draw(_backroundMain, new Rectangle(0, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
-            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, 0, _backroundMain.Width, _backroundMain.Height), Color.White);
-            spriteBatch.Draw(_backroundMain, new Rectangle(0, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
-            spriteBatch.Draw(_backroundMain, new Rectangle(_backroundMain.Width, _backroundMain.Height, _backroundMain.Width, _backroundMain.Height), Color.White);
-            spriteBatch.Draw(_guuBackroundMain, new Rectangle(350, 100, 300, 300), Color.White);
-            spriteBatch.DrawString(titleFont, "Guus Reise", new Vector2(_backroundMain.Width - titleFont.MeasureString("Guus Reise").X/2, 25), Color.SkyBlue);
+            spriteBatch.Draw(_backroundMain, new Rectangle(0, 0,HexMap._graphicsDevice.Viewport.Width, HexMap._graphicsDevice.Viewport.Height), Color.White);
+            
+            //Unterscheidung FullScreen und kleiner Screen
+            if (_graphics.IsFullScreen == true)
+            {
+                spriteBatch.Draw(_guu, new Rectangle(600, 200, 600, 600), Color.White);
+                spriteBatch.DrawString(titleFontBig, "Guus Reise", new Vector2(HexMap._graphicsDevice.Viewport.Width - titleFont.MeasureString("Guus Reise").X * 6, 50), Color.SkyBlue);
+            }
+            else
+            {
+                spriteBatch.Draw(_guu, new Rectangle(350, 100, 300, 300), Color.White);
+                spriteBatch.DrawString(titleFont, "Guus Reise", new Vector2(HexMap._graphicsDevice.Viewport.Width - titleFont.MeasureString("Guus Reise").X * 3, 25), Color.SkyBlue);
+            }
+                
+           
             btnPlay.Draw(spriteBatch, mainMenuFont);
             btnControls.Draw(spriteBatch, mainMenuFont);
             btnCredits.Draw(spriteBatch, mainMenuFont);

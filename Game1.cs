@@ -7,6 +7,7 @@ using System.Linq;
 using Guus_Reise.Menu;
 using Guus_Reise.HexangonMap;
 using Guus_Reise.Animation;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
 
@@ -25,6 +26,7 @@ namespace Guus_Reise
 
         public static SpriteFont mainMenuFont;
 
+
         public static bool defaultValueSoundOn = false;
         
 
@@ -40,7 +42,8 @@ namespace Guus_Reise
             Exit,
             Credits,
             PlanetMenu,
-            MovementAnimation
+            MovementAnimation,
+            YouWon
         }
 
         private static GameState _state;
@@ -67,12 +70,14 @@ namespace Guus_Reise
             base.Initialize();
            
             MainMenu.Init(_graphics);
+            YouWon.Init();
             Credits.Init();  
             CharakterAnimationManager.Init(Content);            //CharakterAnimationManager muss VOR der HexMap initialisiert werden
             Weapon.LoadWeapons(Content);                        //Waffen müssen vor den Charakteren initialisert werden
             Skill.LoadSkills(Content);
             LevelHandler.InitContent(Content);
             HexMap.Init(Content, GraphicsDevice, _graphics);
+            InformationIcon.Init(GraphicsDevice);
             PlanetMenu.Init(_graphics);
             Fighthandler.Init(GraphicsDevice, Content);
             GameOver.Init(Content);
@@ -93,10 +98,13 @@ namespace Guus_Reise
             mainMenuFont = Content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
             MainMenu.LoadTexture(Content);
+            YouWon.LoadTexture(Content);
             PlanetMenu.LoadTexture(Content, _spriteBatch);
             Credits.LoadTexture(Content);
             HexMap.LoadContent(Content, _graphics);
+            InformationIcon.LoadTexture(Content);
             MovementAnimationManager.LoadTextures(Content, _spriteBatch);
+            FightPlayer._soundEffect = Content.Load<SoundEffect>("Sounds\\mixkit-knife-fast-hit-2184");
             
         }
 
@@ -111,7 +119,6 @@ namespace Guus_Reise
                     break;
                 case GameState.Controls:
                     Controls.Update(gameTime);
-          
                     break;
                 case GameState.Credits:
                     Credits.Update(gameTime);
@@ -133,6 +140,9 @@ namespace Guus_Reise
                     break;
                 case GameState.GameOver:
                     GameOver.Update(gameTime, GraphicsDevice);
+                    break;
+                case GameState.YouWon:
+                    YouWon.Update(gameTime);
                     break;
                 case GameState.Exit:
                     Exit();
@@ -179,7 +189,7 @@ namespace Guus_Reise
                     break;
                 case GameState.InGame:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    HexMap.DrawInGame(_spriteBatch, gameTime);
+                    HexMap.DrawInGame(_spriteBatch, gameTime, _graphics);
                     break;
                 case GameState.InFight:
                     GraphicsDevice.Clear(Color.Black);
@@ -193,9 +203,13 @@ namespace Guus_Reise
                     GraphicsDevice.Clear(Color.DarkBlue);
                     GameOver.Draw(_spriteBatch, gameTime);
                     break;
+                case GameState.YouWon:
+                    GraphicsDevice.Clear(Color.Blue);
+                    YouWon.Draw(_spriteBatch, gameTime);
+                    break;
                 case GameState.MovementAnimation:
                     GraphicsDevice.Clear(Color.CornflowerBlue);
-                    HexMap.DrawInGame(_spriteBatch, gameTime);
+                    HexMap.DrawInGame(_spriteBatch, gameTime, _graphics);
                     MovementAnimationManager.DrawMovementAnimation();
                     break;
                 default:

@@ -24,7 +24,7 @@ namespace Guus_Reise.Menu
         static AnimatedSprite[] planetButtonAnimations;
         static AnimatedButton[] planetButtons;
         static Button btnBack;
-        static Button btnLoadGame;
+        //static Button btnLoadGame;
         static List<string> listOfPlanets;
         static int indexOfSelectedPlanet;
 
@@ -46,7 +46,7 @@ namespace Guus_Reise.Menu
             _graphics = graphics;
             // here to insert Names of Planets
             List<string> planetNames = new List<string>{ "Planet 1", "Planet 2", "Planet 3"};
-            indexOfSelectedPlanet = (planetNames.Count) / 2;
+            indexOfSelectedPlanet = 0; //(planetNames.Count) / 2;
 
             // set Planet-Buttons
             planetButtons = new AnimatedButton[planetNames.Count];
@@ -58,7 +58,7 @@ namespace Guus_Reise.Menu
             planetButtons[indexOfSelectedPlanet].isFocused = true;
             bool test = planetButtons[indexOfSelectedPlanet].isFocused;
             // Set Button Back
-            btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
+           // btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
             btnBack = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800,20);
 
             // Set previous Keyboard State
@@ -195,7 +195,7 @@ namespace Guus_Reise.Menu
             // Draw Back-Button
             btnBack.Draw(spriteBatch, mainMenuFont);
 
-            btnLoadGame.Draw(spriteBatch, mainMenuFont);
+            //btnLoadGame.Draw(spriteBatch, mainMenuFont);
 
             // Draw Planet-Buttons
             foreach(AnimatedButton planet in planetButtons)
@@ -241,6 +241,19 @@ namespace Guus_Reise.Menu
             {
                 if (planet.IsClicked() == true && planet.isFocused || Keyboard.GetState().IsKeyDown(Keys.Enter) && planet.isFocused)
                 {
+                    switch (planet.Name)
+                    {
+                        case ("Planet 1"):
+                            LevelHandler.currentWorld = 1;
+                            break;
+                        case ("Planet 2"):
+                            LevelHandler.currentWorld = 2;
+                            break;
+                        case ("Planet 3"):
+                            LevelHandler.currentWorld = 3;
+                            break;
+                    }
+                    LevelHandler.FirstTimeCreation();
                     GState = GameState.InGame;
                     _soundOnButton.Play();
                 }
@@ -250,11 +263,11 @@ namespace Guus_Reise.Menu
                 GState = GameState.MainMenu;
                 _soundOnButton.Play();
             }
-            if(btnLoadGame.IsClicked() == true)
-            {
+           // if(btnLoadGame.IsClicked() == true)
+           // {
                 //TODO LOAD GAME
-                _soundOnButton.Play();
-            }
+               // _soundOnButton.Play();
+            //}
             _prevKeyState = Keyboard.GetState();
         }
 

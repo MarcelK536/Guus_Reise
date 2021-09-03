@@ -49,8 +49,9 @@ namespace Guus_Reise
         {
             spriteBatch.Begin();
             spriteBatch.DrawString(mainMenuFont, "Du spielst als Guu und möchtest von dem Planeten wegfliegen.", new Vector2(50, 150), Color.White);
-            spriteBatch.DrawString(mainMenuFont, "Tastatursteuerung: H - Charaktermenü, G - Levelziele", new Vector2(50, 200), Color.White);
-            spriteBatch.DrawString(mainMenuFont, "Maussteuerung: Bewegen und Linksklicken - Spielfeld auswählen, Rechtsklick - Spielfeld abwählen", new Vector2(50, 250), Color.White);
+            spriteBatch.DrawString(mainMenuFont, "Mouse Controls: \n   -Left Click = Select Tile / Action \n   -Right Click = DeSelect Tile \n\n " +
+                    "Keyboard Controls: \n   -G = Show Level Goal\n   -H = Show Character Info\n -R = Center Map\n   -ESC - Quit Menu \n\n" +
+                    "Map Controls: \n   -W,A,S,D = Move Map\n   -Mouse Wheel = Zoom In / Out", new Vector2(50, 200), Color.White);
             btnMainMenu.Draw(spriteBatch, mainMenuFont);
             btnStartGame.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();
