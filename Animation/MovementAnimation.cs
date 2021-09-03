@@ -391,6 +391,14 @@ namespace Guus_Reise.Animation
                     Y = targetHex.Position.Y - oldNpcPos[index].Position.Y,
                     Z = targetHex.Position.Z - oldNpcPos[index].Position.Z
                 };
+                if (directionMovement == new Vector3(0, 0, 0))
+                {
+                    if(newNpcPos.Count == 1)
+                    {
+                        return;
+                    }
+                    continue;
+                }
                 Vector3 moveVector = NormOnLength(directionMovement, 0.01f);
                 currDirectionMovementList[index] = moveVector;
                 movingCharakter = targetHex.Charakter;
