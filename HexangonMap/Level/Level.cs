@@ -72,13 +72,23 @@ namespace Guus_Reise
             }
         }
 
-        public void AddNewCharacter(Hex[,] levelBoard, string[] charNames, bool[] canBefriended,  int[,] charStats, int[,] charPos)
+        public void AddNewCharacter(Hex[,] levelBoard, string[] charNames, bool[] canBefriended,  int[] ki, int[,] charPos)
         {
             List<Charakter> createdCharakters = new List<Charakter>();
             for (int i = 0; i < charNames.GetLength(0); i++)
             {
                 Hex currHex = levelBoard[charPos[i, 0], charPos[i, 1]];
-                Charakter currChar = new Charakter(charNames[i], charStats[i, 0], charStats[i, 1], currHex, CharakterAnimationManager.GetCharakterAnimation(charNames[i]));
+                int level;
+                if (LevelHandler._currentPlayableCharacters.Exists(e=>e.Name == "Guu")){
+                    int hilf = LevelHandler._currentPlayableCharacters.FindIndex(e => e.Name == "Guu");
+                    level = LevelHandler._currentPlayableCharacters[hilf].Level;
+                }
+                else
+                {
+                    int hilf = PlayableCharacters.FindIndex(e => e.Name == "Guu");
+                    level = playableCharacters[hilf].Level;
+                }
+                Charakter currChar = new Charakter(charNames[i], level, ki[i], currHex, CharakterAnimationManager.GetCharakterAnimation(charNames[i]));
                 currHex.Charakter = currChar;
                 currHex.Charakter.LogicalBoardPosition = currHex.LogicalPosition;
                 createdCharakters.Add(currChar);

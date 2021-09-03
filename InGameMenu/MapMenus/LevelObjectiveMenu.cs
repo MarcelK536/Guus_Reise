@@ -11,12 +11,12 @@ namespace Guus_Reise
         static SoundEffect _clickSound;
         public LevelObjectiveMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, direction, _clickSound)
         {
-            
+            needCloseBtn = false;
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2)-90,0);
             bkgPos = pos;
             btnClose.MoveButton(pos - Vector2.UnitX * btnClose.TextureDefault.Width);
-            menuHeight = menuFont.MeasureString("Placeholder").Y * HexMap.lvlObjectiveText.Length;
-            menuWidth = _graphicsDevice.Viewport.Width / 2;
+            menuHeight = btnClose.TextureDefault.Height;
+            menuWidth = 20;
         }
 
         public void Update(GameTime time)
@@ -25,10 +25,23 @@ namespace Guus_Reise
             {
                 Active = false;
             }
-            menuWidth = _graphicsDevice.Viewport.Width / 2 + 60;
-            pos.X = _graphicsDevice.Viewport.Width / 2 - 90;
             btnClose.MoveButton(pos - Vector2.UnitX * btnClose.TextureDefault.Width);
             bkgPos = pos;
+            if(menuHeight < textFont.MeasureString("Placeholder").Y * HexMap.lvlObjectiveText.Length)
+            {
+                menuHeight = textFont.MeasureString("Placeholder").Y * HexMap.lvlObjectiveText.Length;
+            }
+            else
+            {
+                menuHeight = btnClose.TextureDefault.Height;
+            }
+            foreach (string obj in HexMap.lvlObjectiveText) {
+                if(textFont.MeasureString(obj).X > menuWidth)
+                {
+                    menuWidth = textFont.MeasureString(obj + "   Status: false " ).X ;
+                }
+            }
+            pos.X = _graphicsDevice.Viewport.Width - HexMap.btSoundEinstellungen.TextureDefault.Width-10;
             SetBackgroundTexture(bkgColor);
         }
 
