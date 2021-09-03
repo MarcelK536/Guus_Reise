@@ -72,13 +72,13 @@ namespace Guus_Reise
                 btSoundEinstellungen.TextureHover = Game1.textureSoundButtonOff;
                 btSoundEinstellungen.TextureDefault = Game1.textureSoundButtonOff;
             }
-            bkgSoundIcon = new Texture2D(graphicsDevice, btSoundEinstellungen.TextureDefault.Width, btSoundEinstellungen.TextureDefault.Height);
+            bkgSoundIcon = new Texture2D(graphicsDevice,(int)(btSoundEinstellungen.TextureDefault.Width * btSoundEinstellungen.Scale)+10,(int)(btSoundEinstellungen.TextureDefault.Height * btSoundEinstellungen.Scale)+10);
             Color[] bkgSoundIconColor = new Color[bkgSoundIcon.Width * bkgSoundIcon.Height];
             for (int i = 0; i < bkgSoundIconColor.Length; i++)
             {
-                bkgSoundIconColor[i] = Color.GhostWhite * 1f;
+                bkgSoundIconColor[i] = Color.GhostWhite * 0.2f;
             }
-
+            bkgSoundIcon.SetData(bkgSoundIconColor);
             Player._prevMouseState = Mouse.GetState();
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
@@ -247,9 +247,9 @@ namespace Guus_Reise
 
             if(Game1.GState == Game1.GameState.InGame)
             {
-                Game1._spriteBatch.Begin();
+                Game1._spriteBatch.Begin(); 
+                Game1._spriteBatch.Draw(bkgSoundIcon, new Rectangle((int)btSoundEinstellungen.ButtonX-5, (int)btSoundEinstellungen.ButtonY-5, (int)bkgSoundIcon.Width, (int)bkgSoundIcon.Height), Color.White);
                 btSoundEinstellungen.Draw(Game1._spriteBatch, Game1.mainMenuFont);
-                spriteBatch.Draw(bkgSoundIcon,btSoundEinstellungen.GetPos(), Color.White);
                 Game1._spriteBatch.End();
             }
             

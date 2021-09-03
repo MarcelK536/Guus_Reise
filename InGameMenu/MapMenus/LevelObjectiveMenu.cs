@@ -31,17 +31,13 @@ namespace Guus_Reise
             {
                 menuHeight = textFont.MeasureString("Placeholder").Y * HexMap.lvlObjectiveText.Length;
             }
-            else
-            {
-                menuHeight = btnClose.TextureDefault.Height;
-            }
             foreach (string obj in HexMap.lvlObjectiveText) {
                 if(textFont.MeasureString(obj).X > menuWidth)
                 {
                     menuWidth = textFont.MeasureString(obj + "   Status: false " ).X ;
                 }
             }
-            pos.X = _graphicsDevice.Viewport.Width - HexMap.btSoundEinstellungen.TextureDefault.Width-10;
+            pos.X = _graphicsDevice.Viewport.Width - HexMap.btSoundEinstellungen.TextureDefault.Width - btnClose.TextureDefault.Width - 10;
             SetBackgroundTexture(bkgColor);
         }
 
