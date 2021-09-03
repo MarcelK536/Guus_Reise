@@ -18,7 +18,7 @@ namespace Guus_Reise.Menu
         static SpriteFont mainMenuFont;
 
         static Button btnMainMenu;
-        static Button btnLoadGame;
+        //static Button btnLoadGame;
 
         private static SoundEffect _soundOnButton;
 
@@ -29,7 +29,7 @@ namespace Guus_Reise.Menu
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
 
-            btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
+          //  btnLoadGame = new Button("Load Game", btnDefaultTexture, btnHoverTexture, 0.4f, 40, 20);
             btnMainMenu = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800, 20);
 
             _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
@@ -62,7 +62,7 @@ namespace Guus_Reise.Menu
 
             spriteBatch.DrawString(mainMenuFont, "Game Over", new Vector2(350, 250), Color.White, 0, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             btnMainMenu.Draw(spriteBatch,mainMenuFont);
-            btnLoadGame.Draw(spriteBatch, mainMenuFont);
+           // btnLoadGame.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();
         }
     }
