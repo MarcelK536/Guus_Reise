@@ -352,6 +352,7 @@ namespace Guus_Reise
             ++firsttimeCounter;
             if(firsttime == true)
             {
+                possibleMoves.Add(new Point(x, y));
                 firsttime = false;
                 StartGlow();
             }
