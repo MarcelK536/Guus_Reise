@@ -39,7 +39,6 @@ namespace Guus_Reise
             }
             return false;
         }
-
         /// <summary>
         /// The Objective is to fight all enemys
         /// </summary>
@@ -67,6 +66,15 @@ namespace Guus_Reise
         public static bool ObtainTeamMember(List<Charakter> team, Charakter who)
         {
             if (team.Contains(who))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool SurviveRounds(int curRound, int reachRound)
+        {
+            if(curRound == reachRound)
             {
                 return true;
             }
