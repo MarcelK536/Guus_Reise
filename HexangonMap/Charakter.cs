@@ -368,7 +368,7 @@ namespace Guus_Reise
         public int[] LevelToStats(String name, int level)
         {
             int[] stats = new int[14];
-            int fpoints = level * 3 + 37;
+            int fpoints = level * 3 + 15;
 
             switch (name)
             {
