@@ -28,6 +28,7 @@ namespace Guus_Reise
         public static Hex prevSoundHex;
 
         static Texture2D _backroundMain;
+        static Texture2D bkgSoundIcon;
         public static Button btSoundEinstellungen;
 
         private static Camera _camera;
@@ -71,7 +72,13 @@ namespace Guus_Reise
                 btSoundEinstellungen.TextureHover = Game1.textureSoundButtonOff;
                 btSoundEinstellungen.TextureDefault = Game1.textureSoundButtonOff;
             }
-            
+            bkgSoundIcon = new Texture2D(graphicsDevice, btSoundEinstellungen.TextureDefault.Width, btSoundEinstellungen.TextureDefault.Height);
+            Color[] bkgSoundIconColor = new Color[bkgSoundIcon.Width * bkgSoundIcon.Height];
+            for (int i = 0; i < bkgSoundIconColor.Length; i++)
+            {
+                bkgSoundIconColor[i] = Color.GhostWhite * 1f;
+            }
+
             Player._prevMouseState = Mouse.GetState();
             Player._prevKeyState = Keyboard.GetState();
             playerTurn = true;
@@ -242,6 +249,7 @@ namespace Guus_Reise
             {
                 Game1._spriteBatch.Begin();
                 btSoundEinstellungen.Draw(Game1._spriteBatch, Game1.mainMenuFont);
+                spriteBatch.Draw(bkgSoundIcon,btSoundEinstellungen.GetPos(), Color.White);
                 Game1._spriteBatch.End();
             }
             

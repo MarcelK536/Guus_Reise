@@ -83,10 +83,10 @@ namespace Guus_Reise
                     LevelDatabase.W1L2objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(7, 5), new Point(7, 4), new Point(8, 4), new Point(8, 5) });
                     break;
                 case (2, 1):
-                    LevelDatabase.W2L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(6, 1), new Point(7, 1), new Point(7, 2) });
+                    LevelDatabase.W2L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(0, 6), new Point(0, 7), new Point(1, 7) });
                     break;
                 case (2, 2):
-                    LevelDatabase.W2L2objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(11, 3), new Point(11, 4) });
+                    LevelDatabase.W2L2objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(3,11), new Point(4, 11) });
                     break;
                 case (3, 1):
                     LevelDatabase.W3L1objective[0] = LevelObjectives.SurviveRounds(LevelDatabase.W3L1curRound,LevelDatabase.W3L1reachRound) || LevelObjectives.EliminateAllEnemys(HexMap.npcs);
@@ -174,7 +174,7 @@ namespace Guus_Reise
             if(currentLevel+1 > maxLevel)
             {
                 currentLevel = 1;
-                if (currentWorld + 1 < maxWorld)
+                if (currentWorld + 1 >= maxWorld)
                 {
                     currentWorld += 1;
                 }
