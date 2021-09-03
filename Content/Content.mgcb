@@ -2559,6 +2559,18 @@
 /processorParam:Quality=Best
 /build:Sounds/mixkit-positive-interface-click-1112.wav
 
+#begin Sounds/mixkit-retro-arcade-game-over-470.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mixkit-retro-arcade-game-over-470.wav
+
+#begin Sounds/mixkit-video-game-win-2016.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mixkit-video-game-win-2016.wav
+
 #begin Sounds/paul_wave.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor

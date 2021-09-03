@@ -150,7 +150,7 @@ namespace Guus_Reise.Animation
             }
             UpdateAnimation();
         }
-
+        
         public void UpdateAnimation()
         {
             if (currentStep >= ablauf.Count)
