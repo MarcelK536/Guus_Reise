@@ -12,6 +12,7 @@ namespace Guus_Reise
     {
         Button btnLevelUp;
         Button btnSkillWechsel;
+        Button btnTalkSkillWechsel;
 
         GraphicsDevice graphics;
 
@@ -19,6 +20,7 @@ namespace Guus_Reise
         bool preClickState;
 
         SkillMenu skillMenu;
+        SkillMenu talkSkillMenu;
         public CharakterMenu(SpriteFont menuFont, GraphicsDevice graphicsDevice, SoundEffect clickSound) : base(new Vector2(), menuFont, graphicsDevice, SimpleMenu.BlendDirection.None, _clickSound)
         {
             graphics = graphicsDevice;
@@ -28,7 +30,7 @@ namespace Guus_Reise
             pos = new Vector2((_graphicsDevice.Viewport.Width / 2) -(int)(menuWidth / 2), (_graphicsDevice.Viewport.Height / 2) - (int)(menuHeight / 2));
             bkgPos = pos;
             btnClose.MoveButton(pos);
-            btnWidth = menuFont.MeasureString("Change Weapon ").X;
+            btnWidth = menuFont.MeasureString("Change Talk Skills ").X;
             Texture2D btnTexture = new Texture2D(graphicsDevice, (int)btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -40,6 +42,8 @@ namespace Guus_Reise
             menuButtons.Add(btnLevelUp);
             btnSkillWechsel = new Button("Change Skills", btnTexture, 1, btnLevelUp.GetPosBelow());
             menuButtons.Add(btnSkillWechsel);
+            btnTalkSkillWechsel = new Button("Change Talk Skills", btnTexture, 1, btnSkillWechsel.GetPosBelow());
+            menuButtons.Add(btnTalkSkillWechsel);
             _clickSound = clickSound;
 
         }
@@ -52,6 +56,7 @@ namespace Guus_Reise
             btnClose.MoveButton(pos);
             btnLevelUp.MoveButton(btnClose.GetPosBelow());
             btnSkillWechsel.MoveButton(btnLevelUp.GetPosBelow());
+            btnTalkSkillWechsel.MoveButton(btnSkillWechsel.GetPosBelow());
             SetBackgroundTexture(bkgColor);
 
             if (Active)
@@ -75,6 +80,10 @@ namespace Guus_Reise
                     {
                         skillMenu.Update(time);
                     }
+                    else if (talkSkillMenu != null && talkSkillMenu.Active)
+                    {
+                        talkSkillMenu.Update(time);
+                    }
                     else
                     {
                         if (btnClose.IsClicked())
@@ -86,6 +95,10 @@ namespace Guus_Reise
                             if (skillMenu != null)
                             {
                                 skillMenu.Active = false;
+                            }
+                            if(talkSkillMenu != null)
+                            {
+                                talkSkillMenu.Active = false;
                             }
                         }
                         if (HexMap._board[x, y].Charakter != null && HexMap._board[x, y].Charakter.IsNPC == false)
@@ -102,14 +115,32 @@ namespace Guus_Reise
                                 {
                                     skillMenu.Active = false;
                                 }
-                         
+                                if (talkSkillMenu != null)
+                                {
+                                    talkSkillMenu.Active = false;
+                                }
+
                             if (btnSkillWechsel.IsClicked())
                             {
 
                                 _clickSound.Play();
-                                skillMenu = new SkillMenu(Skill.skills, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None, _clickSound);
+                                skillMenu = new SkillMenu(HexMap._board[x,y].Charakter.SkillInv, btnSkillWechsel.GetPosRightOf(), textFont, graphics, SimpleMenu.BlendDirection.None, _clickSound);
                                 skillMenu.Active = !skillMenu.Active;
 
+                                if (talkSkillMenu != null)
+                                {
+                                    talkSkillMenu.Active = false;
+                                }
+                            }
+                            if (btnTalkSkillWechsel.IsClicked())
+                            {
+                                _clickSound.Play();
+                                talkSkillMenu = new SkillMenu(HexMap._board[x, y].Charakter.SkillInvTalk, btnTalkSkillWechsel.GetPosRightOf(), textFont, graphics, BlendDirection.None, _clickSound);
+                                talkSkillMenu.Active = !talkSkillMenu.Active;
+                                if (skillMenu != null)
+                                {
+                                    skillMenu.Active = false;
+                                }
                             }
                         }
                     }
@@ -162,6 +193,7 @@ namespace Guus_Reise
                         {
                             btnLevelUp.Draw(spriteBatch, textFont);
                             btnSkillWechsel.Draw(spriteBatch, textFont);
+                            btnTalkSkillWechsel.Draw(spriteBatch, textFont);
                         }
                         spriteBatch.End();
                     }
@@ -169,6 +201,10 @@ namespace Guus_Reise
                     if (skillMenu != null && skillMenu.Active)
                     {
                         skillMenu.Draw(spriteBatch);
+                    }
+                    if (talkSkillMenu != null && talkSkillMenu.Active)
+                    {
+                        talkSkillMenu.Draw(spriteBatch);
                     }
                 }
             }
