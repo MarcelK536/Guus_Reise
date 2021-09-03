@@ -15,6 +15,7 @@ namespace Guus_Reise
         private List<string> _killedEnemys = new List<string>();
         private List<string> _killedFriends = new List<string>();
         private List<string> _newFriends = new List<string>();
+        private List<string> _levelUp = new List<string>();
         private Dictionary<string, int> _earnedXP = new Dictionary<string,int>();
         private Dictionary<string, List<string>> _earnedWeapons = new Dictionary<string, List<string>>();
 
@@ -29,6 +30,7 @@ namespace Guus_Reise
         public List<string> NewFriends { get => _newFriends; set => _newFriends = value; }
         public Dictionary<string, int> EarnedXP { get => _earnedXP; set => _earnedXP = value; }
         public Dictionary<string, List<string>> EarnedWeapons { get => _earnedWeapons; set => _earnedWeapons = value; }
+        public List<string> LevelUp { get => _levelUp; set => _levelUp = value; }
 
         public FightResults(SpriteFont menuFont, GraphicsDevice graphicsDevice, BlendDirection direction) : base(new Vector2(), menuFont, graphicsDevice, direction, _clickSound)
         {
@@ -67,7 +69,7 @@ namespace Guus_Reise
             }
             foreach(string n in _newFriends)
             {
-                spriteBatch.DrawString(textFont, n + " joined the group.", textPos, Color.Green);
+                spriteBatch.DrawString(textFont, n + " joined the group.", textPos, Color.White);
                 textPos.Y += textFont.MeasureString("Placeholder").Y;
             }
             int pPos = 0;
@@ -77,7 +79,12 @@ namespace Guus_Reise
                 pPos++;
                 textPos.Y += textFont.MeasureString("Placeholder").Y;
             }
-            foreach(KeyValuePair<string,List<string>> weapons in _earnedWeapons)
+            foreach (string lvlUP in _levelUp)
+            {
+                spriteBatch.DrawString(textFont, lvlUP + " has gone up a level.", textPos, Color.White);
+                textPos.Y += textFont.MeasureString("Placeholder").Y;
+            }
+            foreach (KeyValuePair<string,List<string>> weapons in _earnedWeapons)
             {
                 spriteBatch.DrawString(textFont, weapons.Key + " found the weapon(s) " + string.Join(",",weapons.Value), textPos, Color.White);
                 textPos.Y += textFont.MeasureString("Placeholder").Y;

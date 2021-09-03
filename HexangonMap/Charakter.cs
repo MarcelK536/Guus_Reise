@@ -434,6 +434,7 @@ namespace Guus_Reise
                 winner.Level += hilf2;
                 winner.Fähigkeitspunkte += hilf2;
                 winner.XP += hilf;
+                Fighthandler.fightResults.LevelUp.Add(Name);
             }
             else
             {
