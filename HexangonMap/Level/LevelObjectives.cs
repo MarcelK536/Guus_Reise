@@ -74,7 +74,7 @@ namespace Guus_Reise
 
         public static bool SurviveRounds(int curRound, int reachRound)
         {
-            if(curRound == reachRound)
+            if(curRound >= reachRound)
             {
                 return true;
             }

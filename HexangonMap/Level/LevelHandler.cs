@@ -15,7 +15,7 @@ namespace Guus_Reise
         public static ContentManager contentLevel;
 
         public static int currentWorld = 1;
-        public static int currentLevel = 1;
+        public static int currentLevel = 2;
 
         readonly static int maxWorld = 3;
         readonly static int maxLevel = 2;
@@ -59,12 +59,12 @@ namespace Guus_Reise
                     activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L2npcNames, LevelDatabase.W2L2canBefriended, LevelDatabase.W2L2npcStats, LevelDatabase.W2L2npcPos);
                     return activeLevel;
                 case (3, 1):
-                    activeLevel = new Level(LevelDatabase.W3L1playerNames, LevelDatabase.W3L2canBefriended, LevelDatabase.W3L1playerStats, LevelDatabase.W3L1playerPos, LevelDatabase.W3L1tilemap, LevelDatabase.W3L1objectiveText, LevelDatabase.W3L1objective, contentLevel);
-                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L1npcNames, LevelDatabase.W2L1canBefriended, LevelDatabase.W2L1npcStats, LevelDatabase.W2L1npcPos);
+                    activeLevel = new Level(LevelDatabase.W3L1playerNames, LevelDatabase.W3L1canBefriended, LevelDatabase.W3L1playerStats, LevelDatabase.W3L1playerPos, LevelDatabase.W3L1tilemap, LevelDatabase.W3L1objectiveText, LevelDatabase.W3L1objective, contentLevel);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W3L1npcNames, LevelDatabase.W3L1canBefriended, LevelDatabase.W3L1npcStats, LevelDatabase.W3L1npcPos);
                     return activeLevel;
                 case (3, 2):
                     activeLevel = new Level(LevelDatabase.W3L2playerNames, LevelDatabase.W3L2canBefriended, LevelDatabase.W3L2playerStats, LevelDatabase.W3L2playerPos, LevelDatabase.W3L2tilemap, LevelDatabase.W3L2objectiveText, LevelDatabase.W3L2objective, contentLevel);
-                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W2L2npcNames, LevelDatabase.W2L2canBefriended, LevelDatabase.W2L2npcStats, LevelDatabase.W2L2npcPos);
+                    activeLevel.AddNewCharacter(activeLevel.Board, LevelDatabase.W3L2npcNames, LevelDatabase.W3L2canBefriended, LevelDatabase.W3L2npcStats, LevelDatabase.W3L2npcPos);
                     return activeLevel;
             }
 
@@ -100,6 +100,11 @@ namespace Guus_Reise
                     else
                     {
                         LevelDatabase.W3L2objective[0] = false;
+                    }
+                    LevelDatabase.W3L2objective[1] = HexMap.playableCharacter.Exists(c => c.Name == "Timmae");
+                    if(!(HexMap.playableCharacter.Exists(c=>c.Name == "Timmae") || HexMap.npcs.Exists(c => c.Name == "Timmae")))
+                    {
+                        Game1.GState = Game1.GameState.GameOver;
                     }
                     break;
             }

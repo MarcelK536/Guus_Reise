@@ -102,6 +102,12 @@ namespace Guus_Reise
                     // Movement Animation starten
                     MovementAnimationManager.Init("CharakterMovement", startHex, targetHex);
                     
+                    //Update TurnCounter for Level 3-1
+                    if(LevelHandler.currentLevel == 1 || LevelHandler.currentWorld == 3)
+                    {
+                        LevelDatabase.W3L1curRound++;
+                    }
+                    
                 }
                 if (fightTrue)
                 {
