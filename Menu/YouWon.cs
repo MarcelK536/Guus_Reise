@@ -35,9 +35,9 @@ namespace Guus_Reise.Menu
         {
             spriteBatch.Begin();
             spriteBatch.Draw(_backround, new Rectangle(0, 0, HexMap._graphicsDevice.Viewport.Width, HexMap._graphicsDevice.Viewport.Height), Color.White);
-            spriteBatch.Draw(_guu, new Rectangle(250, 100, 450, 450), Color.White);
+            spriteBatch.Draw(_guu, new Rectangle(250, 150, 450, 450), Color.White);
 
-            spriteBatch.DrawString(screenFont, "You Won", new Vector2(375, 50), Color.Yellow);
+            spriteBatch.DrawString(screenFont, "Great! You sent Guu back to his home galaxy", new Vector2(75, 100), Color.Yellow);
             btnMainMenu.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();
         }
