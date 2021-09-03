@@ -5,8 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Audio;
+
 
 namespace Guus_Reise
 {
@@ -15,6 +15,9 @@ namespace Guus_Reise
         Button btnGiveUp;
         Button btnAttack;
         Button btnCancelAttack;
+
+        Texture2D btnDefaultTexture;
+        Texture2D btnHoverTexture;
 
         Button btnExit;
         Button btnSave;
@@ -87,9 +90,11 @@ namespace Guus_Reise
             boxCount = new int[2];
 
             _isInModeWeaponEdit = false;
-           
 
-            btnWidth = menuFont.MeasureString("Change Weapon").X + 10;
+            btnAttack = new Button("Attack", btnDefaultTexture, btnHoverTexture, 0.4f, _graphicsDevice.Viewport.Width - 150, Fighthandler.hoeheArena + 20);
+            btnGiveUp = new Button("Give Up", btnDefaultTexture, btnHoverTexture, 0.4f, _graphicsDevice.Viewport.Width - 150, Fighthandler.hoeheArena + 50) ;
+
+            btnWidth = menuFont.MeasureString("Change Weapon").X + 50;
             Texture2D btnTexture = new Texture2D(graphicsDevice,(int) btnWidth, 50);
             Color[] btnColor = new Color[btnTexture.Width * btnTexture.Height];
             for (int i = 0; i < btnColor.Length; i++)
@@ -97,8 +102,6 @@ namespace Guus_Reise
                 btnColor[i] = Color.Red * 0.8f;
             }
             btnTexture.SetData(btnColor);
-
-            btnAttack = new Button("Attack", btnTexture, 1, pos);
 
             //Speicher und Abbruch-Buttons für die Waffen-Bearbeitung
             btnExit = new Button("", InformationComponents.texExit, 0.2f, pos);
@@ -116,7 +119,7 @@ namespace Guus_Reise
 
 
             menuButtons.Add(btnAttack);
-            btnGiveUp = new Button("Give Up", btnTexture, 1, btnAttack.GetPosBelow());
+            //btnGiveUp = new Button("Give Up", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnGiveUp);
             btnCancelAttack = new Button("Cancel Attack", btnTexture, 1, btnAttack.GetPos());
             menuButtons.Add(btnCancelAttack);
@@ -142,6 +145,8 @@ namespace Guus_Reise
             textureEditbuttonHover = content.Load<Texture2D>("Buttons\\pencilHover");
             _clickSound = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
 
+            btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
+            btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover"); ;
 
 
             Texture2D platzhalterFight = content.Load<Texture2D>("Fight\\Weapon\\platzhalterFight");
@@ -401,6 +406,13 @@ namespace Guus_Reise
                 btnRight.ButtonX = _graphicsDevice.Viewport.Width - 150;
                 btnRight.ButtonY = _graphicsDevice.Viewport.Height - 150;
 
+                btnAttack.Scale = 0.5f;
+                btnGiveUp.Scale = 0.5f;
+                btnAttack.ButtonX = _graphicsDevice.Viewport.Width - 1100;
+                btnAttack.ButtonY = _graphicsDevice.Viewport.Height - 450;
+                btnGiveUp.ButtonX = _graphicsDevice.Viewport.Width - 1100;
+                btnGiveUp.ButtonY = _graphicsDevice.Viewport.Height - 300;
+
             }
             else
             {
@@ -410,6 +422,13 @@ namespace Guus_Reise
                 btnLeft.ButtonY = _graphicsDevice.Viewport.Height - 80;
                 btnRight.ButtonX = _graphicsDevice.Viewport.Width - 75;
                 btnRight.ButtonY = _graphicsDevice.Viewport.Height - 80;
+
+                btnAttack.Scale = 0.32f;
+                btnGiveUp.Scale = 0.32f;
+                btnAttack.ButtonX = _graphicsDevice.Viewport.Width - 600;
+                btnAttack.ButtonY = _graphicsDevice.Viewport.Height - 230;
+                btnGiveUp.ButtonX = _graphicsDevice.Viewport.Width - 600;
+                btnGiveUp.ButtonY = _graphicsDevice.Viewport.Height - 160;
             }
 
             // Test if an swipe in left or right direktion was initialized
@@ -535,8 +554,7 @@ namespace Guus_Reise
 
             bkgPos.Y = Fighthandler.hoeheArena;
             menuWidth = _graphicsDevice.Viewport.Width;
-            btnAttack.MoveButton(btnClose.GetPosBelow());
-            btnGiveUp.MoveButton(btnAttack.GetPosBelow());
+            
 
             if ((attackMenu != null && attackMenu.Active)|| FightPlayer.isSelecting == true)
             {
