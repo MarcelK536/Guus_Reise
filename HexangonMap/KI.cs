@@ -92,6 +92,10 @@ namespace Guus_Reise
                             HexMap._board[move.X, move.Y].Charakter.LogicalPosition = charakter.LogicalPosition;
                             charakter.LogicalPosition = move;
                         }
+                        else
+                        {
+                            npcNewHex.Add(HexMap._board[charakter.LogicalPosition.X, charakter.LogicalPosition.Y]);
+                        }
                         charakter.CanMove = false;
                         break;
                     case 4: //patroulliert bis der Spieler sich in gewisser Reichweite befindet

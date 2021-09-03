@@ -179,7 +179,7 @@ namespace Guus_Reise
             if(currentLevel+1 > maxLevel)
             {
                 currentLevel = 1;
-                if (currentWorld + 1 >= maxWorld)
+                if (currentWorld + 1 <= maxWorld)
                 {
                     currentWorld += 1;
                 }

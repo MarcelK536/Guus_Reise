@@ -19,10 +19,10 @@ namespace Guus_Reise
                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 },
                                                                   { 1, 1, 1, 1, 2, 2, 2, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
         public readonly static int[,] W1L1playerStats = new int[,] { { 5, 0, 20, 8, 8, 8, 8, 8, 8, 8, 5, 5, 5 } };
-        public readonly static int[] W1L1npcStats = new int[] { 2 , 2, 2 };
+        public readonly static int[] W1L1npcStats = new int[] { 2, 2, 2 };
         public readonly static int[,] W1L1npcPatroulPoints = new int[,] { { 1, 1 }, { 4, 1 }, { 4, 4 }, { 1, 4 } };
         public readonly static string[] W1L1playerNames = new string[] { "Guu"};       //input Array für Namen
-        public readonly static string[] W1L1npcNames = new string[] {"Bully", "Paul","Bully" };
+        public readonly static string[] W1L1npcNames = new string[] { "Bully", "Paul","Bully" };
         public readonly static bool[] W1L1canBefriended = new bool[] { false, true, false };
         public readonly static int[,] W1L1playerPos = new int[,] { { 0, 1 } };   //input Array für Positionen
         public readonly static int[,] W1L1npcPos = new int[,] { { 5, 4 }, { 4, 2 },{ 0, 5 } };
