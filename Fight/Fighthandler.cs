@@ -213,6 +213,7 @@ namespace Guus_Reise
                 }
             }
             newTeamMember.Clear();
+            FightMenu.DeactivateAllOtherMenus(null);
             Player.activeTile.IsActive = false;
             Player.activeTile = null;
             HexMap.activeHex = null;

@@ -83,7 +83,24 @@ namespace Guus_Reise
                     LevelDatabase.W1L2objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(7, 5), new Point(7, 4), new Point(8, 4), new Point(8, 5) });
                     break;
                 case (2, 1):
-
+                    LevelDatabase.W2L1objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(6, 1), new Point(7, 1), new Point(7, 2) });
+                    break;
+                case (2, 2):
+                    LevelDatabase.W2L2objective[0] = LevelObjectives.GoToHexAny(HexMap.playableCharacter, new List<Point>() { new Point(11, 3), new Point(11, 4) });
+                    break;
+                case (3, 1):
+                    LevelDatabase.W3L1objective[0] = LevelObjectives.SurviveRounds(LevelDatabase.W3L1curRound,LevelDatabase.W3L1reachRound) || LevelObjectives.EliminateAllEnemys(HexMap.npcs);
+                    break;
+                case (3, 2):
+                    var character = HexMap.playableCharacter.Find(c => c.Name == "characterName");
+                    if (character != null)
+                    {
+                        LevelDatabase.W3L2objective[0] = LevelObjectives.GoToHexSpecific(character, new List<Point>() { new Point(11, 0), new Point(11, 1), new Point(11, 2), new Point(11, 3), new Point(10, 0), new Point(10, 1), new Point(9, 0) });
+                    }
+                    else
+                    {
+                        LevelDatabase.W3L2objective[0] = false;
+                    }
                     break;
             }
         }
