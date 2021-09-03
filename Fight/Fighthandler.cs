@@ -340,27 +340,43 @@ namespace Guus_Reise
         public static void LoseFight()
         {
             bool guuDead = true;
-            if (playerTiles.Find(c => c.Charakter.Name == "Guu") != null)
-            {
-                foreach (Hex h in playerTiles)
-                {
-                    if (h.Charakter != null && h.Charakter.Name == "Guu")
-                    {
-                        guuDead = false;
-                    }
-                }
 
-                if (guuDead == true)
+            if (playerTiles.All(c => c.Charakter == null))
+            {
+                if (HexMap.playableCharacter.Exists(c => c.Name == "Guu"))
                 {
-                    fightResults.gameOver = true;
                     showFightResults = true;
+                }
+                else
+                {
+                    showFightResults = true;
+                    fightResults.gameOver = true;
                 }
             }
             else
             {
-                if(playerTiles.Count == 0)
+                if (playerTiles.Exists(c => c.Charakter.Name == "Guu"))
                 {
-                    showFightResults = true;
+                    foreach (Hex h in playerTiles)
+                    {
+                        if (h.Charakter != null && h.Charakter.Name == "Guu")
+                        {
+                            guuDead = false;
+                        }
+                    }
+
+                    if (guuDead == true)
+                    {
+                        fightResults.gameOver = true;
+                        showFightResults = true;
+                    }
+                }
+                else
+                {
+                    if (playerTiles.Count == 0)
+                    {
+                        showFightResults = true;
+                    }
                 }
             }
         }
