@@ -436,6 +436,7 @@ namespace Guus_Reise
                 if (turnBar.ReturnCurrentCharakter().IsNPC == false)
                 {
                     fightMenu.Draw(spriteBatch);
+                   
                 }
 
 
