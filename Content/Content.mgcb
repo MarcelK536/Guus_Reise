@@ -1095,33 +1095,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika.spritefont
 
-#begin Fonts/Aika.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Aika.spritefont
-
 #begin Fonts/Aika12.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Aika12.spritefont
-
-#begin Fonts/Aika12.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Aika12.spritefont
-
-#begin Fonts/Aika20.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Aika20.spritefont
 
 #begin Fonts/Aika20.spritefont
 /importer:FontDescriptionImporter
@@ -1137,33 +1116,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Fantasma.spritefont
 
-#begin Fonts/Fantasma.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Fantasma.spritefont
-
 #begin Fonts/GemunuLibre.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/GemunuLibre.spritefont
-
-#begin Fonts/GemunuLibre.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/GemunuLibre.spritefont
-
-#begin Fonts/Inclitodo.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Inclitodo.spritefont
 
 #begin Fonts/Inclitodo.spritefont
 /importer:FontDescriptionImporter
@@ -1179,20 +1137,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Inclitodo12.spritefont
 
-#begin Fonts/Inclitodo12.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Inclitodo12.spritefont
-
-#begin Fonts/Inclitodo15.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Inclitodo15.spritefont
-
 #begin Fonts/Inclitodo15.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -1207,33 +1151,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Inclitodo30.spritefont
 
-#begin Fonts/Inclitodo30.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Inclitodo30.spritefont
-
 #begin Fonts/Jellee20.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Jellee20.spritefont
-
-#begin Fonts/Jellee20.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Jellee20.spritefont
-
-#begin Fonts/Jellee30.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Jellee30.spritefont
 
 #begin Fonts/Jellee30.spritefont
 /importer:FontDescriptionImporter
@@ -1315,6 +1238,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/mixkit-positive-interface-click-1112.wav
+
+#begin Sounds/mixkit-retro-arcade-game-over-470.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mixkit-retro-arcade-game-over-470.wav
+
+#begin Sounds/mixkit-video-game-win-2016.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/mixkit-video-game-win-2016.wav
 
 #begin Sounds/paul_wave.mp3
 /importer:Mp3Importer

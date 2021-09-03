@@ -14,6 +14,7 @@ namespace Guus_Reise.Menu
 
         static Texture2D btnDefaultTexture;
         static Texture2D btnHoverTexture;
+        static Texture2D _backround;
         static SpriteFont mainMenuFont;
 
         static Button btnMainMenu;
@@ -32,6 +33,8 @@ namespace Guus_Reise.Menu
             btnMainMenu = new Button("Back", btnDefaultTexture, btnHoverTexture, 0.4f, 800, 20);
 
             _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
+
+            _backround = content.Load<Texture2D>("MainMenu\\backround");
         }
 
         internal static void Update(GameTime gameTime, GraphicsDevice graphicsDevice)
@@ -53,7 +56,11 @@ namespace Guus_Reise.Menu
         internal static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(mainMenuFont, "Game Over", new Vector2(150, 150), Color.White);
+
+            spriteBatch.Draw(_backround, new Rectangle(0, 0, HexMap._graphicsDevice.Viewport.Width, HexMap._graphicsDevice.Viewport.Height), Color.White);
+           
+
+            spriteBatch.DrawString(mainMenuFont, "Game Over", new Vector2(350, 250), Color.White, 0, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             btnMainMenu.Draw(spriteBatch,mainMenuFont);
             btnLoadGame.Draw(spriteBatch, mainMenuFont);
             spriteBatch.End();

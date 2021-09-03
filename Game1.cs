@@ -18,7 +18,12 @@ namespace Guus_Reise
         public static GraphicsDeviceManager _graphics;
         public static SpriteBatch _spriteBatch;
         private static KeyboardState _prevKeyState;
+        static SoundEffect _gameOverSound;
+        static SoundEffect _youWonSound;
         private static Song _mainMenuSong;
+
+        bool _preStateSoundGO;
+        bool _preStateSoundWin;
 
         public static Texture2D textureSoundButton;
         public static Texture2D textureSoundButtonOff;
@@ -68,6 +73,8 @@ namespace Guus_Reise
             _graphics.PreferredBackBufferHeight = 600;
             _graphics.ApplyChanges();
             base.Initialize();
+            _preStateSoundGO = false;
+            _preStateSoundWin = false;
            
             MainMenu.Init(_graphics);
             YouWon.Init();
@@ -105,6 +112,8 @@ namespace Guus_Reise
             InformationIcon.LoadTexture(Content);
             MovementAnimationManager.LoadTextures(Content, _spriteBatch);
             FightPlayer._soundEffect = Content.Load<SoundEffect>("Sounds\\mixkit-knife-fast-hit-2184");
+            _gameOverSound = Content.Load<SoundEffect>("Sounds\\mixkit-retro-arcade-game-over-470");
+            _youWonSound = Content.Load<SoundEffect>("Sounds\\mixkit-video-game-win-2016");
             
         }
 
@@ -139,9 +148,19 @@ namespace Guus_Reise
                     Fighthandler.Update(gameTime, GraphicsDevice);
                     break;
                 case GameState.GameOver:
+                    if (!_preStateSoundGO)
+                    {
+                        _gameOverSound.Play();
+                        _preStateSoundGO = true;
+                    }
                     GameOver.Update(gameTime, GraphicsDevice);
                     break;
                 case GameState.YouWon:
+                    if (!_preStateSoundWin)
+                    {
+                        _youWonSound.Play();
+                        _preStateSoundWin = true;
+                    }
                     YouWon.Update(gameTime);
                     break;
                 case GameState.Exit:

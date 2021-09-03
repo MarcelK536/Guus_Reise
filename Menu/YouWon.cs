@@ -13,6 +13,7 @@ namespace Guus_Reise.Menu
         static Button btnMainMenu;
         static Texture2D btnDefaultTexture;
         static Texture2D btnHoverTexture;
+        static Texture2D _backround;
 
         public static void Init()
         {
@@ -24,11 +25,14 @@ namespace Guus_Reise.Menu
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             screenFont = content.Load<SpriteFont>("Fonts\\Jellee30");
+            _backround = content.Load<Texture2D>("MainMenu\\backround");
         }
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(screenFont, "You Won", btnMainMenu.GetPosBelow(), Color.Yellow);
+            spriteBatch.Draw(_backround, new Rectangle(0, 0, HexMap._graphicsDevice.Viewport.Width, HexMap._graphicsDevice.Viewport.Height), Color.White);
+
+            spriteBatch.DrawString(screenFont, "You Won", btnMainMenu.GetPosBelow(), Color.Yellow, 0, Vector2.Zero, 2f, SpriteEffects.None, 0f);
             btnMainMenu.Draw(spriteBatch, screenFont);
             spriteBatch.End();
         }
