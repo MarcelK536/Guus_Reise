@@ -296,8 +296,41 @@ namespace Guus_Reise
                         break;
                 }
             }
-            this.WeaponInv.Add(Weapon.weapons[0]);
-            this.WeaponInvTalk.Add(Weapon.weapons[7]);
+            switch (name)
+            {
+                case "Bully":
+                    this.WeaponInv.Add(Weapon.weapons[2]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[7]);
+                    break;
+                case "Heavyweight":
+                    this.WeaponInv.Add(Weapon.weapons[1]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[7]);
+                    break;
+                case "Preacher":
+                    this.WeaponInv.Add(Weapon.weapons[4]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[8]);
+                    break;
+                case "Politician":
+                    this.WeaponInv.Add(Weapon.weapons[5]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[9]);
+                    break;
+                case "Assassin":
+                    this.WeaponInv.Add(Weapon.weapons[6]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[10]);
+                    break;
+                case "Daydreamer":
+                    this.WeaponInv.Add(Weapon.weapons[3]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[11]);
+                    break;
+                case "old_man":
+                    this.WeaponInv.Add(Weapon.weapons[2]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[8]);
+                    break;
+                default:
+                    this.WeaponInv.Add(Weapon.weapons[0]);
+                    this.WeaponInvTalk.Add(Weapon.weapons[7]);
+                    break;
+            }           
             this.Weapon = this.WeaponInv[0];
             this.WeaponTalkFight = this.WeaponInvTalk[0];
 
