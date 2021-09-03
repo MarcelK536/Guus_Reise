@@ -29,7 +29,7 @@ namespace Guus_Reise
 
             UpdateBarTexture(graphicsDevice);
             barPos.X = graphicsDevice.Viewport.Width / 2 - barTexture.Width / 2;
-            barPos.Y = 50;
+            barPos.Y = graphicsDevice.Viewport.Height - 80;
 
             charPos = barPos + Vector2.UnitY * barPos.Y;
             foreach(Hex hex in players)
@@ -136,12 +136,20 @@ namespace Guus_Reise
         public void Update(GraphicsDevice graphicsDevice)
         {
             UpdateBarTexture(graphicsDevice);
+            if (Game1._graphics.IsFullScreen == true)
+            {
+                barPos.Y = graphicsDevice.Viewport.Height - 100;
+
+            }
+            else
+            {
+                barPos.Y = graphicsDevice.Viewport.Height - 80;
+            }
             barPos.X = graphicsDevice.Viewport.Width / 2 - barTexture.Width / 2;
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             spriteBatch.Draw(barTexture, barPos, Color.White);
             foreach(Charakter c in NextTurn){
                 //TODO Charaktere haben kein abrufbares Standbild --> spriteBatch.Draw(c.Picture, charPos, Color.White);
@@ -149,7 +157,6 @@ namespace Guus_Reise
                 charPos += Vector2.UnitX * barFont.MeasureString(c.Name + " ");
             }
             charPos = barPos;
-            spriteBatch.End();
         }
 
     }

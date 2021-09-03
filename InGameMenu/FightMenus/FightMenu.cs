@@ -884,7 +884,7 @@ namespace Guus_Reise
                     {
                         spriteBatch.DrawString(textFont, "If you give up, you will get a penalty", btnGiveUp.GetTextPosRightOf(), Color.Yellow);
                     }
-
+                    Fighthandler.turnBar.Draw(spriteBatch);
                     spriteBatch.End();
                     break;
                 
