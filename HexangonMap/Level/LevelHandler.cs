@@ -15,7 +15,7 @@ namespace Guus_Reise
         public static ContentManager contentLevel;
 
         public static int currentWorld = 1;
-        public static int currentLevel = 2;
+        public static int currentLevel = 1;
 
         readonly static int maxWorld = 3;
         readonly static int maxLevel = 2;
