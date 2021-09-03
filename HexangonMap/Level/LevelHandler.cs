@@ -17,8 +17,8 @@ namespace Guus_Reise
         public static int currentWorld = 1;
         public static int currentLevel = 1;
 
-        readonly static int maxWorld = 3;
-        readonly static int maxLevel = 2;
+        readonly static int maxWorld = 3; 
+        readonly static int maxLevel = 2; 
 
         public static Level activeLevel;
 
