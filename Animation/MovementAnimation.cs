@@ -95,6 +95,14 @@ namespace Guus_Reise.Animation
             {
                 var index = movingCharakters.IndexOf(charakter);
                 charakter.IsMoving = true;
+
+                //#Bug-Fix
+                if(newNpcPos[index].Charakter == null)
+                {
+                    Game1.GState = Game1.GameState.InGame;
+                    return;
+                }
+
                 charakter.CharakterAnimation.CharakterMovementPostion = newNpcPos[index].Charakter.CharakterAnimation.Translation + oldNpcPos[index].Position;
                 readyMatrix[index, 0] = false;
                 readyMatrix[index,1] = false;
@@ -112,6 +120,11 @@ namespace Guus_Reise.Animation
             {
                 foreach(Hex targetHex in newNpcPos)
                 {
+                    //#Bug-Fix
+                    if(targetHex.Charakter == null)
+                    {
+                        continue;
+                    }
                     targetHex.Charakter.CharakterAnimation.Update(gametime);
                 }
             }
@@ -316,6 +329,12 @@ namespace Guus_Reise.Animation
             {
                 foreach (Hex targetHex in newNpcPos)
                 {
+                    //#Bug-Fix
+                    if(targetHex.Charakter == null)
+                    {
+                        continue;
+                    }
+
                     if(targetHex.Charakter.IsMoving == true)
                     {
                         targetHex.Charakter.CharakterAnimation.DrawCharakterMovementPosition(_camera);

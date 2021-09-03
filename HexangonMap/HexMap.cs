@@ -356,15 +356,17 @@ namespace Guus_Reise
 
                 if (_board[x, y].Charakter != null && activeTile.LogicalPosition != new Point(x,y)) //erkennt andere charaktere
                 {
-                    if(_board[x, y].Charakter.IsNPC != activeTile.Charakter.IsNPC)
+                    if(activeTile.Charakter != null)
                     {
-                        _board[x, y].Tile.Color = new Vector3(4, 0, 0);
+                        if (_board[x, y].Charakter.IsNPC != activeTile.Charakter.IsNPC)
+                        {
+                            _board[x, y].Tile.Color = new Vector3(4, 0, 0);
+                        }
+                        else
+                        {
+                            _board[x, y].Tile.Color = new Vector3(0, 3, 0);
+                        }
                     }
-                    else
-                    {
-                        _board[x, y].Tile.Color = new Vector3(0, 3, 0);
-                    }
-                    
                     possibleMoves.Remove(new Point(x, y));
                 }
                 else
