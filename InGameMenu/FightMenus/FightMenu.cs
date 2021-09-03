@@ -170,11 +170,11 @@ namespace Guus_Reise
                 //NPCs
                 if (playerHex.Charakter.IsNPC)
                 {
-                    if (infoBoxesNPCs == null || infoBoxesPlayer.Length < fightTiles.Count)
+                    if (infoBoxesNPCs == null || infoBoxesNPCs.Length < fightTiles.Count)
                     {
                         infoBoxesNPCs = new CharakterBox[fightTiles.Count];
                     }
-                    if(weaponboxesNPCs == null || weaponboxesPlayer.Length < fightTiles.Count)
+                    if(weaponboxesNPCs == null || weaponboxesNPCs.Length < fightTiles.Count)
                     {
                         weaponboxesNPCs = new CharakterBox[fightTiles.Count];
                     }
