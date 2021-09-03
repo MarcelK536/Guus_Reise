@@ -9,8 +9,8 @@ namespace Guus_Reise
 {
     class LevelHandler
     {
-       static List<Charakter> _currentPlayableCharacters = new List<Charakter>();
-       static List<Charakter> _currentNPCs = new List<Charakter>();
+       public static List<Charakter> _currentPlayableCharacters = new List<Charakter>();
+       public static List<Charakter> _currentNPCs = new List<Charakter>();
 
         public static ContentManager contentLevel;
 

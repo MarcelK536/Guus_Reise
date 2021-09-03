@@ -109,15 +109,23 @@ namespace Guus_Reise
                 int zahl = rand.Next(100);
                 if (zahl < boi.CurrentFightStats[8] + 15)
                 {
-                    boi.WeaponInv.Add(clickedTile.Charakter.Weapon);
+                    if (!boi.WeaponInv.Exists(c => c.Name == (clickedTile.Charakter.Weapon.Name))){
+                        boi.WeaponInv.Add(clickedTile.Charakter.Weapon);
+                    }
+                    if(!boi.WeaponInvTalk.Exists(c=>c.Name == clickedTile.Charakter.WeaponTalkFight.Name))
+                    {
+                        boi.WeaponInvTalk.Add(clickedTile.Charakter.WeaponTalkFight);
+                    }                   
                     if (Fighthandler.fightResults.EarnedWeapons.ContainsKey(boi.Name))
                     {
                         Fighthandler.fightResults.EarnedWeapons[boi.Name].Add(clickedTile.Charakter.Weapon.Name);
+                        Fighthandler.fightResults.EarnedWeapons[boi.Name].Add(clickedTile.Charakter.WeaponTalkFight.Name);
                     }
                     else
                     {
                         Fighthandler.fightResults.EarnedWeapons.Add(boi.Name, new List<string> { clickedTile.Charakter.Weapon.Name });
-                    }   
+                        Fighthandler.fightResults.EarnedWeapons[boi.Name].Add(clickedTile.Charakter.WeaponTalkFight.Name);
+                    }
                 }
 
                 if (Fighthandler.fightResults.EarnedXP.ContainsKey(boi.Name))
