@@ -164,11 +164,11 @@ namespace Guus_Reise
                 //NPCs
                 if (playerHex.Charakter.IsNPC)
                 {
-                    if (infoBoxesNPCs == null)
+                    if (infoBoxesNPCs == null || infoBoxesPlayer.Length < fightTiles.Count)
                     {
                         infoBoxesNPCs = new CharakterBox[fightTiles.Count];
                     }
-                    if(weaponboxesNPCs == null)
+                    if(weaponboxesNPCs == null || weaponboxesPlayer.Length < fightTiles.Count)
                     {
                         weaponboxesNPCs = new CharakterBox[fightTiles.Count];
                     }
@@ -202,11 +202,11 @@ namespace Guus_Reise
                 //Player
                 else
                 {
-                    if (infoBoxesPlayer == null)
+                    if (infoBoxesPlayer == null || infoBoxesPlayer.Length < fightTiles.Count)
                     {
                         infoBoxesPlayer = new CharakterBox[fightTiles.Count];
                     }
-                    if (weaponboxesPlayer == null)
+                    if (weaponboxesPlayer == null|| weaponboxesPlayer.Length < fightTiles.Count)
                     {
                         weaponboxesPlayer = new Infobox[fightTiles.Count];
                     }

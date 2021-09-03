@@ -148,7 +148,11 @@ namespace Guus_Reise.Animation
             }
             else if(MovementAnimationManager.skip != null && MovementAnimationManager.skip.IsClicked())
             {
-                _clickSound.Play();
+                // #BugFix
+                if (_clickSound != null)
+                {
+                    _clickSound.Play();
+                }
                 ResetAnimation();
                 Game1.GState = Game1.GameState.InGame;
                 return;

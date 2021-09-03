@@ -212,6 +212,7 @@ namespace Guus_Reise
                     HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
                 }
             }
+            newTeamMember.Clear();
             Player.activeTile.IsActive = false;
             Player.activeTile = null;
             HexMap.activeHex = null;
@@ -248,7 +249,6 @@ namespace Guus_Reise
                 if (Keyboard.GetState().IsKeyDown(Keys.Q))
                 {
                     Fighthandler.fightResults.gaveUp = true;
-                    Fighthandler.showFightResults = true;
                     fightMenu.Active = false;
                     ExitFight();
                 }
@@ -339,18 +339,28 @@ namespace Guus_Reise
         public static void LoseFight()
         {
             bool guuDead = true;
-            foreach (Hex h in playerTiles)
+            if (playerTiles.Find(c => c.Charakter.Name == "Guu") != null)
             {
-                if(h.Charakter != null && h.Charakter.Name == "Guu")
+                foreach (Hex h in playerTiles)
                 {
-                    guuDead = false;
+                    if (h.Charakter != null && h.Charakter.Name == "Guu")
+                    {
+                        guuDead = false;
+                    }
+                }
+
+                if (guuDead == true)
+                {
+                    fightResults.gameOver = true;
+                    showFightResults = true;
                 }
             }
-
-            if(guuDead == true)
+            else
             {
-                fightResults.gameOver = true;
-                showFightResults = true;
+                if(playerTiles.Count == 0)
+                {
+                    showFightResults = true;
+                }
             }
         }
 
