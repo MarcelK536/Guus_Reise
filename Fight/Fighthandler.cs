@@ -199,8 +199,15 @@ namespace Guus_Reise
             }
             for(int i = npcTiles.Count-1; i >= 0; i--)
             {
-                Hex isNewFriend = newTeamMember.Find(e => e.LogicalPosition == npcTiles[i].LogicalPosition);
-                if (isNewFriend != null)
+                if (newTeamMember.Count > 0)
+                {
+                    Hex isNewFriend = newTeamMember.Find(e => e.LogicalPosition == npcTiles[i].LogicalPosition);
+                    if (isNewFriend != null)
+                    {
+                        HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
+                    }
+                }
+                else
                 {
                     HexMap._board[npcTiles[i].LogicalBoardPosition.X, npcTiles[i].LogicalBoardPosition.Y] = npcTiles[i];
                 }

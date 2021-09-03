@@ -146,7 +146,7 @@ namespace Guus_Reise.Animation
                 Game1.GState = Game1.GameState.InGame;
                 return;
             }
-            else if(MovementAnimationManager.skip.IsClicked())
+            else if(MovementAnimationManager.skip != null && MovementAnimationManager.skip.IsClicked())
             {
                 _clickSound.Play();
                 ResetAnimation();
@@ -300,7 +300,7 @@ namespace Guus_Reise.Animation
         public void Draw()
         {
             MovementAnimationManager._spriteBatch.Begin();
-            if (movingCharakter != null)
+            if (movingCharakter != null && MovementAnimationManager.skip != null)
             {
                 MovementAnimationManager.skip.Draw(MovementAnimationManager._spriteBatch, MovementAnimationManager.mainMenuFont);
             }
