@@ -39,7 +39,7 @@ namespace Guus_Reise
             menuButtons.Add(btnConfirm);
             btnAttack = new Button("Attack", btnTexture, 1, btnConfirm.GetPosBelow());
             menuButtons.Add(btnAttack);
-            btnInteract = new Button("Iteract", btnTexture, 1, btnAttack.GetPosBelow());
+            btnInteract = new Button("Interact", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnInteract);
            // btnSaveGame = new Button("Save", btnTexture, 1, btnAttack.GetPosBelow());
            // menuButtons.Add(btnSaveGame);
@@ -201,7 +201,7 @@ namespace Guus_Reise
                             btnInteract.Draw(spriteBatch, textFont);
                             if (btnAttack.IsHovered() && HexMap._board[Player.activeTile.LogicalPosition.X, Player.activeTile.LogicalPosition.Y].Charakter.GaveUp == true)
                             {
-                                spriteBatch.DrawString(textFont, "You cannot Interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
+                                spriteBatch.DrawString(textFont, "You cannot interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
                             }
                            // btnSaveGame.MoveButton(btnInteract.GetPosBelow());
                             btnQuitGame.MoveButton(btnInteract.GetPosBelow());

@@ -18,7 +18,7 @@ namespace Guus_Reise
                                                                   { 1, 1, 2, 1, 1, 1, 1, 2 },
                                                                  { 1, 1, 1, 1, 1, 1, 1, 1 },
                                                                   { 1, 1, 1, 1, 2, 2, 2, 1 } }; //input Array der die Art der Tiles für die map generierung angibt
-        public readonly static int[,] W1L1playerStats = new int[,] { { 5, 0, 15, 8, 8, 8, 8, 8, 8, 8, 5, 5, 5 } };
+        public readonly static int[,] W1L1playerStats = new int[,] { { 5, 0, 20, 8, 8, 8, 8, 8, 8, 8, 5, 5, 5 } };
         public readonly static int[] W1L1npcStats = new int[] { 2 , 2, 2 };
         public readonly static int[,] W1L1npcPatroulPoints = new int[,] { { 1, 1 }, { 4, 1 }, { 4, 4 }, { 1, 4 } };
         public readonly static string[] W1L1playerNames = new string[] { "Guu"};       //input Array für Namen
@@ -117,14 +117,14 @@ namespace Guus_Reise
                                                                   { 2, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 },
                                                                  { 2, 2, 6, 6, 6, 6, 6, 6, 6, 6, 8 },
                                                                   { 2, 2, 2, 2, 2, 6, 6, 6, 6, 8, 8 }}; //input Array der die Art der Tiles für die map generierung angibt
-        public readonly static int[,] W3L1playerStats = new int[,] { { 5, 0, 10, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
-        public readonly static int[] W3L1npcStats = new int[] { 2, 2, 3, 3, 3, 2, 2, 1 };
+        public readonly static int[,] W3L1playerStats = new int[,] { { 5, 0, 15, 5, 5, 5, 3, 3, 3, 5, 0, 5, 3 } };
+        public readonly static int[] W3L1npcStats = new int[] { 2, 2, 2, 3, 3, 3, 2, 2, 1 };
         public readonly static int[,] W3L1npcPatroulPoints = new int[,] { };
         public readonly static string[] W3L1playerNames = new string[] { "Guu" };       //input Array für Namen
-        public readonly static string[] W3L1npcNames = new string[] { "Bully", "Bully", "Daydreamer", "Daydreamer", "Assassin", "Preacher", "Preacher", "Politician" };
-        public readonly static bool[] W3L1canBefriended = new bool[] { false, false, false, false, false, false, false, false};
+        public readonly static string[] W3L1npcNames = new string[] {"Paul", "Bully", "Bully", "Daydreamer", "Daydreamer", "Assassin", "Preacher", "Preacher", "Politician" };
+        public readonly static bool[] W3L1canBefriended = new bool[] { true, false, false, false, false, false, false, false, false};
         public readonly static int[,] W3L1playerPos = new int[,] { { 5, 0 } };   //input Array für Positionen
-        public readonly static int[,] W3L1npcPos = new int[,] { { 1, 1 }, { 9, 1 }, { 4, 6 }, { 8, 6 }, { 1, 7 }, { 0, 10 }, { 8, 10 }, { 5, 5 } };
+        public readonly static int[,] W3L1npcPos = new int[,] { { 3, 3 }, { 1, 1 }, { 9, 1 }, { 4, 6 }, { 8, 6 }, { 1, 7 }, { 0, 10 }, { 8, 10 }, { 5, 5 } };
         public static int W3L1curRound = 0;
         public readonly static int W3L1reachRound = 10;
         public readonly static string[] W3L1objectiveText = { "Survive "+ W3L1reachRound+ " rounds. " + (W3L1reachRound - W3L1curRound) + " remaining." };
