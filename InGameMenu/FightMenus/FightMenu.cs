@@ -122,6 +122,7 @@ namespace Guus_Reise
             //btnGiveUp = new Button("Give Up", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnGiveUp);
             btnCancelAttack = new Button("Cancel Attack", btnTexture, 1, btnAttack.GetPos());
+            btnCancelAttack.ButtonY -= 50;
             menuButtons.Add(btnCancelAttack);
 
             //Eigenschaften vom Menu-Panel
@@ -518,7 +519,9 @@ namespace Guus_Reise
             {
                 if (btnAttack.IsClicked())
                 {
-                    attackMenu = new AttackMenu(btnAttack.GetPosRightOf(), textFont, graphics, BlendDirection.None);
+                    var posAttackMenu = btnAttack.GetPosRightOf();
+                    posAttackMenu.X -= 90;
+                    attackMenu = new AttackMenu(posAttackMenu, textFont, graphics, BlendDirection.None);
                     attackMenu.Active = true;
 
                     if(!preClickState[0])
@@ -900,7 +903,9 @@ namespace Guus_Reise
                     btnGiveUp.Draw(spriteBatch, textFont);
                     if (btnGiveUp.IsHovered())
                     {
-                        spriteBatch.DrawString(textFont, "If you give up, you will get a penalty", btnGiveUp.GetTextPosRightOf(), Color.Yellow);
+                        Vector2 posOfText = btnGiveUp.GetTextPosRightOf();
+                        posOfText.X -= 70;
+                        spriteBatch.DrawString(textFont, "If you give up, you will get a penalty", posOfText, Color.Yellow);
                     }
                     Fighthandler.turnBar.Draw(spriteBatch);
                     spriteBatch.End();
