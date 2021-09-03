@@ -14,14 +14,19 @@ namespace Guus_Reise
             double bestdmg = 0;
             int player = 0;
             Skill name = boi.Skill[0];
+            int hilf = 3;
+            if (Game1.GState == Game1.GameState.InTalkFight)
+            {
+                hilf = 6;
+            }
 
             foreach (Skill s in boi.Skill)
             {
                 for (int i = 0; i < Fighthandler.playerTiles.Count; i++)
                 {
-                    if (bestdmg < (basedmg * s.MoveValue) * (20.0 / (20 + Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3])))
+                    if (bestdmg < (basedmg * s.MoveValue) * (20.0 / (20 + Fighthandler.playerTiles[i].Charakter.CurrentFightStats[hilf])))
                     {
-                        bestdmg = (basedmg * s.MoveValue) * (20.0 / (20 + Fighthandler.playerTiles[i].Charakter.CurrentFightStats[3]));
+                        bestdmg = (basedmg * s.MoveValue) * (20.0 / (20 + Fighthandler.playerTiles[i].Charakter.CurrentFightStats[hilf]));
                         player = i;
                         name = s;
                     }
