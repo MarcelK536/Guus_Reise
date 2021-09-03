@@ -16,9 +16,6 @@ namespace Guus_Reise.Menu
         static Texture2D btnHoverTexture;
         static SpriteFont mainMenuFont;
 
-        static Texture2D referenzen;
-        static Texture2D referenzen2;
-
         static List<Texture2D> referenzenList;
 
 
@@ -38,12 +35,15 @@ namespace Guus_Reise.Menu
         public static void LoadTexture(ContentManager content)
         {
             btnDefaultTexture = content.Load<Texture2D>("Buttons\\B1");
-            referenzen = content.Load<Texture2D>("Buttons\\Referenzen");
-            referenzen2 = content.Load<Texture2D>("Buttons\\Referenzen2");
+            referenzenList = new List<Texture2D> 
+            {
+                content.Load<Texture2D>("Credits\\CreditsDanksagung"), content.Load<Texture2D>("Credits\\CreditsCharaktere"), content.Load<Texture2D>("Credits\\CreditsFonts"),
+                content.Load<Texture2D>("Credits\\CreditsHexagone"), content.Load<Texture2D>("Credits\\CreditsHintergruende"), content.Load<Texture2D>("Credits\\CreditsMusik"), 
+                content.Load<Texture2D>("Credits\\CreditsPlaneten"), content.Load<Texture2D>("Credits\\CreditsWeitereHinweise"), content.Load<Texture2D>("Credits\\CreditsCredits")
+            };
             btnHoverTexture = content.Load<Texture2D>("Buttons\\B1_hover");
             mainMenuFont = content.Load<SpriteFont>("MainMenu\\MainMenuFont");
             _soundOnButton = content.Load<SoundEffect>("Sounds\\mixkit-positive-interface-click-1112");
-            referenzenList = new List<Texture2D> { referenzen, referenzen2 };
             currentReferenzen = 0;
         }
 
