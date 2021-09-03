@@ -401,7 +401,7 @@ namespace Guus_Reise
         public int[] LevelToStats(String name, int level)
         {
             int[] stats = new int[14];
-            int fpoints = level * 3 + 15;
+            int fpoints = level + 30;
 
             switch (name)
             {
@@ -560,7 +560,7 @@ namespace Guus_Reise
 
         public int GainXp(Charakter winner, Charakter looser)
         {
-            int hilf = ((looser.Level - winner.Level) * 5) + 30;
+            int hilf = ((looser.Level - winner.Level) * 15) + 50;
             
             if (hilf < 0)
             {
