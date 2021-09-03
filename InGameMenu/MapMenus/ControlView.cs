@@ -17,11 +17,15 @@ namespace Guus_Reise
                     "Keyboard Controls: \n   -G = Show Level Goal\n   -H = Show Character Info\n -R = Center Map\n   -ESC - Quit Menu \n\n" +
                     "Map Controls: \n   -W,A,S,D = Move Map\n   -Mouse Wheel = Zoom In / Out");
             menuWidth = menuWH.X;
-            menuHeight = menuWH.Y;
+            menuHeight = menuWH.Y + btnClose.TextureDefault.Height+20 ;
+            SetBackgroundTexture(Color.GhostWhite, 0.9f);
         }
         public override void Update()
         {
-            base.Update();
+            if (btnClose.IsClicked())
+            {
+                Active = false;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

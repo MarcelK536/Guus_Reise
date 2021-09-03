@@ -27,12 +27,12 @@ namespace Guus_Reise
 
         public static void Init(GraphicsDevice _graphicsDevice)
         {
-            btnInfo = new Button("", infoIcon, 0.2f, new Vector2(_graphicsDevice.Viewport.Width - infoIcon.Width, _graphicsDevice.Viewport.Height - infoIcon.Height));
+            btnInfo = new Button("", infoIcon, 0.2f, new Vector2(_graphicsDevice.Viewport.Width - infoIcon.Width-5, _graphicsDevice.Viewport.Height - infoIcon.Height-5));
         }
 
         public void Update(GraphicsDevice _graphicsDevice)
         {
-            btnInfo.MoveButton(new Vector2(_graphicsDevice.Viewport.Width - infoIcon.Width*btnInfo.Scale, _graphicsDevice.Viewport.Height - infoIcon.Height*btnInfo.Scale));
+            btnInfo.MoveButton(new Vector2(_graphicsDevice.Viewport.Width - infoIcon.Width*btnInfo.Scale-5, _graphicsDevice.Viewport.Height - infoIcon.Height*btnInfo.Scale-5));
             Clear();
         }
 
