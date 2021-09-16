@@ -17,8 +17,6 @@ namespace Guus_Reise
         Button btnConfirm;
         Button btnAttack;
         Button btnInteract;
-       // Button btnSaveGame;
-        Button btnQuitGame;
         public bool fightTrue;
         public bool interactTrue;
         static SoundEffect _clickSound;
@@ -41,10 +39,6 @@ namespace Guus_Reise
             menuButtons.Add(btnAttack);
             btnInteract = new Button("Interact", btnTexture, 1, btnAttack.GetPosBelow());
             menuButtons.Add(btnInteract);
-           // btnSaveGame = new Button("Save", btnTexture, 1, btnAttack.GetPosBelow());
-           // menuButtons.Add(btnSaveGame);
-            btnQuitGame = new Button("Quit Game", btnTexture, 1, btnInteract.GetPosBelow());
-            menuButtons.Add(btnQuitGame);
 
             SetMenuHeight();
             SetMenuWidth();
@@ -55,7 +49,16 @@ namespace Guus_Reise
         public void Update(GameTime gametime)
         {
             base.Update();
-            menuHeight = btnQuitGame.GetPosBelow().Y;
+            menuHeight = btnConfirm.GetPosBelow().Y;
+            if (fightTrue)
+            {
+                menuHeight = btnAttack.GetPosBelow().Y;
+            }
+            if (interactTrue)
+            {
+                menuHeight = btnInteract.GetPosBelow().Y;
+            }
+
             SetBackgroundTexture(bkgColor);
             if (Active)
             {
@@ -67,15 +70,6 @@ namespace Guus_Reise
                     _clickSound.Play();
                     Active = false;
                 }
-                if (btnQuitGame.IsClicked())
-                {
-                    _clickSound.Play();
-                    Game1.GState = Game1.GameState.MainMenu;
-                }
-          /*      if (btnSaveGame.IsClicked())
-                {
-                    //TODO SAVE GAME
-                }*/
                 if (btnConfirm.IsClicked())
                 {
                     _clickSound.Play();
@@ -168,9 +162,7 @@ namespace Guus_Reise
 
                if (!fightTrue && !interactTrue)
                {
-                //    btnSaveGame.MoveButton(btnConfirm.GetPosBelow());
-                    btnQuitGame.MoveButton(btnConfirm.GetPosBelow());
-                }
+               }
                 else
                 {
                     if (fightTrue)
@@ -180,8 +172,6 @@ namespace Guus_Reise
                         {
                             spriteBatch.DrawString(textFont, "You cannot attack, because you gave up last fight. \nWait 1 Turn",btnAttack.GetTextPosRightOf(), Color.Yellow);
                         }
-                       // btnSaveGame.MoveButton(btnAttack.GetPosBelow());
-                        btnQuitGame.MoveButton(btnAttack.GetPosBelow());
                         if (interactTrue)
                         {
                             btnInteract.Draw(spriteBatch, textFont);
@@ -189,8 +179,6 @@ namespace Guus_Reise
                             {
                                 spriteBatch.DrawString(textFont, "You cannot interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
                             }
-                          //  btnSaveGame.MoveButton(btnInteract.GetPosBelow());
-                                btnQuitGame.MoveButton(btnInteract.GetPosBelow());
                         }
                     }
                     else
@@ -203,13 +191,9 @@ namespace Guus_Reise
                             {
                                 spriteBatch.DrawString(textFont, "You cannot interact, because you gave up last fight. \nWait 1 Turn", btnAttack.GetTextPosRightOf(), Color.Yellow);
                             }
-                           // btnSaveGame.MoveButton(btnInteract.GetPosBelow());
-                            btnQuitGame.MoveButton(btnInteract.GetPosBelow());
                         }
                     }
                 }
-                //btnSaveGame.Draw(spriteBatch, textFont);
-                btnQuitGame.Draw(spriteBatch, textFont);
                 spriteBatch.End();
             }
         }
