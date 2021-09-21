@@ -77,8 +77,8 @@ namespace Guus_Reise.Animation
 
         public MovementAnimation(string type, List<Hex> oldHex, List<Hex> newHex, List<Charakter> movednpcs)
         {
-
-            hexWithGuu = CharakterAnimationManager.CharakterAnimations[0]._hexagon;
+            Point guuPos = HexMap.playableCharacter.Find(x => x.Name == "Guu").LogicalBoardPosition;
+            hexWithGuu = HexMap._board[guuPos.X,guuPos.Y];
             oldNpcPos = oldHex;
             newNpcPos = newHex;
             movingCharakters = movednpcs;
