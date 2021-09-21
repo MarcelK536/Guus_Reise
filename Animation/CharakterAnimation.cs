@@ -99,7 +99,14 @@ namespace Guus_Reise.HexangonMap
             CharakterAnimation charakterAnimation = new CharakterAnimation(this._planeModel, this._texCharakter, this.idle, this.jump, this.walkLeft, this.walkRight, this.fightWeapons, this._standardIntervall, this._sm);
             charakterAnimation.Charakter = this.Charakter;
             charakterAnimation.Hexagon = this.Hexagon;
-            charakterAnimation.Translation = Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(Hexagon.TileRotation));
+            if (charakterAnimation.Hexagon != null)
+            {
+                charakterAnimation.Translation = Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(Hexagon.TileRotation));
+            }
+            else
+            {
+                charakterAnimation.Translation = this.translation;
+            }
             charakterAnimation.CharakterPostion = this.CharakterPostion;
             charakterAnimation.CharakterMovementPostion = this.CharakterMovementPostion;
             charakterAnimation._glow = this._glow;
