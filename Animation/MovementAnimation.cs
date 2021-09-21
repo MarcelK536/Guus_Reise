@@ -13,6 +13,7 @@ namespace Guus_Reise.Animation
 
         public Hex startHex;
         public Hex targetHex;
+        public Hex hexWithGuu;
 
         static SoundEffect _clickSound;
 
@@ -76,7 +77,8 @@ namespace Guus_Reise.Animation
 
         public MovementAnimation(string type, List<Hex> oldHex, List<Hex> newHex, List<Charakter> movednpcs)
         {
-            
+
+            hexWithGuu = CharakterAnimationManager.CharakterAnimations[0]._hexagon;
             oldNpcPos = oldHex;
             newNpcPos = newHex;
             movingCharakters = movednpcs;
@@ -86,7 +88,7 @@ namespace Guus_Reise.Animation
             switch (type)
             {
                 case "NPCMovement":
-                    ablauf = new List<string> { "FokusOnCenter", "Wait500", "CharakterMovementPlural" };
+                    ablauf = new List<string> { "FokusOnCenter", "Wait500", "CharakterMovementPlural", "Wait500", "FokusGuu" };
                     break;
             }
             currentStep = 0;
@@ -175,6 +177,12 @@ namespace Guus_Reise.Animation
                 if (ablauf[currentStep] == "FokusStartHex")
                 {
                     HexMap.visManager.SetFocusToHex(startHex, 6);
+                    currentStep++;
+                    isNewStep = true;
+                }
+                else if (ablauf[currentStep] == "FokusGuu")
+                {
+                    HexMap.visManager.SetFocusToHex(hexWithGuu, 6);
                     currentStep++;
                     isNewStep = true;
                 }

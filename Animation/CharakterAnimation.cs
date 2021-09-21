@@ -35,7 +35,7 @@ namespace Guus_Reise.HexangonMap
         //static List<Texture2D> moveFront;
         //static List<Texture2D> readyToFight;
 
-        Hex _hexagon;
+        public Hex _hexagon;
         Charakter _charakter;
         readonly Model _planeModel;
 
