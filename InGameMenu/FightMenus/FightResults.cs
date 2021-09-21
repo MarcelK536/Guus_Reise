@@ -125,8 +125,10 @@ namespace Guus_Reise
                 KilledEnemys.Clear();
                 KilledFriends.Clear();
                 EarnedXP.Clear();
+                EarnedWeapons.Clear();
                 NewFriends.Clear();
                 LevelUp.Clear();
+
             }
         }
 

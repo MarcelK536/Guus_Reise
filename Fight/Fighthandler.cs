@@ -355,7 +355,7 @@ namespace Guus_Reise
             }
             else
             {
-                if (playerTiles.Exists(c => c.Charakter.Name == "Guu"))
+                if (playerTiles.Exists(c => c.Charakter != null && c.Charakter.Name == "Guu"))
                 {
                     foreach (Hex h in playerTiles)
                     {
