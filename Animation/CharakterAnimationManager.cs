@@ -148,7 +148,7 @@ namespace Guus_Reise.Animation
                 //moveRight
                 //...
 
-
+                Random rnd = new Random();
                 charakterAnimations[indexCharakter] = new CharakterAnimation(planeModel, texCharakter, idle, jump, walkLeft, walkRight, fightWeapons, standardIntervall, _sm);  
             }
         }
@@ -156,7 +156,7 @@ namespace Guus_Reise.Animation
         public static CharakterAnimation GetCharakterAnimation(string name)
         {
             int index = charakterNames.IndexOf(name);
-            return charakterAnimations[index];
+            return charakterAnimations[index].Clone();
         }
     }
 }

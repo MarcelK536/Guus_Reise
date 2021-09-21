@@ -13,7 +13,7 @@ namespace Guus_Reise
         private Vector3 _fightPosition;
         private Point _logicalFightPosition;
         private int _tileRotation = 45; //Darf nur 0,45,90,135,180 sein
-        public static readonly int[] possibleRotations = { 0, 45, 135, 180 };
+        public static readonly int[] possibleRotations = { 45, 90, 135, 180 };
 
         private Tile _tile;
         private Charakter _charakter;

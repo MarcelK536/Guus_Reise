@@ -102,7 +102,7 @@ namespace Guus_Reise.Animation
                     Game1.GState = Game1.GameState.InGame;
                     return;
                 }
-
+                newNpcPos[index].Charakter.CharakterAnimation.Translation = Vector3.Transform(newNpcPos[index].Charakter.CharakterAnimation.DefaultTranslation, Matrix.CreateRotationZ(newNpcPos[index].TileRotation));
                 charakter.CharakterAnimation.CharakterMovementPostion = newNpcPos[index].Charakter.CharakterAnimation.Translation + oldNpcPos[index].Position;
                 readyMatrix[index, 0] = false;
                 readyMatrix[index,1] = false;

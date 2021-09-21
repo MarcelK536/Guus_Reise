@@ -56,9 +56,12 @@ namespace Guus_Reise.HexangonMap
 
         string _animationPlanner = "";
 
+        public int identifier;
+
 
         public CharakterAnimation(Model planeModel, Texture2D texCharakter, List<Texture2D> animIdle, List<Texture2D> animJump, List<Texture2D> animWalkLeft, List<Texture2D> animWalkRight, List<Texture2D> animFightWeapons,  float standardintervall, SoundManager sm)
         {
+
             _standardIntervall = standardintervall;
             idle = animIdle;
             jump = animJump;
@@ -89,6 +92,21 @@ namespace Guus_Reise.HexangonMap
             _charakterMovementPostion = _charakterPostion + Translation;
             _glow = new Vector3(0.1f, 0.1f, 0.1f);
             _color = new Vector3(0, 0, 0);
+        }
+
+        public CharakterAnimation Clone()
+        {
+            CharakterAnimation charakterAnimation = new CharakterAnimation(this._planeModel, this._texCharakter, this.idle, this.jump, this.walkLeft, this.walkRight, this.fightWeapons, this._standardIntervall, this._sm);
+            charakterAnimation.Charakter = this.Charakter;
+            charakterAnimation.Hexagon = this.Hexagon;
+            charakterAnimation.Translation = Vector3.Transform(defaultTranslation, Matrix.CreateRotationY(Hexagon.TileRotation));
+            charakterAnimation.CharakterPostion = this.CharakterPostion;
+            charakterAnimation.CharakterMovementPostion = this.CharakterMovementPostion;
+            charakterAnimation._glow = this._glow;
+            charakterAnimation._color = this._color;
+            Random rnd = new Random();
+            charakterAnimation.identifier = rnd.Next();
+            return charakterAnimation;
         }
 
         public Hex Hexagon
@@ -132,6 +150,11 @@ namespace Guus_Reise.HexangonMap
         {
             get => translation;
             set => translation = value;
+        }
+
+        public Vector3 DefaultTranslation
+        {
+            get => defaultTranslation;
         }
 
         // Wenn im Kampf: Charaktere werden mit Waffen angezeigt
