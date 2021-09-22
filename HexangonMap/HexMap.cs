@@ -104,6 +104,9 @@ namespace Guus_Reise
             lvlObjectives = LevelHandler.activeLevel.LevelObjective;
             lvlObjectiveText = LevelHandler.activeLevel.LevelObjectiveText;
             playerTurn = true;
+            visManager = new VisualisationManagerHexmap(_board.GetLength(0), _board.GetLength(1), Camera);
+            //Fokus der Camera auf die Mitte der Karte setzen
+            visManager.SetCameraToMiddleOfMap();
         }
 
         public static void LoadContent(ContentManager content, GraphicsDeviceManager _graphics)
